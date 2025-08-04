@@ -1,0 +1,43 @@
+# Technical Architecture  
+
+- **System Components**:
+  - Frontend web app for assessors (rvGutachten.Web)
+  - Frontend web app for managers (rvGutachten.Verw)
+  - Frontend web app for admins (rvGutachten.Admin)
+  - Backend API for assignment, document, and messaging data
+  - Integration with a separate admin/management app for assignment and PDF uploads
+  - Web API (backend)
+  - Angular SPA (frontend)
+  - Database (PostgreSQL)
+  - File storage (local or cloud, e.g., Azure Blob Storage)
+- **Data Models**:
+  - **Assignment**:
+    - id (UUID), title (string), description (text)
+    - status (enum: New, Assigned, InProgress, PendingReview, Completed, Signed)
+    - priority (enum: Low, Medium, High, Critical)
+    - assessorId (UUID), managerId (UUID)
+    - dueDate (datetime), createdAt (datetime), updatedAt (datetime)
+    - documentIds (array of UUIDs), metadata (JSON)
+  - **Document**:
+    - id (UUID), assignmentId (UUID), fileName (string)
+    - fileUrl (string), filePath (string), fileSize (integer)
+    - mimeType (string), uploadedBy (UUID), uploadedAt (datetime)
+    - version (integer), isActive (boolean), metadata (JSON)
+  - **Message**:
+    - id (UUID), senderId (UUID), recipientId (UUID)
+    - assignmentId (UUID), documentId (UUID, optional)
+    - subject (string), content (text), messageType (enum)
+    - isRead (boolean), timestamp (datetime), attachments (JSON)
+  - **User**:
+    - id (UUID), email (string), firstName (string), lastName (string)
+    - role (enum: Assessor, Manager, Admin), isActive (boolean)
+    - department (string), phone (string), lastLogin (datetime)
+    - preferences (JSON), createdAt (datetime)
+- **APIs and Integrations**:
+  - REST API for assignments, documents, and messages
+  - Authentication API (JWT or OAuth2)
+  - WebSocket or polling for real-time notifications
+- **Infrastructure Requirements**:
+  - Cloud hosting for frontend and backend
+  - Secure storage for PDF documents
+  - Database for assignments, users, messages
