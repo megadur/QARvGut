@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <packageSources>
+        <clear />
+        <add key="gfal-gmbh"
+            value="https://pkgs.dev.azure.com/gfal-gmbh/_packaging/gfal-gmbh/nuget/v3/index.json" />
+    </packageSources>
+       <packageSourceCredentials>
+        <gfal-gmbh>
+            <add key="Username" value="YOUR_USERNAME_HERE" />
+            <add key="ClearTextPassword" value="YOUR_PERSONAL_ACCESS_TOKEN_HERE" />
+        </gfal-gmbh>
+    </packageSourceCredentials>
+</configuration>
