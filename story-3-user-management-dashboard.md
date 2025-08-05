@@ -1,98 +1,135 @@
-# Story 3: User Management Dashboard - Brownfield Addition
+# Story 3: Assignment Management Interface - Platform Features
 
 ## User Story
 
-As a **System Administrator**,
-I want **a comprehensive Angular user management interface**,
-So that **I can efficiently perform user administration tasks including profile editing, activity monitoring, and bulk operations through an intuitive web interface**.
+As a **Manager or Admin**,
+I want **assignment creation and management capabilities with document handling**,
+So that **I can create assessment assignments, attach relevant documents, assign assessors, and track assignment progress within the rvGutachten platform**.
 
 ## Story Context
 
-**Existing System Integration:**
+**Platform Development:**
 
-- Integrates with: Existing Angular admin components, routing, and HTTP services
-- Technology: Angular with existing UI component library, HTTP client, and routing framework
-- Follows pattern: Existing admin component structure with forms, tables, and navigation
-- Touch points: Angular admin routing, existing HTTP services, UI component patterns
+- Platform: rvGutachten assessment management platform (greenfield)
+- Dependencies: Builds on Stories 1 & 2 (User Authentication & Profile Management)
+- Technology: Angular 19 components, .NET Core API, PDF.js integration, responsive design
+- Scope: Assignment workflow and document management features
 
 ## Acceptance Criteria
 
-**Functional Requirements:**
+**Assignment Creation & Management:**
 
-1. User management dashboard component with user list, search/filter controls, and pagination
-2. User profile editing form component with validation for new extended fields
-3. Activity tracking display showing login history and user statistics
-4. Bulk operations interface for import/export, bulk role changes, and bulk activation controls
+1. Assignment creation form with title, description, due date, priority settings
+2. Document upload and attachment capabilities (PDF, Word, Excel support)
+3. Assessor assignment interface with user selection and role validation
+4. Assignment status tracking (Draft, Active, In Progress, Completed, Archived)
+5. Assignment editing capabilities for managers with change tracking
 
-**Integration Requirements:**
+**Document Management:**
 
-1. Existing Angular admin navigation and routing continue to work unchanged
-2. New components follow existing Angular component patterns and styling framework
-3. Integration with existing HTTP services maintains current authentication headers and error handling
+6. Document viewer integration using PDF.js for in-browser preview
+7. Document versioning support with upload history tracking
+8. Document download and sharing capabilities with access controls
+9. Document annotation tools for assessor feedback and notes
+10. Document search functionality within assignments
 
-**Quality Requirements:**
+**Assignment Workflow:**
 
-1. Responsive design works on desktop and tablet devices
-2. Form validation follows existing Angular validation patterns
-3. Loading states and error handling match existing admin component behavior
+11. Assignment dashboard showing all assignments by status and priority
+12. Assignment detail view with document list and assessor information
+13. Assignment filtering and search by title, assignee, status, due date
+14. Assignment progress tracking with completion percentage display
+15. Assignment notification system for status changes and deadlines
+
+**Assessment Features:**
+
+16. Assessment form templates for standardized evaluation criteria
+17. Assessment scoring and rating system with configurable scales
+18. Assessment comments and feedback system for detailed evaluations
+19. Assessment submission and approval workflow
+20. Assessment reporting with export capabilities (PDF, Excel)
 
 ## Technical Notes
 
-- **Integration Approach:** Create new admin components following existing Angular patterns, integrate with current routing and service structure
-- **Existing Pattern Reference:** Follow existing admin component patterns in QARvGut.client/src/app/ admin modules
-- **Key Constraints:** Must use existing styling framework, follow current component architecture
+- **Frontend Architecture:** Angular components with reactive forms, file upload handling, PDF.js integration
+- **Document Storage:** Secure file storage with access controls and versioning
+- **Workflow Engine:** State management for assignment lifecycle and status transitions
+- **Integration:** Assignment data linked to user profiles from authentication system
 
 ## Definition of Done
 
-- [ ] User management dashboard component implemented and functional
-- [ ] Profile editing forms working with proper validation
-- [ ] Activity tracking display showing user statistics
-- [ ] Bulk operations interface integrated with API endpoints
-- [ ] Existing admin navigation and components continue to work
-- [ ] UI follows existing design patterns and responsive requirements
+- [ ] Assignment creation and editing interface functional
+- [ ] Document upload, preview, and management working
+- [ ] Assessor assignment and user selection operational
+- [ ] Assignment status tracking and workflow implemented
+- [ ] Document viewer with PDF.js integration functional
+- [ ] Assignment dashboard with filtering and search working
+- [ ] Assessment forms and scoring system implemented
+- [ ] Assignment notifications and status updates functional
+- [ ] Responsive design working on desktop and tablet devices
+- [ ] Access controls ensuring role-based assignment management
 
-## Risk and Compatibility Check
+## Platform Integration
 
-**Minimal Risk Assessment:**
+**Assignment Workflow:**
 
-- **Primary Risk:** New UI components could conflict with existing admin styling or navigation
-- **Mitigation:** Follow existing component patterns exactly, test integration with current admin modules
-- **Rollback:** New components can be disabled via routing configuration, existing admin interface unaffected
+- Assignment Creation → Document Attachment → Assessor Assignment → Active Status
+- Assessment Progress → Document Review → Scoring → Completion
+- Assignment Management → Status Tracking → Reporting → Archive
 
-**Compatibility Verification:**
+**Role-Based Features:**
 
-- ✅ Uses existing Angular component architecture
-- ✅ Follows current styling and UI patterns
-- ✅ Integrates with existing routing and navigation
-- ✅ No impact on existing admin functionality
+- **Manager:** Full assignment management, assessor assignment, progress oversight
+- **Admin:** All manager features plus system-wide assignment oversight
+- **Assessor:** Assignment viewing, document access, assessment submission
 
-## Story Dependencies
+**Document Integration:**
 
-- **Prerequisites:** Story 1 (needs extended data model) and Story 2 (needs API endpoints)
-- **Dependents:** None (final story in epic)
+- PDF document viewing with annotation capabilities
+- Document versioning and access history tracking
+- Integration with assessment workflow for document-based evaluations
+
+## User Experience Requirements
+
+**Assignment Dashboard:**
+1. Card-based layout showing assignments by status
+2. Quick filters for My Assignments, Team Assignments, All Assignments
+3. Search bar with auto-complete and advanced filtering
+4. Sortable columns for due date, priority, status, assignee
+5. Bulk actions for status updates and assignment management
+
+**Assignment Detail View:**
+1. Assignment information panel with edit capabilities
+2. Document list with preview thumbnails and quick actions
+3. Assessor assignment section with user search and selection
+4. Activity timeline showing assignment history and status changes
+5. Assessment section with forms, scoring, and submission tracking
+
+**Document Management:**
+1. Drag-and-drop document upload with progress indicators
+2. Document preview modal with PDF.js viewer
+3. Document annotation tools for highlighting and comments
+4. Document sharing with permission settings
+5. Document search across all assignments
 
 ## Estimated Effort
 
-- **Development:** 3-4 days
-- **Testing:** 1-2 days
-- **Total:** 4-6 days
+- **Development:** 6-7 days
+- **Testing:** 3 days
+- **UI/UX refinement:** 2 days
+- **Total:** 11-12 days
 
-## UI Mockup Requirements
+## Dependencies
 
-**Dashboard Layout:**
-- User list table with sortable columns
-- Search/filter controls in sidebar or top bar
-- Pagination controls at bottom
-- Action buttons for bulk operations
+- **Prerequisites:** Stories 1 & 2 (User Authentication & Profile Management) completed
+- **External:** PDF.js library integration for document viewing
+- **Database:** Assignment and document tables with relationships
 
-**Profile Edit Form:**
-- Modal or separate page for user editing
-- Form sections: Basic Info, Contact Details, Department, Preferences
-- Validation messages following existing patterns
-- Save/Cancel/Delete actions
+## Success Criteria
 
-**Activity Tracking:**
-- User statistics cards or widgets
-- Login history table
-- Activity timeline if applicable
-- Export functionality for audit reports
+- Managers can create assignments with document attachments and assessor assignments
+- Assignment workflow supports full lifecycle from creation to completion
+- Document management provides secure viewing, annotation, and version control
+- Assessment system enables structured evaluation with scoring and feedback
+- Platform integration supports role-based access and workflow management
+- Foundation established for advanced features like real-time collaboration and automated workflows

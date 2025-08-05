@@ -127,6 +127,12 @@ rvGutachten is a web-based platform designed for assessors to efficiently manage
   - Cloud hosting for frontend and backend
   - Secure storage for PDF documents
   - Database for assignments, users, messages
+- **Development Requirements**:
+  - using Jasmine and Jest for frontend testing
+  - using xUnit for backend tests
+  - using cucumber for E2E tests
+- **Deployment Requirements**:
+  - github actions for CI/CD
 
 ## Development Roadmap
 

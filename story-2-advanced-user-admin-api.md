@@ -1,78 +1,126 @@
-# Story 2: Advanced User Administration API - Brownfield Addition
+# Story 2: User Registration & Profile Management - Platform Features
 
 ## User Story
 
-As a **System Administrator**,
-I want **bulk user operations and advanced search capabilities through API endpoints**,
-So that **I can efficiently manage large numbers of users with import/export, bulk updates, and sophisticated filtering**.
+As a **Platform User (Assessor/Manager/Admin)**,
+I want **user registration, profile management, and secure authentication capabilities**,
+So that **I can create my account, manage my profile information, and securely access the rvGutachten platform with appropriate role-based permissions**.
 
 ## Story Context
 
-**Existing System Integration:**
+**Platform Development:**
 
-- Integrates with: Existing UserController, authorization attributes, and Entity Framework queries
-- Technology: .NET Core Web API, existing authorization framework, Entity Framework queries
-- Follows pattern: Existing API controller structure with [Authorize] attributes and response patterns
-- Touch points: UserController, existing user API endpoints, role-based authorization middleware
+- Platform: rvGutachten assessment management platform (greenfield)
+- Dependencies: Builds on Story 1 (User Data Model & Authentication API)
+- Technology: Angular 19 frontend components, .NET Core API integration, responsive design
+- Scope: User-facing authentication and profile management features
 
 ## Acceptance Criteria
 
-**Functional Requirements:**
+**User Registration Requirements:**
 
-1. Bulk operations API endpoints: bulk user import (CSV/JSON), bulk role assignment, bulk activation/deactivation
-2. Advanced search/filter API with support for department, role, activity status, date ranges
-3. User export API endpoint with filtering capabilities (CSV/JSON formats)
-4. Pagination support for large user lists with configurable page sizes
+1. User registration form with validation (email, password, firstName, lastName, role selection)
+2. Email validation and uniqueness checking
+3. Password strength validation with clear requirements
+4. Role assignment during registration (with admin approval for Manager/Admin roles)
+5. Registration confirmation system with email verification
 
-**Integration Requirements:**
+**Authentication Interface:**
 
-1. Existing UserController endpoints continue to work unchanged
-2. New endpoints follow existing authorization pattern with [Authorize(Roles = "Admin")] attributes
-3. Integration with existing Entity Framework context maintains current query patterns
+6. Login form with email/password authentication
+7. "Remember me" functionality with secure session management
+8. Password reset capability with email-based reset links
+9. Logout functionality with secure session termination
+10. Token refresh handling for seamless user experience
 
-**Quality Requirements:**
+**Profile Management:**
 
-1. Bulk operations include proper validation and error handling
-2. API documentation updated with new endpoint specifications
-3. Performance testing completed for large user datasets (1000+ users)
+11. User profile viewing with all personal information display
+12. Profile editing form for personal details (firstName, lastName, department, phone)
+13. Password change functionality with current password verification
+14. User preferences management (JSON-based settings)
+15. Profile activity tracking display (last login, account creation date)
+
+**Security & Validation:**
+
+16. Input validation on all forms with user-friendly error messages
+17. CSRF protection on all form submissions
+18. Client-side and server-side validation consistency
+19. Secure password handling (no plaintext storage or transmission)
+20. Session timeout handling with automatic logout
 
 ## Technical Notes
 
-- **Integration Approach:** Add new action methods to existing UserController, follow current authorization and response patterns
-- **Existing Pattern Reference:** Follow current controller patterns in QARvGut.Server/Controllers/UserAccountController.cs
-- **Key Constraints:** Must respect existing role-based authorization, maintain current API versioning approach
+- **Frontend Architecture:** Angular reactive forms with validation, HTTP interceptors for authentication
+- **Security Implementation:** JWT token storage, HTTP interceptors for token attachment, route guards
+- **User Experience:** Responsive design, loading states, error handling, accessibility compliance
+- **Integration:** Seamless integration with authentication API from Story 1
 
 ## Definition of Done
 
-- [ ] Bulk operation endpoints implemented with proper validation
-- [ ] Advanced search/filter functionality working with pagination
-- [ ] Export functionality supports multiple formats
-- [ ] All endpoints properly authorized and tested
-- [ ] Existing user API endpoints continue to function
-- [ ] API documentation updated
+- [ ] User registration form functional with validation and email verification
+- [ ] Login/logout functionality working with secure session management
+- [ ] Profile viewing and editing interface operational
+- [ ] Password change and reset capabilities implemented
+- [ ] Input validation and error handling on all forms
+- [ ] Responsive design working on desktop and tablet devices
+- [ ] Route guards protecting authenticated areas
+- [ ] JWT token handling and refresh functionality
+- [ ] Accessibility compliance (WCAG 2.1 AA) for all user interfaces
+- [ ] Cross-browser compatibility (Chrome, Firefox, Safari, Edge)
 
-## Risk and Compatibility Check
+## Platform Integration
 
-**Minimal Risk Assessment:**
+**Authentication Flow:**
 
-- **Primary Risk:** Bulk operations could impact database performance or timeout
-- **Mitigation:** Implement batch processing, transaction management, and timeout handling
-- **Rollback:** New endpoints can be disabled via feature flags, existing APIs unaffected
+- Registration → Email verification → Profile setup → Platform access
+- Login → Token storage → Route protection → Dashboard access
+- Profile management → Real-time updates → Preference persistence
 
-**Compatibility Verification:**
+**Role-Based Experience:**
 
-- ✅ No changes to existing API endpoints
-- ✅ Follows existing authorization patterns
-- ✅ Uses existing Entity Framework context
-- ✅ Performance impact managed through batching and pagination
+- **Assessor:** Basic profile management, assignment access preparation
+- **Manager:** Enhanced profile options, team management preparation
+- **Admin:** Administrative user oversight, system management preparation
 
-## Story Dependencies
+**Future Feature Foundation:**
 
-- **Prerequisites:** Story 1 (Enhanced User Data Model must be completed)
-- **Dependents:** Story 3 (UI needs these API endpoints)
+- User profiles support assignment workflow personalization
+- Authentication enables secure document access and messaging
+- Role management supports feature access control throughout platform
+
+## User Experience Requirements
+
+**Registration Flow:**
+1. Welcome page with platform introduction
+2. Registration form with clear field requirements
+3. Email verification step with resend capability
+4. Profile completion with role-appropriate options
+5. Welcome dashboard with guided onboarding
+
+**Profile Management:**
+1. Accessible profile menu from main navigation
+2. Tabbed interface for different profile sections
+3. In-place editing with save/cancel options
+4. Activity history for transparency
+5. Settings preferences with immediate effect
 
 ## Estimated Effort
 
-- **Development:** 2-3 days
-- **Testing:** 1-2 days
-- **Total:** 3-5 days
+- **Development:** 4-5 days
+- **Testing:** 2 days
+- **UI/UX refinement:** 1 day
+- **Total:** 7-8 days
+
+## Dependencies
+
+- **Prerequisites:** Story 1 (User Data Model & Authentication API) completed
+- **Dependents:** Story 3 (Admin User Management Interface) for admin features
+
+## Success Criteria
+
+- Users can successfully register accounts and verify email addresses
+- Authentication provides secure, seamless login/logout experience
+- Profile management enables users to maintain current information
+- Role-based registration prepares users for appropriate platform access
+- Foundation supports all planned user management and workflow features
