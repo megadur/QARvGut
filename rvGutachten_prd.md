@@ -94,7 +94,7 @@ rvGutachten is a web-based platform designed for assessors to efficiently manage
   - Integration with a separate admin/management app for assignment and PDF uploads
   - Web API (backend)
   - Angular SPA (frontend)
-  - Database (PostgreSQL)
+  - Database (SQL Server LocalDB, Azure SQL DB, Azure Cosmos DB)
   - File storage (local or cloud, e.g., Azure Blob Storage)
 - **Data Models**:
   - **Assignment**:

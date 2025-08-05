@@ -362,6 +362,171 @@ namespace QARvGut.Server.Controllers
             return NotFound(userId);
         }
 
+        // Enhanced User Management API Endpoints
+
+        [HttpPut("users/{id}/profile")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> UpdateUserProfile(string id, [FromBody] UserProfileUpdateVM profileUpdate)
+        {
+            if (!(await _authorizationService.AuthorizeAsync(User, id,
+                UserAccountManagementOperations.UpdateOperationRequirement)).Succeeded)
+                return new ChallengeResult();
+
+            var appUser = await _userAccountService.GetUserByIdAsync(id);
+            if (appUser == null)
+                return NotFound(id);
+
+            // Update profile fields - aligned with business objects
+            appUser.Department = profileUpdate.Department;
+            appUser.Phone = profileUpdate.Phone;
+            appUser.ContactInfo = profileUpdate.ContactInfo;
+            appUser.Preferences = profileUpdate.Preferences;
+            appUser.IsActive = profileUpdate.IsActive ?? appUser.IsActive;
+            appUser.Avatar = profileUpdate.Avatar;
+            appUser.GesperrtSeit = profileUpdate.GesperrtSeit;
+
+            var result = await _userAccountService.UpdateUserAsync(appUser);
+            
+            if (result.Succeeded)
+                return NoContent();
+
+            AddModelError(result.Errors);
+            return BadRequest(ModelState);
+        }
+
+        [HttpGet("users/{id}/activity")]
+        [ProducesResponseType(200, Type = typeof(UserActivityVM))]
+        [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> GetUserActivity(string id)
+        {
+            if (!(await _authorizationService.AuthorizeAsync(User, id,
+                UserAccountManagementOperations.ReadOperationRequirement)).Succeeded)
+                return new ChallengeResult();
+
+            var appUser = await _userAccountService.GetUserByIdAsync(id);
+            if (appUser == null)
+                return NotFound(id);
+
+            var activity = new UserActivityVM
+            {
+                UserId = appUser.Id,
+                UserName = appUser.UserName,
+                LastLoginDate = appUser.LastLoginDate,
+                LastLoginIp = appUser.LastLoginIp,
+                LoginCount = appUser.LoginCount,
+                CreatedDate = appUser.CreatedDate,
+                UpdatedDate = appUser.UpdatedDate,
+                IsActive = appUser.IsActive,
+                GesperrtSeit = appUser.GesperrtSeit
+            };
+
+            return Ok(activity);
+        }
+
+        [HttpGet("users/search")]
+        [Authorize(AuthPolicies.ViewAllUsersPolicy)]
+        [ProducesResponseType(200, Type = typeof(List<UserVM>))]
+        public async Task<IActionResult> SearchUsers(
+            string? department = null,
+            string? role = null,
+            bool? isActive = null,
+            int page = 1,
+            int pageSize = 10)
+        {
+            var users = await _userAccountService.SearchUsersAsync(department, role, isActive, page, pageSize);
+            
+            var userVMs = new List<UserVM>();
+            foreach (var userAndRole in users)
+            {
+                var userVM = _mapper.Map<UserVM>(userAndRole.User);
+                userVM.Roles = userAndRole.Roles;
+                userVMs.Add(userVM);
+            }
+
+            return Ok(userVMs);
+        }
+
+        [HttpPost("users/bulk-import")]
+        [Authorize(AuthPolicies.ManageAllUsersPolicy)]
+        [ProducesResponseType(200, Type = typeof(BulkOperationResultVM))]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> BulkImportUsers([FromBody] List<UserImportVM> users)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            // Convert UserImportVM to ApplicationUser entities
+            var applicationUsers = users.Select(u => new ApplicationUser
+            {
+                UserName = u.UserName,
+                Email = u.Email,
+                FullName = u.FullName,
+                Department = u.Department,
+                Phone = u.Phone,
+                JobTitle = u.JobTitle,
+                IsActive = u.IsActive,
+                EmailConfirmed = true // Auto-confirm for bulk imports
+            }).ToList();
+
+            var defaultRoles = users.FirstOrDefault()?.Roles ?? Array.Empty<string>();
+            var (succeeded, failed, errors) = await _userAccountService.BulkImportUsersAsync(applicationUsers, defaultRoles);
+            
+            var result = new BulkOperationResultVM
+            {
+                SuccessCount = succeeded,
+                FailureCount = failed,
+                Errors = errors.ToList()
+            };
+            
+            return Ok(result);
+        }
+
+        [HttpPost("users/bulk-roles")]
+        [Authorize(AuthPolicies.ManageAllUsersPolicy)]
+        [ProducesResponseType(200, Type = typeof(BulkOperationResultVM))]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> BulkAssignRoles([FromBody] BulkRoleAssignmentVM bulkAssignment)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var (succeeded, failed, errors) = await _userAccountService.BulkAssignRolesAsync(bulkAssignment.UserIds, bulkAssignment.Roles);
+            
+            var result = new BulkOperationResultVM
+            {
+                SuccessCount = succeeded,
+                FailureCount = failed,
+                Errors = errors.ToList()
+            };
+            
+            return Ok(result);
+        }
+
+        [HttpPost("users/bulk-activate")]
+        [Authorize(AuthPolicies.ManageAllUsersPolicy)]
+        [ProducesResponseType(200, Type = typeof(BulkOperationResultVM))]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> BulkActivateUsers([FromBody] BulkActivationVM bulkActivation)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var (succeeded, failed, errors) = await _userAccountService.BulkActivateUsersAsync(bulkActivation.UserIds, bulkActivation.IsActive);
+            
+            var result = new BulkOperationResultVM
+            {
+                SuccessCount = succeeded,
+                FailureCount = failed,
+                Errors = errors.ToList()
+            };
+            
+            return Ok(result);
+        }
+
         private async Task<UserVM?> GetUserViewModelHelper(string userId)
         {
             var userAndRoles = await _userAccountService.GetUserAndRolesAsync(userId);

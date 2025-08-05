@@ -212,5 +212,187 @@ namespace QARvGut.Core.Services.Account
             var result = await _userManager.DeleteAsync(user);
             return (result.Succeeded, result.Errors.Select(e => e.Description).ToArray());
         }
+
+        // Enhanced User Management - Business Object Aligned Methods
+        public async Task<List<(ApplicationUser User, string[] Roles)>> SearchUsersAsync(string? department, string? role, bool? isActive, int page, int pageSize)
+        {
+            var query = _context.Users.Include(u => u.Roles).AsQueryable();
+
+            // Apply filters based on business object requirements
+            if (!string.IsNullOrEmpty(department))
+                query = query.Where(u => u.Department == department);
+
+            if (isActive.HasValue)
+                query = query.Where(u => u.IsActive == isActive.Value);
+
+            // Apply pagination
+            var users = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var result = new List<(ApplicationUser User, string[] Roles)>();
+            foreach (var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                
+                // Filter by role if specified
+                if (!string.IsNullOrEmpty(role) && !roles.Contains(role))
+                    continue;
+                    
+                result.Add((user, roles.ToArray()));
+            }
+
+            return result;
+        }
+
+        public async Task<(bool Succeeded, string[] Errors)> UpdateLastLoginAsync(string userId, string ipAddress)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                return (false, new[] { "User not found" });
+
+            // Update LastLogin information as per business object specification
+            user.LastLoginDate = DateTime.UtcNow;
+            user.LastLoginIp = ipAddress;
+            user.LoginCount++;
+
+            var result = await _userManager.UpdateAsync(user);
+            return (result.Succeeded, result.Errors.Select(e => e.Description).ToArray());
+        }
+
+        public async Task<(int Succeeded, int Failed, string[] Errors)> BulkImportUsersAsync(IEnumerable<ApplicationUser> users, IEnumerable<string> defaultRoles)
+        {
+            var succeeded = 0;
+            var failed = 0;
+            var errors = new List<string>();
+
+            foreach (var user in users)
+            {
+                try
+                {
+                    // Set default values for business object fields
+                    user.IsActive = true;
+                    user.LoginCount = 0;
+                    user.CreatedDate = DateTime.UtcNow;
+                    user.UpdatedDate = DateTime.UtcNow;
+
+                    var result = await _userManager.CreateAsync(user);
+                    if (result.Succeeded)
+                    {
+                        // Assign default roles
+                        if (defaultRoles.Any())
+                        {
+                            await _userManager.AddToRolesAsync(user, defaultRoles);
+                        }
+                        succeeded++;
+                    }
+                    else
+                    {
+                        failed++;
+                        errors.AddRange(result.Errors.Select(e => $"User {user.UserName}: {e.Description}"));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    failed++;
+                    errors.Add($"User {user.UserName}: {ex.Message}");
+                }
+            }
+
+            return (succeeded, failed, errors.ToArray());
+        }
+
+        public async Task<(int Succeeded, int Failed, string[] Errors)> BulkAssignRolesAsync(string[] userIds, string[] roles)
+        {
+            var succeeded = 0;
+            var failed = 0;
+            var errors = new List<string>();
+
+            foreach (var userId in userIds)
+            {
+                try
+                {
+                    var user = await _userManager.FindByIdAsync(userId);
+                    if (user == null)
+                    {
+                        failed++;
+                        errors.Add($"User {userId}: User not found");
+                        continue;
+                    }
+
+                    var result = await _userManager.AddToRolesAsync(user, roles);
+                    if (result.Succeeded)
+                    {
+                        succeeded++;
+                    }
+                    else
+                    {
+                        failed++;
+                        errors.AddRange(result.Errors.Select(e => $"User {user.UserName}: {e.Description}"));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    failed++;
+                    errors.Add($"User {userId}: {ex.Message}");
+                }
+            }
+
+            return (succeeded, failed, errors.ToArray());
+        }
+
+        public async Task<(int Succeeded, int Failed, string[] Errors)> BulkActivateUsersAsync(string[] userIds, bool isActive)
+        {
+            var succeeded = 0;
+            var failed = 0;
+            var errors = new List<string>();
+
+            foreach (var userId in userIds)
+            {
+                try
+                {
+                    var user = await _userManager.FindByIdAsync(userId);
+                    if (user == null)
+                    {
+                        failed++;
+                        errors.Add($"User {userId}: User not found");
+                        continue;
+                    }
+
+                    // Update IsActive status and related fields
+                    user.IsActive = isActive;
+                    user.UpdatedDate = DateTime.UtcNow;
+                    
+                    // If deactivating, set GesperrtSeit timestamp
+                    if (!isActive && !user.GesperrtSeit.HasValue)
+                    {
+                        user.GesperrtSeit = DateTime.UtcNow;
+                    }
+                    else if (isActive)
+                    {
+                        user.GesperrtSeit = null; // Clear lock timestamp when reactivating
+                    }
+
+                    var result = await _userManager.UpdateAsync(user);
+                    if (result.Succeeded)
+                    {
+                        succeeded++;
+                    }
+                    else
+                    {
+                        failed++;
+                        errors.AddRange(result.Errors.Select(e => $"User {user.UserName}: {e.Description}"));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    failed++;
+                    errors.Add($"User {userId}: {ex.Message}");
+                }
+            }
+
+            return (succeeded, failed, errors.ToArray());
+        }
     }
 }

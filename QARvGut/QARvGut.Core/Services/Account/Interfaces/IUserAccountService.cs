@@ -25,5 +25,14 @@ namespace QARvGut.Core.Services.Account
         Task<(bool Succeeded, string[] Errors)> UpdatePasswordAsync(ApplicationUser user, string currentPassword, string newPassword);
         Task<(bool Succeeded, string[] Errors)> UpdateUserAsync(ApplicationUser user);
         Task<(bool Succeeded, string[] Errors)> UpdateUserAsync(ApplicationUser user, IEnumerable<string>? roles);
+
+        // Enhanced User Management - Business Object Aligned Methods
+        Task<List<(ApplicationUser User, string[] Roles)>> SearchUsersAsync(string? department, string? role, bool? isActive, int page, int pageSize);
+        Task<(bool Succeeded, string[] Errors)> UpdateLastLoginAsync(string userId, string ipAddress);
+        
+        // Bulk Operations for Enhanced User Management
+        Task<(int Succeeded, int Failed, string[] Errors)> BulkImportUsersAsync(IEnumerable<ApplicationUser> users, IEnumerable<string> defaultRoles);
+        Task<(int Succeeded, int Failed, string[] Errors)> BulkAssignRolesAsync(string[] userIds, string[] roles);
+        Task<(int Succeeded, int Failed, string[] Errors)> BulkActivateUsersAsync(string[] userIds, bool isActive);
     }
 }
