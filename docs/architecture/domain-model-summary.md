@@ -161,4 +161,4 @@ RESTful endpoints following established patterns:
 
 **Next Action:** Complete Story 1.1 implementation and begin detailed Phase 2 entity design based on this comprehensive domain model plan.
 
-*See `docs/domain-model-plan.md` for complete technical specifications and implementation details.*
+*See `domain-model-plan.md` for complete technical specifications and implementation details.*

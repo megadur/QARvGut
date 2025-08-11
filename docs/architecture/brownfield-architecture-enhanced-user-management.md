@@ -22,7 +22,7 @@ This document supplements the existing QARvGut project architecture by defining 
 
 **Available Documentation:**
 - README.md files in client and server projects
-- Comprehensive PRD document (rvGutachten_prd.md) 
+- Comprehensive PRD document (see `../prd/` folder and `../reference/legacy-prd.md`)
 - User story documentation for Enhanced User Management epic
 - Existing controller patterns and service layer structure
 

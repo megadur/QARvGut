@@ -9,8 +9,11 @@ This documentation is organized into logical categories to help developers, arch
 
 ### 📋 Product Requirements (`prd/`)
 
+**⭐ Primary PRD Location - Use for all current requirements**
+
 Comprehensive product requirements documentation split into focused sections:
 
+- **[📋 PRD Navigation](prd/index.md)** - Complete PRD index and navigation
 - **Executive Summary** - High-level project overview
 - **Business Objectives** - Goals and success metrics
 - **Functional Requirements** - Detailed feature specifications
@@ -22,6 +25,7 @@ Comprehensive product requirements documentation split into focused sections:
 
 Technical architecture and design documents:
 
+- **[📋 Architecture Overview](architecture/index.md)** - Navigation guide and document relationships
 - **brownfield-architecture-enhanced-user-management.md** - Main architectural blueprint for brownfield enhancements
 - **domain-model-plan.md** - Comprehensive domain model implementation plan
 - **domain-model-summary.md** - High-level domain model overview
@@ -56,6 +60,7 @@ High-level feature epics:
 
 Detailed user stories and implementation specifications:
 
+- **[📋 Stories Overview](stories/index.md)** - Story status, dependencies, and navigation guide
 - **1.1.user-data-model-authentication-api.md** - User model and auth API
 - **1.1-completion-summary.md** - Story 1.1 completion documentation
 - **1.1-testing-documentation.md** - Story 1.1 testing details
@@ -70,6 +75,7 @@ Detailed user stories and implementation specifications:
 
 UI/UX specifications and design assets:
 
+- **[📋 Design Overview](design/index.md)** - Design documentation guide and usage instructions
 - **document-viewing-interaction-spec.md** - Document viewer interaction design
 - **wireframes/document-viewer-wireframes.md** - Detailed wireframes and layouts
 - **images/** - Design mockups and visual assets (rvGut1.png, rvGut2.png, rvGut3.png)
@@ -78,14 +84,16 @@ UI/UX specifications and design assets:
 
 Project analysis and validation documentation:
 
+- **[📋 Analysis Overview](analysis/index.md)** - Analysis documentation guide and insights
 - **po-master-checklist-analysis.md** - Comprehensive project readiness analysis
 
 ### 📚 Reference (`reference/`)
 
 Reference materials and legacy documentation:
 
+- **[📋 Reference Overview](reference/index.md)** - Reference materials guide and usage instructions
 - **business-objects.csv** - Business object specifications
-- **legacy-prd.md** - Legacy/standalone PRD document
+- **legacy-prd.md** - ⚠️ DEPRECATED - Legacy/standalone PRD document (use `prd/` folder instead)
 
 ## Quick Navigation
 
@@ -137,3 +145,11 @@ Design (UI/UX Specifications)
 - Follow the established folder structure for new documentation
 - Use consistent naming conventions (lowercase, hyphens for spaces)
 - Cross-reference related documents where applicable
+
+## 📋 Documentation Standards & Maintenance
+
+- **[📋 Documentation Standards](DOCUMENTATION_STANDARDS.md)** - Complete guidelines for creating and maintaining documentation
+- **[✅ Maintenance Checklist](MAINTENANCE_CHECKLIST.md)** - Regular maintenance tasks and schedules
+- **[📄 Document Templates](DOCUMENT_TEMPLATES.md)** - Standard templates for consistent formatting
+
+**For Contributors:** Please review the standards and use appropriate templates when creating new documentation.

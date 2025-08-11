@@ -1,7 +1,21 @@
-# Product Requirements Document: rvGutachten
+# Product Requirements Document: rvGutachten (LEGACY)
 
-**Document Version:** 1.0  
+> **⚠️ DEPRECATION NOTICE**
+> 
+> **This document is superseded by the structured PRD in the `../prd/` folder.**
+> 
+> - **Current PRD:** [../prd/index.md](../prd/index.md) - Use this for all current requirements
+> - **This document:** Preserved for historical reference and context only
+> - **Content status:** Content has been migrated to modular structured format
+> - **Maintenance:** This legacy document is no longer actively maintained
+> 
+> **For current requirements, please use the structured PRD:** [../prd/index.md](../prd/index.md)
+
+---
+
+**Document Version:** 1.0 (LEGACY)  
 **Last Updated:** August 4, 2025  
+**Status:** 🚫 DEPRECATED - Use structured PRD in `../prd/` folder  
 **Product Manager:** [Your Name]  
 **Stakeholders:** Development Team, Assessment Department, Management  
 
