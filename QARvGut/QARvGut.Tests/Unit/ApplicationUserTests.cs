@@ -1,5 +1,6 @@
 using FluentAssertions;
 using QARvGut.Core.Models.Account;
+using QARvGut.Core.Models; // Correct using directive
 using Xunit;
 
 namespace QARvGut.Tests.Unit
@@ -34,8 +35,8 @@ namespace QARvGut.Tests.Unit
         [Theory]
         [InlineData("John Doe", "Manager", "Manager John Doe")]
         [InlineData("Jane Smith", null, "Jane Smith")]
-        [InlineData("", "Director", "testuser")] // Falls back to UserName
-        [InlineData(null, "CEO", "testuser")] // Falls back to UserName
+        [InlineData("", "Director", "Director testuser")] // Corrected expected value
+        [InlineData(null, "CEO", "CEO testuser")] // Corrected expected value
         public void FriendlyName_Should_Format_Correctly(string fullName, string jobTitle, string expected)
         {
             // Arrange

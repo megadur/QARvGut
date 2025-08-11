@@ -15,8 +15,8 @@ namespace QARvGut.Tests.Unit
     public class UserAccountServiceTests
     {
         private readonly Mock<UserManager<ApplicationUser>> _mockUserManager;
-        private readonly Mock<ApplicationDbContext> _mockContext;
         private readonly UserAccountService _service;
+        private readonly ApplicationDbContext _dbContext; // Use concrete instance for in-memory DB
 
         public UserAccountServiceTests()
         {
@@ -30,16 +30,13 @@ namespace QARvGut.Tests.Unit
                 .UseInMemoryDatabase(databaseName: System.Guid.NewGuid().ToString())
                 .Options;
 
-            // Mock the IUserIdAccessor since we can't easily create ApplicationDbContext without it
+            // Mock the IUserIdAccessor
             var mockUserIdAccessor = new Mock<QARvGut.Core.Services.Account.IUserIdAccessor>();
-            
-            // Note: This is a simplified test setup. In a real scenario, you'd use a test database
-            // _mockContext = new ApplicationDbContext(options, mockUserIdAccessor.Object);
-            
-            // For now, create a mock context
-            _mockContext = new Mock<ApplicationDbContext>();
-            
-            _service = new UserAccountService(_mockContext.Object, _mockUserManager.Object);
+
+            _dbContext = new ApplicationDbContext(options, mockUserIdAccessor.Object);
+            _dbContext.Database.EnsureCreated(); // Ensure the in-memory database is created
+
+            _service = new UserAccountService(_dbContext, _mockUserManager.Object);
         }
 
         [Fact]
