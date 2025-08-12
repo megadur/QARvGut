@@ -1,0 +1,328 @@
+/* 
+  Story 1.2 Task 3: User Preferences Component Styles
+  Professional styling for comprehensive preferences management
+*/
+
+.user-preferences-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.preferences-header {
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+
+.preferences-header h2 {
+  color: #333;
+  font-weight: 600;
+}
+
+.preferences-header .text-muted {
+  font-size: 0.95rem;
+}
+
+/* Card Styling */
+.card {
+  border: 1px solid #e9ecef;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  transition: box-shadow 0.15s ease-in-out;
+}
+
+.card:hover {
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  padding: 1rem 1.25rem;
+}
+
+.card-title {
+  color: #495057;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.card-body {
+  padding: 1.5rem 1.25rem;
+}
+
+/* Form Controls */
+.form-label {
+  font-weight: 500;
+  color: #495057;
+  margin-bottom: 0.5rem;
+}
+
+.form-select,
+.form-control {
+  border: 1px solid #ced4da;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-select:focus,
+.form-control:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.form-check-input {
+  margin-top: 0.25rem;
+}
+
+.form-check-label {
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+.form-check-label strong {
+  color: #495057;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.form-check-label small {
+  color: #6c757d;
+  font-size: 0.875rem;
+}
+
+/* Switch Styling */
+.form-switch .form-check-input {
+  width: 2.5rem;
+  height: 1.25rem;
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: contain;
+}
+
+.form-switch .form-check-input:checked {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+/* Validation States */
+.is-invalid {
+  border-color: #dc3545;
+}
+
+.is-valid {
+  border-color: #198754;
+}
+
+.invalid-feedback {
+  display: block;
+  font-size: 0.875rem;
+  color: #dc3545;
+  margin-top: 0.25rem;
+}
+
+/* Button Styling */
+.btn {
+  font-weight: 500;
+  transition: all 0.15s ease-in-out;
+}
+
+.btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
+}
+
+.btn-outline-warning {
+  color: #f57c00;
+  border-color: #f57c00;
+}
+
+.btn-outline-warning:hover:not(:disabled) {
+  background-color: #f57c00;
+  color: white;
+}
+
+.btn-outline-secondary {
+  color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-outline-secondary:hover:not(:disabled) {
+  background-color: #6c757d;
+  color: white;
+}
+
+/* Sticky Actions Card */
+.actions-card-sticky {
+  position: sticky;
+  top: 2rem;
+}
+
+/* Loading State */
+.spinner-border-sm {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Alert Styling */
+.alert-info {
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+  color: #0c5460;
+}
+
+.alert-info ul {
+  padding-left: 1.25rem;
+}
+
+.alert-info li {
+  margin-bottom: 0.25rem;
+}
+
+/* Theme Preview */
+.theme-preview {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6 !important;
+}
+
+.theme-preview.bg-dark {
+  background-color: #343a40 !important;
+  border-color: #495057 !important;
+}
+
+.theme-preview-circle {
+  width: 20px;
+  height: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .user-preferences-container {
+    padding: 1rem 0.5rem;
+  }
+  
+  .preferences-header .d-flex {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+  
+  .preferences-header .btn {
+    margin-top: 1rem;
+    align-self: stretch;
+  }
+  
+  .card-body {
+    padding: 1rem;
+  }
+  
+  .actions-card-sticky {
+    position: static;
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .user-preferences-container {
+    padding: 1rem 0.25rem;
+  }
+  
+  .card-body .row .col-md-6,
+  .card-body .row .col-md-4 {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Dark Theme Support */
+.theme-dark .user-preferences-container {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.theme-dark .card {
+  background-color: #1e1e1e;
+  border-color: #333;
+}
+
+.theme-dark .card-header {
+  background-color: #2d2d2d;
+  border-bottom-color: #333;
+}
+
+.theme-dark .card-title,
+.theme-dark .form-label {
+  color: #ffffff;
+}
+
+.theme-dark .form-select,
+.theme-dark .form-control {
+  background-color: #2d2d2d;
+  border-color: #555;
+  color: #ffffff;
+}
+
+.theme-dark .form-select:focus,
+.theme-dark .form-control:focus {
+  background-color: #2d2d2d;
+  border-color: #80bdff;
+  color: #ffffff;
+}
+
+.theme-dark .text-muted {
+  color: #adb5bd !important;
+}
+
+.theme-dark .alert-info {
+  background-color: #1a2332;
+  border-color: #1e2a3a;
+  color: #9fc5e8;
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .card {
+    border-width: 2px;
+  }
+  
+  .form-select,
+  .form-control {
+    border-width: 2px;
+  }
+  
+  .btn {
+    border-width: 2px;
+    font-weight: 600;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .form-select,
+  .form-control,
+  .btn {
+    transition: none;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .preferences-header .btn,
+  .card .btn,
+  .actions-card-sticky {
+    display: none;
+  }
+  
+  .card {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+}

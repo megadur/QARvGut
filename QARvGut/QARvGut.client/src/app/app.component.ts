@@ -200,7 +200,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     modalRef.hidden.subscribe(() => {
       this.alertService.resetStickyMessage();
-      this.loginControl?.reset();
+      //this.loginControl?.();
 
       if (this.authService.isSessionExpired) {
         this.alertService.showStickyMessage(this.gT('app.alerts.SessionExpired'),

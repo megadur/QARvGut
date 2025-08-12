@@ -179,7 +179,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         {
           violations: securityResult.violations,
           username: formData.userName,
-          riskScore: securityResult.riskScore
+          //riskScore: securityResult.riskScore
         }
       );
 
@@ -254,7 +254,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
           // End performance monitoring
           this.performanceService.endAuthentication();
-          const performanceMetrics = this.performanceService.completeLoginMeasurement();
+          //const performanceMetrics = this.performanceService.completeLoginMeasurement();
 
           console.info('✅ Login Performance:', this.performanceService.getPerformanceSummary());
 

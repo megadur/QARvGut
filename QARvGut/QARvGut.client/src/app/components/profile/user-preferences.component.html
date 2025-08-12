@@ -1,0 +1,425 @@
+<!-- 
+  Story 1.2 Task 3: User Preferences Component Template
+  Comprehensive preferences management interface
+-->
+<div class="user-preferences-container">
+  <!-- Header Section -->
+  <div class="preferences-header">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h2 class="h3 mb-1">
+          <i class="fas fa-cog me-2"></i>
+          User              <div *ngIf="preferencesForm.get('theme')?.value !== 'auto'" class="mt-3">
+              <small class="text-muted d-block mb-2">Theme Preview:</small>
+              <div class="theme-preview p-3 rounded border" 
+                   [class.bg-dark]="preferencesForm.get('theme')?.value === 'dark'"
+                   [class.text-light]="preferencesForm.get('theme')?.value === 'dark'">
+                <div class="d-flex align-items-center">
+                  <div class="rounded-circle bg-primary me-2 theme-preview-circle"></div>
+                  <small>Sample interface element</small>
+                </div>
+              </div>
+            </div>s
+        </h2>
+        <p class="text-muted mb-0">Customize your account settings and preferences</p>
+      </div>
+      <button 
+        type="button" 
+        class="btn btn-outline-secondary"
+        (click)="cancel()"
+        [disabled]="isSaving">
+        <i class="fas fa-arrow-left me-1"></i>
+        Back to Profile
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading Indicator -->
+  <div *ngIf="isLoading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading preferences...</span>
+    </div>
+    <p class="text-muted mt-3">Loading your preferences...</p>
+  </div>
+
+  <!-- Preferences Form -->
+  <form [formGroup]="preferencesForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading" novalidate>
+    <div class="row">
+      <!-- Left Column -->
+      <div class="col-lg-8">
+        <!-- Appearance Settings -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="card-title mb-0">
+              <i class="fas fa-palette me-2"></i>
+              Appearance
+            </h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="theme" class="form-label">Theme</label>
+                <select 
+                  id="theme" 
+                  class="form-select"
+                  [class]="getFieldClass('theme')"
+                  formControlName="theme">
+                  <option value="light">Light</option>
+                  <option value="dark">Dark</option>
+                  <option value="auto">Auto (System)</option>
+                </select>
+                <div *ngIf="hasFieldError('theme')" class="invalid-feedback">
+                  <div *ngFor="let error of getFieldErrors('theme')">{{ error }}</div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="language" class="form-label">Language</label>
+                <select 
+                  id="language" 
+                  class="form-select"
+                  [class]="getFieldClass('language')"
+                  formControlName="language">
+                  <option *ngFor="let lang of availableLanguages" [value]="lang.code">
+                    {{ lang.name }}
+                  </option>
+                </select>
+                <div *ngIf="hasFieldError('language')" class="invalid-feedback">
+                  <div *ngFor="let error of getFieldErrors('language')">{{ error }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Regional Settings -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="card-title mb-0">
+              <i class="fas fa-globe me-2"></i>
+              Regional Settings
+            </h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="timezone" class="form-label">Timezone</label>
+                <select 
+                  id="timezone" 
+                  class="form-select"
+                  [class]="getFieldClass('timezone')"
+                  formControlName="timezone">
+                  <option *ngFor="let tz of availableTimezones" [value]="tz.value">
+                    {{ tz.label }}
+                  </option>
+                </select>
+                <div *ngIf="hasFieldError('timezone')" class="invalid-feedback">
+                  <div *ngFor="let error of getFieldErrors('timezone')">{{ error }}</div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="dateFormat" class="form-label">Date Format</label>
+                <select 
+                  id="dateFormat" 
+                  class="form-select"
+                  [class]="getFieldClass('dateFormat')"
+                  formControlName="dateFormat">
+                  <option *ngFor="let format of availableDateFormats" [value]="format.value">
+                    {{ format.label }}
+                  </option>
+                </select>
+                <div *ngIf="hasFieldError('dateFormat')" class="invalid-feedback">
+                  <div *ngFor="let error of getFieldErrors('dateFormat')">{{ error }}</div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="timeFormat" class="form-label">Time Format</label>
+                <select 
+                  id="timeFormat" 
+                  class="form-select"
+                  [class]="getFieldClass('timeFormat')"
+                  formControlName="timeFormat">
+                  <option value="12h">12-hour (AM/PM)</option>
+                  <option value="24h">24-hour</option>
+                </select>
+                <div *ngIf="hasFieldError('timeFormat')" class="invalid-feedback">
+                  <div *ngFor="let error of getFieldErrors('timeFormat')">{{ error }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notification Settings -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="card-title mb-0">
+              <i class="fas fa-bell me-2"></i>
+              Notifications
+            </h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <div class="form-check form-switch">
+                  <input 
+                    type="checkbox" 
+                    class="form-check-input" 
+                    id="emailNotifications"
+                    formControlName="emailNotifications">
+                  <label class="form-check-label" for="emailNotifications">
+                    <strong>Email Notifications</strong>
+                    <small class="d-block text-muted">Receive notifications via email</small>
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <div class="form-check form-switch">
+                  <input 
+                    type="checkbox" 
+                    class="form-check-input" 
+                    id="browserNotifications"
+                    formControlName="browserNotifications">
+                  <label class="form-check-label" for="browserNotifications">
+                    <strong>Browser Notifications</strong>
+                    <small class="d-block text-muted">Show browser push notifications</small>
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <div class="form-check form-switch">
+                  <input 
+                    type="checkbox" 
+                    class="form-check-input" 
+                    id="securityNotifications"
+                    formControlName="securityNotifications">
+                  <label class="form-check-label" for="securityNotifications">
+                    <strong>Security Alerts</strong>
+                    <small class="d-block text-muted">Important security notifications</small>
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <div class="form-check form-switch">
+                  <input 
+                    type="checkbox" 
+                    class="form-check-input" 
+                    id="updateNotifications"
+                    formControlName="updateNotifications">
+                  <label class="form-check-label" for="updateNotifications">
+                    <strong>Update Notifications</strong>
+                    <small class="d-block text-muted">New features and updates</small>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Privacy Settings -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="card-title mb-0">
+              <i class="fas fa-shield-alt me-2"></i>
+              Privacy Settings
+            </h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="profileVisibility" class="form-label">Profile Visibility</label>
+                <select 
+                  id="profileVisibility" 
+                  class="form-select"
+                  [class]="getFieldClass('profileVisibility')"
+                  formControlName="profileVisibility">
+                  <option value="public">Public</option>
+                  <option value="contacts">Contacts Only</option>
+                  <option value="private">Private</option>
+                </select>
+                <div *ngIf="hasFieldError('profileVisibility')" class="invalid-feedback">
+                  <div *ngFor="let error of getFieldErrors('profileVisibility')">{{ error }}</div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <div class="form-check form-switch">
+                      <input 
+                        type="checkbox" 
+                        class="form-check-input" 
+                        id="showEmail"
+                        formControlName="showEmail">
+                      <label class="form-check-label" for="showEmail">
+                        Show Email Address
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <div class="form-check form-switch">
+                      <input 
+                        type="checkbox" 
+                        class="form-check-input" 
+                        id="showPhone"
+                        formControlName="showPhone">
+                      <label class="form-check-label" for="showPhone">
+                        Show Phone Number
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <div class="form-check form-switch">
+                      <input 
+                        type="checkbox" 
+                        class="form-check-input" 
+                        id="showLastLogin"
+                        formControlName="showLastLogin">
+                      <label class="form-check-label" for="showLastLogin">
+                        Show Last Login
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dashboard Settings -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="card-title mb-0">
+              <i class="fas fa-tachometer-alt me-2"></i>
+              Dashboard Settings
+            </h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="dashboardLayout" class="form-label">Layout</label>
+                <select 
+                  id="dashboardLayout" 
+                  class="form-select"
+                  [class]="getFieldClass('dashboardLayout')"
+                  formControlName="dashboardLayout">
+                  <option value="grid">Grid View</option>
+                  <option value="list">List View</option>
+                </select>
+                <div *ngIf="hasFieldError('dashboardLayout')" class="invalid-feedback">
+                  <div *ngFor="let error of getFieldErrors('dashboardLayout')">{{ error }}</div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="itemsPerPage" class="form-label">Items per Page</label>
+                <select 
+                  id="itemsPerPage" 
+                  class="form-select"
+                  [class]="getFieldClass('itemsPerPage')"
+                  formControlName="itemsPerPage">
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                </select>
+                <div *ngIf="hasFieldError('itemsPerPage')" class="invalid-feedback">
+                  <div *ngFor="let error of getFieldErrors('itemsPerPage')">{{ error }}</div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="defaultView" class="form-label">Default View</label>
+                <select 
+                  id="defaultView" 
+                  class="form-select"
+                  [class]="getFieldClass('defaultView')"
+                  formControlName="defaultView">
+                  <option value="dashboard">Dashboard</option>
+                  <option value="documents">Documents</option>
+                  <option value="activity">Activity</option>
+                </select>
+                <div *ngIf="hasFieldError('defaultView')" class="invalid-feedback">
+                  <div *ngFor="let error of getFieldErrors('defaultView')">{{ error }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column - Actions & Info -->
+      <div class="col-lg-4">
+        <div class="card actions-card-sticky">
+          <div class="card-header">
+            <h5 class="card-title mb-0">
+              <i class="fas fa-info-circle me-2"></i>
+              Actions
+            </h5>
+          </div>
+          <div class="card-body">
+            <!-- Save Button -->
+            <button 
+              type="submit" 
+              class="btn btn-primary w-100 mb-3"
+              [disabled]="preferencesForm.invalid || isSaving">
+              <span *ngIf="!isSaving">
+                <i class="fas fa-save me-1"></i>
+                Save Preferences
+              </span>
+              <span *ngIf="isSaving">
+                <div class="spinner-border spinner-border-sm me-1" role="status">
+                  <span class="visually-hidden">Saving...</span>
+                </div>
+                Saving...
+              </span>
+            </button>
+
+            <!-- Reset Button -->
+            <button 
+              type="button" 
+              class="btn btn-outline-warning w-100 mb-3"
+              (click)="resetToDefaults()"
+              [disabled]="isSaving">
+              <i class="fas fa-undo me-1"></i>
+              Reset to Defaults
+            </button>
+
+            <!-- Cancel Button -->
+            <button 
+              type="button" 
+              class="btn btn-outline-secondary w-100"
+              (click)="cancel()"
+              [disabled]="isSaving">
+              <i class="fas fa-times me-1"></i>
+              Cancel
+            </button>
+
+            <hr class="my-4">
+
+            <!-- Help Text -->
+            <div class="alert alert-info" role="alert">
+              <i class="fas fa-lightbulb me-2"></i>
+              <strong>Tips:</strong>
+              <ul class="mb-0 mt-2">
+                <li>Theme changes apply immediately</li>
+                <li>Notification settings affect all devices</li>
+                <li>Privacy settings control profile visibility</li>
+                <li>Dashboard layout affects your home page</li>
+              </ul>
+            </div>
+
+            <!-- Theme Preview (if dark/light selected) -->
+            <div *ngIf="preferencesForm.get('theme')?.value !== 'auto'" class="mt-3">
+              <small class="text-muted d-block mb-2">Theme Preview:</small>
+              <div class="theme-preview p-3 rounded border" 
+                   [class.bg-dark]="preferencesForm.get('theme')?.value === 'dark'"
+                   [class.text-light]="preferencesForm.get('theme')?.value === 'dark'">
+                <div class="d-flex align-items-center">
+                  <div class="rounded-circle bg-primary me-2 theme-preview-circle"></div>
+                  <small>Sample interface element</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
