@@ -2,7 +2,8 @@
   <div class="login-container m-auto">
     <div class="card boxshadow">
       <div class="card-header bg-primary text-white">
-        <i class="fa fa-lock" aria-hidden="true"></i> Login
+        <i class="fa fa-lock" aria-hidden="true"></i>
+        {{ showPasswordReset ? 'Password Reset' : 'Login' }}
         @if (isModal) {
           <button type="button" class="btn-close btn-close-white fs-sm float-end" aria-label="Close"
                   (click)="closeModal()" tabindex="-1"></button>
@@ -10,58 +11,146 @@
       </div>
       <div class="card-body">
         <div class="col-md-10 offset-md-1 px-md-3">
-          @if (formResetToggle) {
-            <form class="login" name="loginForm" #f="ngForm" novalidate
-                  (ngSubmit)="f.form.valid ? login() :
-                            (!username.valid && showErrorAlert('Username is required', 'Please enter a valid username'));
-                            (!password.valid && showErrorAlert('Password is required', 'Please enter a valid password'))">
+
+          <!-- Security Warnings -->
+          @if (securityWarnings.length) {
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+              <strong>Security Notice:</strong>
+              <ul class="mb-0">
+                @for (warning of securityWarnings; track warning) {
+                  <li>{{ warning }}</li>
+                }
+              </ul>
+            </div>
+          }
+
+          <!-- Login Form -->
+          @if (!showPasswordReset) {
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
               <div class="mb-3 row">
                 <label class="col-form-label text-md-end col-md-4" for="login-username">Username:</label>
                 <div class="col-md-8">
-                  <input type="text" id="login-username" name="username" placeholder="Enter username"
-                         autocomplete="username" class="form-control"
-                         [ngClass]="{'is-valid': f.submitted && username.valid, 'is-invalid' : f.submitted && !username.valid}"
-                         [(ngModel)]="userLogin.userName" #username="ngModel" required />
-                  @if (f.submitted && !username.valid) {
-                    <span class="invalid-feedback">
-                      Username is required
-                    </span>
+                  <input type="text"
+                         id="login-username"
+                         formControlName="userName"
+                         placeholder="Enter username"
+                         autocomplete="username"
+                         class="form-control"
+                         [class.is-valid]="loginForm.get('userName')?.valid && loginForm.get('userName')?.touched"
+                         [class.is-invalid]="hasFieldError('userName')" />
+                  @if (hasFieldError('userName')) {
+                    <div class="invalid-feedback">
+                      {{ getFieldError('userName') }}
+                    </div>
                   }
                 </div>
               </div>
+
               <div class="mb-3 row">
                 <label class="col-form-label text-md-end col-md-4" for="login-password">Password:</label>
                 <div class="col-md-8">
-                  <input type="password" id="login-password" name="password" placeholder="Enter password"
-                         autocomplete="current-password" class="form-control"
-                         [ngClass]="{'is-valid': f.submitted && password.valid, 'is-invalid' : f.submitted && !password.valid}"
-                         [(ngModel)]="userLogin.password" #password="ngModel" required />
-                  @if (f.submitted && !password.valid) {
-                    <span class="invalid-feedback">
-                      Password is required
-                    </span>
+                  <input type="password"
+                         id="login-password"
+                         formControlName="password"
+                         placeholder="Enter password"
+                         autocomplete="current-password"
+                         class="form-control"
+                         [class.is-valid]="loginForm.get('password')?.valid && loginForm.get('password')?.touched"
+                         [class.is-invalid]="hasFieldError('password')" />
+                  @if (hasFieldError('password')) {
+                    <div class="invalid-feedback">
+                      {{ getFieldError('password') }}
+                    </div>
                   }
                 </div>
               </div>
+
               <div class="mb-3 row">
                 <div class="offset-md-4 col-md-8">
                   <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="login-rememberme" name="rememberMe"
-                           [(ngModel)]="userLogin.rememberMe">
+                    <input type="checkbox"
+                           class="form-check-input"
+                           id="login-rememberme"
+                           formControlName="rememberMe">
                     <label class="form-check-label" for="login-rememberme">Remember me</label>
                   </div>
                 </div>
               </div>
+
               <div class="mb-3 row">
                 <div class="offset-md-4 col-md-8">
-                  <div class="d-flex align-items-stretch">
-                    <button type="submit" class="btn btn-primary text-nowrap" [disabled]="isLoading">
+                  <div class="d-flex align-items-stretch gap-2">
+                    <button type="submit"
+                            class="btn btn-primary text-nowrap"
+                            [disabled]="isLoading">
                       @if (isLoading) {
-                        <i class='fa fa-circle-o-notch fa-spin'></i> {{'Logging in...'}}
+                        <i class="fa fa-circle-o-notch fa-spin"></i> Logging in...
+                      } @else {
+                        Login
                       }
-                      @else {
-                        {{'Login'}}
+                    </button>
+                    <button type="button"
+                            class="btn btn-link text-nowrap"
+                            (click)="showPasswordResetForm()"
+                            [disabled]="isLoading">
+                      Forgot Password?
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          }
+
+          <!-- Password Reset Form -->
+          @if (showPasswordReset) {
+            <form [formGroup]="passwordResetForm" (ngSubmit)="onPasswordReset()" novalidate>
+              <div class="alert alert-info" role="alert">
+                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                Enter your email address and we'll send you a link to reset your password.
+              </div>
+
+              <div class="mb-3 row">
+                <label class="col-form-label text-md-end col-md-4" for="reset-email">Email:</label>
+                <div class="col-md-8">
+                  <input type="email"
+                         id="reset-email"
+                         formControlName="email"
+                         placeholder="Enter your email address"
+                         autocomplete="email"
+                         class="form-control"
+                         [class.is-valid]="passwordResetForm.get('email')?.valid && passwordResetForm.get('email')?.touched"
+                         [class.is-invalid]="passwordResetForm.get('email')?.invalid && passwordResetForm.get('email')?.touched" />
+                  @if (passwordResetForm.get('email')?.invalid && passwordResetForm.get('email')?.touched) {
+                    <div class="invalid-feedback">
+                      @if (passwordResetForm.get('email')?.hasError('required')) {
+                        Email address is required
                       }
+                      @if (passwordResetForm.get('email')?.hasError('email')) {
+                        Please enter a valid email address
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
+
+              <div class="mb-3 row">
+                <div class="offset-md-4 col-md-8">
+                  <div class="d-flex align-items-stretch gap-2">
+                    <button type="submit"
+                            class="btn btn-primary text-nowrap"
+                            [disabled]="isLoading || passwordResetForm.invalid">
+                      @if (isLoading) {
+                        <i class="fa fa-circle-o-notch fa-spin"></i> Sending...
+                      } @else {
+                        Send Reset Link
+                      }
+                    </button>
+                    <button type="button"
+                            class="btn btn-secondary text-nowrap"
+                            (click)="hidePasswordResetForm()"
+                            [disabled]="isLoading">
+                      Back to Login
                     </button>
                   </div>
                 </div>

@@ -20,6 +20,16 @@ export const routes: Routes = [
     title: 'Login'
   },
   {
+    path: 'register',
+    loadComponent: () => import('./components/register/register.component').then(m => m.RegisterComponent),
+    title: 'Register'
+  },
+  {
+    path: 'password-reset',
+    loadComponent: () => import('./components/password-reset/password-reset.component').then(m => m.PasswordResetComponent),
+    title: 'Password Reset'
+  },
+  {
     path: 'customers',
     loadComponent: () => import('./components/customers/customers.component').then(m => m.CustomersComponent),
     canActivate: [AuthGuard],
