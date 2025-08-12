@@ -1,0 +1,215 @@
+<!-- Profile Edit Component Template -->
+<div class="profile-edit-container">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-8 col-xl-6">
+
+        <!-- Header -->
+        <div class="card shadow-sm">
+          <div class="card-header bg-primary text-white">
+            <div class="d-flex align-items-center">
+              <i class="fas fa-user-edit me-2"></i>
+              <h4 class="mb-0">Edit Profile</h4>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <!-- Loading State -->
+            <div *ngIf="isLoading" class="text-center py-4">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <p class="mt-2 text-muted">Loading profile...</p>
+            </div>
+
+            <!-- Profile Form -->
+            <form *ngIf="!isLoading" [formGroup]="profileForm" (ngSubmit)="onSubmit()" novalidate>
+
+              <!-- Personal Information Section -->
+              <div class="mb-4">
+                <h5 class="text-muted mb-3">
+                  <i class="fas fa-user me-2"></i>Personal Information
+                </h5>
+
+                <div class="row">
+                  <!-- First Name -->
+                  <div class="col-md-6 mb-3">
+                    <label for="firstName" class="form-label">First Name <span class="text-danger">*</span></label>
+                    <input
+                      type="text"
+                      id="firstName"
+                      class="form-control"
+                      [class]="getFieldClass('firstName')"
+                      formControlName="firstName"
+                      placeholder="Enter your first name"
+                      maxlength="50">
+                    <div *ngIf="hasFieldError('firstName')" class="invalid-feedback">
+                      <div *ngFor="let error of getFieldErrors('firstName')">{{ error }}</div>
+                    </div>
+                  </div>
+
+                  <!-- Last Name -->
+                  <div class="col-md-6 mb-3">
+                    <label for="lastName" class="form-label">Last Name <span class="text-danger">*</span></label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      class="form-control"
+                      [class]="getFieldClass('lastName')"
+                      formControlName="lastName"
+                      placeholder="Enter your last name"
+                      maxlength="50">
+                    <div *ngIf="hasFieldError('lastName')" class="invalid-feedback">
+                      <div *ngFor="let error of getFieldErrors('lastName')">{{ error }}</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Email (Read-only) -->
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email Address</label>
+                  <input
+                    type="email"
+                    id="email"
+                    class="form-control"
+                    formControlName="email"
+                    readonly>
+                  <div class="form-text">Email address cannot be changed through this form.</div>
+                </div>
+              </div>
+
+              <!-- Contact Information Section -->
+              <div class="mb-4">
+                <h5 class="text-muted mb-3">
+                  <i class="fas fa-phone me-2"></i>Contact Information
+                </h5>
+
+                <!-- Phone Number -->
+                <div class="mb-3">
+                  <label for="phoneNumber" class="form-label">Phone Number</label>
+                  <input
+                    type="tel"
+                    id="phoneNumber"
+                    class="form-control"
+                    [class]="getFieldClass('phoneNumber')"
+                    formControlName="phoneNumber"
+                    placeholder="+1 (555) 123-4567"
+                    maxlength="20">
+                  <div *ngIf="hasFieldError('phoneNumber')" class="invalid-feedback">
+                    <div *ngFor="let error of getFieldErrors('phoneNumber')">{{ error }}</div>
+                  </div>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="mb-3">
+                  <label for="contactInfo" class="form-label">Additional Contact Information</label>
+                  <textarea
+                    id="contactInfo"
+                    class="form-control"
+                    [class]="getFieldClass('contactInfo')"
+                    formControlName="contactInfo"
+                    rows="3"
+                    placeholder="Additional contact information or notes"
+                    maxlength="500"></textarea>
+                  <div *ngIf="hasFieldError('contactInfo')" class="invalid-feedback">
+                    <div *ngFor="let error of getFieldErrors('contactInfo')">{{ error }}</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Professional Information Section -->
+              <div class="mb-4">
+                <h5 class="text-muted mb-3">
+                  <i class="fas fa-briefcase me-2"></i>Professional Information
+                </h5>
+
+                <div class="row">
+                  <!-- Job Title -->
+                  <div class="col-md-6 mb-3">
+                    <label for="jobTitle" class="form-label">Job Title</label>
+                    <input
+                      type="text"
+                      id="jobTitle"
+                      class="form-control"
+                      [class]="getFieldClass('jobTitle')"
+                      formControlName="jobTitle"
+                      placeholder="Enter your job title"
+                      maxlength="100">
+                    <div *ngIf="hasFieldError('jobTitle')" class="invalid-feedback">
+                      <div *ngFor="let error of getFieldErrors('jobTitle')">{{ error }}</div>
+                    </div>
+                  </div>
+
+                  <!-- Department -->
+                  <div class="col-md-6 mb-3">
+                    <label for="department" class="form-label">Department</label>
+                    <input
+                      type="text"
+                      id="department"
+                      class="form-control"
+                      [class]="getFieldClass('department')"
+                      formControlName="department"
+                      placeholder="Enter your department"
+                      maxlength="100">
+                    <div *ngIf="hasFieldError('department')" class="invalid-feedback">
+                      <div *ngFor="let error of getFieldErrors('department')">{{ error }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="d-flex gap-2 pt-3 border-top">
+                <button
+                  type="submit"
+                  class="btn btn-primary flex-fill"
+                  [disabled]="isSaving || profileForm.invalid">
+                  <span *ngIf="isSaving" class="spinner-border spinner-border-sm me-2" role="status"></span>
+                  <i *ngIf="!isSaving" class="fas fa-save me-2"></i>
+                  {{ isSaving ? 'Saving...' : 'Save Changes' }}
+                </button>
+
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary flex-fill"
+                  (click)="cancel()"
+                  [disabled]="isSaving">
+                  <i class="fas fa-times me-2"></i>
+                  Cancel
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+        <!-- Quick Actions Card -->
+        <div class="card shadow-sm mt-4">
+          <div class="card-header">
+            <h6 class="mb-0">Quick Actions</h6>
+          </div>
+          <div class="card-body">
+            <div class="d-grid gap-2">
+              <button
+                type="button"
+                class="btn btn-outline-warning btn-sm"
+                routerLink="/change-password">
+                <i class="fas fa-key me-2"></i>
+                Change Password
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-outline-info btn-sm"
+                routerLink="/profile">
+                <i class="fas fa-user me-2"></i>
+                View Profile
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

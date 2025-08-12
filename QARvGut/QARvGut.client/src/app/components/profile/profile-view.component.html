@@ -1,0 +1,188 @@
+<!-- Profile View Template -->
+<div class="profile-view-container">
+  <div class="profile-header">
+    <div class="profile-avatar">
+      <img
+        [src]="getAvatarUrl()"
+        [alt]="(currentUser?.friendlyName || 'User') + ' avatar'"
+        [title]="(currentUser?.friendlyName || 'User') + ' profile picture'"
+        (error)="onAvatarError($event)"
+        class="avatar-image"
+      />
+    </div>
+    <div class="profile-basic-info">
+      <h1 class="profile-name">{{ currentUser?.friendlyName }}</h1>
+      <p class="profile-username">@{{ currentUser?.userName }}</p>
+      <span class="profile-status" [class]="getUserStatusClass()">
+        {{ getUserStatus() }}
+      </span>
+    </div>
+    <div class="profile-actions">
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="editProfile()"
+        title="Edit Profile"
+      >
+        <i class="fa fa-edit"></i>
+        Edit Profile
+      </button>
+    </div>
+  </div>
+
+  <div class="profile-content" *ngIf="!isLoading">
+    <div class="row">
+      <!-- Personal Information Card -->
+      <div class="col-md-6">
+        <div class="info-card">
+          <div class="card-header">
+            <h3><i class="fa fa-user"></i> Personal Information</h3>
+          </div>
+          <div class="card-body">
+            <div class="info-row">
+              <label>Full Name:</label>
+              <span>{{ currentUser?.fullName || 'Not provided' }}</span>
+            </div>
+            <div class="info-row">
+              <label>Email:</label>
+              <span>{{ currentUser?.email }}</span>
+            </div>
+            <div class="info-row">
+              <label>Job Title:</label>
+              <span>{{ currentUser?.jobTitle || 'Not provided' }}</span>
+            </div>
+            <div class="info-row">
+              <label>Department:</label>
+              <span>{{ currentUser?.department || 'Not assigned' }}</span>
+            </div>
+            <div class="info-row">
+              <label>Phone Number:</label>
+              <span>{{ currentUser?.phoneNumber || 'Not provided' }}</span>
+            </div>
+            <div class="info-row">
+              <label>Contact Info:</label>
+              <span>{{ currentUser?.contactInfo || 'Not provided' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account Information Card -->
+      <div class="col-md-6">
+        <div class="info-card">
+          <div class="card-header">
+            <h3><i class="fa fa-shield-alt"></i> Account Information</h3>
+          </div>
+          <div class="card-body">
+            <div class="info-row">
+              <label>User ID:</label>
+              <span class="user-id">{{ currentUser?.id }}</span>
+            </div>
+            <div class="info-row">
+              <label>Roles:</label>
+              <span class="roles">{{ getRolesDisplay() }}</span>
+            </div>
+            <div class="info-row">
+              <label>Account Status:</label>
+              <span [class]="getUserStatusClass()">{{ getUserStatus() }}</span>
+            </div>
+            <div class="info-row">
+              <label>Account Age:</label>
+              <span>{{ accountAgeFormatted }}</span>
+            </div>
+            <div class="info-row">
+              <label>Total Logins:</label>
+              <span>{{ getLoginCountDisplay() }}</span>
+            </div>
+            <div class="info-row" *ngIf="currentUser?.lastLoginDate">
+              <label>Last Login:</label>
+              <span>{{ lastLoginFormatted }}</span>
+            </div>
+            <div class="info-row" *ngIf="currentUser?.lastLoginIp">
+              <label>Last IP:</label>
+              <span class="ip-address">{{ currentUser?.lastLoginIp }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- User Preferences Card -->
+    <div class="row" *ngIf="getParsedPreferences() | keyvalue as preferences">
+      <div class="col-12" *ngIf="preferences.length > 0">
+        <div class="info-card">
+          <div class="card-header">
+            <h3><i class="fa fa-cog"></i> User Preferences</h3>
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-primary"
+              (click)="managePreferences()"
+            >
+              Manage
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="preferences-grid">
+              <div
+                class="preference-item"
+                *ngFor="let pref of preferences"
+              >
+                <label>{{ pref.key }}:</label>
+                <span>{{ pref.value }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row">
+      <div class="col-12">
+        <div class="quick-actions-card">
+          <div class="card-header">
+            <h3><i class="fa fa-bolt"></i> Quick Actions</h3>
+          </div>
+          <div class="card-body">
+            <div class="action-buttons">
+              <button
+                type="button"
+                class="btn btn-outline-secondary action-btn"
+                (click)="editProfile()"
+              >
+                <i class="fa fa-edit"></i>
+                Edit Profile
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-outline-warning action-btn"
+                (click)="changePassword()"
+              >
+                <i class="fa fa-key"></i>
+                Change Password
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-outline-info action-btn"
+                (click)="managePreferences()"
+              >
+                <i class="fa fa-cog"></i>
+                Preferences
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="isLoading">
+    <div class="loading-spinner">
+      <i class="fa fa-spinner fa-spin"></i>
+      <p>Loading profile...</p>
+    </div>
+  </div>
+</div>
