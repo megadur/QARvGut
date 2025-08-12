@@ -16,9 +16,7 @@ import { AuthService } from '../../services/auth.service';
 import { FormValidationService } from '../../services/form-validation.service';
 import { Utilities } from '../../services/utilities';
 import { UserRegistration } from '../../models/user-edit.model';
-import { User } from '../../models/user.model';
 import { PasswordValidators } from '../../validators/password-validators';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -163,7 +161,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     };
   }
 
-  private handleRegistrationSuccess(user: User, role: string): void {
+  private handleRegistrationSuccess(user: any, role: string): void {
     this.setLoadingState(false);
 
     const approvalMessage = role !== 'Assessor'
@@ -182,7 +180,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }, 2000);
   }
 
-  private handleRegistrationError(error: HttpErrorResponse): void {
+  private handleRegistrationError(error: any): void {
     this.setLoadingState(false);
 
     if (this.isServerValidationError(error)) {
@@ -193,7 +191,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
   }
 
-  private isServerValidationError(error: HttpErrorResponse): boolean {
+  private isServerValidationError(error: any): boolean {
     return error?.status === 400 && error?.error?.errors;
   }
 

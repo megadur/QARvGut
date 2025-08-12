@@ -10,14 +10,14 @@
         </div>
         <div class="card-body">
           <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" novalidate>
-            
+
             <!-- Username -->
             <div class="mb-3">
               <label for="userName" class="form-label">Username <span class="text-danger">*</span></label>
-              <input 
-                type="text" 
-                id="userName" 
-                class="form-control" 
+              <input
+                type="text"
+                id="userName"
+                class="form-control"
                 formControlName="userName"
                 [class.is-invalid]="showValidationErrors && registrationForm.get('userName')?.invalid"
                 placeholder="Enter username">
@@ -31,10 +31,10 @@
             <!-- Email -->
             <div class="mb-3">
               <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
-              <input 
-                type="email" 
-                id="email" 
-                class="form-control" 
+              <input
+                type="email"
+                id="email"
+                class="form-control"
                 formControlName="email"
                 [class.is-invalid]="showValidationErrors && registrationForm.get('email')?.invalid"
                 placeholder="Enter email address">
@@ -49,10 +49,10 @@
             <div class="row mb-3">
               <div class="col-md-6">
                 <label for="firstName" class="form-label">First Name <span class="text-danger">*</span></label>
-                <input 
-                  type="text" 
-                  id="firstName" 
-                  class="form-control" 
+                <input
+                  type="text"
+                  id="firstName"
+                  class="form-control"
                   formControlName="firstName"
                   [class.is-invalid]="showValidationErrors && registrationForm.get('firstName')?.invalid"
                   placeholder="Enter first name">
@@ -63,10 +63,10 @@
               </div>
               <div class="col-md-6">
                 <label for="lastName" class="form-label">Last Name <span class="text-danger">*</span></label>
-                <input 
-                  type="text" 
-                  id="lastName" 
-                  class="form-control" 
+                <input
+                  type="text"
+                  id="lastName"
+                  class="form-control"
                   formControlName="lastName"
                   [class.is-invalid]="showValidationErrors && registrationForm.get('lastName')?.invalid"
                   placeholder="Enter last name">
@@ -80,10 +80,10 @@
             <!-- Job Title -->
             <div class="mb-3">
               <label for="jobTitle" class="form-label">Job Title</label>
-              <input 
-                type="text" 
-                id="jobTitle" 
-                class="form-control" 
+              <input
+                type="text"
+                id="jobTitle"
+                class="form-control"
                 formControlName="jobTitle"
                 [class.is-invalid]="showValidationErrors && registrationForm.get('jobTitle')?.invalid"
                 placeholder="Enter job title">
@@ -96,10 +96,10 @@
             <div class="row mb-3">
               <div class="col-md-6">
                 <label for="department" class="form-label">Department</label>
-                <input 
-                  type="text" 
-                  id="department" 
-                  class="form-control" 
+                <input
+                  type="text"
+                  id="department"
+                  class="form-control"
                   formControlName="department"
                   [class.is-invalid]="showValidationErrors && registrationForm.get('department')?.invalid"
                   placeholder="Enter department">
@@ -109,10 +109,10 @@
               </div>
               <div class="col-md-6">
                 <label for="phoneNumber" class="form-label">Phone Number</label>
-                <input 
-                  type="tel" 
-                  id="phoneNumber" 
-                  class="form-control" 
+                <input
+                  type="tel"
+                  id="phoneNumber"
+                  class="form-control"
                   formControlName="phoneNumber"
                   [class.is-invalid]="showValidationErrors && registrationForm.get('phoneNumber')?.invalid"
                   placeholder="Enter phone number">
@@ -125,10 +125,10 @@
             <!-- Mobile Phone -->
             <div class="mb-3">
               <label for="phone" class="form-label">Mobile Phone</label>
-              <input 
-                type="tel" 
-                id="phone" 
-                class="form-control" 
+              <input
+                type="tel"
+                id="phone"
+                class="form-control"
                 formControlName="phone"
                 [class.is-invalid]="showValidationErrors && registrationForm.get('phone')?.invalid"
                 placeholder="Enter mobile phone">
@@ -140,9 +140,9 @@
             <!-- Contact Info -->
             <div class="mb-3">
               <label for="contactInfo" class="form-label">Additional Contact Info</label>
-              <textarea 
-                id="contactInfo" 
-                class="form-control" 
+              <textarea
+                id="contactInfo"
+                class="form-control"
                 formControlName="contactInfo"
                 [class.is-invalid]="showValidationErrors && registrationForm.get('contactInfo')?.invalid"
                 placeholder="Enter additional contact information"
@@ -155,9 +155,9 @@
             <!-- Role Selection -->
             <div class="mb-3">
               <label for="role" class="form-label">Role <span class="text-danger">*</span></label>
-              <select 
-                id="role" 
-                class="form-select" 
+              <select
+                id="role"
+                class="form-select"
                 formControlName="role"
                 [class.is-invalid]="showValidationErrors && registrationForm.get('role')?.invalid">
                 <option value="Assessor">Assessor</option>
@@ -175,10 +175,10 @@
             <!-- Password -->
             <div class="mb-3">
               <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
-              <input 
-                type="password" 
-                id="password" 
-                class="form-control" 
+              <input
+                type="password"
+                id="password"
+                class="form-control"
                 formControlName="password"
                 [class.is-invalid]="showValidationErrors && registrationForm.get('password')?.invalid"
                 placeholder="Enter password">
@@ -200,10 +200,10 @@
             <!-- Confirm Password -->
             <div class="mb-3">
               <label for="confirmPassword" class="form-label">Confirm Password <span class="text-danger">*</span></label>
-              <input 
-                type="password" 
-                id="confirmPassword" 
-                class="form-control" 
+              <input
+                type="password"
+                id="confirmPassword"
+                class="form-control"
                 formControlName="confirmPassword"
                 [class.is-invalid]="showValidationErrors && (registrationForm.get('confirmPassword')?.invalid || registrationForm.errors?.['passwordMismatch'])"
                 placeholder="Confirm password">
@@ -216,10 +216,10 @@
             <!-- Terms and Conditions -->
             <div class="mb-3">
               <div class="form-check">
-                <input 
-                  type="checkbox" 
-                  id="acceptTerms" 
-                  class="form-check-input" 
+                <input
+                  type="checkbox"
+                  id="acceptTerms"
+                  class="form-check-input"
                   formControlName="acceptTerms"
                   [class.is-invalid]="showValidationErrors && registrationForm.get('acceptTerms')?.invalid">
                 <label class="form-check-label" for="acceptTerms">
@@ -233,8 +233,8 @@
 
             <!-- Submit Button -->
             <div class="d-grid mb-3">
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 class="btn btn-primary btn-lg"
                 [disabled]="isLoading">
                 <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
