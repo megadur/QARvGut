@@ -5,7 +5,7 @@
 // ---------------------------------------
 
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -24,6 +24,7 @@ export class AccountEndpoint extends EndpointBase {
   get currentUserUrl() { return this.configurations.baseUrl + '/api/account/users/me'; }
   get currentUserPreferencesUrl() { return this.configurations.baseUrl + '/api/account/users/me/preferences'; }
   get unblockUserUrl() { return this.configurations.baseUrl + '/api/account/users/unblock'; }
+  get registerUrl() { return this.configurations.baseUrl + '/api/account/register'; }
   get rolesUrl() { return this.configurations.baseUrl + '/api/account/roles'; }
   get roleByRoleNameUrl() { return this.configurations.baseUrl + '/api/account/roles/name'; }
   get permissionsUrl() { return this.configurations.baseUrl + '/api/account/permissions'; }
@@ -59,6 +60,20 @@ export class AccountEndpoint extends EndpointBase {
     return this.http.post<T>(this.usersUrl, JSON.stringify(user), this.requestHeaders).pipe(
       catchError(error => {
         return this.handleError(error, () => this.getNewUserEndpoint<T>(user));
+      }));
+  }
+
+  getRegisterUserEndpoint<T>(registration: object): Observable<T> {
+    const requestHeaders = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Accept: 'application/json, text/plain, */*'
+      })
+    };
+
+    return this.http.post<T>(this.registerUrl, JSON.stringify(registration), requestHeaders).pipe(
+      catchError(error => {
+        return this.handleError(error, () => this.getRegisterUserEndpoint<T>(registration));
       }));
   }
 

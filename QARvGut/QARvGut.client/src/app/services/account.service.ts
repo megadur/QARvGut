@@ -13,7 +13,7 @@ import { AuthService } from './auth.service';
 import { User } from '../models/user.model';
 import { Role } from '../models/role.model';
 import { Permission, PermissionValues } from '../models/permission.model';
-import { UserEdit } from '../models/user-edit.model';
+import { UserEdit, UserRegistration } from '../models/user-edit.model';
 
 export type RolesChangedOperation = 'add' | 'delete' | 'modify';
 export interface RolesChangedEventArg { roles: Role[] | string[]; operation: RolesChangedOperation; }
@@ -65,6 +65,11 @@ export class AccountService {
 
   newUser(user: UserEdit) {
     return this.accountEndpoint.getNewUserEndpoint<User>(user);
+  }
+
+  // Public registration method for user self-registration
+  registerUser(registration: UserRegistration) {
+    return this.accountEndpoint.getRegisterUserEndpoint<User>(registration);
   }
 
   getUserPreferences() {

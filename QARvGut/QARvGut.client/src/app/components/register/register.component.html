@@ -1,0 +1,256 @@
+<!-- Story 1.2: User Registration & Profile Management -->
+<!-- Registration Form Template -->
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">Create Your Account</h4>
+          <p class="mb-0 mt-2 small">Join the rvGutachten platform</p>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" novalidate>
+            
+            <!-- Username -->
+            <div class="mb-3">
+              <label for="userName" class="form-label">Username <span class="text-danger">*</span></label>
+              <input 
+                type="text" 
+                id="userName" 
+                class="form-control" 
+                formControlName="userName"
+                [class.is-invalid]="showValidationErrors && registrationForm.get('userName')?.invalid"
+                placeholder="Enter username">
+              <div class="invalid-feedback" *ngIf="showValidationErrors && registrationForm.get('userName')?.invalid">
+                <div *ngIf="registrationForm.get('userName')?.errors?.['required']">Username is required</div>
+                <div *ngIf="registrationForm.get('userName')?.errors?.['minlength']">Username must be at least 2 characters</div>
+                <div *ngIf="registrationForm.get('userName')?.errors?.['maxlength']">Username cannot exceed 200 characters</div>
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+              <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
+              <input 
+                type="email" 
+                id="email" 
+                class="form-control" 
+                formControlName="email"
+                [class.is-invalid]="showValidationErrors && registrationForm.get('email')?.invalid"
+                placeholder="Enter email address">
+              <div class="invalid-feedback" *ngIf="showValidationErrors && registrationForm.get('email')?.invalid">
+                <div *ngIf="registrationForm.get('email')?.errors?.['required']">Email is required</div>
+                <div *ngIf="registrationForm.get('email')?.errors?.['email']">Please enter a valid email address</div>
+                <div *ngIf="registrationForm.get('email')?.errors?.['maxlength']">Email cannot exceed 200 characters</div>
+              </div>
+            </div>
+
+            <!-- First Name & Last Name -->
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="firstName" class="form-label">First Name <span class="text-danger">*</span></label>
+                <input 
+                  type="text" 
+                  id="firstName" 
+                  class="form-control" 
+                  formControlName="firstName"
+                  [class.is-invalid]="showValidationErrors && registrationForm.get('firstName')?.invalid"
+                  placeholder="Enter first name">
+                <div class="invalid-feedback" *ngIf="showValidationErrors && registrationForm.get('firstName')?.invalid">
+                  <div *ngIf="registrationForm.get('firstName')?.errors?.['required']">First name is required</div>
+                  <div *ngIf="registrationForm.get('firstName')?.errors?.['maxlength']">First name cannot exceed 50 characters</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="lastName" class="form-label">Last Name <span class="text-danger">*</span></label>
+                <input 
+                  type="text" 
+                  id="lastName" 
+                  class="form-control" 
+                  formControlName="lastName"
+                  [class.is-invalid]="showValidationErrors && registrationForm.get('lastName')?.invalid"
+                  placeholder="Enter last name">
+                <div class="invalid-feedback" *ngIf="showValidationErrors && registrationForm.get('lastName')?.invalid">
+                  <div *ngIf="registrationForm.get('lastName')?.errors?.['required']">Last name is required</div>
+                  <div *ngIf="registrationForm.get('lastName')?.errors?.['maxlength']">Last name cannot exceed 50 characters</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Job Title -->
+            <div class="mb-3">
+              <label for="jobTitle" class="form-label">Job Title</label>
+              <input 
+                type="text" 
+                id="jobTitle" 
+                class="form-control" 
+                formControlName="jobTitle"
+                [class.is-invalid]="showValidationErrors && registrationForm.get('jobTitle')?.invalid"
+                placeholder="Enter job title">
+              <div class="invalid-feedback" *ngIf="showValidationErrors && registrationForm.get('jobTitle')?.invalid">
+                <div *ngIf="registrationForm.get('jobTitle')?.errors?.['maxlength']">Job title cannot exceed 100 characters</div>
+              </div>
+            </div>
+
+            <!-- Department & Phone Number -->
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="department" class="form-label">Department</label>
+                <input 
+                  type="text" 
+                  id="department" 
+                  class="form-control" 
+                  formControlName="department"
+                  [class.is-invalid]="showValidationErrors && registrationForm.get('department')?.invalid"
+                  placeholder="Enter department">
+                <div class="invalid-feedback" *ngIf="showValidationErrors && registrationForm.get('department')?.invalid">
+                  <div *ngIf="registrationForm.get('department')?.errors?.['maxlength']">Department cannot exceed 100 characters</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="phoneNumber" class="form-label">Phone Number</label>
+                <input 
+                  type="tel" 
+                  id="phoneNumber" 
+                  class="form-control" 
+                  formControlName="phoneNumber"
+                  [class.is-invalid]="showValidationErrors && registrationForm.get('phoneNumber')?.invalid"
+                  placeholder="Enter phone number">
+                <div class="invalid-feedback" *ngIf="showValidationErrors && registrationForm.get('phoneNumber')?.invalid">
+                  <div *ngIf="registrationForm.get('phoneNumber')?.errors?.['maxlength']">Phone number cannot exceed 20 characters</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mobile Phone -->
+            <div class="mb-3">
+              <label for="phone" class="form-label">Mobile Phone</label>
+              <input 
+                type="tel" 
+                id="phone" 
+                class="form-control" 
+                formControlName="phone"
+                [class.is-invalid]="showValidationErrors && registrationForm.get('phone')?.invalid"
+                placeholder="Enter mobile phone">
+              <div class="invalid-feedback" *ngIf="showValidationErrors && registrationForm.get('phone')?.invalid">
+                <div *ngIf="registrationForm.get('phone')?.errors?.['maxlength']">Mobile phone cannot exceed 20 characters</div>
+              </div>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="mb-3">
+              <label for="contactInfo" class="form-label">Additional Contact Info</label>
+              <textarea 
+                id="contactInfo" 
+                class="form-control" 
+                formControlName="contactInfo"
+                [class.is-invalid]="showValidationErrors && registrationForm.get('contactInfo')?.invalid"
+                placeholder="Enter additional contact information"
+                rows="3"></textarea>
+              <div class="invalid-feedback" *ngIf="showValidationErrors && registrationForm.get('contactInfo')?.invalid">
+                <div *ngIf="registrationForm.get('contactInfo')?.errors?.['maxlength']">Contact info cannot exceed 500 characters</div>
+              </div>
+            </div>
+
+            <!-- Role Selection -->
+            <div class="mb-3">
+              <label for="role" class="form-label">Role <span class="text-danger">*</span></label>
+              <select 
+                id="role" 
+                class="form-select" 
+                formControlName="role"
+                [class.is-invalid]="showValidationErrors && registrationForm.get('role')?.invalid">
+                <option value="Assessor">Assessor</option>
+                <option value="Manager">Manager (requires admin approval)</option>
+                <option value="Admin">Administrator (requires admin approval)</option>
+              </select>
+              <div class="invalid-feedback" *ngIf="showValidationErrors && registrationForm.get('role')?.invalid">
+                <div *ngIf="registrationForm.get('role')?.errors?.['required']">Role selection is required</div>
+              </div>
+              <div class="form-text" *ngIf="registrationForm.get('role')?.value !== 'Assessor'">
+                <i class="fas fa-info-circle"></i> Manager and Administrator roles require approval from an existing administrator.
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+              <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+              <input 
+                type="password" 
+                id="password" 
+                class="form-control" 
+                formControlName="password"
+                [class.is-invalid]="showValidationErrors && registrationForm.get('password')?.invalid"
+                placeholder="Enter password">
+              <div class="invalid-feedback" *ngIf="showValidationErrors && registrationForm.get('password')?.invalid">
+                <div *ngIf="registrationForm.get('password')?.errors?.['required']">Password is required</div>
+                <div *ngIf="registrationForm.get('password')?.errors?.['passwordStrength']">
+                  <div>Password must meet the following requirements:</div>
+                  <ul class="mb-0 mt-1">
+                    <li *ngIf="registrationForm.get('password')?.errors?.['passwordStrength']?.['minLength']">At least 8 characters long</li>
+                    <li *ngIf="registrationForm.get('password')?.errors?.['passwordStrength']?.['requiresUppercase']">At least one uppercase letter</li>
+                    <li *ngIf="registrationForm.get('password')?.errors?.['passwordStrength']?.['requiresLowercase']">At least one lowercase letter</li>
+                    <li *ngIf="registrationForm.get('password')?.errors?.['passwordStrength']?.['requiresNumeric']">At least one number</li>
+                    <li *ngIf="registrationForm.get('password')?.errors?.['passwordStrength']?.['requiresSpecialChar']">At least one special character</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirm Password <span class="text-danger">*</span></label>
+              <input 
+                type="password" 
+                id="confirmPassword" 
+                class="form-control" 
+                formControlName="confirmPassword"
+                [class.is-invalid]="showValidationErrors && (registrationForm.get('confirmPassword')?.invalid || registrationForm.errors?.['passwordMismatch'])"
+                placeholder="Confirm password">
+              <div class="invalid-feedback" *ngIf="showValidationErrors && (registrationForm.get('confirmPassword')?.invalid || registrationForm.errors?.['passwordMismatch'])">
+                <div *ngIf="registrationForm.get('confirmPassword')?.errors?.['required']">Password confirmation is required</div>
+                <div *ngIf="registrationForm.errors?.['passwordMismatch']">Passwords do not match</div>
+              </div>
+            </div>
+
+            <!-- Terms and Conditions -->
+            <div class="mb-3">
+              <div class="form-check">
+                <input 
+                  type="checkbox" 
+                  id="acceptTerms" 
+                  class="form-check-input" 
+                  formControlName="acceptTerms"
+                  [class.is-invalid]="showValidationErrors && registrationForm.get('acceptTerms')?.invalid">
+                <label class="form-check-label" for="acceptTerms">
+                  I accept the <a href="/terms" target="_blank">Terms and Conditions</a> and <a href="/privacy" target="_blank">Privacy Policy</a> <span class="text-danger">*</span>
+                </label>
+                <div class="invalid-feedback d-block" *ngIf="showValidationErrors && registrationForm.get('acceptTerms')?.invalid">
+                  <div *ngIf="registrationForm.get('acceptTerms')?.errors?.['required']">You must accept the terms and conditions</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid mb-3">
+              <button 
+                type="submit" 
+                class="btn btn-primary btn-lg"
+                [disabled]="isLoading">
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                <span *ngIf="isLoading">Creating Account...</span>
+                <span *ngIf="!isLoading">Create Account</span>
+              </button>
+            </div>
+
+            <!-- Login Link -->
+            <div class="text-center">
+              <p class="mb-0">Already have an account? <a routerLink="/login" class="text-primary">Sign in here</a></p>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
