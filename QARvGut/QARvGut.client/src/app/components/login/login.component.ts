@@ -1,6 +1,6 @@
 // ---------------------------------------
 // Story 1.2 Task 2: Authentication Interface
-// Login Component - ENTERPRISE REFACTORED
+// Login Component - ENTERPRISE REFACTORED WITH PERFORMANCE & AUDIT
 // ---------------------------------------
 
 import { Component, OnInit, OnDestroy, Input, inject } from '@angular/core';
@@ -16,6 +16,8 @@ import { LoginValidationService } from '../../services/login-validation.service'
 import { LoginSecurityService } from '../../services/login-security.service';
 import { LoginErrorHandlingService } from '../../services/login-error-handling.service';
 import { PasswordResetService } from '../../services/password-reset.service';
+import { LoginPerformanceService } from '../../services/login-performance.service';
+import { LoginSecurityAuditService, SecurityEventType, SecurityAuditLevel } from '../../services/login-security-audit.service';
 import { Utilities } from '../../services/utilities';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -29,7 +31,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LoginComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();
 
-  // Service injections
+  // Service injections - ENTERPRISE SERVICES
   private readonly alertService = inject(AlertService);
   private readonly authService = inject(AuthService);
   private readonly configurations = inject(ConfigurationService);
@@ -39,6 +41,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   private readonly securityService = inject(LoginSecurityService);
   private readonly errorHandlingService = inject(LoginErrorHandlingService);
   private readonly passwordResetService = inject(PasswordResetService);
+  private readonly performanceService = inject(LoginPerformanceService);
+  private readonly auditService = inject(LoginSecurityAuditService);
 
   // Form and UI state
   loginForm!: FormGroup;
@@ -54,8 +58,25 @@ export class LoginComponent implements OnInit, OnDestroy {
   modalClosedCallback: (() => void) | undefined;
 
   ngOnInit() {
+    // Start form render performance measurement
+    this.performanceService.startFormRender();
+
     this.initializeForms();
     this.setupAuthenticationFlow();
+
+    // Complete form render measurement
+    this.performanceService.endFormRender();
+
+    // Log component initialization
+    this.auditService.logSecurityEvent(
+      SecurityEventType.LOGIN_ATTEMPT,
+      SecurityAuditLevel.LOW,
+      {
+        action: 'login_component_initialized',
+        isModal: this.isModal,
+        timestamp: Date.now()
+      }
+    );
   }
 
   ngOnDestroy() {
@@ -108,12 +129,32 @@ export class LoginComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     if (this.isLoading) return;
 
+    // Start performance monitoring
+    this.performanceService.startAuthentication();
+
     // Validate form
+    this.performanceService.startValidation();
     const validationResult = this.validationService.validateLoginForm(this.loginForm);
+    this.performanceService.endValidation();
+
     this.validationErrors = validationResult.fieldErrors;
 
     if (!validationResult.isValid) {
       this.validationService.focusFirstInvalidField(this.loginForm);
+
+      // Log validation failure audit event
+      this.auditService.logSecurityEvent(
+        SecurityEventType.LOGIN_ATTEMPT,
+        SecurityAuditLevel.LOW,
+        {
+          validationFailed: true,
+          errors: Object.keys(validationResult.fieldErrors),
+          username: this.loginForm.get('userName')?.value || 'unknown'
+        }
+      );
+
+      this.performanceService.endAuthentication();
+      this.performanceService.completeLoginMeasurement();
       return;
     }
 
@@ -124,10 +165,26 @@ export class LoginComponent implements OnInit, OnDestroy {
       userAgent: navigator.userAgent
     };
 
+    this.performanceService.startSecurityCheck();
     const securityResult = this.securityService.validateLoginSecurity(formData, clientInfo);
+    this.performanceService.endSecurityCheck();
 
     if (!securityResult.isAllowed) {
       this.handleSecurityViolations(securityResult);
+
+      // Log security violation
+      this.auditService.logSecurityViolation(
+        'Login security check failed',
+        true, // blocked
+        {
+          violations: securityResult.violations,
+          username: formData.userName,
+          riskScore: securityResult.riskScore
+        }
+      );
+
+      this.performanceService.endAuthentication();
+      this.performanceService.completeLoginMeasurement();
       return;
     }
 
@@ -138,6 +195,16 @@ export class LoginComponent implements OnInit, OnDestroy {
         'Additional security verification is required. Please complete the CAPTCHA.',
         MessageSeverity.warn
       );
+
+      // Log CAPTCHA requirement
+      this.auditService.logSuspiciousActivity(
+        'CAPTCHA required',
+        ['Multiple failed attempts', 'Suspicious patterns detected'],
+        { username: formData.userName }
+      );
+
+      this.performanceService.endAuthentication();
+      this.performanceService.completeLoginMeasurement();
       return;
     }
 
@@ -162,6 +229,15 @@ export class LoginComponent implements OnInit, OnDestroy {
       }
     );
 
+    // Log login attempt in audit system
+    this.auditService.logLoginAttempt(formData.userName, false, {
+      rememberMe: formData.rememberMe,
+      clientInfo: {
+        ip: this.getClientIP(),
+        userAgent: navigator.userAgent
+      }
+    });
+
     this.authService.loginWithPassword(formData.userName, formData.password, formData.rememberMe)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
@@ -169,6 +245,18 @@ export class LoginComponent implements OnInit, OnDestroy {
           // Record successful login
           this.securityService.recordLoginAttempt(formData.userName, true);
           this.securityService.clearLoginAttempts(formData.userName);
+
+          // Log successful login in audit system
+          this.auditService.logLoginAttempt(formData.userName, true, {
+            userId: user?.id || 'unknown',
+            rememberMe: formData.rememberMe
+          });
+
+          // End performance monitoring
+          this.performanceService.endAuthentication();
+          const performanceMetrics = this.performanceService.completeLoginMeasurement();
+
+          console.info('✅ Login Performance:', this.performanceService.getPerformanceSummary());
 
           setTimeout(() => {
             this.alertService.stopLoadingMessage();
@@ -188,7 +276,21 @@ export class LoginComponent implements OnInit, OnDestroy {
         },
         error: error => {
           this.alertService.stopLoadingMessage();
+
+          // Start error handling performance measurement
+          this.performanceService.startErrorHandling();
+
           this.handleLoginError(error);
+
+          // Log failed login attempt in audit system
+          this.auditService.logLoginAttempt(formData.userName, false, {
+            error: error instanceof Error ? error.message : 'Unknown error',
+            errorType: error instanceof HttpErrorResponse ? 'HTTP' : 'General'
+          });
+
+          this.performanceService.endErrorHandling();
+          this.performanceService.endAuthentication();
+          this.performanceService.completeLoginMeasurement();
 
           setTimeout(() => {
             this.isLoading = false;
