@@ -6,6 +6,7 @@
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
 
 import { AuthService } from '../../services/auth.service';
@@ -28,7 +29,7 @@ export interface UserActivity {
   selector: 'app-profile-activity',
   templateUrl: './profile-activity.component.html',
   styleUrl: './profile-activity.component.scss',
-  imports: [CommonModule, RouterModule]
+  imports: [CommonModule, RouterModule, FormsModule]
 })
 export class ProfileActivityComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();
@@ -366,5 +367,65 @@ export class ProfileActivityComponent implements OnInit, OnDestroy {
    */
   getTotalPages(): number {
     return Math.ceil(this.totalActivities / this.pageSize);
+  }
+
+  /**
+   * Get successful login count
+   */
+  getSuccessfulLoginsCount(): number {
+    return this.activities.filter(a => a.type === 'login' && a.success).length;
+  }
+
+  /**
+   * Get failed login count
+   */
+  getFailedLoginsCount(): number {
+    return this.activities.filter(a => a.type === 'login' && !a.success).length;
+  }
+
+  /**
+   * Get password changes count
+   */
+  getPasswordChangesCount(): number {
+    return this.activities.filter(a => a.type === 'password_change').length;
+  }
+
+  /**
+   * Get profile updates count
+   */
+  getProfileUpdatesCount(): number {
+    return this.activities.filter(a => a.type === 'profile_update').length;
+  }
+
+  /**
+   * Get browser info safely
+   */
+  getBrowserInfo(activity: UserActivity): string {
+    return activity.details?.['browser']?.toString() || 'Unknown';
+  }
+
+  /**
+   * Get updated fields as string
+   */
+  getUpdatedFields(activity: UserActivity): string {
+    const fields = activity.details?.['fields_updated'];
+    if (Array.isArray(fields)) {
+      return fields.join(', ');
+    }
+    return 'Unknown fields';
+  }
+
+  /**
+   * Get failure reason safely
+   */
+  getFailureReason(activity: UserActivity): string {
+    return activity.details?.['reason']?.toString() || 'Unknown reason';
+  }
+
+  /**
+   * Get OS info safely
+   */
+  getOSInfo(activity: UserActivity): string {
+    return activity.details?.['os']?.toString() || 'Unknown';
   }
 }
