@@ -9,11 +9,34 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QARvGut.Core", "QARvGut\QAR
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "QARvGut.client", "QARvGut\QARvGut.client\QARvGut.client.esproj", "{B563D083-1BDF-45A6-823B-14EB3977415A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "QARvGut", "QARvGut", "{CA9D8941-1717-7CEA-3C7A-9F2374A796A2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{CA9D8941-1717-7CEA-3C7A-9F2374A796A2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QARvGut.Tests", "QARvGut\QARvGut.Tests\QARvGut.Tests.csproj", "{145102A3-FF8E-438A-B7A8-973471691393}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		docs\comprehensive-deployment-strategy.md = docs\comprehensive-deployment-strategy.md
+		docs\comprehensive-risk-assessment-and-change-impact-analysis.md = docs\comprehensive-risk-assessment-and-change-impact-analysis.md
+		docs\comprehensive-testing-strategy.md = docs\comprehensive-testing-strategy.md
+		docs\deployment-implementation-checklist.md = docs\deployment-implementation-checklist.md
+		docs\DOCUMENTATION_STANDARDS.md = docs\DOCUMENTATION_STANDARDS.md
+		docs\DOCUMENT_TEMPLATES.md = docs\DOCUMENT_TEMPLATES.md
+		docs\INDEX_FILES_REPORT.md = docs\INDEX_FILES_REPORT.md
+		docs\LINKS_AUDIT_REPORT.md = docs\LINKS_AUDIT_REPORT.md
+		docs\MAINTENANCE_CHECKLIST.md = docs\MAINTENANCE_CHECKLIST.md
+		docs\PRD_CONSOLIDATION_PLAN.md = docs\PRD_CONSOLIDATION_PLAN.md
+		docs\PRD_CONSOLIDATION_REPORT.md = docs\PRD_CONSOLIDATION_REPORT.md
+		docs\README.md = docs\README.md
+		docs\REORGANIZATION_SUMMARY.md = docs\REORGANIZATION_SUMMARY.md
+		docs\risk-assessment-implementation-summary.md = docs\risk-assessment-implementation-summary.md
+		docs\testing-implementation-checklist.md = docs\testing-implementation-checklist.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "epics", "epics", "{0F2463CB-647D-49F8-B216-A792D9AE6A37}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "design", "design", "{89E07CE1-D7D0-403D-973C-596DF9B61028}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "architecture", "architecture", "{43423496-8806-4F09-A9DB-02E7CE7C7EB7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +100,9 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{145102A3-FF8E-438A-B7A8-973471691393} = {CA9D8941-1717-7CEA-3C7A-9F2374A796A2}
+		{0F2463CB-647D-49F8-B216-A792D9AE6A37} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{89E07CE1-D7D0-403D-973C-596DF9B61028} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{43423496-8806-4F09-A9DB-02E7CE7C7EB7} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0A27807E-F329-4E99-B1EE-C5ED3C4CA840}

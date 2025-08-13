@@ -1,4 +1,4 @@
-/* 
+/*
   Story 1.2 Task 3: User Preferences Component Styles
   Professional styling for comprehensive preferences management
 */
@@ -209,21 +209,21 @@
   .user-preferences-container {
     padding: 1rem 0.5rem;
   }
-  
+
   .preferences-header .d-flex {
     flex-direction: column;
     align-items: flex-start !important;
   }
-  
+
   .preferences-header .btn {
     margin-top: 1rem;
     align-self: stretch;
   }
-  
+
   .card-body {
     padding: 1rem;
   }
-  
+
   .actions-card-sticky {
     position: static;
     margin-top: 1rem;
@@ -234,7 +234,7 @@
   .user-preferences-container {
     padding: 1rem 0.25rem;
   }
-  
+
   .card-body .row .col-md-6,
   .card-body .row .col-md-4 {
     margin-bottom: 1rem;
@@ -291,12 +291,12 @@
   .card {
     border-width: 2px;
   }
-  
+
   .form-select,
   .form-control {
     border-width: 2px;
   }
-  
+
   .btn {
     border-width: 2px;
     font-weight: 600;
@@ -320,7 +320,7 @@
   .actions-card-sticky {
     display: none;
   }
-  
+
   .card {
     box-shadow: none;
     border: 1px solid #000;
