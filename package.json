@@ -1,0 +1,29 @@
+{
+  "name": "qarvgut-monorepo",
+  "version": "1.0.0",
+  "description": "QARvGut Monorepo - Angular frontend applications and .NET backend services",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/megadur/QARvGut.git"
+  },
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "frontend"
+  ],
+  "scripts": {
+    "postinstall": "cd frontend && npm install",
+    "frontend:serve:gutachter": "cd frontend && nx serve gutachter-app",
+    "frontend:serve:management": "cd frontend && nx serve management-app",
+    "frontend:build": "cd frontend && nx run-many --target=build --all",
+    "frontend:test": "cd frontend && nx run-many --target=test --all",
+    "frontend:lint": "cd frontend && nx run-many --target=lint --all",
+    "backend:build": "dotnet build QARvGut.sln",
+    "backend:test": "dotnet test QARvGut.sln",
+    "start:dev": "concurrently \"npm run frontend:serve:gutachter\" \"dotnet run --project QARvGut/QARvGut.Server\"",
+    "build:all": "npm run backend:build && npm run frontend:build"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

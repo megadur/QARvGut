@@ -23,41 +23,50 @@ This folder contains all user stories that define specific features and function
 - [1.1-completion-summary.md](1.1-completion-summary.md) - Implementation completion summary
 - [1.1-testing-documentation.md](1.1-testing-documentation.md) - Testing results and coverage
 
-### 📋 **Story 1.x - User Management Features**
+### 📋 **Story 1.2 - User Registration & Profile Management** (COMPLETED)
 
-**[story-1-enhanced-user-data-model.md](story-1-enhanced-user-data-model.md)**
+**[1.2.user-registration-profile-management.md](1.2.user-registration-profile-management.md)**
 
-- **Status:** 🔄 In Progress
-- **Scope:** Enhanced user data model with advanced profile fields
+- **Status:** ✅ Complete
+- **Scope:** User registration, profile editing, and password management
+- **Epic:** Enhanced User Management
 - **Dependencies:** Story 1.1 completion
 
-### 🧪 **Testing Framework Stories**
+### 🆕 **Story 1.3 - Admin User Management Interface** (READY)
 
-**[story-1-e2e-framework-setup.md](story-1-e2e-framework-setup.md)**
+**[1.3.admin-user-management-interface.story.md](1.3.admin-user-management-interface.story.md)**
+
+- **Status:** 🆕 Ready for Development
+- **Scope:** Admin dashboard for user management with bulk operations
+- **Epic:** Enhanced User Management
+- **Dependencies:** Stories 1.1 and 1.2 completion
+
+### 🧪 **E2E Testing Framework Stories**
+
+**[2.1.e2e-framework-setup.md](2.1.e2e-framework-setup.md)**
 
 - **Epic:** E2E Testing Framework
 - **Scope:** End-to-end testing infrastructure setup
+- **Status:** 📋 Ready for Development
 
-**[story-2-critical-user-journeys.md](story-2-critical-user-journeys.md)**
+**[2.2.critical-user-journeys.md](2.2.critical-user-journeys.md)**
 
 - **Epic:** E2E Testing Framework
 - **Scope:** Critical user journey test implementation
+- **Status:** 📋 Ready for Development
 
-**[story-3-cross-browser-integration.md](story-3-cross-browser-integration.md)**
+**[2.3.cross-browser-integration.md](2.3.cross-browser-integration.md)**
 
 - **Epic:** E2E Testing Framework  
 - **Scope:** Cross-browser testing integration
+- **Status:** 📋 Ready for Development
 
-### 🚀 **API & Dashboard Stories**
+### 🚀 **PDF Document Viewer Stories**
 
-**[story-2-advanced-user-admin-api.md](story-2-advanced-user-admin-api.md)**
+**[3.1.assignment-data-model-dashboard.md](3.1.assignment-data-model-dashboard.md)**
 
-- **Epic:** Enhanced User Management
-- **Scope:** Advanced user administration API endpoints
-
-**[story-3-user-management-dashboard.md](story-3-user-management-dashboard.md)**
-
-- **Epic:** Enhanced User Management
+- **Epic:** PDF Document Viewer
+- **Scope:** Assignment creation and management with document handling
 - **Scope:** User management dashboard UI components
 
 ## Story Status Overview
@@ -65,12 +74,12 @@ This folder contains all user stories that define specific features and function
 | Story | Epic | Status | Priority |
 |-------|------|--------|----------|
 | 1.1 User Data Model & Auth API | Enhanced User Management | ✅ Complete | High |
-| 1.x Enhanced User Data Model | Enhanced User Management | 🔄 In Progress | High |
-| 1.x E2E Framework Setup | E2E Testing Framework | 📋 Ready | Medium |
-| 2.x Advanced User Admin API | Enhanced User Management | 📋 Ready | High |
-| 2.x Critical User Journeys | E2E Testing Framework | 📋 Ready | Medium |
-| 3.x User Management Dashboard | Enhanced User Management | 📋 Ready | High |
-| 3.x Cross-browser Integration | E2E Testing Framework | 📋 Ready | Low |
+| 1.2 User Registration & Profile Mgmt | Enhanced User Management | ✅ Complete | High |
+| 1.3 Admin User Management Interface | Enhanced User Management | 🆕 Ready | High |
+| 2.1 E2E Framework Setup | E2E Testing Framework | 📋 Ready | Medium |
+| 2.2 Critical User Journeys | E2E Testing Framework | 📋 Ready | Medium |
+| 2.3 Cross-browser Integration | E2E Testing Framework | 📋 Ready | Low |
+| 3.1 Assignment Data Model & Dashboard | PDF Document Viewer | 📋 Ready | High |
 
 ## Usage Guide
 
