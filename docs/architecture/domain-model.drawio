@@ -6,44 +6,44 @@
         <mxCell id="1" parent="0"/>
 
         <!-- Entities: Account -->
-        <mxCell id="ApplicationUser" value="ApplicationUser\n- Id: string (IdentityUser)\n- UserName: string\n- FullName?: string\n- JobTitle?: string\n- Department?: string\n- Phone?: string\n- ContactInfo?: string\n- Preferences?: string (JSON)\n- IsEnabled: bool\n- IsLockedOut: bool (computed)\n- LastLoginDate?: datetime\n- LastLoginIp?: string\n- LoginCount: int\n- IsActive: bool\n- GesperrtSeit?: datetime\n- Avatar?: string\n- CreatedDate: datetime\n- UpdatedDate: datetime" style="swimlane;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
+        <mxCell id="ApplicationUser" value="&lt;b&gt;ApplicationUser&lt;/b&gt;&lt;br&gt;- Id: string (IdentityUser)&lt;br&gt;- UserName: string&lt;br&gt;- FullName?: string&lt;br&gt;- JobTitle?: string&lt;br&gt;- Department?: string&lt;br&gt;- Phone?: string&lt;br&gt;- ContactInfo?: string&lt;br&gt;- Preferences?: string (JSON)&lt;br&gt;- IsEnabled: bool&lt;br&gt;- IsLockedOut: bool (computed)&lt;br&gt;- LastLoginDate?: datetime&lt;br&gt;- LastLoginIp?: string&lt;br&gt;- LoginCount: int&lt;br&gt;- IsActive: bool&lt;br&gt;- GesperrtSeit?: datetime&lt;br&gt;- Avatar?: string&lt;br&gt;- CreatedDate: datetime&lt;br&gt;- UpdatedDate: datetime" style="swimlane;html=1;whiteSpace=wrap;overflow=fill;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="60" y="60" width="300" height="360" as="geometry"/>
         </mxCell>
-        <mxCell id="ApplicationRole" value="ApplicationRole\n- Id: string (IdentityRole)\n- Name: string\n- Description?: string\n- CreatedDate: datetime\n- UpdatedDate: datetime" style="swimlane;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
+        <mxCell id="ApplicationRole" value="&lt;b&gt;ApplicationRole&lt;/b&gt;&lt;br&gt;- Id: string (IdentityRole)&lt;br&gt;- Name: string&lt;br&gt;- Description?: string&lt;br&gt;- CreatedDate: datetime&lt;br&gt;- UpdatedDate: datetime" style="swimlane;html=1;whiteSpace=wrap;overflow=fill;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="420" y="60" width="280" height="200" as="geometry"/>
         </mxCell>
 
         <!-- Entities: Shop -->
-        <mxCell id="Customer" value="Customer\n- Id: int\n- Name: string\n- Email: string\n- PhoneNumber?: string\n- Address?: string\n- City?: string\n- Gender: enum" style="swimlane;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
+        <mxCell id="Customer" value="&lt;b&gt;Customer&lt;/b&gt;&lt;br&gt;- Id: int&lt;br&gt;- Name: string&lt;br&gt;- Email: string&lt;br&gt;- PhoneNumber?: string&lt;br&gt;- Address?: string&lt;br&gt;- City?: string&lt;br&gt;- Gender: enum" style="swimlane;html=1;whiteSpace=wrap;overflow=fill;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="60" y="480" width="260" height="220" as="geometry"/>
         </mxCell>
-        <mxCell id="Order" value="Order\n- Id: int\n- Discount: decimal\n- Comments?: string\n- CashierId?: string\n- CustomerId: int" style="swimlane;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
+        <mxCell id="Order" value="&lt;b&gt;Order&lt;/b&gt;&lt;br&gt;- Id: int&lt;br&gt;- Discount: decimal&lt;br&gt;- Comments?: string&lt;br&gt;- CashierId?: string&lt;br&gt;- CustomerId: int" style="swimlane;html=1;whiteSpace=wrap;overflow=fill;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="360" y="480" width="240" height="200" as="geometry"/>
         </mxCell>
-        <mxCell id="OrderDetail" value="OrderDetail\n- Id: int\n- UnitPrice: decimal\n- Quantity: int\n- Discount: decimal\n- ProductId: int\n- OrderId: int" style="swimlane;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
+        <mxCell id="OrderDetail" value="&lt;b&gt;OrderDetail&lt;/b&gt;&lt;br&gt;- Id: int&lt;br&gt;- UnitPrice: decimal&lt;br&gt;- Quantity: int&lt;br&gt;- Discount: decimal&lt;br&gt;- ProductId: int&lt;br&gt;- OrderId: int" style="swimlane;html=1;whiteSpace=wrap;overflow=fill;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="640" y="480" width="260" height="220" as="geometry"/>
         </mxCell>
-        <mxCell id="Product" value="Product\n- Id: int\n- Name: string\n- Description?: string\n- Icon?: string\n- BuyingPrice: decimal\n- SellingPrice: decimal\n- UnitsInStock: int\n- IsActive: bool\n- IsDiscontinued: bool\n- ParentId?: int\n- ProductCategoryId: int" style="swimlane;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
+        <mxCell id="Product" value="&lt;b&gt;Product&lt;/b&gt;&lt;br&gt;- Id: int&lt;br&gt;- Name: string&lt;br&gt;- Description?: string&lt;br&gt;- Icon?: string&lt;br&gt;- BuyingPrice: decimal&lt;br&gt;- SellingPrice: decimal&lt;br&gt;- UnitsInStock: int&lt;br&gt;- IsActive: bool&lt;br&gt;- IsDiscontinued: bool&lt;br&gt;- ParentId?: int&lt;br&gt;- ProductCategoryId: int" style="swimlane;html=1;whiteSpace=wrap;overflow=fill;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="940" y="480" width="300" height="300" as="geometry"/>
         </mxCell>
-        <mxCell id="ProductCategory" value="ProductCategory\n- Id: int\n- Name: string\n- Description?: string\n- Icon?: string" style="swimlane;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
+        <mxCell id="ProductCategory" value="&lt;b&gt;ProductCategory&lt;/b&gt;&lt;br&gt;- Id: int&lt;br&gt;- Name: string&lt;br&gt;- Description?: string&lt;br&gt;- Icon?: string" style="swimlane;html=1;whiteSpace=wrap;overflow=fill;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="1280" y="480" width="260" height="180" as="geometry"/>
         </mxCell>
 
         <!-- Entities: Business Objects from CSV (selected) -->
-        <mxCell id="Gutachter" value="Gutachter\n- userId: uuid\n- anrede: string\n- titel?: string\n- nachname: string\n- vorname: string\n- namenszusatz?: string\n- geburtsdatum?: date\n- efN: number(15)\n- status: enum\n- gesperrtSeit?: datetime" style="swimlane;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
+        <mxCell id="Gutachter" value="&lt;b&gt;Gutachter&lt;/b&gt;&lt;br&gt;- userId: uuid&lt;br&gt;- anrede: string&lt;br&gt;- titel?: string&lt;br&gt;- nachname: string&lt;br&gt;- vorname: string&lt;br&gt;- namenszusatz?: string&lt;br&gt;- geburtsdatum?: date&lt;br&gt;- efn: number(15)&lt;br&gt;- status: enum&lt;br&gt;- gesperrtSeit?: datetime" style="swimlane;html=1;whiteSpace=wrap;overflow=fill;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="60" y="780" width="300" height="260" as="geometry"/>
         </mxCell>
-        <mxCell id="Mitarbeiter" value="Mitarbeiter\n- userId: uuid\n- anrede: string\n- titel?: string\n- nachname: string\n- vorname: string\n- namenszusatz?: string\n- status: enum\n- gesperrtSeit?: datetime" style="swimlane;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
+        <mxCell id="Mitarbeiter" value="&lt;b&gt;Mitarbeiter&lt;/b&gt;&lt;br&gt;- userId: uuid&lt;br&gt;- anrede: string&lt;br&gt;- titel?: string&lt;br&gt;- nachname: string&lt;br&gt;- vorname: string&lt;br&gt;- namenszusatz?: string&lt;br&gt;- status: enum&lt;br&gt;- gesperrtSeit?: datetime" style="swimlane;html=1;whiteSpace=wrap;overflow=fill;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="400" y="780" width="300" height="240" as="geometry"/>
         </mxCell>
-        <mxCell id="Proband" value="Proband\n- vsnr: string\n- gebdatum: date\n- name: string\n- vorname: string" style="swimlane;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
+        <mxCell id="Proband" value="&lt;b&gt;Proband&lt;/b&gt;&lt;br&gt;- vsnr: string&lt;br&gt;- gebdatum: date&lt;br&gt;- name: string&lt;br&gt;- vorname: string" style="swimlane;html=1;whiteSpace=wrap;overflow=fill;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="740" y="780" width="240" height="180" as="geometry"/>
         </mxCell>
-        <mxCell id="Auftrag" value="Auftrag\n- auftragsId: uuid\n- rvPurAuftragsID: string\n- auftragsDatum: date\n- eingangsDatum: datetime\n- stornierungsDatum?: datetime\n- bereitstellungsDatum?: datetime\n- einbestellDatum?: date" style="swimlane;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
+        <mxCell id="Auftrag" value="&lt;b&gt;Auftrag&lt;/b&gt;&lt;br&gt;- auftragsId: uuid&lt;br&gt;- rvPurAuftragsID: string&lt;br&gt;- auftragsDatum: date&lt;br&gt;- eingangsDatum: datetime&lt;br&gt;- stornierungsDatum?: datetime&lt;br&gt;- bereitstellungsDatum?: datetime&lt;br&gt;- einbestellDatum?: date" style="swimlane;html=1;whiteSpace=wrap;overflow=fill;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="1020" y="780" width="320" height="240" as="geometry"/>
         </mxCell>
-        <mxCell id="Gutachten" value="Gutachten\n- begonnenAm: datetime\n- fertiggestelltAm?: datetime" style="swimlane;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
+        <mxCell id="Gutachten" value="&lt;b&gt;Gutachten&lt;/b&gt;&lt;br&gt;- begonnenAm: datetime&lt;br&gt;- fertiggestelltAm?: datetime" style="swimlane;html=1;whiteSpace=wrap;overflow=fill;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="1380" y="780" width="240" height="160" as="geometry"/>
         </mxCell>
 
