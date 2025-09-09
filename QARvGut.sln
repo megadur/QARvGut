@@ -33,10 +33,47 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{02EA681E-C
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "epics", "epics", "{0F2463CB-647D-49F8-B216-A792D9AE6A37}"
+	ProjectSection(SolutionItems) = preProject
+		docs\epics\epic-Digital Signatures Advanced Features.md = docs\epics\epic-Digital Signatures Advanced Features.md
+		docs\epics\epic-E2E-Testing-Framework.md = docs\epics\epic-E2E-Testing-Framework.md
+		docs\epics\epic-Enhanced User Management.md = docs\epics\epic-Enhanced User Management.md
+		docs\epics\epic-Monorepo Architecture Implementation.md = docs\epics\epic-Monorepo Architecture Implementation.md
+		docs\epics\epic-Monorepo Architektur Implementierung_DE.md = docs\epics\epic-Monorepo Architektur Implementierung_DE.md
+		docs\epics\epic-PDF Document Viewer.md = docs\epics\epic-PDF Document Viewer.md
+		docs\epics\epic-Real-time Messaging System.md = docs\epics\epic-Real-time Messaging System.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "design", "design", "{89E07CE1-D7D0-403D-973C-596DF9B61028}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "architecture", "architecture", "{43423496-8806-4F09-A9DB-02E7CE7C7EB7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "stories", "stories", "{38432EA6-FCD5-4937-875F-AC9009D9171D}"
+	ProjectSection(SolutionItems) = preProject
+		docs\stories\1.1-completion-summary.md = docs\stories\1.1-completion-summary.md
+		docs\stories\1.1-testing-documentation.md = docs\stories\1.1-testing-documentation.md
+		docs\stories\1.1.user-data-model-authentication-api.md = docs\stories\1.1.user-data-model-authentication-api.md
+		docs\stories\1.2.user-registration-profile-management.md = docs\stories\1.2.user-registration-profile-management.md
+		docs\stories\1.3.admin-user-management-interface.story.md = docs\stories\1.3.admin-user-management-interface.story.md
+		docs\stories\2.1.e2e-framework-setup.md = docs\stories\2.1.e2e-framework-setup.md
+		docs\stories\2.2.critical-user-journeys.md = docs\stories\2.2.critical-user-journeys.md
+		docs\stories\2.3.cross-browser-integration.md = docs\stories\2.3.cross-browser-integration.md
+		docs\stories\3.1.assignment-data-model-dashboard.md = docs\stories\3.1.assignment-data-model-dashboard.md
+		docs\stories\index.md = docs\stories\index.md
+		docs\stories\story-MONO-001-MVP-nx-workspace-setup_DE.md = docs\stories\story-MONO-001-MVP-nx-workspace-setup_DE.md
+		docs\stories\story-MONO-001-nx-workspace-setup.md = docs\stories\story-MONO-001-nx-workspace-setup.md
+		docs\stories\story-MONO-001-nx-workspace-setup_DE.md = docs\stories\story-MONO-001-nx-workspace-setup_DE.md
+		docs\stories\story-MONO-002-client-code-migration.md = docs\stories\story-MONO-002-client-code-migration.md
+		docs\stories\story-MONO-002-client-code-migration_DE.md = docs\stories\story-MONO-002-client-code-migration_DE.md
+		docs\stories\story-MONO-002-MVP-client-migration_DE.md = docs\stories\story-MONO-002-MVP-client-migration_DE.md
+		docs\stories\story-MONO-003-shared-ui-library.md = docs\stories\story-MONO-003-shared-ui-library.md
+		docs\stories\story-MONO-003-shared-ui-library_DE.md = docs\stories\story-MONO-003-shared-ui-library_DE.md
+		docs\stories\story-MONO-004-shared-core-services.md = docs\stories\story-MONO-004-shared-core-services.md
+		docs\stories\story-MONO-004-shared-core-services_DE.md = docs\stories\story-MONO-004-shared-core-services_DE.md
+		docs\stories\story-MONO-006-management-app-structure.md = docs\stories\story-MONO-006-management-app-structure.md
+		docs\stories\story-MONO-006-management-app-structure_DE.md = docs\stories\story-MONO-006-management-app-structure_DE.md
+		docs\stories\story-MONO-006-MVP-management-structure_DE.md = docs\stories\story-MONO-006-MVP-management-structure_DE.md
+		docs\stories\story-naming-convention-proposal.md = docs\stories\story-naming-convention-proposal.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -103,6 +140,7 @@ Global
 		{0F2463CB-647D-49F8-B216-A792D9AE6A37} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{89E07CE1-D7D0-403D-973C-596DF9B61028} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{43423496-8806-4F09-A9DB-02E7CE7C7EB7} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{38432EA6-FCD5-4937-875F-AC9009D9171D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0A27807E-F329-4E99-B1EE-C5ED3C4CA840}
