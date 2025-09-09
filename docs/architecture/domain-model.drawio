@@ -1,0 +1,92 @@
+<mxfile host="app.diagrams.net" modified="2025-09-09T00:00:00.000Z" agent="Cursor-GPT5" version="24.7.1">
+  <diagram id="domain-model" name="Domain Model">
+    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1080" background="#FFFFFF">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Entities: Account -->
+        <mxCell id="ApplicationUser" value="ApplicationUser\n- Id: string (IdentityUser)\n- UserName: string\n- FullName?: string\n- JobTitle?: string\n- Department?: string\n- Phone?: string\n- ContactInfo?: string\n- Preferences?: string (JSON)\n- IsEnabled: bool\n- IsLockedOut: bool (computed)\n- LastLoginDate?: datetime\n- LastLoginIp?: string\n- LoginCount: int\n- IsActive: bool\n- GesperrtSeit?: datetime\n- Avatar?: string\n- CreatedDate: datetime\n- UpdatedDate: datetime" style="swimlane;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="60" y="60" width="300" height="360" as="geometry"/>
+        </mxCell>
+        <mxCell id="ApplicationRole" value="ApplicationRole\n- Id: string (IdentityRole)\n- Name: string\n- Description?: string\n- CreatedDate: datetime\n- UpdatedDate: datetime" style="swimlane;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="420" y="60" width="280" height="200" as="geometry"/>
+        </mxCell>
+
+        <!-- Entities: Shop -->
+        <mxCell id="Customer" value="Customer\n- Id: int\n- Name: string\n- Email: string\n- PhoneNumber?: string\n- Address?: string\n- City?: string\n- Gender: enum" style="swimlane;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="60" y="480" width="260" height="220" as="geometry"/>
+        </mxCell>
+        <mxCell id="Order" value="Order\n- Id: int\n- Discount: decimal\n- Comments?: string\n- CashierId?: string\n- CustomerId: int" style="swimlane;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="360" y="480" width="240" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="OrderDetail" value="OrderDetail\n- Id: int\n- UnitPrice: decimal\n- Quantity: int\n- Discount: decimal\n- ProductId: int\n- OrderId: int" style="swimlane;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="640" y="480" width="260" height="220" as="geometry"/>
+        </mxCell>
+        <mxCell id="Product" value="Product\n- Id: int\n- Name: string\n- Description?: string\n- Icon?: string\n- BuyingPrice: decimal\n- SellingPrice: decimal\n- UnitsInStock: int\n- IsActive: bool\n- IsDiscontinued: bool\n- ParentId?: int\n- ProductCategoryId: int" style="swimlane;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="940" y="480" width="300" height="300" as="geometry"/>
+        </mxCell>
+        <mxCell id="ProductCategory" value="ProductCategory\n- Id: int\n- Name: string\n- Description?: string\n- Icon?: string" style="swimlane;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="480" width="260" height="180" as="geometry"/>
+        </mxCell>
+
+        <!-- Entities: Business Objects from CSV (selected) -->
+        <mxCell id="Gutachter" value="Gutachter\n- userId: uuid\n- anrede: string\n- titel?: string\n- nachname: string\n- vorname: string\n- namenszusatz?: string\n- geburtsdatum?: date\n- efN: number(15)\n- status: enum\n- gesperrtSeit?: datetime" style="swimlane;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="60" y="780" width="300" height="260" as="geometry"/>
+        </mxCell>
+        <mxCell id="Mitarbeiter" value="Mitarbeiter\n- userId: uuid\n- anrede: string\n- titel?: string\n- nachname: string\n- vorname: string\n- namenszusatz?: string\n- status: enum\n- gesperrtSeit?: datetime" style="swimlane;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="400" y="780" width="300" height="240" as="geometry"/>
+        </mxCell>
+        <mxCell id="Proband" value="Proband\n- vsnr: string\n- gebdatum: date\n- name: string\n- vorname: string" style="swimlane;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="740" y="780" width="240" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="Auftrag" value="Auftrag\n- auftragsId: uuid\n- rvPurAuftragsID: string\n- auftragsDatum: date\n- eingangsDatum: datetime\n- stornierungsDatum?: datetime\n- bereitstellungsDatum?: datetime\n- einbestellDatum?: date" style="swimlane;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="780" width="320" height="240" as="geometry"/>
+        </mxCell>
+        <mxCell id="Gutachten" value="Gutachten\n- begonnenAm: datetime\n- fertiggestelltAm?: datetime" style="swimlane;fontStyle=1;align=left;verticalAlign=top;childLayout=stackLayout;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1380" y="780" width="240" height="160" as="geometry"/>
+        </mxCell>
+
+        <!-- Relationships (edges) -->
+        <!-- Account relationships -->
+        <mxCell id="edge_User_Role" edge="1" parent="1" source="ApplicationUser" target="ApplicationRole" style="endArrow=block;startArrow=none;endFill=1;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Shop relationships -->
+        <mxCell id="edge_Customer_Order" edge="1" parent="1" source="Customer" target="Order" value="1..*" style="endArrow=block;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_Order_OrderDetail" edge="1" parent="1" source="Order" target="OrderDetail" value="1..*" style="endArrow=block;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_OrderDetail_Product" edge="1" parent="1" source="OrderDetail" target="Product" value="many-to-1" style="endArrow=block;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_Product_ProductCategory" edge="1" parent="1" source="Product" target="ProductCategory" value="many-to-1" style="endArrow=block;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_Product_Self" edge="1" parent="1" source="Product" target="Product" value="self-parent" style="endArrow=block;curved=1;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_Order_Cashier" edge="1" parent="1" source="Order" target="ApplicationUser" value="Cashier (0..1)" style="endArrow=block;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Business object relationships -->
+        <mxCell id="edge_Gutachter_Mitarbeiter" edge="1" parent="1" source="Gutachter" target="Mitarbeiter" value="1..*" style="endArrow=block;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_Auftrag_Proband" edge="1" parent="1" source="Auftrag" target="Proband" value="1" style="endArrow=block;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_Auftrag_Gutachter" edge="1" parent="1" source="Auftrag" target="Gutachter" value="1" style="endArrow=block;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_Gutachten_Auftrag" edge="1" parent="1" source="Gutachten" target="Auftrag" value="1" style="endArrow=block;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
