@@ -1,0 +1,39 @@
+flowchart TD
+    A[DRV-Mitarbeiter benötigt Support-Zugang] --> B[Zugang über rvGutachtenAdmin beantragen]
+    B --> C[System validiert Mitarbeiter-Status über eLogin]
+    C --> D{Gültige DRV-Berechtigung?}
+    D -->|Nein| E[Zugriff verweigert<br/>Fehlermeldung anzeigen]
+    D -->|Ja| F[Berechtigungsstufe prüfen]
+    F --> G[Admin genehmigt Support-Zugang]
+    G --> H[DRV-Mitarbeiter-Account erstellen<br/>Erweiterte Rechte zuweisen]
+    H --> I[Zugriff auf Support-Funktionen gewähren]
+    I --> J[Support-Dashboard verfügbar]
+    
+    %% Support-Funktionen
+    J --> K[Gutachter-Registrierungen verwalten]
+    J --> L[Auftragszuweisungen einsehen]
+    J --> M[Dokumenten-Übersicht verwalten]
+    J --> N[System-Konfiguration]
+    
+    %% Detailierte Gutachter-Verwaltung
+    K --> O[Pending Registrierungen anzeigen]
+    O --> P[Registrierung auswählen]
+    P --> Q{Genehmigen oder ablehnen?}
+    Q -->|Genehmigen| R[Status auf approved setzen]
+    Q -->|Ablehnen| S[Begründung eingeben<br/>Ablehnungs-E-Mail senden]
+    R --> T[Aktivierungscode-Versand auslösen]
+    
+    %% Auftragszuweisungen
+    L --> U[Alle Zuweisungen anzeigen]
+    U --> V[Nach VSNR/Gutachter suchen]
+    V --> W[Auftragsdetails einsehen]
+    W --> X[Support bereitstellen]
+    
+    %% Audit-Trail
+    T --> Y[Alle Aktionen in Audit-Trail dokumentieren]
+    S --> Y
+    X --> Y
+    
+    style A fill:#e1f5fe
+    style Y fill:#c8e6c9
+    style E fill:#ffcdd2
