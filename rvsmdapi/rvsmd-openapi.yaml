@@ -1,0 +1,131 @@
+openapi: 3.1.0
+info:
+   title: rvSMD Gutachten API
+   version: 0.0.1
+   description: API von rvSMD für rvGutachten
+servers:
+-  url: http://localhost:8080/api/v1
+security:
+-  api_key: []
+paths:
+   /gutachtenauftraege/{fcId}/gutachten/eingang:
+      parameters:
+      -  $ref: '#/components/parameters/fachlicheCorrelationId'
+      post:
+         tags:
+         - Gutachtenauftrag
+         requestBody:
+            content:
+               application/json:
+                  schema:
+                     $ref: '#/components/schemas/Eingang'
+            required: true
+         responses:
+            '202':
+               description: Eingangsdatum erfolgreich entgegen genommen
+            '400':
+               description: Eingangsdatum ist ungültig
+               $ref: '#/components/responses/Bad_Request'
+            '404':
+               description: Gutachtenauftrag nicht gefunden
+               $ref: '#/components/responses/Not_found'
+         operationId: postEingangsdatum
+         summary: Speichert das Eingangsdatum des Gutachtens zum Gutachtenauftrag
+   /gutachter/{efn}/status:
+      parameters:
+      -  $ref: '#/components/parameters/efn'
+      post:
+         tags:
+         - Gutachter
+         requestBody:
+            content:
+               application/json:
+                  schema:
+                     type: object
+                     properties:
+                        status: 
+                           $ref: '#/components/schemas/Gutachterstatus'
+            required: true
+         responses:
+            '202':
+               description: Status des Gutachters erfolreich aktualisiert
+            '400':
+               description: Status ist ungültig
+               $ref: '#/components/responses/Bad_Request'
+            '404':
+               description: Gutachter nicht gefunden
+               $ref: '#/components/responses/Not_found'
+         operationId: postGutachterstatus
+         summary: Aktualisiert den Status des Gutachters
+components:
+   schemas:
+      ErrorResponse:
+         type: object
+         properties:
+            message:
+               type: string
+               description: Error Message
+            httpCode:
+               type: integer
+               description: http Return code
+      Gutachterstatus:
+         description: Aktivierungsstatus des Gutachters in rvGutachten
+         type: string
+         enum:
+         - neu
+         - aktiv
+         - gesperrt
+         - ungueltig
+      Eingang:
+         type: object
+         required:
+         - eingangsdatum
+         properties:
+            eingangsdatum:
+               type: string
+               format: date-time
+               example: '2025-08-20T23:59:59Z'
+               description: Zeitstempel vom Eingang des Gutachtens in UTC
+   parameters:
+      fachlicheCorrelationId:
+         name: fcId
+         in: path
+         description: Fachliche CorrelationId des Auftrags in rvSMD
+         required: true
+         schema:
+            type: string
+      efn:
+         name: efn
+         in: path
+         description: Einheitliche fortbildungsnummer des Gutachters
+         required: true
+         schema:
+            type: string
+   responses:
+      Not_found:
+         description: Resource wurde nicht gefunden
+         content:
+            application/json:
+               schema:
+                  $ref: '#/components/schemas/ErrorResponse'
+               example:
+                  message: Resource nicht gefunden
+                  httpcode: 404
+      Bad_Request:
+         description: Request ist ungültig
+         content:
+            application/json:
+               schema:
+                  $ref: '#/components/schemas/ErrorResponse'
+               example:
+                  message: Request ist ungültig
+                  httpcode: 400
+   securitySchemes:
+      api_key:
+         type: apiKey
+         name: rvsmd-apikey
+         in: header
+         description: API Key zur Authorisierung des Requests
+tags:
+-  name: Gutachtenauftrag
+   description: Funktionen für Gutachtenaufträge

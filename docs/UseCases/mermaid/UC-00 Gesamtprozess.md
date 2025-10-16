@@ -1,3 +1,4 @@
+```mermaid
 flowchart TD
     A[System-Ereignis tritt auf] --> B{Ereignis-Typ}
     
@@ -65,3 +66,4 @@ flowchart TD
     style DD fill:#c8e6c9
     style U fill:#fff3e0
     style CC fill:#ffcdd2
+```

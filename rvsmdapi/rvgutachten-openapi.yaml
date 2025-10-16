@@ -1,0 +1,362 @@
+openapi: 3.1.0
+info:
+   title: rvGutachten Fachdienst API
+   version: 0.0.1
+   description: API des rvGutachten Fachdienstes für rvSMD
+servers:
+-  url: http://localhost:8080/api/v1
+security:
+-  api_key: []
+paths:
+   /gutachtenauftraege:
+      post:
+         tags:
+         - Gutachtenauftrag
+         requestBody:
+            content:
+               application/json:
+                  schema:
+                     $ref: '#/components/schemas/Gutachtenauftrag'
+            required: true
+         responses:
+            '202':
+               description: Gutachtenauftrag erfolgreich übergeben
+            '400':
+               description: Gutachtenauftrag ist ungültig
+               $ref: '#/components/responses/Bad_Request'
+         operationId: addGutachtenauftrag
+         summary: Übergibt einen neuen Gutachtenauftrag an rvGutachten
+   /gutachtenauftraege/{fcId}/status:
+      parameters:
+      -  $ref: '#/components/parameters/fachlicheCorrelationId'
+      post:
+         tags:
+         - Gutachtenauftrag
+         requestBody:
+            content:
+               application/json:
+                  schema:
+                     $ref: '#/components/schemas/ChangeStatus'
+            required: true
+         responses:
+            '202':
+               description: Statusänderung erfolgreich entgegen genommen
+            '400':
+               description: Statusänderung ist ungültig
+               $ref: '#/components/responses/Bad_Request'
+            '404':
+               description: Gutachter nicht gefunden
+               $ref: '#/components/responses/Not_found'
+         operationId: updateAuftragsstatus
+         summary: Ändert den Auftragsstatus.
+   /gutachtenauftraege/{fcId}/mahnungen:
+      parameters:
+      -  $ref: '#/components/parameters/fachlicheCorrelationId'
+      post:
+         tags:
+         - Gutachtenauftrag
+         requestBody:
+            content:
+               application/json:
+                  schema:
+                     $ref: '#/components/schemas/Mahnung'
+            required: true
+         responses:
+            '202':
+               description: Statusänderung erfolgreich entgegen genommen
+            '400':
+               description: Statusänderung ist ungültig
+               $ref: '#/components/responses/Bad_Request'
+            '404':
+               description: Gutachter nicht gefunden
+               $ref: '#/components/responses/Not_found'
+         operationId: addMahnung
+         summary: Erstellt eine Mahnung zu einem Gutachtenauftrag.
+   /gutachtenauftraege/{fcId}/mahntermin:
+      parameters:
+      -  $ref: '#/components/parameters/fachlicheCorrelationId'
+      post:
+         tags:
+         - Gutachtenauftrag
+         requestBody:
+            content:
+               application/json:
+                  schema:
+                     $ref: '#/components/schemas/Mahntermin'
+            required: true
+         responses:
+            '202':
+               description: Daten der Mahnterminverschiebung erfolgreich entgegen genommen
+            '400':
+               description: Daten der Mahnterminverschiebung ist ungültig
+               $ref: '#/components/responses/Bad_Request'
+            '404':
+               description: Auftrag wurde nicht gefunden
+               $ref: '#/components/responses/Not_found'
+         operationId: postMahntermin
+         summary: Gibt eine Mahnterminverschiebung bekannt.
+   /gutachter:
+      post:
+         tags:
+         - Gutachter
+         requestBody:
+            content:
+               application/json:
+                  schema:
+                     $ref: '#/components/schemas/Gutachter'
+            required: true
+         responses:
+            '202':
+               description: Gutachterdaten erfolgreich entgegengenommen
+            '400':
+               description: Gutachterdaten sind ungültig
+               $ref: '#/components/responses/Bad_Request'
+         operationId: addGutachter
+         summary: Daten des Gutachters
+   /gutachter/{efn}/status:
+      parameters:
+      -  $ref: '#/components/parameters/efn'
+      get:
+         tags:
+         - Gutachter
+         responses:
+            '200':
+               description: Status des Gutachters in rvGutachten
+               content:
+                  application/json:
+                     schema:
+                        type: object
+                        properties:
+                           status:
+                              $ref: '#/components/schemas/Gutachterstatus'
+            '404':
+               description: Gutachter nicht gefunden
+               $ref: '#/components/responses/Not_found'
+components:
+   schemas:
+      ErrorResponse:
+         type: object
+         properties:
+            message:
+               type: string
+               description: Error Message
+            httpCode:
+               type: integer
+               description: http Return code
+      Mahntermin:
+         type: object
+         description: Daten einer Mahnterminverschiebung
+         required:
+         - mahnstufe
+         - neuerTermin
+         properties:
+            mahnstufe:
+               type: number
+               format: int32
+               minimum: 1
+            neuerTermin:
+               type: string
+               format: date
+               example: 2025-09-05T00:00:00Z
+      Mahnung:
+         type: object
+         description: Daten einer Mahnung
+         required:
+         - mahnstufe
+         - datum
+         - inhalt
+         properties:
+            mahnstufe:
+               type: number
+               format: int32
+               minimum: 1
+            datum:
+               type: string
+               format: date
+               example: 2025-08-08T00:00:00Z
+            inhalt:
+               type: string
+               example: Dies ist eine automatische Mahnung - sprechen Sie nach dem Piepton.... piep...
+      Gutachtenauftrag:
+         type: object
+         required:
+         - ktan
+         - traegerBezeichnung
+         - rvPurAuftragsreferenz
+         - fachlicheCorrelationId
+         - efn
+         - Proband
+         - DocsAuftragsdaten
+         properties:
+            ktan:
+               type: string
+               description: KTAN des Trägers
+               example: '70'
+            traegerBezeichnung:
+               type: string
+               description: Bezeichnung des Trägers - wird in UI Angezeigt
+               example: Deutsche Rentenversicherung Bund
+            rvPurAuftragsreferenz:
+               $ref: '#/components/schemas/AuftragsReferenz'
+            fachlicheCorrelationId:
+               type: string
+               description: Fachliche CorrelationId des Auftrags in rvSMD
+               example: 65010203M654-085-29
+            auftragsdatum:
+                type: string
+                format: date
+                example: 2025-08-02
+                description: Auftragsdatum aus rvSMD, wenn keines vorhanden, wird das aktuelle Datum mit Uhrzeit als UTC angenommen
+            efn:
+               type: string
+               description: EFN (Einheitliche FortbildungsNummer) des Gutachters
+               example: '654987321014785'
+            Status:
+               readOnly: true
+               $ref: '#/components/schemas/Auftragsstatus'
+               example: neu
+            Auftragsdatum:
+               description: Zeitstempel nach ISO 8601 in UTC
+               type: string
+               format: date-time
+               readOnly: true
+               example: '2025-08-05T13:12:11Z'
+            Proband:
+               $ref: '#/components/schemas/Proband'
+            DocsAuftragsdaten:
+               contentMediaType: application/xml
+               contentEncoding: base64
+               description: base64 Codierter Auftragsinhalt, welcher direkt an das Dokumentenerzeugungssystem übergeben wird
+      Auftragsstatus:
+         type: string
+         enum:
+         - neu
+         - in_bearbeitung
+         - abgeschlossen
+         - storniert
+      ChangeStatus:
+         type: object
+         required:
+         - status
+         properties:
+            status:
+               $ref: '#/components/schemas/Auftragsstatus'
+      AuftragsReferenz:
+         type: object
+         description: rvPuR Auftragsreferenz
+         required:
+         - AuftragsId
+         properties:
+            AuftragsId:
+               type: string
+               example: AM567834DE
+            VorgangsId:
+               type: string
+               example: AM567834
+      Gutachterstatus:
+         description: Aktivierungsstatus des Gutachters in rvGutachten
+         type: string
+         enum:
+         - neu
+         - aktiv
+         - gesperrt
+         - ungueltig
+      Gutachter:
+         type: object
+         description: Daten des Gutachters
+         required:
+         - name
+         - vorname
+         - efn
+         properties:
+            titel:
+               type: string
+               example: Prof. Dr.
+            name:
+               type: string
+               example: Maus
+            vorname:
+               type: string
+               example: Mickey
+            namenszusatz:
+               type: string
+               example: Baron von und zu
+            efn:
+               type: string
+               description: Einheitliche Fortbildungsnummer des Gutachters
+               example: '654987321014785'
+            fachrichtung:
+               type: string
+               example: Kardiologie
+            status:
+               $ref: '#/components/schemas/Gutachterstatus'
+               readOnly: true
+      Proband:
+         type: object
+         description: Daten des Probanden
+         required:
+         - name
+         - vorname
+         - geburtsdatum
+         - vsnr
+         properties:
+            name:
+               type: string
+               example: Mustermann
+            vorname:
+               type: string
+               example: Max
+            geburtsdatum:
+               type: string
+               format: date
+               example: 1987-06-05T00:00:00Z
+            vsnr:
+               type: string
+               example: 65010203M654
+   parameters:
+      fachlicheCorrelationId:
+         name: fcId
+         in: path
+         description: Fachliche CorrelationId des Auftrags in rvSMD
+         required: true
+         schema:
+            type: string
+      efn:
+         name: efn
+         in: path
+         description: Einheitliche fortbildungsnummer des Gutachters
+         required: true
+         schema:
+            type: string
+   responses:
+      Not_found:
+         description: Resource wurde nicht gefunden
+         content:
+            application/json:
+               schema:
+                  $ref: '#/components/schemas/ErrorResponse'
+               example:
+                  message: Resource nicht gefunden
+                  httpcode: 404
+      Bad_Request:
+         description: Request ist ungültig
+         content:
+            application/json:
+               schema:
+                  $ref: '#/components/schemas/ErrorResponse'
+               example:
+                  message: Request ist ungültig
+                  httpcode: 400
+   securitySchemes:
+      api_key:
+         type: apiKey
+         name: rvgutachten-apikey
+         in: header
+         description: API Key zur Authorisierung des Requests
+tags:
+-  name: Gutachtenauftrag
+   description: Funktionen für Gutachtenaufträge
+-  name: Maintenance
+   description: Wartungsfunktionen
+-  name: Gutachter
+   description: Funktionen für die Gutachterdaten
