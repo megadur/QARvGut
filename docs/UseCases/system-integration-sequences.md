@@ -246,39 +246,37 @@ sequenceDiagram
     
     Note over RVG,ADMIN: API-Fehlerbehandlung Patterns
     
-    RVG->>+RVS: POST /gutachter/{efn}/status
+    RVG->>RVS: POST /gutachter/{efn}/status
     
     alt Erfolgreiche Antwort
-        RVS-->>-RVG: 202 Accepted
+        RVS-->>RVG: 202 Accepted
         RVG->>LOG: Success Log schreiben
     else Temporärer Fehler (5xx)
         RVS-->>RVG: 503 Service Unavailable
-        RVG->>+RETRY: In Retry-Queue einreihen
+        RVG->>RETRY: In Retry-Queue einreihen
         RETRY->>RETRY: Exponential Backoff<br/>(1s, 2s, 4s, 8s)
         
         loop Max 3 Versuche
-            RETRY->>+RVS: Retry Request
+            RETRY->>RVS: Retry Request
             alt Erfolg
-                RVS-->>-RETRY: 202 Accepted
+                RVS-->>RETRY: 202 Accepted
                 RETRY-->>RVG: ✅ Erfolg nach Retry
             else Weiterhin Fehler
-                RVS-->>-RETRY: 503 Service Unavailable
+                RVS-->>RETRY: 503 Service Unavailable
                 RETRY->>RETRY: Nächster Versuch warten
             end
         end
         
         opt Alle Versuche fehlgeschlagen
             RETRY->>LOG: ❌ Permanent Error Log
-            RETRY->>+ADMIN: Alert: API nicht erreichbar
-            ADMIN-->>-RETRY: Alert empfangen
+            RETRY->>ADMIN: Alert: API nicht erreichbar
         end
         
-        RETRY-->>-RVG: Final Status
+        RETRY-->>RVG: Final Status
     else Client Fehler (4xx)
-        RVS-->>-RVG: 400 Bad Request
+        RVS-->>RVG: 400 Bad Request
         RVG->>LOG: ❌ Client Error (keine Retry)
-        RVG->>+ADMIN: Sofortiger Alert<br/>Daten-Validierungsfehler
-        ADMIN-->>-RVG: Alert empfangen
+        RVG->>ADMIN: Sofortiger Alert<br/>Daten-Validierungsfehler
     end
 ```
 
