@@ -19,25 +19,26 @@ Diese Dokumentation zeigt die System-Integration zwischen rvGutachten, rvSMD und
 
 ---
 
-## UC-01a: Selbst-Registrierung Workflow
+## UC-01a: Managed Registration Workflow (Starts with rvSMD!)
 
-**Basierend auf**: UC-01.md (Modernisierter Ansatz)
+**Basierend auf**: UC-01_mermaid.md (Korrekte Implementierung)
 
 ```mermaid
 sequenceDiagram
     participant G as Gutachter
+    participant ADM as 8023<br/>(DRV-Admin)
+    participant RVS as rvSMD<br/>System
     participant RVG as rvGutachten<br/>System
     participant EL as eLogin<br/>API
-    participant RVS as rvSMD<br/>System
-    participant DRV as DRV-Mitarbeiter
     participant EMAIL as E-Mail<br/>Service
-    
-    Note over G,EMAIL: Selbst-Registrierung Workflow (Zielzustand)
-    
-    G->>+RVG: Registrierungsseite aufrufen
-    RVG-->>-G: Formular anzeigen
-    
-    G->>+RVG: Formular ausfüllen<br/>(Name, E-Mail, EFN)
+
+    Note over G,EMAIL: Managed Registration Workflow - Beginnt mit rvSMD!
+
+    G->>+ADM: Interesse an Teilnahme bekundet
+    ADM->>+RVS: EFN beim Gutachter eintragen (rvSMD!)
+    RVS-->>-ADM: EFN gespeichert
+
+    RVS->>+RVG: Gutachter-Daten übertragen<br/>(Name, Vorname, EFN, Adresse)
     RVG->>RVG: Eingaben validieren
     
     Note over RVG,RVS: Externe Validierung
@@ -48,22 +49,22 @@ sequenceDiagram
     RVS-->>-RVG: Status: nicht_vorhanden/aktiv/gesperrt
     
     alt Gutachter bereits registriert
-        RVG-->>G: ❌ A2: Hinweis auf bestehenden Account
+        RVG-->>ADM: ❌ A2: Hinweis auf bestehenden Account
     else eLogin/rvSMD nicht erreichbar
-        RVG-->>G: ❌ A3: Registrierung temporär gesperrt
+        RVG-->>ADM: ❌ A3: Integration temporär gesperrt
     else Validierung erfolgreich
         RVG->>RVG: Account erstellen (Status: pending)
-        RVG->>+EMAIL: DRV-Mitarbeiter benachrichtigen
-        EMAIL-->>-RVG: Benachrichtigung versendet
+        RVG->>+EMAIL: Account-Erstellung bestätigen
+        EMAIL-->>-ADM: Bestätigung versendet
+
+        Note over ADM: Admin verwaltet den Prozess
+        ADM->>+RVG: Gutachter freigeben
         
-        Note over DRV: Manuelle Prüfung
-        DRV->>+RVG: Berechtigung prüfen<br/>in internen Systemen
-        
-        alt DRV lehnt ab
+        alt Admin lehnt ab
             RVG->>RVG: Account deaktivieren
             RVG->>+EMAIL: ❌ A4: Gutachter informieren
             EMAIL-->>-G: Ablehnungsmail
-        else DRV genehmigt
+        else Admin genehmigt
             RVG->>+RVS: POST /gutachter<br/>(Gutachter-Daten)
             RVS-->>-RVG: 202 Accepted
             

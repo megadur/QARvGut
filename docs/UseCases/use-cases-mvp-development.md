@@ -446,7 +446,7 @@ Konfigurierbare Parameter:
 4. Anmeldung wird zur Genehmigung an DRV weitergeleitet
 5. DRV-Mitarbeiter prüft und genehmigt Anmeldung
 6. Mitarbeiter erhält Aktivierungscode
-7. Mitarbeiter registriert sich selbst im System
+7. Mitarbeiter aktiviert sich mit dem erhaltenen Code
 
 **Erweiterte Verwaltung:**
 - **V1:** Mitarbeiter-Status einsehen und verwalten

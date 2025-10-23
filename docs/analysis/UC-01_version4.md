@@ -143,13 +143,13 @@ sequenceDiagram
     participant RVG as rvGutachten<br/>System
     participant EMAIL as E-Mail<br/>Service
     
-    Note over G,EMAIL: UC-01 Improved: Streamlined Self-Service Workflow
-    
-    %% Phase 1: Self-Service Registration
-    G->>WEB: 01. Online Registrierung starten
-    WEB-->>G: Registrierungsformular anzeigen
-    
-    G->>WEB: 02. Daten eingeben<br/>(Name, Geburtsdatum, EFN, E-Mail)
+    Note over G,EMAIL: UC-01 Improved: Streamlined Managed Registration Workflow (begins with rvSMD!)
+
+    %% Phase 1: Managed Registration Initiation
+    G->>ADM: 01. Interesse an Teilnahme bekundet
+    ADM->>RVS: 02. EFN beim Gutachter eintragen (rvSMD!)
+
+    RVS->>WEB: 03. Gutachter-Daten an Portal übertragen<br/>(Name, Vorname, EFN, Adresse)
     WEB->>RVS: 03. EFN-Validierung
     
     alt EFN nicht gefunden
@@ -202,7 +202,7 @@ sequenceDiagram
 ### Verbesserungen im Detail:
 
 **🚀 Prozessoptimierungen:**
-1. **Self-Service Portal** - Gutachter startet Registrierung selbständig
+1. **Managed Registration** - Prozess beginnt mit rvSMD-Dateneintragung durch Admin
 2. **Realtime Validierung** - EFN wird sofort gegen rvSMD geprüft
 3. **Automatische Verknüpfung** - Keine manuelle Suche/Zuordnung mehr
 4. **Single Sign-On** - Ein Aktivierungsschritt statt zwei
@@ -224,7 +224,7 @@ sequenceDiagram
 - **Sofortige Validierung** - Fehler werden früh erkannt
 - **Parallele Verarbeitung** - Systemintegration läuft automatisch
 - **Reduzierte Latenz** - Keine Postlaufzeiten
-- **Self-Service** - Weniger Support-Aufwand
+- **Streamlined Process** - Weniger Support-Aufwand durch bessere Automatisierung
 
 ---
 
