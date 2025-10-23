@@ -27,14 +27,14 @@ Dieses Dokument definiert die Use Cases für das QARvGut MVP basierend auf der A
 
 | Priorität | Use Cases | Implementierungs-Reihenfolge | Abhängigkeiten |
 |-----------|-----------|------------------------------|----------------|
-| **��� Kritisch** | UC-01, UC-02, UC-03 | Sprint 1 (Wochen 1-2) | eLogin, rvSMD, DSGVO |
-| **��� Hoch** | UC-04, UC-05 | Sprint 2 (Wochen 3-4) | Authentifizierung |
-| **�� Mittel** | UC-06, UC-09 | Sprint 3 (Wochen 5-6) | Kern-Workflow |
-| **��� Niedrig** | UC-07, UC-08 | Sprint 3+ | Admin-System |
+| **🔴 Kritisch** | UC-01, UC-02, UC-03, UC-10 | Sprint 1 (Wochen 1-2) | eLogin, rvSMD, DSGVO, rvPUR |
+| **🟡 Hoch** | UC-04, UC-05 | Sprint 2 (Wochen 3-4) | Authentifizierung |
+| **🔵 Mittel** | UC-06, UC-09 | Sprint 3 (Wochen 5-6) | Kern-Workflow |
+| **⚪ Niedrig** | UC-07, UC-08 | Sprint 3+ | Admin-System |
 
 ---
 
-## ��� Kritische Use Cases (Sprint 1)
+## 🔴 Kritische Use Cases (Sprint 1)
 
 ### UC-01: Gutachter-Onboarding-Prozess
 
@@ -72,6 +72,7 @@ Dieses Dokument definiert die Use Cases für das QARvGut MVP basierend auf der A
 **Nachbedingungen:**
 - Gutachter-Account ist aktiv und einsatzbereit
 - Gutachter kann sich anmelden und Aufträge einsehen
+- Für jeden Auftrag sind alle relevanten Dokumente gemäß UC-10 automatisch im System verfügbar
 - Audit-Log der Registrierung ist erstellt
 
 **Technische Anforderungen:**
@@ -465,5 +466,70 @@ Konfigurierbare Parameter:
 - Audit-Trail ist vollständig
 
 **Quell-Stories:** US-RL.02, US-RL.03, US-RL.09, US-RL.10  
-**Priorität:** Niedrig - Erweiterte Funktionalität für größere Praxen  
+**Priorität:** Niedrig - Erweiterte Funktionalität für größere Praxen
+
+---
+
+### UC-10: Automatischer Dokumentenabruf und Caching (rvPUR → rvGutachten)
+
+**Use Case ID:** UC-10  
+**Name:** Automatischer Dokumentenabruf und Zwischenspeicherung bei neuem Auftrag  
+**Primärer Akteur:** System (rvGutachten, Hintergrundprozess)  
+**Sekundäre Akteure:** Gutachter, rvSMD, rvPUR  
+**Auslöser:** Neuer Gutachtenauftrag wird erstellt/übertragen
+
+**Vorbedingungen:**
+- Auftrag ist in rvGutachten angelegt
+- Dokumente zu diesem Auftrag sind in rvPUR vorhanden
+- System hat Zugriff auf rvPUR-API
+
+**Erfolgsszenario:**
+1. rvSMD überträgt neuen Gutachtenauftrag an rvGutachten
+2. rvGutachten legt Auftrag an und stößt Hintergrundprozess an
+3. Hintergrundprozess fragt alle relevanten Dokumente zu diesem Auftrag aus rvPUR ab
+4. Dokumente werden in rvGutachten zwischengespeichert (Cache)
+5. Gutachter kann Dokumente direkt in rvGutachten einsehen und bearbeiten
+6. Bei neuen/aktualisierten Dokumenten wird der Cache aktualisiert
+
+**Alternativszenarien:**
+- **A1:** rvPUR nicht erreichbar → Wiederholungsversuch, Fehlerbenachrichtigung an Support
+- **A2:** Keine Dokumente vorhanden → Hinweis an Gutachter
+- **A3:** Fehler beim Caching → Logging, Retry, ggf. manuelle Nachbearbeitung
+
+**Nachbedingungen:**
+- Alle relevanten Dokumente sind im Auftrag in rvGutachten verfügbar
+- Dokumentenzugriff ist performant und ausfallsicher
+- Audit-Log für alle Dokumentenzugriffe vorhanden
+
+**Technische Anforderungen:**
+- Integration mit rvPUR-API (Dokumentenabruf)
+- Caching-Mechanismus in rvGutachten
+- Fehler- und Retry-Handling für Hintergrundprozess
+- Rechteprüfung bei jedem Dokumentenzugriff
+
+**Quell-Stories:** US-AM.02, US-AM.03, US-AM.05, US-NF.01  
+**Priorität:** Mittel/Hoch – Voraussetzung für effiziente Auftragsbearbeitung
+
+---
+
+#### Sequenzdiagramm
+
+```mermaid
+sequenceDiagram
+    participant RVS as rvSMD
+    participant RVG as rvGutachten
+    participant JOB as Background Job
+    participant PUR as rvPUR
+    participant G as Gutachter
+
+    RVS->>RVG: Neuer Gutachtenauftrag (Auftragsdaten)
+    RVG->>RVG: Auftrag anlegen
+    RVG->>JOB: Dokumentenabruf-Job starten
+    JOB->>PUR: Dokumente zu Auftrag abrufen
+    PUR-->>JOB: Dokumente (Dateien, Metadaten)
+    JOB->>RVG: Dokumente im Cache speichern
+    G->>RVG: Auftragsdetails & Dokumente anzeigen
+    RVG-->>G: Dokumente bereitstellen (aus Cache)
+    Note over JOB,PUR: Bei neuen/aktualisierten Dokumenten: Cache-Refresh
+```
 
