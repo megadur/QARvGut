@@ -7,3 +7,4 @@
 - **General Messaging**: Assessors can also send and receive messages not tied to specific assessments, supporting broader communication.
 - **Notifications**: Real-time or periodic notifications for new assignments, messages, or document updates.
 - **User Authentication**: Secure login for assessors, with role-based access control.
+- **Automatischer Dokumentenabruf & Caching**: Bei jedem neuen Gutachtenauftrag werden alle relevanten Dokumente automatisch aus rvPUR geladen und im System rvGutachten zwischengespeichert, um eine sofortige und ausfallsichere Verfügbarkeit für den Gutachter zu gewährleisten.

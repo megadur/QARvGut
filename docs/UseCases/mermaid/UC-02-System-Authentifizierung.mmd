@@ -1,0 +1,76 @@
+sequenceDiagram
+    participant U as Benutzer
+    participant RG as rvGutachten System
+    participant DB as Datenbank
+    participant SM as Session Manager
+    participant ES as E-Mail System
+
+    Note over U,ES: UC02 Benutzer-Anmeldung am System
+
+    U->>RG: 1. Login-Seite aufrufen
+    RG->>U: 2. Login-Formular anzeigen
+
+    U->>RG: 3. E-Mail und Passwort eingeben
+    RG->>RG: 4. Eingaben validieren (Format, Pflichtfelder)
+
+    alt Ungültige Eingaben
+        RG->>U: 5a. Validierungsfehler anzeigen
+    else Eingaben gültig
+        RG->>DB: 5b. Benutzer-Authentifizierung (E-Mail, Passwort-Hash)
+        DB->>RG: 6. Authentifizierungsresultat
+
+        alt Falsche Anmeldedaten
+            RG->>RG: 7a. Fehlversuch zählen
+            alt Zu viele Fehlversuche (>3)
+                RG->>DB: 8a. Account temporär sperren (30 Min)
+                RG->>U: 9a. Account gesperrt - Wartezeit
+            else Normale Fehlermeldung
+                RG->>U: 8b. Anmeldedaten falsch
+            end
+        else Account gesperrt
+            RG->>U: 7b. Account gesperrt - Kontakt Information
+        else Authentifizierung erfolgreich
+            RG->>DB: 7c. Account-Status prüfen (aktiv/gesperrt)
+            DB->>RG: 8c. Status-Information
+
+            alt Account nicht aktiv
+                RG->>U: 9c. Account inaktiv - Kontakt Support
+            else Account aktiv
+                RG->>SM: 9d. Session erstellen
+                SM->>RG: 10. Session-Token + Security-Token
+
+                alt "Angemeldet bleiben" gewählt
+                    RG->>SM: 11a. Extended Session (7 Tage)
+                else Standard Session
+                    RG->>SM: 11b. Standard Session (8 Stunden)
+                end
+
+                RG->>DB: 12. Login-Zeitstempel + IP-Adresse speichern
+                RG->>RG: 13. Audit-Log erstellen
+
+                alt Erster Login
+                    RG->>U: 14a. Passwort-Änderung erforderlich
+                else Verdächtige Anmeldung (neue IP/Gerät)
+                    RG->>ES: 14b. Sicherheitsbenachrichtigung senden
+                    ES->>U: 15. E-Mail über neue Anmeldung
+                    RG->>U: 16. Zusätzliche Verifikation erforderlich
+                else Normale Anmeldung
+                    RG->>U: 14c. Weiterleitung zur Auftragsübersicht
+                end
+            end
+        end
+    end
+
+    Note over U,ES: Passwort vergessen (Erweiterte Funktion)
+    alt Passwort vergessen
+        U->>RG: 17. "Passwort vergessen" klicken
+        U->>RG: 18. E-Mail-Adresse eingeben
+        RG->>DB: 19. E-Mail validieren
+        alt E-Mail existiert
+            RG->>RG: 20a. Reset-Token generieren
+            RG->>ES: 21. Reset-E-Mail senden
+            ES->>U: 22. E-Mail mit Reset-Link
+        else E-Mail unbekannt
+            RG->>U: 20b. Allgemeine Bestätigungsmeldung (Security)
+        end
+    end
