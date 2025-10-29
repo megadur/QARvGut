@@ -1,0 +1,21 @@
+```mermaid
+sequenceDiagram
+    participant A as Akteur (Gutachter/DRV-Mitarbeiter)
+    participant SMD as rvSMD-System
+    participant GUT as rvGutachten-System
+    participant P as Partei (optional)
+
+    A->>SMD: Öffnet Auftragsübersicht
+    A->>SMD: Wählt Auftrag
+    A->>SMD: Wählt Statusänderung (angenommen, in Bearbeitung, abgeschlossen, storniert)
+    SMD->>SMD: Prüft Berechtigungen & Statusübergang
+    alt Ungültiger Statusübergang
+        SMD-->>A: Fehlermeldung
+    else Gültig
+        SMD->>SMD: Status setzen & Audit-Log
+        SMD->>GUT: Synchronisation Statusänderung
+        GUT->>GUT: Status übernehmen & Audit-Log
+        GUT->>P: Benachrichtigung (z.B. E-Mail)
+        SMD-->>A: Bestätigung
+    end
+```

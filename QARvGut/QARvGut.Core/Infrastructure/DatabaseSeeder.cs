@@ -18,6 +18,7 @@ namespace QARvGut.Core.Infrastructure
     {
         public async Task SeedAsync()
         {
+            var csFromContext = dbContext.GetConnectionStringContext();
             await dbContext.Database.MigrateAsync();
             await SeedDefaultUsersAsync();
             await SeedDemoDataAsync();

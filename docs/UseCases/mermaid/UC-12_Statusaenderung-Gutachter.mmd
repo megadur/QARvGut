@@ -1,0 +1,21 @@
+```mermaid
+sequenceDiagram
+    participant M as 8023-Mitarbeiter
+    participant SMD as rvSMD-System
+    participant GUT as rvGutachten-System
+    participant G as Gutachter
+
+    M->>SMD: Öffnet Gutachter-Verwaltung
+    M->>SMD: Wählt Gutachter
+    M->>SMD: Wählt Statusänderung (aktiv, gesperrt, reaktiviert, gelöscht)
+    SMD->>SMD: Prüft Berechtigungen & Statusübergang
+    alt Ungültiger Statusübergang
+        SMD-->>M: Fehlermeldung
+    else Gültig
+        SMD->>SMD: Status setzen & Audit-Log
+        SMD->>GUT: Synchronisation Statusänderung
+        GUT->>GUT: Status übernehmen & Audit-Log
+        GUT->>G: Benachrichtigung (z.B. E-Mail)
+        SMD-->>M: Bestätigung
+    end
+```

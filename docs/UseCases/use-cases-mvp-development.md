@@ -5,123 +5,69 @@
 **Typ:** MVP Use Case Spezifikation  
 **Erstellt:** 29. September 2025  
 **Product Owner:** Sarah  
-
----
-
-## Dokumentzweck
-
-Dieses Dokument definiert die Use Cases für das QARvGut MVP basierend auf der Analyse der 16 MVP User Stories aus UserStories.tsv. Es dient als Entwicklungsgrundlage für die Implementierung der Kernfunktionalitäten.
-
-## Beziehung zu bestehenden Dokumenten
-
-- **Quell-Stories:** `docs/UserStories.tsv` (MVP-markierte Stories)
-- **Architektur:** `docs/brownfield-architecture/`
-- **PRD:** `docs/prd/`
-- **Technische Spezifikation:** `docs/architecture/brownfield-architecture-enhanced-user-management.md`
-
----
-
-## Use Case Übersicht
-
-### Prioritäts-Matrix
-
-| Priorität | Use Cases | Implementierungs-Reihenfolge | Abhängigkeiten |
-|-----------|-----------|------------------------------|----------------|
-| **🔴 Kritisch** | UC-01, UC-02, UC-03, UC-10 | Sprint 1 (Wochen 1-2) | eLogin, rvSMD, DSGVO, rvPUR |
-| **🟡 Hoch** | UC-04, UC-05 | Sprint 2 (Wochen 3-4) | Authentifizierung |
-| **🔵 Mittel** | UC-06, UC-09 | Sprint 3 (Wochen 5-6) | Kern-Workflow |
-| **⚪ Niedrig** | UC-07, UC-08 | Sprint 3+ | Admin-System |
-
----
-
-## 🔴 Kritische Use Cases (Sprint 1)
-
 ### UC-01: Gutachter-Onboarding-Prozess
 
 **Use Case ID:** UC-01  
 **Name:** Gutachter-Registrierung und -Aktivierung  
 **Primärer Akteur:** Neuer Gutachter  
-**Sekundäre Akteure:** DRV-Mitarbeiter, eLogin-System, rvSMD-System  
-**Auslöser:** Gutachter möchte Zugang zu rvGutachten  
-
-**Vorbedingungen:**
-- Gutachter hat gültige Zulassung für Begutachtung
+**Primärer Akteur:** 8023-Mitarbeiter (in rvSMD)  
+**Sekundäre Akteure:** rvSMD-System, rvGutachten-System  
+**Auslöser:** Status eines Gutachters wird in rvSMD geändert (z.B. Aktivierung, Sperrung, Reaktivierung)
 - eLogin-System ist verfügbar
 - rvSMD-System ist verfügbar
-- DRV-Mitarbeiter für Freischaltung verfügbar
-
+- 8023-Mitarbeiter ist authentifiziert und autorisiert
+- Gutachter ist in rvSMD vorhanden
 **Erfolgsszenario:**
 1. Gutachter ruft Registrierungsseite auf
-2. Gutachter füllt Registrierungsformular aus (Name, E-Mail, EFN)
-3. System validiert Eingaben gegen eLogin/rvSMD
-4. System erstellt Benutzer-Account mit Status "pending"
-5. System benachrichtigt DRV-Mitarbeiter über neue Registrierung
-6. DRV-Mitarbeiter prüft Gutachter-Berechtigung in internen Systemen
-7. DRV-Mitarbeiter genehmigt Registrierung im System
-8. System generiert und sendet Aktivierungscode per E-Mail
-9. Gutachter gibt Aktivierungscode ein
-10. System aktiviert Account und gewährt vollen Zugang
-
-**Alternativszenarien:**
+1. 8023-Mitarbeiter öffnet Gutachter-Verwaltung in rvSMD
+2. Auswahl eines Gutachters
+3. Auswahl gewünschter Statusänderung (aktiv, gesperrt, reaktiviert, gelöscht)
+4. rvSMD prüft Berechtigungen und Statusübergänge
+5. rvSMD setzt neuen Status und dokumentiert Änderung
+6. rvSMD stößt Synchronisation nach rvGutachten an
+7. rvGutachten übernimmt Statusänderung automatisch
+8. System informiert Gutachter (z.B. per E-Mail)
 - **A1:** Ungültige E-Mail → Fehlermeldung, Eingabe wiederholen
 - **A2:** Gutachter bereits registriert → Hinweis auf bestehenden Account
-- **A3:** eLogin/rvSMD nicht erreichbar → Registrierung temporär gesperrt
-- **A4:** DRV-Mitarbeiter lehnt ab → Account wird deaktiviert, Gutachter informiert
+- **A1:** Ungültiger Statusübergang in rvSMD → Fehlermeldung
+- **A2:** Synchronisationsfehler → Logging, Support-Benachrichtigung
 - **A5:** Aktivierungscode falsch → Erneute Eingabe erlauben (3 Versuche)
 
-**Nachbedingungen:**
-- Gutachter-Account ist aktiv und einsatzbereit
 - Gutachter kann sich anmelden und Aufträge einsehen
-- Für jeden Auftrag sind alle relevanten Dokumente gemäß UC-10 automatisch im System verfügbar
-- Audit-Log der Registrierung ist erstellt
-
 **Technische Anforderungen:**
 - Integration mit eLogin-API
 - Integration mit rvSMD-Datenabgleich
 - E-Mail-Versand-Funktionalität
 - DSGVO-konforme Datenspeicherung
-
-**Quell-Stories:** US-RL.01, US-RL.04, US-RL.05  
-**Priorität:** Kritisch - Blocker für alle anderen Features  
-
----
+**Primärer Akteur:** Gutachter, 8023-Mitarbeiter (in rvSMD)  
+**Sekundäre Akteure:** rvSMD-System, rvGutachten-System  
+**Auslöser:** Status eines Gutachtenauftrags wird in rvSMD geändert (z.B. angenommen, in Bearbeitung, abgeschlossen, storniert) und nach rvGutachten synchronisiert
 
 ### UC-02: System-Authentifizierung
-
-**Use Case ID:** UC-02  
-**Name:** Benutzer-Anmeldung am System  
-**Primärer Akteur:** Registrierter Benutzer (Gutachter/Mitarbeiter)  
-**Auslöser:** Benutzer möchte auf rvGutachten zugreifen  
+ Auftrag ist in rvSMD vorhanden
+ Akteur ist berechtigt (in rvSMD)
 
 **Vorbedingungen:**
-- Benutzer hat aktivierten Account
-- System ist verfügbar
-- Browser unterstützt erforderliche Standards
-
-**Erfolgsszenario:**
-1. Benutzer navigiert zur Login-Seite
+1. Akteur (Gutachter oder 8023-Mitarbeiter) öffnet Auftragsübersicht in rvSMD
+2. Auswahl eines Auftrags
+3. Auswahl gewünschter Statusänderung (angenommen, in Bearbeitung, abgeschlossen, storniert)
+4. rvSMD prüft Berechtigungen und Statusübergänge
+5. rvSMD setzt neuen Status und dokumentiert Änderung
+6. rvSMD stößt Synchronisation nach rvGutachten an
+7. rvGutachten übernimmt Statusänderung automatisch
+8. System informiert relevante Parteien (z.B. per E-Mail)
 2. Benutzer gibt E-Mail-Adresse ein
 3. Benutzer gibt Passwort ein
-4. System validiert Anmeldedaten gegen Datenbank
-5. System prüft Account-Status (aktiv/gesperrt)
-6. System erstellt Session und Security-Token
-7. System leitet zur Auftragsübersicht weiter
+- **A1:** Ungültiger Statusübergang in rvSMD → Fehlermeldung
+- **A2:** Synchronisationsfehler → Logging, Support-Benachrichtigung
 
 **Alternativszenarien:**
-- **A1:** Falsche E-Mail/Passwort → Fehlermeldung, erneute Eingabe
-- **A2:** Account gesperrt → Informative Meldung, Kontakt-Information
 - **A3:** Zu viele Fehlversuche → Account temporär sperren (30 Min)
-- **A4:** Session-Timeout → Automatische Weiterleitung zur Login-Seite
 - **A5:** "Angemeldet bleiben" → Extended Session (7 Tage)
 
-**Erweiterte Funktionen:**
-- **E1:** Passwort vergessen → E-Mail mit Reset-Link senden
 - **E2:** Erster Login → Passwort-Änderung erzwingen
 - **E3:** Verdächtige Anmeldung → Zusätzliche Verifikation
-
-**Nachbedingungen:**
 - Benutzer ist authentifiziert und autorisiert
-- Session ist aktiv und gültig
 - Navigation zu geschützten Bereichen möglich
 
 **Sicherheitsanforderungen:**

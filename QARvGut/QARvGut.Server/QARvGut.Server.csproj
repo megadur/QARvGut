@@ -50,4 +50,9 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Logs\" />
+    <Folder Include="NewFolder\" />
+  </ItemGroup>
+
 </Project>
