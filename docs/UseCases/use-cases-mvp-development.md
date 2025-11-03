@@ -10,64 +10,87 @@
 **Use Case ID:** UC-01  
 **Name:** Gutachter-Registrierung und -Aktivierung  
 **Primärer Akteur:** Neuer Gutachter  
-**Primärer Akteur:** 8023-Mitarbeiter (in rvSMD)  
-**Sekundäre Akteure:** rvSMD-System, rvGutachten-System  
-**Auslöser:** Status eines Gutachters wird in rvSMD geändert (z.B. Aktivierung, Sperrung, Reaktivierung)
+**Sekundäre Akteure:** DRV-Mitarbeiter, eLogin-System, rvSMD-System  
+**Auslöser:** Gutachter möchte Zugang zu rvGutachten  
+
+**Vorbedingungen:**
+- Gutachter hat gültige Zulassung für Begutachtung
 - eLogin-System ist verfügbar
 - rvSMD-System ist verfügbar
-- 8023-Mitarbeiter ist authentifiziert und autorisiert
-- Gutachter ist in rvSMD vorhanden
+- DRV-Mitarbeiter für Freischaltung verfügbar
+
 **Erfolgsszenario:**
 1. Gutachter ruft Registrierungsseite auf
-1. 8023-Mitarbeiter öffnet Gutachter-Verwaltung in rvSMD
-2. Auswahl eines Gutachters
-3. Auswahl gewünschter Statusänderung (aktiv, gesperrt, reaktiviert, gelöscht)
-4. rvSMD prüft Berechtigungen und Statusübergänge
-5. rvSMD setzt neuen Status und dokumentiert Änderung
-6. rvSMD stößt Synchronisation nach rvGutachten an
-7. rvGutachten übernimmt Statusänderung automatisch
-8. System informiert Gutachter (z.B. per E-Mail)
+2. Gutachter füllt Registrierungsformular aus (Name, E-Mail, EFN)
+3. System validiert Eingaben gegen eLogin/rvSMD
+4. System erstellt Benutzer-Account mit Status "pending"
+5. System benachrichtigt DRV-Mitarbeiter über neue Registrierung
+6. DRV-Mitarbeiter prüft Gutachter-Berechtigung in internen Systemen
+7. DRV-Mitarbeiter genehmigt Registrierung im System
+8. System generiert und sendet Aktivierungscode per E-Mail
+9. Gutachter gibt Aktivierungscode ein
+10. System aktiviert Account und gewährt vollen Zugang
+
+**Alternativszenarien:**
 - **A1:** Ungültige E-Mail → Fehlermeldung, Eingabe wiederholen
 - **A2:** Gutachter bereits registriert → Hinweis auf bestehenden Account
-- **A1:** Ungültiger Statusübergang in rvSMD → Fehlermeldung
-- **A2:** Synchronisationsfehler → Logging, Support-Benachrichtigung
+- **A3:** eLogin/rvSMD nicht erreichbar → Registrierung temporär gesperrt
+- **A4:** DRV-Mitarbeiter lehnt ab → Account wird deaktiviert, Gutachter informiert
 - **A5:** Aktivierungscode falsch → Erneute Eingabe erlauben (3 Versuche)
 
+**Nachbedingungen:**
+- Gutachter-Account ist aktiv und einsatzbereit
 - Gutachter kann sich anmelden und Aufträge einsehen
+- Für jeden Auftrag sind alle relevanten Dokumente gemäß UC-10 automatisch im System verfügbar
+- Audit-Log der Registrierung ist erstellt
+
 **Technische Anforderungen:**
 - Integration mit eLogin-API
 - Integration mit rvSMD-Datenabgleich
 - E-Mail-Versand-Funktionalität
 - DSGVO-konforme Datenspeicherung
-**Primärer Akteur:** Gutachter, 8023-Mitarbeiter (in rvSMD)  
-**Sekundäre Akteure:** rvSMD-System, rvGutachten-System  
-**Auslöser:** Status eines Gutachtenauftrags wird in rvSMD geändert (z.B. angenommen, in Bearbeitung, abgeschlossen, storniert) und nach rvGutachten synchronisiert
+
+**Quell-Stories:** US-RL.01, US-RL.04, US-RL.05  
+**Priorität:** Kritisch - Blocker für alle anderen Features  
+
+---
 
 ### UC-02: System-Authentifizierung
- Auftrag ist in rvSMD vorhanden
- Akteur ist berechtigt (in rvSMD)
+
+**Use Case ID:** UC-02  
+**Name:** Benutzer-Anmeldung am System  
+**Primärer Akteur:** Registrierter Benutzer (Gutachter/Mitarbeiter)  
+**Auslöser:** Benutzer möchte auf rvGutachten zugreifen  
 
 **Vorbedingungen:**
-1. Akteur (Gutachter oder 8023-Mitarbeiter) öffnet Auftragsübersicht in rvSMD
-2. Auswahl eines Auftrags
-3. Auswahl gewünschter Statusänderung (angenommen, in Bearbeitung, abgeschlossen, storniert)
-4. rvSMD prüft Berechtigungen und Statusübergänge
-5. rvSMD setzt neuen Status und dokumentiert Änderung
-6. rvSMD stößt Synchronisation nach rvGutachten an
-7. rvGutachten übernimmt Statusänderung automatisch
-8. System informiert relevante Parteien (z.B. per E-Mail)
+- Benutzer hat aktivierten Account
+- System ist verfügbar
+- Browser unterstützt erforderliche Standards
+
+**Erfolgsszenario:**
+1. Benutzer navigiert zur Login-Seite
 2. Benutzer gibt E-Mail-Adresse ein
 3. Benutzer gibt Passwort ein
-- **A1:** Ungültiger Statusübergang in rvSMD → Fehlermeldung
-- **A2:** Synchronisationsfehler → Logging, Support-Benachrichtigung
+4. System validiert Anmeldedaten gegen Datenbank
+5. System prüft Account-Status (aktiv/gesperrt)
+6. System erstellt Session und Security-Token
+7. System leitet zur Auftragsübersicht weiter
 
 **Alternativszenarien:**
+- **A1:** Falsche E-Mail/Passwort → Fehlermeldung, erneute Eingabe
+- **A2:** Account gesperrt → Informative Meldung, Kontakt-Information
 - **A3:** Zu viele Fehlversuche → Account temporär sperren (30 Min)
+- **A4:** Session-Timeout → Automatische Weiterleitung zur Login-Seite
 - **A5:** "Angemeldet bleiben" → Extended Session (7 Tage)
 
+**Erweiterte Funktionen:**
+- **E1:** Passwort vergessen → E-Mail mit Reset-Link senden
 - **E2:** Erster Login → Passwort-Änderung erzwingen
 - **E3:** Verdächtige Anmeldung → Zusätzliche Verifikation
+
+**Nachbedingungen:**
 - Benutzer ist authentifiziert und autorisiert
+- Session ist aktiv und gültig
 - Navigation zu geschützten Bereichen möglich
 
 **Sicherheitsanforderungen:**
@@ -78,7 +101,7 @@
 
 **Quell-Stories:** US-RL.07, US-RL.08  
 **Priorität:** Kritisch - Grundlage für alle authentifizierten Features  
-**Status:** ��� In Prüfung - Signaturkarte wird evaluiert  
+**Status:** ⚠️ In Prüfung - Signaturkarte wird evaluiert  
 
 ---
 
@@ -456,26 +479,84 @@ Konfigurierbare Parameter:
 **Quell-Stories:** US-AM.02, US-AM.03, US-AM.05, US-NF.01  
 **Priorität:** Mittel/Hoch – Voraussetzung für effiziente Auftragsbearbeitung
 
+
 ---
 
-#### Sequenzdiagramm
+### UC-11: Statusänderungen Gutachter
 
-```mermaid
-sequenceDiagram
-    participant RVS as rvSMD
-    participant RVG as rvGutachten
-    participant JOB as Background Job
-    participant PUR as rvPUR
-    participant G as Gutachter
+**Use Case ID:** UC-11  
+**Name:** Statusänderungen Gutachter  
+**Primärer Akteur:** 8023-Mitarbeiter (in rvSMD)  
+**Sekundäre Akteure:** rvSMD-System, rvGutachten-System  
+**Auslöser:** Status eines Gutachters wird in rvSMD geändert (z.B. Aktivierung, Sperrung, Reaktivierung)
 
-    RVS->>RVG: Neuer Gutachtenauftrag (Auftragsdaten)
-    RVG->>RVG: Auftrag anlegen
-    RVG->>JOB: Dokumentenabruf-Job starten
-    JOB->>PUR: Dokumente zu Auftrag abrufen
-    PUR-->>JOB: Dokumente (Dateien, Metadaten)
-    JOB->>RVG: Dokumente im Cache speichern
-    G->>RVG: Auftragsdetails & Dokumente anzeigen
-    RVG-->>G: Dokumente bereitstellen (aus Cache)
-    Note over JOB,PUR: Bei neuen/aktualisierten Dokumenten: Cache-Refresh
-```
+**Vorbedingungen:**
+
+- 8023-Mitarbeiter ist authentifiziert und autorisiert
+- Gutachter ist in rvSMD vorhanden
+
+**Erfolgsszenario:**
+
+1. 8023-Mitarbeiter öffnet Gutachter-Verwaltung in rvSMD
+2. Auswahl eines Gutachters
+3. Auswahl gewünschter Statusänderung (aktiv, gesperrt, reaktiviert, gelöscht)
+4. rvSMD prüft Berechtigungen und Statusübergänge
+5. rvSMD setzt neuen Status und dokumentiert Änderung
+6. rvSMD stößt Synchronisation nach rvGutachten an
+7. rvGutachten übernimmt Statusänderung automatisch
+8. System informiert Gutachter (z.B. per E-Mail)
+
+**Alternativszenarien:**
+
+- **A1:** Ungültiger Statusübergang in rvSMD → Fehlermeldung
+- **A2:** Synchronisationsfehler → Logging, Support-Benachrichtigung
+
+**Nachbedingungen:**
+
+- Status des Gutachters ist aktualisiert
+- Audit-Log der Statusänderung ist erstellt
+
+**Quell-Stories:** US-RL.09, US-RL.10  
+**Priorität:** Mittel - Wichtig für Gutachter-Verwaltung
+
+---
+
+### UC-12: Statusänderungen Gutachtenauftrag
+
+**Use Case ID:** UC-12  
+**Name:** Statusänderungen Gutachtenauftrag  
+**Primärer Akteur:** Gutachter, 8023-Mitarbeiter (in rvSMD)  
+**Sekundäre Akteure:** rvSMD-System, rvGutachten-System  
+**Auslöser:** Status eines Gutachtenauftrags wird in rvSMD geändert (z.B. angenommen, in Bearbeitung, abgeschlossen, storniert) und nach rvGutachten synchronisiert
+
+**Vorbedingungen:**
+
+- Auftrag ist in rvSMD vorhanden
+- Akteur ist berechtigt (in rvSMD)
+
+**Erfolgsszenario:**
+
+1. Akteur (Gutachter oder 8023-Mitarbeiter) öffnet Auftragsübersicht in rvSMD
+2. Auswahl eines Auftrags
+3. Auswahl gewünschter Statusänderung (angenommen, in Bearbeitung, abgeschlossen, storniert)
+4. rvSMD prüft Berechtigungen und Statusübergänge
+5. rvSMD setzt neuen Status und dokumentiert Änderung
+6. rvSMD stößt Synchronisation nach rvGutachten an
+7. rvGutachten übernimmt Statusänderung automatisch
+8. System informiert relevante Parteien (z.B. per E-Mail)
+
+**Alternativszenarien:**
+
+- **A1:** Ungültiger Statusübergang in rvSMD → Fehlermeldung
+- **A2:** Synchronisationsfehler → Logging, Support-Benachrichtigung
+
+**Nachbedingungen:**
+
+- Status des Auftrags ist aktualisiert
+- Audit-Log der Statusänderung ist erstellt
+
+**Quell-Stories:** US-AM.04, US-AM.06, US-BN.02  
+**Priorität:** Mittel - Wichtig für Auftrags-Verwaltung
+
+---
 
