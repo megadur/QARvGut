@@ -1,0 +1,107 @@
+Zeile,Name,Typ,Kard,Bedeutung (Quelle),"Beispiel/e
+Wertebereich / Anzahl Stellen"
+User,userid,uuid,1,,"550e8400-e29b-41d4-a716-446655440000
+36 Stellen"
+User,created,string (datetime),1,wann wurde der User erstellt Gutachtermitarbeiter,yyyy-mm-ddTHH:M M:SSZ
+User,gesperrtSeit,string (datetime),?,Wann wurde der User gesperrt?,yyyy-mm-ddTHH:M M:SSZ
+User,rollen,string,+,"(Gutachter, Gutachtermitarbeiter, Admin, ... )",
+User,status,string (enum),1,"z.b. active, locked, unverified ...",
+Gutachter,userId,uuid,1,,"550e8400-e29b-41d4-a716-446655440000
+36 Stellen"
+Gutachter,created,string (datetime),1,wann wurde der User in rvGutachten erstellt,yyyy-mm-ddTHH:M M:SSZ
+Gutachter,lastLogin,LastLogin,?,,
+Gutachter,gesperrtSeit,string (datetime),?,Wann wurde der User gesperrt?,yyyy-mm-ddTHH:M M:SSZ
+Gutachter,rollen,string,+,"(Gutachter, Gutachtermitarbeiter, Admin, ... )",
+Gutachter,status,string (enum),1,"z.b. active, locked, unverified ...",
+Gutachter,mitarbeiter,Mitarbeiter,*,Liste der Mitarbeiter des Gutachters,
+Gutachter,anrede,string,1,Anrede des Gutachters (Quelle? eLogin: ist in Version 3.8 nicht mehr enthalten),Frau / Herr
+Gutachter,titel,string,?,Titel des Gutachters (Quelle: Kann in eLogin),Dr./Graf/Prof.
+Gutachter,nachname,string,1,Nachname des Gutachters (Pflicht in eLogin) (Quelle: Pflicht in eLogin),"Günther-Bartholow
+max. 50 Zeichen"
+Gutachter,vorname,string,1,Vorname des Gutachters (Pflicht in eLogin) (Quelle: Pflicht eLogin),"Gerd
+max. 50 Zeichen"
+Gutachter,namenszusatz,string,?,Namenszusatz des Gutachters (Quelle: Kann in eLogin),"zu / von
+max. 25 Zeichen"
+Gutachter,kontakte,Kontakt,+,Pflicht eLogin: eMail und Telefonnummer,
+Gutachter,fachrichtung,string,+,,
+Gutachter,geburtsdatum,date,?,Geburtsdatum des Gutachters (Pflicht in eLogin: dd.mm.yyyy: ist ab Januar '26 nicht mehr enthalten),"01.04.1948
+yyyy-mm-dd"
+Gutachter,adresse,Adresse,+,"Pflicht eLogin: PLZ, Ort, Land (Quelle: rvSMD)",
+Gutachter,efn,number(15),1,"einheitliche Fortbildungsnummer (Quelle: rvSMD); Diese Nummer ist personenbezogen, lebenslang gültig und identifiziert eindeutig die Person.","802760802176345
+15 Ziffern"
+Gutachter,zuordnung,RvSmdId,+,Zuordnung zu den Trägern,
+Mitarbeiter,userid,uuid,1,,"550e8400-e29b-41d4-a716-446655440000
+36 Stellen"
+Mitarbeiter,created,string (datetime),1,wann wurde der User erstellt Gutachtermitarbeiter,yyyy-mm-ddTHH:M M:SSZ
+Mitarbeiter,gesperrtSeit,string (datetime),?,Wann wurde der User gesperrt?,yyyy-mm-ddTHH:M M:SSZ
+Mitarbeiter,rollen,string,+,"(Gutachter, Gutachtermitarbeiter, Admin, ... )",
+Mitarbeiter,status,string (enum),1,"z.b. active, locked, unverified ...",
+Mitarbeiter,gutachter,Gutachter,1,Referenz auf den Gutachter für den der Mitarbeiter tätig ist,
+Mitarbeiter,anrede,string,1,,Frau / Herr
+Mitarbeiter,titel,string,?,,Dr./Graf/Prof.
+Mitarbeiter,nachname,string,1,,"Günther-Bartholow
+max. 50 Zeichen"
+Mitarbeiter,vorname,string,1,,"Gerd
+max. 50 Zeichen"
+Mitarbeiter,namenszusatz,string,?,,max. 25 Zeichen
+Mitarbeiter,adresse,Adresse,1,,
+Mitarbeiter,kontakte,Kontakt,+,Pflicht eLogin: eMail und Telefonnummer,
+Administrator,userid,uuid,1,,"550e8400-e29b-41d4-a716-446655440000
+36 Stellen"
+Administrator,created,string (datetime),1,wann wurde der User erstellt,yyyy-mm-ddTHH:M M:SSZ
+Administrator,gesperrtSeit,string (datetime),?,Wann wurde der User gesperrt?,yyyy-mm-ddTHH:M M:SSZ
+Administrator,rollen,string,+,"(Gutachter, Gutachtermitarbeiter, Admin, ... )",
+Administrator,status,string (enum),1,"z.b. active, locked, unverified ...",
+Administrator,traeger,Träger,1,,
+Administrator,anrede,string,1,,Frau / Herr
+Administrator,titel,string,?,,Dr./Graf/Prof.
+Administrator,nachname,string,1,,"Günther-Bartholow
+max. 50 Zeichen"
+Administrator,vorname,string,1,,"Gerd
+max. 50 Zeichen"
+Administrator,namenszusatz,string,?,,max. 25 Zeichen
+Administrator,adresse,Adresse,1,,
+Administrator,kontakte,Kontakt,+,,
+LastLogin,logintimestamp,string (datetime),1,Zeitstempel des letzten Logins,yyyy-mm-ddTHH:M M:SSZ
+LastLogin,ip,string,1,IP-Adresse des letzten Logins,
+Kontakt,typ,ENUM,1,"""Email"", ""Telefon"", ""unbekannt""",
+Kontakt,wert,string,*,"Telefonnummer, Emailadresse",
+Kontakt,anmerkung,string,1,"(primär, privat, dienstlich oder mobil, fax)",
+Adresse,,,,,
+Adresse,strasse,string,1,,
+Adresse,hausnummer,string,?,,
+Adresse,plz,string,1,,
+Adresse,ort,string,1,,
+Adresse,typ,ENUM,1,"zur Unterscheidung bei mehreren Adressen: ""Wohnadresse"", ""Postadresse"", ...",
+Proband,vsnr,string,1,Versicherungsnummer des Probanden (Quelle: rvSMD),
+Proband,gebdatum,string(date),1,yyyy-mm-dd steht in der VSNR (Quelle: rvSMD),yyyy-mm-dd
+Proband,name,string,1,Nachname des Probanden (Quelle: rvSMD),
+Proband,vorname,string,1,Vorname des Probanden (Quelle: rvSMD),
+Auftrag,auftragsId,string(uuid),1,,"550e8400-e29b-41d4-a716-446655440000
+36 Stellen"
+Auftrag,rvPurAuftragsID,string,?,"rvPuR-AuftragsID anhand derer die Dokumente aus rvPuR/rvArchiv ermittelt werden (Backend-Nutzung, nicht vom Frontend benötigt)",
+Auftrag,proband,Proband,1,Verweis (Quelle: rvSMD),
+Auftrag,gutachter,Gutachter,1,Verweis (Quelle: rvSMD),
+Auftrag,gutachtenstatus,Gutachtenstatus,+,Verweis,
+Auftrag,anhang,Document,*,Verweis,
+Auftrag,auftraggeber,Träger,1,"Sagt aus, durch welchen Träger die Beauftragung erfolgte. (Quelle: rvSMD)",
+Auftrag,auftragsDatum,string(date),1,Wann wurde das Gutachten in rvSMD für den Gutachter beauftragt. (Quelle: rvSMD),yyyy-mm-dd
+Auftrag,eingangsDatum,string(datetime),1,Wann ist der Auftrag in rvGutachten angekommen.,yyyy-mm-ddTHH:M M:SSZ
+Auftrag,stornierungsDatum,string(datetime),?,Wann wurde der Auftrag storniert? Wichtig für Einhaltung von Löschfristen. (Quelle: rvSMD),yyyy-mm-ddTHH:M M:SSZ
+Auftrag,dokumente,Document,+,"Medizinische Dokumente und Gutachter-Dokumente (z.B. Anschreiben / Auftrag, Information über Bevollmächtigten etc.)",
+Gutachtenstatus,status,ENUM,1,"""neu"", ""einbestellt"" , ""in Bearbeitung"", ""abgeschlossen"", ""storniert"", ""Stellungnahme angefordert"" <= Klärung in Sprint 5",
+Gutachtenstatus,changedOn,string(timestmp),1,Wann wurde der Status geändert,yyyy-mm-ddTHH:M M:SSZ
+Document,documentId,string(uuid),1,,"550e8400-e29b-41d4-a716-446655440000
+36 Stellen"
+Document,metadata,DocumentMetadata,1,Verweis,
+Document,data,binary,1,Der Stream der Daten,
+Nachricht,timestamp,string(timestamp),1,yyyy-mm-ddTHH:MM:SSZ,
+Nachricht,Titel,string,1,Betreff,
+Nachricht,gelesen,bool,1,Flag,
+Document,name,string,1,Der Anzeigename / kurze Beschreibung,
+Document,filesize,number(int),?,Größe in Bytes,
+Document,filename,string,1,"Dateiname (erlaubte Zeichen: A-Z, a-z, 0-9, -, _ , . )",
+Document,filetype,string,1,Dateityp,
+RvSmdId,KTAN,string,1,KTAN ist die DRV-übergreifende eindeutige Nummer des Trägers bei internen Gutachten,"KTAN-Träger-Liste
+2 Ziffern (führende 0 möglich!)"
+RvSmdId,GutachterId,string,1,ID aus rvSMD,

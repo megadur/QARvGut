@@ -11,12 +11,12 @@
 
 | Symbol | Bedeutung |
 |--------|-----------|
-| 🔍 | **Read** - Daten werden gelesen/abgefragt |
-| 📝 | **Create** - Daten werden erstellt |
-| 🔄 | **Update** - Daten werden aktualisiert |
-| ✅ | **Display** - Daten werden dem Benutzer angezeigt |
-| ⚠️ | **Validate** - Daten werden validiert/geprüft |
-| 🔒 | **Check** - Berechtigungsprüfung |
+| [R] | **Read** - Daten werden gelesen/abgefragt |
+| [C] | **Create** - Daten werden erstellt |
+| [U] | **Update** - Daten werden aktualisiert |
+| [OK] | **Display** - Daten werden dem Benutzer angezeigt |
+| [WARN] | **Validate** - Daten werden validiert/geprüft |
+| [AUTH] | **Check** - Berechtigungsprüfung |
 | - | Nicht beteiligt in diesem Schritt |
 
 ---
@@ -55,29 +55,29 @@
 
 | Attribut | Typ | MVP | Step 2: GET Orders | Step 3: Response | Step 4b: Display | Step 6a: Refresh | Step 7a: Response | Step 10a: Update Status | Step 16: GET Warnings | Step 17: Response |
 |----------|-----|-----|-------------------|------------------|------------------|------------------|-------------------|------------------------|----------------------|-------------------|
-| **auftragsId** | uuid | 1 | 🔍 | ✅ | ✅ | 🔍 | ✅ | 🔍 | 🔍 | - |
-| **rvPurAuftragsID** | string | 1 | ❌ | ❌ | ❌ | ❌ | ❌ | - | ❌ | - |
-| **proband** | Proband | 1 | 🔍 | ✅ | ✅ | 🔍 | ✅ | - | - | - |
-| **gutachter** | Gutachter | 1 | ❌ | ❌ | ❌ | ❌ | ❌ | - | ❌ | - |
-| **kennzeichen1** | string | - | 🔍 | ✅ | ✅ | 🔍 | ✅ | - | - | - |
-| **kennzeichen2** | string | - | 🔍 | ✅ | ✅ | 🔍 | ✅ | - | - | - |
-| **gutachtenstatus** | Gutachtenstatus | 1 | 🔍 | ✅ | ✅ | 🔍 | ✅ | 🔄 | - | - |
-| **anhang** | Document[] | 1 | 🔍 | ✅ | - | 🔍 | ✅ | - | - | - |
-| **gutachten** | Gutachten | - | 🔍 | ✅ | - | 🔍 | ✅ | - | - | - |
-| **auftraggeber** | Träger | 1 | ❌ | ❌ | ❌ | ❌ | ❌ | - | ❌ | - |
-| **auftragsDatum** | date | 1 | 🔍 | ✅ | ✅ | 🔍 | ✅ | - | - | - |
-| **eingangsDatum** | datetime | 1 | 🔍 | ✅ | ✅ | 🔍 | ✅ | - | - | - |
-| **stornierungsDatum** | datetime | 1 | ❌ | ❌ | ❌ | ❌ | ❌ | - | ❌ | - |
-| **bereitstellungsDatum** | datetime | - | 🔍 | ✅ | - | 🔍 | ✅ | - | - | - |
-| **einbestellDatum** | date | - | 🔍 | ✅ | ✅ | 🔍 | ✅ | - | - | - |
-| **dokumente** | Document[] | 1 | 🔍 | ⚠️ | - | 🔍 | ⚠️ | - | - | - |
-| **mahnungen** | Mahnung[] | - | ❌ | ❌ | ❌ | ❌ | ❌ | - | 🔍 | ✅ |
+| **auftragsId** | uuid | 1 | [R] | [OK] | [OK] | [R] | [OK] | [R] | [R] | - |
+| **rvPurAuftragsID** | string | ? | [NO] | [NO] | [NO] | [NO] | [NO] | - | [NO] | - |
+| **proband** | Proband | 1 | [R] | [OK] | [OK] | [R] | [OK] | - | - | - |
+| **gutachter** | Gutachter | 1 | [NO] | [NO] | [NO] | [NO] | [NO] | - | [NO] | - |
+| **kennzeichen1** | string | - | [R] | [OK] | [OK] | [R] | [OK] | - | - | - |
+| **kennzeichen2** | string | - | [R] | [OK] | [OK] | [R] | [OK] | - | - | - |
+| **gutachtenstatus** | Gutachtenstatus | 1 | [R] | [OK] | [OK] | [R] | [OK] | [U] | - | - |
+| **anhang** | Document[] | 1 | [R] | [OK] | - | [R] | [OK] | - | - | - |
+| **gutachten** | Gutachten | - | [R] | [OK] | - | [R] | [OK] | - | - | - |
+| **auftraggeber** | Träger | 1 | [NO] | [NO] | [NO] | [NO] | [NO] | - | [NO] | - |
+| **auftragsDatum** | date | 1 | [R] | [OK] | [OK] | [R] | [OK] | - | - | - |
+| **eingangsDatum** | datetime | 1 | [R] | [OK] | [OK] | [R] | [OK] | - | - | - |
+| **stornierungsDatum** | datetime | 1 | [NO] | [NO] | [NO] | [NO] | [NO] | - | [NO] | - |
+| **bereitstellungsDatum** | datetime | - | [R] | [OK] | - | [R] | [OK] | - | - | - |
+| **einbestellDatum** | date | - | [R] | [OK] | [OK] | [R] | [OK] | - | - | - |
+| **dokumente** | Document[] | 1 | [R] | [WARN] | - | [R] | [WARN] | - | - | - |
+| **mahnungen** | Mahnung[] | - | [NO] | [NO] | [NO] | [NO] | [NO] | - | [R] | [OK] |
 
-**🔴 Kritische Lücken:**
-- `rvPurAuftragsID` fehlt in allen Schritten (MVP=1)
+**[CRIT] Kritische Lücken:**
+- `rvPurAuftragsID` fehlt in allen Schritten (MVP optional, nur Backend-Nutzung)
 - `gutachter` fehlt in allen Schritten (MVP=1)
 - `auftraggeber` fehlt in allen Schritten (MVP=1)
-- `stornierungsDatum` fehlt in allen Schritten (MVP=1)
+- `stornierungsDatum` fehlt in allen Schritten (MVP optional)
 - `mahnungen` nur über separaten API-Aufruf verfügbar (nicht in Hauptdaten)
 
 ---
@@ -86,12 +86,12 @@
 
 | Attribut | Typ | MVP | Step 2: GET Orders | Step 3: Response | Step 4b: Display | Step 6a: Refresh | Step 7a: Response |
 |----------|-----|-----|-------------------|------------------|------------------|------------------|-------------------|
-| **vsnr** | string | 1 | 🔍 | ✅ | ✅ | 🔍 | ✅ |
-| **gebdatum** | date | 1 | 🔍 | ✅ | - | 🔍 | ✅ |
-| **name** | string | 1 | 🔍 | ✅ | ✅ | 🔍 | ✅ |
-| **vorname** | string | 1 | 🔍 | ✅ | ✅ | 🔍 | ✅ |
-| **contacts** | Kontakt[] | - | 🔍 | ✅ | - | 🔍 | ✅ |
-| **adresse** | Adresse | - | 🔍 | ✅ | - | 🔍 | ✅ |
+| **vsnr** | string | 1 | [R] | [OK] | [OK] | [R] | [OK] |
+| **gebdatum** | date | 1 | [R] | [OK] | - | [R] | [OK] |
+| **name** | string | 1 | [R] | [OK] | [OK] | [R] | [OK] |
+| **vorname** | string | 1 | [R] | [OK] | [OK] | [R] | [OK] |
+| **contacts** | Kontakt[] | - | [R] | [OK] | - | [R] | [OK] |
+| **adresse** | Adresse | - | [R] | [OK] | - | [R] | [OK] |
 
 **Anmerkung:** Proband-Daten werden als Teil des `GutachtenauftragDto` übertragen via nested `ProbandDto`.
 
@@ -101,8 +101,8 @@
 
 | Attribut | Typ | MVP | Step 2: GET Orders | Step 3: Response | Step 4b: Display | Step 10a: Update Status | Step 11a: Confirm |
 |----------|-----|-----|-------------------|------------------|------------------|------------------------|-------------------|
-| **status** | enum | 1 | 🔍 | ✅ | ✅ | 🔄 | ✅ |
-| **changedOn** | timestamp | 1 | 🔍 | ✅ | - | 📝 | ✅ |
+| **status** | enum | 1 | [R] | [OK] | [OK] | [U] | [OK] |
+| **changedOn** | timestamp | 1 | [R] | [OK] | - | [C] | [OK] |
 
 **Enum-Werte:** `neu`, `einbestellt`, `in Bearbeitung`, `abgeschlossen`, `storniert`, `Stellungnahme angefordert`
 
@@ -112,11 +112,11 @@
 
 | Attribut | Typ | MVP | Step 14a: Display Icon | Step 16: GET Warnings | Step 17: Response | Step 18: Display Details |
 |----------|-----|-----|----------------------|----------------------|-------------------|-------------------------|
-| **gemahntAm** | datetime | - | - | 🔍 | ✅ | ✅ |
-| **nummerDerMahnung** | number | - | - | 🔍 | ✅ | ✅ |
-| **inhalt** | string | - | - | 🔍 | ✅ | ✅ |
+| **gemahntAm** | datetime | - | - | [R] | [OK] | [OK] |
+| **nummerDerMahnung** | number | - | - | [R] | [OK] | [OK] |
+| **inhalt** | string | - | - | [R] | [OK] | [OK] |
 
-**🔴 Problem:** Mahnungen sind nicht im `GutachtenauftragDto` enthalten, sondern erfordern einen separaten API-Aufruf.
+**[CRIT] Problem:** Mahnungen sind nicht im `GutachtenauftragDto` enthalten, sondern erfordern einen separaten API-Aufruf.
 
 ---
 
@@ -124,7 +124,7 @@
 
 | Attribut | Typ | MVP | Step 2: GET Orders (Query Param) | Bemerkung |
 |----------|-----|-----|----------------------------------|-----------|
-| **userId** | uuid | 1 | 🔒 | Via X-UserId Header/Token |
+| **userId** | uuid | 1 | [AUTH] | Via X-UserId Header/Token |
 | **name** | Name | 1 | - | Nicht in Response, nur für Authentifizierung |
 
 **Anmerkung:** Gutachter-Kontext wird via Authentication Header (`X-UserId`, `X-GutachterId`) übertragen, aber Gutachter-Details sind nicht Teil der Auftragsdaten.
@@ -147,13 +147,13 @@ Response: GutachtenauftragListDto
 ```
 
 **Gelieferte Business Objects:**
-- ✅ Auftrag (teilweise - siehe kritische Lücken)
-- ✅ Proband (vollständig)
-- ✅ Gutachtenstatus (vollständig)
-- ⚠️ Dokumente (nur Metadaten via `anhaenge`)
-- ❌ Mahnungen (nicht enthalten)
-- ❌ Gutachter (nicht enthalten)
-- ❌ Auftraggeber/Träger (nicht enthalten)
+- [OK] Auftrag (teilweise - siehe kritische Lücken)
+- [OK] Proband (vollständig)
+- [OK] Gutachtenstatus (vollständig)
+- [WARN] Dokumente (nur Metadaten via `anhaenge`)
+- [NO] Mahnungen (nicht enthalten)
+- [NO] Gutachter (nicht enthalten)
+- [NO] Auftraggeber/Träger (nicht enthalten)
 
 ### 2. Status aktualisieren
 ```
@@ -170,8 +170,8 @@ Response: 204 No Content
 ```
 
 **Aktualisierte Business Objects:**
-- 🔄 Gutachtenstatus.status
-- 🔄 Gutachtenstatus.changedOn
+- [U] Gutachtenstatus.status
+- [U] Gutachtenstatus.changedOn
 
 ### 3. Mahnungen laden
 ```
@@ -184,7 +184,7 @@ Response: MahnungDto[]
 ```
 
 **Gelieferte Business Objects:**
-- ✅ Mahnung[] (vollständig)
+- [OK] Mahnung[] (vollständig)
 
 ### 4. Status-Sync zu rvSMD (External)
 ```
@@ -218,10 +218,10 @@ Body: {
 
 | Business Object | Attribut | MVP | Auswirkung auf UC-04 |
 |----------------|----------|-----|---------------------|
-| Auftrag | rvPurAuftragsID | 1 | ❌ Dokumente aus rvPuR/rvArchiv können nicht zugeordnet werden |
-| Auftrag | gutachter | 1 | ❌ Zuständiger Gutachter nicht sichtbar (nur implizit via Auth) |
-| Auftrag | auftraggeber | 1 | ❌ Beauftragender Träger nicht in Übersicht sichtbar |
-| Auftrag | stornierungsDatum | 1 | ❌ Löschfrist-Berechnung nicht möglich |
+| Auftrag | rvPurAuftragsID | ? | [NO] Backend: Dokumente aus rvPuR/rvArchiv können nicht zugeordnet werden (optional) |
+| Auftrag | gutachter | 1 | [NO] Zuständiger Gutachter nicht sichtbar (nur implizit via Auth) |
+| Auftrag | auftraggeber | 1 | [NO] Beauftragender Träger nicht in Übersicht sichtbar |
+| Auftrag | stornierungsDatum | 1 | [NO] Löschfrist-Berechnung nicht möglich |
 
 ### 2. Fragmentierte Daten
 
@@ -272,14 +272,14 @@ GutachtenauftragDto {
 
 | Anforderung | Business Object | Attribut | Status | Quelle |
 |-------------|----------------|----------|--------|---------|
-| Aufträge filtern nach Status | Gutachtenstatus | status | ✅ | Step 2-3 |
-| Aufträge sortieren nach Datum | Auftrag | auftragsDatum | ✅ | Step 2-3 |
-| Proband identifizieren | Proband | vsnr, name, vorname | ✅ | Step 2-3 |
-| Mahnung anzeigen | Mahnung | nummerDerMahnung | ⚠️ | Separater Call (Step 16-17) |
-| Status ändern | Gutachtenstatus | status, changedOn | ✅ | Step 10a-11a |
-| Stornierte Aufträge kennzeichnen | Auftrag | stornierungsDatum | ❌ | Nicht verfügbar |
-| Träger anzeigen | Auftrag | auftraggeber | ❌ | Nicht verfügbar |
-| Dokumente zuordnen | Auftrag | rvPurAuftragsID | ❌ | Nicht verfügbar |
+| Aufträge filtern nach Status | Gutachtenstatus | status | [OK] | Step 2-3 |
+| Aufträge sortieren nach Datum | Auftrag | auftragsDatum | [OK] | Step 2-3 |
+| Proband identifizieren | Proband | vsnr, name, vorname | [OK] | Step 2-3 |
+| Mahnung anzeigen | Mahnung | nummerDerMahnung | [WARN] | Separater Call (Step 16-17) |
+| Status ändern | Gutachtenstatus | status, changedOn | [OK] | Step 10a-11a |
+| Stornierte Aufträge kennzeichnen | Auftrag | stornierungsDatum | [NO] | Nicht verfügbar |
+| Träger anzeigen | Auftrag | auftraggeber | [NO] | Nicht verfügbar |
+| Dokumente zuordnen | Auftrag | rvPurAuftragsID | [NO] | Nicht verfügbar |
 
 **Abdeckung:** 5/8 Anforderungen vollständig erfüllt (62.5%)  
 **Kritische Lücken:** 3/8 (37.5%)
@@ -347,12 +347,12 @@ graph TB
     end
     
     subgraph "Business Objects im Response"
-        BO1[✅ Auftrag<br/>auftragsId, auftragsDatum, eingangsDatum]
-        BO2[✅ Proband<br/>vsnr, name, vorname, gebdatum]
-        BO3[✅ Gutachtenstatus<br/>status, changedOn]
-        BO4[❌ Gutachter<br/>FEHLT]
-        BO5[❌ Auftraggeber<br/>FEHLT]
-        BO6[❌ rvPurAuftragsID<br/>FEHLT]
+        BO1[[OK] Auftrag<br/>auftragsId, auftragsDatum, eingangsDatum]
+        BO2[[OK] Proband<br/>vsnr, name, vorname, gebdatum]
+        BO3[[OK] Gutachtenstatus<br/>status, changedOn]
+        BO4[[NO] Gutachter<br/>FEHLT]
+        BO5[[NO] Auftraggeber<br/>FEHLT]
+        BO6[[NO] rvPurAuftragsID<br/>FEHLT]
         
         RESP1 --> BO1
         RESP1 --> BO2
@@ -382,7 +382,7 @@ sequenceDiagram
     
     UI->>API: Step 9: Status ändern (UI Action)
     API->>GS: Step 10a: PATCH /gutachtenauftraege/{id}/status
-    Note right of GS: Business Objects:<br/>🔄 status<br/>📝 changedOn
+    Note right of GS: Business Objects:<br/>[U] status<br/>[C] changedOn
     GS->>DB: UPDATE Gutachtenstatus
     DB-->>GS: Bestätigung
     GS-->>API: Step 11a: 204 No Content
@@ -395,7 +395,7 @@ sequenceDiagram
     API-->>UI: Step 13a: Update erfolgreich
     UI->>UI: Visuelle Statusänderung
     
-    Note over UI: Business Objects angezeigt:<br/>✅ Neuer Status<br/>✅ Zeitstempel
+    Note over UI: Business Objects angezeigt:<br/>[OK] Neuer Status<br/>[OK] Zeitstempel
 ```
 
 ### Datenfluss: Mahnungen (Fragmentiert)
@@ -423,7 +423,7 @@ graph LR
         UI2 -->|Nein| UI6[Keine Mahnung]
     end
     
-    subgraph "⚠️ Performance-Problem"
+    subgraph "[WARN] Performance-Problem"
         PERF1[N Aufträge mit Mahnung<br/>= N separate API-Calls]
         PERF2[Langsame Detailansicht]
     end
@@ -448,17 +448,17 @@ pie title Attribut-Abdeckung in UC-04 API
 ```mermaid
 graph TB
     subgraph "Fehlende MVP-Attribute"
-        L1[❌ rvPurAuftragsID]
-        L2[❌ gutachter]
-        L3[❌ auftraggeber]
-        L4[❌ stornierungsDatum]
+        L1[[NO] rvPurAuftragsID]
+        L2[[NO] gutachter]
+        L3[[NO] auftraggeber]
+        L4[[NO] stornierungsDatum]
     end
     
     subgraph "Auswirkungen"
-        I1[🚫 Dokumente können nicht<br/>aus rvPuR/rvArchiv geladen werden]
-        I2[🚫 Zuständigkeit unklar<br/>bei Mitarbeitern]
-        I3[🚫 Träger nicht in<br/>Übersicht sichtbar]
-        I4[🚫 Löschfristen nicht<br/>berechenbar]
+        I1[[X] Dokumente können nicht<br/>aus rvPuR/rvArchiv geladen werden]
+        I2[[X] Zuständigkeit unklar<br/>bei Mitarbeitern]
+        I3[[X] Träger nicht in<br/>Übersicht sichtbar]
+        I4[[X] Löschfristen nicht<br/>berechenbar]
     end
     
     subgraph "Betroffene Use Cases"
@@ -501,19 +501,19 @@ graph LR
     end
     
     subgraph "Empfohlen hinzufügen"
-        N1[➕ rvPurAuftragsID: string]
-        N2[➕ gutachter: Object]
-        N3[➕ auftraggeber: TraegerDTO]
-        N4[➕ stornierungsDatum?: datetime]
-        N5[➕ mahnstatus?: Object]
+        N1[[+] rvPurAuftragsID: string]
+        N2[[+] gutachter: Object]
+        N3[[+] auftraggeber: TraegerDTO]
+        N4[[+] stornierungsDatum?: datetime]
+        N5[[+] mahnstatus?: Object]
     end
     
     subgraph "Nutzen"
-        B1[✅ UC-05 Dokumentenzugriff]
-        B2[✅ Zuständigkeits-Anzeige]
-        B3[✅ Träger-Info in Übersicht]
-        B4[✅ DSGVO Löschfrist]
-        B5[✅ Performance: 1 statt N+1 Calls]
+        B1[[OK] UC-05 Dokumentenzugriff]
+        B2[[OK] Zuständigkeits-Anzeige]
+        B3[[OK] Träger-Info in Übersicht]
+        B4[[OK] DSGVO Löschfrist]
+        B5[[OK] Performance: 1 statt N+1 Calls]
     end
     
     A5 -.erweitern.-> N1
@@ -572,21 +572,21 @@ graph TB
 ## Zusammenfassung
 
 **Dokumentiert:**
-- ✅ 23 Sequenzschritte mit API-Mappings
-- ✅ 4 Haupt-Business-Objects (Auftrag, Proband, Gutachtenstatus, Mahnung)
-- ✅ 3 API-Endpunkte analysiert
-- ✅ Client-seitige Operationen identifiziert
+- [OK] 23 Sequenzschritte mit API-Mappings
+- [OK] 4 Haupt-Business-Objects (Auftrag, Proband, Gutachtenstatus, Mahnung)
+- [OK] 3 API-Endpunkte analysiert
+- [OK] Client-seitige Operationen identifiziert
 
 **Kritische Findings:**
-- 🔴 4 MVP-Attribute fehlen in APIs
-- 🔴 Fragmentierte Datenzugriffe (Mahnungen)
-- 🔴 Fehlende Gutachter-Referenz
+- [CRIT] 4 MVP-Attribute fehlen in APIs
+- [CRIT] Fragmentierte Datenzugriffe (Mahnungen)
+- [CRIT] Fehlende Gutachter-Referenz
 
 **Nächste Schritte:**
-1. ⏳ API-Spezifikation aktualisieren
-2. ⏳ Tickets für fehlende Attribute erstellen
-3. ⏳ Performance-Tests für Auto-Refresh durchführen
-4. ⏳ UC-05 Traceability Matrix erstellen
+1. [TODO] API-Spezifikation aktualisieren
+2. [TODO] Tickets für fehlende Attribute erstellen
+3. [TODO] Performance-Tests für Auto-Refresh durchführen
+4. [TODO] UC-05 Traceability Matrix erstellen
 
 ---
 
