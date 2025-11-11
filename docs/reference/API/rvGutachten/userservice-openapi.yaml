@@ -1,0 +1,628 @@
+openapi: 3.0.2
+info:
+    title: UserService
+    version: 0.0.9
+    description: API des Userservice.
+paths:
+    /user:
+        get:
+            tags:
+                - Userservice
+            parameters:
+                - $ref: '#/components/parameters/userIdHeader'
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/NutzerDTO"
+                    description: Gibt den Nutzer zurück der gerade eingeloggt ist (wird über den
+                        Token bestimmt)
+                "404":
+                    $ref: "#/components/responses/ERROR_RESPONSE"
+            security:
+                - BearerAuth: []
+            operationId: getUser
+    /user/einstellungen/{key}:
+        delete:
+            tags:
+                - Userservice
+            parameters:
+                - $ref: '#/components/parameters/userIdHeader'
+                - name: key
+                  description: ""
+                  schema:
+                      type: string
+                  in: path
+                  required: true
+            responses:
+                "204":
+                    description: Löscht die angegebene Nutzereinstellung des eingeloggten Nutzers
+                        (wird über den Token bestimmt)
+                "404":
+                    $ref: "#/components/responses/ERROR_RESPONSE"
+            security:
+                - BearerAuth: []
+            operationId: deleteSetting
+    /user/einstellungen:
+        get:
+            tags:
+                - Userservice
+            parameters:
+                - $ref: '#/components/parameters/userIdHeader'
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PropertyMap"
+                    description: Gibt die Einstellungen zurück vom Nutzer der gerade eingeloggt ist
+                        (wird über den Token bestimmt)
+                "404":
+                    $ref: "#/components/responses/ERROR_RESPONSE"
+            security:
+                - BearerAuth: []
+            operationId: getSetting
+        put:
+            parameters:
+                - $ref: '#/components/parameters/userIdHeader'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/PropertyMap"
+                required: true
+            tags:
+                - Userservice
+            responses:
+                "204":
+                    description: Aktualisiert die Nutzereinstellungen des eingeloggten Nutzers (wird
+                        über den Token bestimmt)
+                "404":
+                    $ref: "#/components/responses/ERROR_RESPONSE"
+            security:
+                - BearerAuth: []
+            operationId: putSetting
+components:
+    parameters:
+      userIdHeader:
+        name: X-UserId
+        in: header
+        description: User-Id des Gutachters bzw. des Gutachtermitarbeiters - Wird durch API-Gateway gesetzt
+        required: true
+        schema:
+          format: uuid
+          type: string
+    schemas:
+        LastLoginDTO:
+            description: ""
+            required:
+                - logintimestamp
+                - ip
+            type: object
+            properties:
+                logintimestamp:
+                    format: date-time
+                    description: ""
+                    type: string
+                ip:
+                    description: ""
+                    type: string
+            example:
+                logintimestamp: 2018-02-10T09:30Z
+                ip: 192.168.0.1
+        KontaktDTO:
+            description: ""
+            required:
+                - typ
+                - anmerkung
+            type: object
+            properties:
+                typ:
+                    description: ""
+                    enum:
+                        - Email
+                        - Telefon
+                        - unbekannt
+                    type: string
+                wert:
+                    description: ""
+                    type: string
+                anmerkung:
+                    description: ""
+                    type: string
+            example:
+                typ: Telefon
+                wert: "110"
+                anmerkung: nicht vergessen
+        AdresseDTO:
+            description: ""
+            required:
+                - strasse
+                - plz
+                - ort
+                - typ
+            type: object
+            properties:
+                strasse:
+                    description: ""
+                    type: string
+                hausnummer:
+                    description: ""
+                    type: string
+                plz:
+                    description: ""
+                    type: string
+                ort:
+                    description: ""
+                    type: string
+                adresszusatz:
+                    description: ""
+                    type: string
+                postfach:
+                    description: ""
+                    type: string
+                land:
+                    description: ""
+                    type: string
+                typ:
+                    description: ""
+                    type: string
+            example:
+                strasse: Strasse der Strassen
+                hausnummer: "33"
+                plz: "10244"
+                ort: Berlin
+                adresszusatz: B
+                postfach: "10"
+                land: Deutschland
+                typ: Postadresse
+        VerfuegbarkeitDTO:
+            description: ""
+            required:
+                - typ
+                - von
+                - bis
+            type: object
+            properties:
+                typ:
+                    description: ""
+                    enum:
+                        - Verfügbar
+                        - Abwesend
+                    type: string
+                von:
+                    format: date
+                    description: ""
+                    type: string
+                bis:
+                    format: date
+                    description: ""
+                    type: string
+            example:
+                typ: Verfügbar
+                von: 2018-01-17
+                bis: 2019-01-17
+        AdministratorDTO:
+            description: ""
+            required:
+                - traeger
+            type: object
+            allOf:
+                - $ref: "#/components/schemas/NutzerDTO"
+            properties:
+                traeger:
+                    $ref: "#/components/schemas/TraegerDTO"
+                    description: ""
+            example:
+                userId: c5f9b785-4718-4108-bf72-833414e1b4a6
+                created: 2018-02-10T09:30Z
+                lastLogin:
+                    logintimestamp: 2018-02-10T09:30Z
+                    ip: 192.168.0.1
+                gesperrtSeit: 2018-02-10T09:30Z
+                rollen:
+                    - Gutachter
+                    - Mitarbeiter 1
+                status: angelegt
+                settings:
+                    DarkMode: no
+                kontakte:
+                    - typ: Telefon
+                      wert: "016147227490"
+                      anmerkung: Privat
+                    - typ: Email
+                      wert: gutachter@test.de
+                      anmerkung: Mailz
+                adressen:
+                    - strasse: Strasse der Strassen
+                      hausnummer: "33"
+                      plz: "10244"
+                      ort: Berlin
+                      adresszusatz: B
+                      postfach: "10"
+                      land: Deutschland
+                      typ: Postadresse
+                    - strasse: Strasse der Strassen
+                      hausnummer: "35"
+                      plz: "10244"
+                      ort: Berlin
+                      adresszusatz: B
+                      postfach: "10"
+                      land: Deutschland
+                      typ: Postadresse
+                name:
+                    anrede: Herr
+                    nachname: McGutachter
+                    namenszusatz: Baron
+                    titel: Dr.
+                    vorname: Gutachter
+                eLoginId: 30fe184fa1
+                traeger:
+                    ktan: "70"
+                    name: DRV Bund
+            x-discriminator-value: administrator
+        GutachterDTO:
+            description: ""
+            required:
+                - fachrichtung
+                - efn
+                - traeger
+            type: object
+            allOf:
+                - $ref: "#/components/schemas/NutzerDTO"
+            properties:
+                mitarbeiterIDs:
+                    description: ""
+                    type: array
+                    items:
+                        format: uuid
+                        type: string
+                fachrichtung:
+                    description: ""
+                    type: array
+                    items:
+                        type: string
+                efn:
+                    description: ""
+                    type: string
+                verfuegbarkeit:
+                    description: ""
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/VerfuegbarkeitDTO"
+                traeger:
+                    description: ""
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/TraegerDTO"
+            example:
+                userId: c5f9b785-4718-4108-bf72-833414e1b4a6
+                created: 2018-02-10T09:30Z
+                lastLogin:
+                    logintimestamp: 2018-02-10T09:30Z
+                    ip: 192.168.0.1
+                gesperrtSeit: 2018-02-10T09:30Z
+                rollen:
+                    - Gutachter
+                    - Mitarbeiter 1
+                status: angelegt
+                settings:
+                    DarkMode: no
+                kontakte:
+                    - typ: Telefon
+                      wert: "016147227490"
+                      anmerkung: Privat
+                    - typ: Email
+                      wert: gutachter@test.de
+                      anmerkung: Mailz
+                adressen:
+                    - strasse: Strasse der Strassen
+                      hausnummer: "33"
+                      plz: "10244"
+                      ort: Berlin
+                      adresszusatz: B
+                      postfach: "10"
+                      land: Deutschland
+                      typ: Postadresse
+                    - strasse: Strasse der Strassen
+                      hausnummer: "35"
+                      plz: "10244"
+                      ort: Berlin
+                      adresszusatz: B
+                      postfach: "10"
+                      land: Deutschland
+                      typ: Postadresse
+                name:
+                    anrede: Herr
+                    nachname: McGutachter
+                    namenszusatz: Baron
+                    titel: Dr.
+                    vorname: Gutachter
+                eLoginId: 30fe184fa1
+                mitarbeiterIDs:
+                    - a26805f9-7109-4548-9dbc-c834d1ddb9f6
+                    - 370bda3c-f8e8-4c48-8611-2a9827fbf167
+                fachrichtung:
+                    - HNO
+                    - Psychologie
+                efn: "13"
+                verfuegbarkeit:
+                    - typ: Abwesend
+                      von: 2018-01-17
+                      bis: 2018-01-18
+                    - typ: Verfügbar
+                      von: 2018-01-18
+                      bis: 2018-01-27
+                traeger:
+                    - ktan: "70"
+                      name: DRV Bund
+                    - ktan: "33"
+                      name: DRV Bremen
+            x-discriminator-value: gutachter
+        GutachtermitarbeiterDTO:
+            description: ""
+            type: object
+            allOf:
+                - $ref: "#/components/schemas/NutzerDTO"
+            example:
+                userId: c5f9b785-4718-4108-bf72-833414e1b4a6
+                created: 2018-02-10T09:30Z
+                lastLogin:
+                    logintimestamp: 2018-02-10T09:30Z
+                    ip: 192.168.0.1
+                gesperrtSeit: 2018-02-10T09:30Z
+                rollen:
+                    - Gutachter
+                    - Mitarbeiter 1
+                status: angelegt
+                settings:
+                    DarkMode: no
+                kontakte:
+                    - typ: Telefon
+                      wert: "016147227490"
+                      anmerkung: Privat
+                    - typ: Email
+                      wert: gutachter@test.de
+                      anmerkung: Mailz
+                adressen:
+                    - strasse: Strasse der Strassen
+                      hausnummer: "33"
+                      plz: "10244"
+                      ort: Berlin
+                      adresszusatz: B
+                      postfach: "10"
+                      land: Deutschland
+                      typ: Postadresse
+                    - strasse: Strasse der Strassen
+                      hausnummer: "35"
+                      plz: "10244"
+                      ort: Berlin
+                      adresszusatz: B
+                      postfach: "10"
+                      land: Deutschland
+                      typ: Postadresse
+                name:
+                    anrede: Herr
+                    nachname: McGutachter
+                    namenszusatz: Baron
+                    titel: Dr.
+                    vorname: Gutachter
+                eLoginId: 30fe184fa1
+            x-discriminator-value: gutachtermitarbeiter
+        TraegerDTO:
+            description: ""
+            required:
+                - ktan
+                - name
+            type: object
+            properties:
+                ktan:
+                    description: ""
+                    type: string
+                name:
+                    description: ""
+                    type: string
+            example:
+                ktan: "70"
+                name: DRV Bund
+        PropertyMap:
+            description: ""
+            type: object
+            additionalProperties:
+                type: string
+            example:
+                DarkMode: no
+        Error:
+            description: ""
+            required:
+                - statusCode
+                - instance
+            type: object
+            properties:
+                type:
+                    description: ""
+                    type: string
+                title:
+                    description: ""
+                    type: string
+                statusCode:
+                    description: ""
+                    type: integer
+                detail:
+                    description: ""
+                    type: string
+                instance:
+                    description: ""
+                    type: string
+            example:
+                type: https://example.com/errors/not-found
+                title: Not Found
+                statusCode: 404
+                detail: Record not found
+                instance: https://api.example.com/errors/404
+        NutzerDTO:
+            discriminator:
+                propertyName: userType
+                mapping:
+                    administrator: "#/components/schemas/AdministratorDTO"
+                    gutachter: "#/components/schemas/GutachterDTO"
+                    gutachtermitarbeiter: "#/components/schemas/GutachtermitarbeiterDTO"
+            description: ""
+            required:
+                - userId
+                - created
+                - rolle
+                - status
+                - settings
+                - adressen
+                - rollen
+                - name
+            type: object
+            properties:
+                userId:
+                    format: uuid
+                    description: ""
+                    type: string
+                created:
+                    format: date-time
+                    description: ""
+                    type: string
+                lastLogin:
+                    $ref: "#/components/schemas/LastLoginDTO"
+                    description: ""
+                gesperrtSeit:
+                    format: date-time
+                    description: ""
+                    type: string
+                rollen:
+                    description: ""
+                    type: array
+                    items:
+                        type: string
+                status:
+                    description: ""
+                    enum:
+                        - angelegt
+                        - email_verifiziert
+                        - aktivert
+                        - gesperrt
+                    type: string
+                settings:
+                    $ref: "#/components/schemas/PropertyMap"
+                    description: ""
+                kontakte:
+                    description: ""
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/KontaktDTO"
+                adressen:
+                    description: ""
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/AdresseDTO"
+                name:
+                    $ref: "#/components/schemas/NameDTO"
+                    description: ""
+                eLoginId:
+                    description: ""
+                    type: string
+                userType:
+                    description: ""
+                    enum:
+                        - administrator
+                        - gutachter
+                        - gutachtermitarbeiter
+                    type: string
+            example:
+                userId: c5f9b785-4718-4108-bf72-833414e1b4a6
+                created: 2018-02-10T09:30Z
+                lastLogin:
+                    logintimestamp: 2018-02-10T09:30Z
+                    ip: 192.168.0.1
+                gesperrtSeit: 2018-02-10T09:30Z
+                rollen:
+                    - Gutachter
+                    - Mitarbeiter 1
+                status: angelegt
+                settings:
+                    DarkMode: no
+                kontakte:
+                    - typ: Telefon
+                      wert: "016147227490"
+                      anmerkung: Privat
+                    - typ: Email
+                      wert: gutachter@test.de
+                      anmerkung: Mailz
+                adressen:
+                    - strasse: Strasse der Strassen
+                      hausnummer: "33"
+                      plz: "10244"
+                      ort: Berlin
+                      adresszusatz: B
+                      postfach: "10"
+                      land: Deutschland
+                      typ: Postadresse
+                    - strasse: Strasse der Strassen
+                      hausnummer: "35"
+                      plz: "10244"
+                      ort: Berlin
+                      adresszusatz: B
+                      postfach: "10"
+                      land: Deutschland
+                      typ: Postadresse
+                name:
+                    anrede: Herr
+                    nachname: McGutachter
+                    namenszusatz: Baron
+                    titel: Dr.
+                    vorname: Gutachter
+                eLoginId: 30fe184fa1
+        NameDTO:
+            description: ""
+            required:
+                - anrede
+                - nachname
+                - vorname
+            type: object
+            properties:
+                anrede:
+                    description: ""
+                    type: string
+                nachname:
+                    description: ""
+                    type: string
+                namenszusatz:
+                    description: ""
+                    type: string
+                titel:
+                    description: ""
+                    type: string
+                vorname:
+                    description: ""
+                    type: string
+            example:
+                anrede: Herr
+                nachname: McGutachter
+                namenszusatz: Baron
+                titel: Dr.
+                vorname: Gutachter
+    responses:
+        ERROR_RESPONSE:
+            content:
+                application/json:
+                    schema:
+                        $ref: "#/components/schemas/Error"
+                    examples:
+                        NotFound:
+                            value:
+                                type: https://example.com/errors/not-found
+                                title: Not Found
+                                statusCode: 404
+                                detail: Record not found
+                                instance: https://api.example.com/errors/404
+            description: ""
+    securitySchemes:
+        BearerAuth:
+            scheme: bearer
+            type: http

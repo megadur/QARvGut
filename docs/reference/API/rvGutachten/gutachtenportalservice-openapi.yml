@@ -1,0 +1,914 @@
+openapi: 3.0.4
+info:
+   title: Gutachtenportalservice API
+   version: 0.0.2
+   description: API to manage assessmentsaufträge
+servers:
+-  url: http://localhost:8080/api/v1
+paths:
+   /dokumente:
+      parameters:
+      -  $ref: '#/components/parameters/orgIdHeader'
+      -  $ref: '#/components/parameters/userIdHeader'
+      -  $ref: '#/components/parameters/gutachterIdHeader'
+      get:
+         tags:
+         - Dokumente
+         parameters:
+         -  $ref: '#/components/parameters/offset'
+         -  $ref: '#/components/parameters/limit'
+         -  name: includeData
+            schema:
+               default: false
+               type: boolean
+            in: query
+            required: false
+         responses:
+            '200':
+               $ref: '#/components/responses/DokumenteList'
+         operationId: getDokumente
+         summary: Gibt eine Liste von Dokumenten zurück
+
+   /dokumente/{id}:
+      parameters:
+      -  $ref: '#/components/parameters/uuid'
+      -  $ref: '#/components/parameters/orgIdHeader'
+      -  $ref: '#/components/parameters/userIdHeader'
+      -  $ref: '#/components/parameters/gutachterIdHeader'
+      get:
+         tags:
+         - Dokumente
+         responses:
+            '200':
+               $ref: '#/components/responses/Dokument_Found'
+            '404':
+               $ref: '#/components/responses/Dokument_Not_Found'
+         operationId: getDocumentById
+         summary: Gibt ein einzelnes Dokument zurück
+   /dokumente/{id}/note:
+      parameters:
+      -  $ref: '#/components/parameters/uuid'
+      -  $ref: '#/components/parameters/orgIdHeader'
+      -  $ref: '#/components/parameters/userIdHeader'
+      -  $ref: '#/components/parameters/gutachterIdHeader'
+      get:
+         tags:
+         - Dokumente
+         responses:
+            '200':
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/DocumentNoteDto'
+               description: Notiz zum Dokument gefunden
+            '404':
+               $ref: '#/components/responses/Dokument_Not_Found'
+         operationId: getDocumentNote
+         summary: Gibt die Notiz eines Dokumentes zurück
+      put:
+         requestBody:
+            content:
+               application/json:
+                  schema:
+                     $ref: '#/components/schemas/DocumentNoteDto'
+            required: true
+         tags:
+         - Dokumente
+         responses:
+            '204':
+               description: Notiz erfolgreich aktualisiert
+            '400':
+               $ref: '#/components/responses/Bad_Request'
+               description: Notiz ist ungültig
+            '404':
+               $ref: '#/components/responses/Dokument_Not_Found'
+         operationId: updateDocumentNote
+         summary: Aktualisiert die Notiz zu einem Dokument
+   /dokumente/{id}/metadaten:
+      parameters:
+      -  $ref: '#/components/parameters/uuid'
+      -  $ref: '#/components/parameters/orgIdHeader'
+      -  $ref: '#/components/parameters/userIdHeader'
+      -  $ref: '#/components/parameters/gutachterIdHeader'
+      get:
+         tags:
+         - Dokumente
+         responses:
+            '200':
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/DocumentMetadataDto'
+               description: Document found
+            '404':
+               $ref: '#/components/responses/Dokument_Not_Found'
+         operationId: getDocumentMetadata
+         summary: Gibt die Metadaten eines Dokumentes zurück
+      put:
+         requestBody:
+            content:
+               application/json:
+                  schema:
+                     $ref: '#/components/schemas/DocumentMetadataDto'
+            required: true
+         tags:
+         - Dokumente
+         responses:
+            '204':
+               description: Document Metadata were successfully updated
+            '400':
+               $ref: '#/components/responses/Bad_Request'
+            '404':
+               $ref: '#/components/responses/Dokument_Not_Found'
+         operationId: updateDocumentMetadata
+         summary: Aktualisiert die Metadaten eines Dokumentes
+      patch:
+         tags:
+         - Dokumente
+         requestBody:
+            content:
+               application/json-patch+json:
+                  schema:
+                     $ref: '#/components/schemas/patchRequest'
+                  example:
+                  -  op: replace
+                     path: /description
+                     value: Beispieldokument
+                  -  op: add
+                     path: /tags/0
+                     value: Passierschein
+                  -  op: add
+                     path: /properties/model
+                     value: T9000
+            required: true
+         responses:
+            '204':
+               description: Document Metadata successfully patched
+            '400':
+               $ref: '#/components/responses/Bad_Request'
+            '404':
+               $ref: '#/components/responses/Dokument_Not_Found'
+         operationId: patchDocumentMetadata
+         summary: Aktualisiert die Metadaten eines Dokumentes
+   /gutachtenauftraege:
+      parameters:
+      -  $ref: '#/components/parameters/orgIdHeader'
+      -  $ref: '#/components/parameters/userIdHeader'
+      -  $ref: '#/components/parameters/gutachterIdHeader'
+      get:
+         tags:
+         - Gutachtenauftrag
+         parameters:
+         -  $ref: '#/components/parameters/offset'
+         -  $ref: '#/components/parameters/limit'
+         responses:
+            '200':
+               $ref: '#/components/responses/GutachtenauftragList'
+               description: OK
+         operationId: getGutachtenauftraege
+         summary: Gibt Gutachtenaufträge in einer Liste zurück
+   /gutachtenauftraege/{id}:
+      parameters:
+      -  $ref: '#/components/parameters/auftragsId'
+      -  $ref: '#/components/parameters/orgIdHeader'
+      -  $ref: '#/components/parameters/userIdHeader'
+      -  $ref: '#/components/parameters/gutachterIdHeader'
+      get:
+         tags:
+         - Gutachtenauftrag
+         responses:
+            '200':
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/GutachtenauftragDto'
+               description: Assessment order found
+
+            '404':
+               $ref: '#/components/responses/Gutachtenauftrag_404'
+         operationId: getGutachtenauftragById
+         summary: Gibt einen Gutachtenauftrag zurück
+      patch:
+         requestBody:
+            content:
+               application/json-patch+json:
+                  schema:
+                     $ref: '#/components/schemas/patchRequest'
+                  example:
+                  -  op: replace
+                     path: /gutachtenstatus/status
+                     value: einbestellt
+                  -  op: replace
+                     path: /einbestelldatum
+                     value: '2025-06-20'
+            required: true
+         tags:
+         - Gutachtenauftrag
+         responses:
+            '204':
+               description: Gutachtenauftragsdaten erfolgreich aktualisiert
+            '400':
+               $ref: '#/components/responses/Bad_Request'
+               description: Patch ist ungültig
+            '404':
+               $ref: '#/components/responses/Gutachtenauftrag_404'
+         operationId: patchGutachtenauftrag
+         summary: Aktualisiert die aktualisierbaren Daten zu einem Auftrag
+
+   /gutachtenauftraege/{id}/anhaenge:
+      parameters:
+      -  $ref: '#/components/parameters/auftragsId'
+      -  $ref: '#/components/parameters/offset'
+      -  $ref: '#/components/parameters/limit'
+      -  $ref: '#/components/parameters/orgIdHeader'
+      -  $ref: '#/components/parameters/userIdHeader'
+      -  $ref: '#/components/parameters/gutachterIdHeader'
+      get:
+         tags:
+         - Gutachtenauftrag
+         responses:
+            '200':
+               $ref: '#/components/responses/DokumenteList'
+            '404':
+               $ref: '#/components/responses/Gutachtenauftrag_404'
+         operationId: getGutachtenauftragAnhaenge
+         summary: Gibt die Anhänge eines Gutachtenauftrags zurück
+   /gutachtenauftraege/{id}/gutachten:
+      parameters:
+      -  $ref: '#/components/parameters/auftragsId'
+      -  $ref: '#/components/parameters/orgIdHeader'
+      -  $ref: '#/components/parameters/userIdHeader'
+      -  $ref: '#/components/parameters/gutachterIdHeader'
+      get:
+         tags:
+         - Gutachten
+         responses:
+            '200':
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/GutachtenDto'
+               description: OK
+            '404':
+               $ref: '#/components/responses/Gutachtenauftrag_404'
+         operationId: getAssessment
+         summary: Gibt das Gutachten zurück
+      post:
+         tags:
+         - Gutachten
+         requestBody:
+            content:
+               application/json:
+                  schema:
+                     $ref: '#/components/schemas/GutachtenDto'
+            required: true
+         responses:
+            '201':
+               description: Gutachten erfolgreich angelegt
+            '400':
+               description: Assessment order number is invalid
+            '404':
+               $ref: '#/components/responses/Gutachtenauftrag_404'
+         operationId: createAssessment
+         summary: Erzeugt ein neues Gutachten zum Auftrag
+   /gutachtenauftraege/{id}/gutachten/anhaenge:
+      parameters:
+      -  $ref: '#/components/parameters/auftragsId'
+      -  $ref: '#/components/parameters/orgIdHeader'
+      -  $ref: '#/components/parameters/userIdHeader'
+      -  $ref: '#/components/parameters/gutachterIdHeader'
+      get:
+         tags:
+         - Gutachten
+         parameters:
+         -  $ref: '#/components/parameters/offset'
+         -  $ref: '#/components/parameters/limit'
+         responses:
+            '200':
+               $ref: '#/components/responses/DokumenteList'
+            '404':
+               $ref: '#/components/responses/Gutachtenauftrag_404'
+         operationId: getAssessmentAttachements
+         summary: Gibt die Dokumentenanhänge eines Gutachtens wieder
+      post:
+         tags:
+         - Gutachten
+         requestBody:
+            content:
+               application/json:
+                  schema:
+                     $ref: '#/components/schemas/DokumentDto'
+            required: true
+         responses:
+            '201':
+               $ref: '#/components/responses/DocumentId'
+               description: Gutachten Dokumentenanhang erfolgreich hinzugefügt
+            '400':
+               description: Gutachtenauftrags-Id ist ungültig
+            '404':
+               $ref: '#/components/responses/Gutachtenauftrag_404'
+         operationId: addAssessmentAttachement
+         summary: Fügt ein Dokument als Anhang zum Gutachten hinzu
+   /gutachtenauftraege/{id}/gutachten/anhaenge/{documentId}:
+      parameters:
+      -  $ref: '#/components/parameters/auftragsId'
+      -  $ref: '#/components/parameters/documentId'
+      -  $ref: '#/components/parameters/orgIdHeader'
+      -  $ref: '#/components/parameters/userIdHeader'
+      -  $ref: '#/components/parameters/gutachterIdHeader'
+      delete:
+         tags:
+         - Gutachten
+         responses:
+            '204':
+               description: Dokumente was deleted successfully
+            '404':
+               description: Document could not be found
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/ErrorResponseDto'
+         operationId: deleteAssessmentAttachement
+         summary: Löscht ein Dokument, welches einem Gutachten angehangen ist
+components:
+   schemas:
+      ErrorResponseDto:
+         type: object
+         properties:
+            code:
+               description: Error Code
+               type: integer
+               example: 5000
+            message:
+               type: string
+               description: Error Message
+               example: Anfrage ungültig
+            httpCode:
+               type: integer
+               description: http Return code
+               example: 404
+      DocumentId:
+         type: object
+         required:
+           - documentId
+         properties:
+            documentId:
+               format: uuid
+               description: UUID des erzeugten Dokumentes.
+               type: string
+               readOnly: true
+               example: 3fa85f64-5717-4562-b3fc-2c963f66afa7
+      DocumentAccessDto:
+         required:
+         - userId
+         type: object
+         properties:
+            userId:
+               format: uuid
+               type: string
+               example: 4aa85f64-5717-4562-b3fc-2c963f66afa7
+            encryptedKey:
+               type: string
+            algorithm:
+               type: string
+      DocumentPropertiesDto:
+         type: object
+         additionalProperties:
+            type: string
+         example:
+            formular: A38
+            rvPur: 38AFBMN3
+      DocumentMetadataDto:
+         required:
+         - filename
+         - filetype
+         type: object
+         properties:
+            description:
+               type: string
+               example: Beispieldokument
+            filename:
+               type: string
+               example: document0
+            filesize:
+               format: int64
+               type: integer
+               readOnly: true
+               example: 98523642
+            filetype:
+               type: string
+               example: pdf
+            createdOn:
+               format: date-time
+               type: string
+               readOnly: true
+               example: '2025-03-10T12:30:12Z'
+            createdBy:
+               type: string
+               readOnly: true
+               example: 4aa85f64-5717-4562-b3fc-2c963f66afa7
+            changedOn:
+               format: date-time
+               type: string
+               readOnly: true
+               example: '2025-03-11T11:40:22Z'
+            changedBy:
+               type: string
+               readOnly: true
+               example: 4aa85f64-5717-4562-b3fc-2c963f66afa7
+            tags:
+               type: array
+               items:
+                  type: string
+               example:
+               - Orthopädie
+               - Anhang
+            properties:
+               $ref: '#/components/schemas/DocumentPropertiesDto'
+      DocumentNoteDto:
+         type: object
+         required:
+         - headline
+         - content
+         properties:
+            headline:
+               type: string
+               format: base64
+               description: Überschrift der Notiz
+               example: w5xiZXJzY2hyaWZ0Cg==
+            content:
+               type: string
+               format: base64
+               description: Inhalt der Notiz
+               example: RGFzIGlzdCBlaW4gSW5oYWx0IGVpbmVyIE5vdGl6Cg==
+      DokumentOhneDatenDto:
+         required:
+         - metadaten
+         type: object
+         allOf:
+         -  $ref: '#/components/schemas/DocumentId'
+         properties:
+            metadaten:
+               $ref: '#/components/schemas/DocumentMetadataDto'
+            acl:
+               type: array
+               items:
+                  $ref: '#/components/schemas/DocumentAccessDto'
+
+      DokumentDto:
+         type: object
+         required:
+         - data
+         - note
+         properties:
+            data:
+               format: byte
+               type: string
+            note:
+               $ref: '#/components/schemas/DocumentNoteDto'
+         allOf:
+         -  $ref: '#/components/schemas/DokumentOhneDatenDto'
+      DokumentListDto:
+         required:
+         - anzahl
+         - offset
+         - limit
+         - dokumente
+         properties:
+            anzahl:
+               description: Document count
+               type: integer
+               minimum: 0
+               example: 1
+            offset:
+               description: Offset-Parameter der Anfrage
+               type: integer
+               minimum: 0
+               example: 0
+            limit:
+               description: Anzahl der Dokumente in der Ergebnismenge
+               type: integer
+               minimum: 1
+               example: 9000
+            dokumente:
+               type: array
+               items:
+                  $ref: '#/components/schemas/DokumentOhneDatenDto'
+      AssessmentId:
+         type: object
+         properties:
+            auftragsId:
+               format: uuid
+               description: UUID of the created assessment.
+               type: string
+               readOnly: true
+               example: 7ca85f64-5717-4562-a3fc-2c963f66afa8
+      KontaktDto:
+         type: object
+         properties:
+            typ:
+               type: string
+               enum:
+               - Email
+               - Telefon
+               example: Email
+            wert:
+               type: string
+               example: gutachter@praxis.de
+            anmerkung:
+               type: string
+               example: primary
+      AddresseDto:
+         type: object
+         properties:
+            strasse:
+               type: string
+               example: Bernauer Straße
+            hausnummer:
+               type: string
+               example: 3a
+            plz:
+               type: string
+               example: 10854
+            ort:
+               type: string
+               example: Berlin
+            addresszusatz:
+               type: string
+               example: 4. OG
+            postfach:
+               type: string
+               example: Postfach 3
+            land:
+               type: string
+               example: Schlaraffenland
+      OrganisationDto:
+         type: object
+         required:
+         - orgId
+         - adresse
+         properties:
+            orgId:
+               type: string
+               format: uuid
+               example: 3db85f64-5717-4562-b3fc-2c963f66afa9
+            ik:
+               type: string
+               description: IK-Nummer der Organisation
+               example: '222222228'
+            ktan:
+               type: string
+               description: KTAN ist die DRV-übergreifende eindeutige Nummer des Trägers
+               example: '70'
+            institutionsname1:
+               type: string
+               description: Praxisname Zeile 1
+            institutionsname2:
+               type: string
+               description: Praxisname Zeile 2
+            zusatz:
+               type: string
+            adresse:
+               $ref: '#/components/schemas/AddresseDto'
+      ProbandDto:
+         type: object
+         readOnly: true
+         required:
+          - vsnr
+          - geburtsdatum
+          - name
+          - vorname
+         properties:
+            vsnr:
+               type: string
+               example: 65050501B652
+            geburtsdatum:
+               format: date
+               type: string
+               example: 1987-06-05T00:00:00Z
+            name:
+               type: string
+               example: Beispiel
+            vorname:
+               type: string
+               example: Marcus
+            kontakte:
+               type: array
+               items:
+                  $ref: '#/components/schemas/KontaktDto'
+               example:
+               -  typ: Email
+                  wert: m.beispiel@gmx.net
+                  anmerkung: mailadresse
+
+            adresse:
+               $ref: '#/components/schemas/AddresseDto'
+      GutachterDto:
+         type: object
+         readOnly: true
+         required:
+          - id
+         properties:
+            id:
+               format: uuid
+               type: string
+               readOnly: true
+               example: 4aa85f64-5717-4562-b3fc-2c963f66afa7
+            orgId:
+               format: uuid
+               type: string
+               readOnly: true
+               example: 3db85f64-5717-4562-b3fc-2c963f66afa9
+      patchDocument:
+         description: A JSONPatch document as defined by RFC 6902
+         required:
+         - op
+         - path
+         properties:
+            op:
+               type: string
+               description: The operation to be performed
+               enum:
+               - add
+               - remove
+               - replace
+               - move
+               - copy
+               - test
+            path:
+               type: string
+               description: A JSON-Pointer
+            value:
+               type: object
+               description: The value to be used within the operations.
+            from:
+               type: string
+               description: A string containing a JSON Pointer value.
+      patchRequest:
+         type: array
+         items:
+            $ref: '#/components/schemas/patchDocument'
+      GutachtenstatusDto:
+         description: Status des Gutachtenauftrages
+         required:
+         - status
+         type: object
+         properties:
+            status:
+               description: ''
+               enum:
+               - neu
+               - einbestellt
+               - in_bearbeitung
+               - abgeschlossen
+               - storniert
+               type: string
+               example: neu
+            changedOn:
+               format: date-time
+               description: Timestamp der Statusänderung (UTC)
+               type: string
+               readOnly: true
+               example: '2025-03-20T11:12:30Z'
+      GutachtenauftragDto:
+         type: object
+         required:
+          - auftragsId
+          - proband
+          - gutachter
+          - auftraggeber
+          - gutachtenstatus
+          - auftragsdatum
+          - eingangsdatum 
+         properties:
+            auftragsId:
+               format: uuid
+               description: UUID of the created assessment.
+               type: string
+               readOnly: true
+               example: 7ca85f64-5717-4562-a3fc-2c963f66afa8
+            proband:
+               $ref: '#/components/schemas/ProbandDto'
+               readOnly: true
+            gutachter:
+               $ref: '#/components/schemas/GutachterDto'
+               readOnly: true
+            auftraggeber:
+               allOf:
+               -  $ref: '#/components/schemas/OrganisationDto'
+               readOnly: true
+            kennzeichen1:
+               type: string
+               readOnly: true
+               example: kommt immer zu spät
+            kennzeichen2:
+               type: string
+               readOnly: true
+               example: sehr nervös
+            gutachtenstatus:
+               $ref: '#/components/schemas/GutachtenstatusDto'
+            anhaenge:
+               type: array
+               items:
+                  $ref: '#/components/schemas/DokumentOhneDatenDto'
+               readOnly: true
+            gutachten:
+               $ref: '#/components/schemas/GutachtenDto'
+            auftragsdatum:
+               format: date
+               description: Wann wurde der Auftrag in rvSMD angelegt.
+               type: string
+               readOnly: true
+               example: '2025-02-20'
+            eingangsdatum:
+               format: date-time
+               description: Wann ist der Auftrag in rvGutachten angekommen.
+               type: string
+               readOnly: true
+               example: '2025-02-20T10:15:30Z'
+            bereitstellungsdatum:
+               format: date-time
+               type: string
+               readOnly: true
+               description: Wann sind alle Dokumente zu einem Auftrag in rvGutachten einsehbar
+               example: '2025-02-20T10:20:21Z'
+            einbestelldatum:
+               format: date
+               type: string
+               description: Zu wann wird der Proband einbestellt
+               example: '2025-02-20'
+      GutachtenauftragListDto:
+         required:
+         - anzahl
+         - offset
+         - limit
+         - auftraege
+         properties:
+            anzahl:
+               description: Gesamtanzahlanzahl der Aufträge
+               type: integer
+               minimum: 0
+               example: 1
+            offset:
+               description: Offset-Parameter der Anfrage
+               type: integer
+               minimum: 0
+               example: 0
+            limit:
+               description: Anzahl der Aufträge in der Ergebnismenge
+               type: integer
+               minimum: 1
+               example: 9000
+            auftraege:
+               type: array
+               items:
+                  $ref: '#/components/schemas/GutachtenauftragDto'
+      GutachtenDto:
+         type: object
+         required:
+            - auftragsId
+         properties:
+            auftragsId:
+               format: uuid
+               description: UUID of the created assessment.
+               type: string
+               readOnly: true
+               example: 7ca85f64-5717-4562-a3fc-2c963f66afa8
+            s0080:
+               description: Gutachtenformular
+               type: object
+            anhaenge:
+               readOnly: true
+               type: array
+               items:
+                  format: uuid
+                  type: string
+               example:
+               - 6ca85f64-5717-4562-b3fc-2c963f66afa7
+               - 1ba85f64-5717-4562-b3fc-2c963f66afa3
+   parameters:
+      auftragsId:
+         name: id
+         description: ID des Gutachtenauftrages
+         schema:
+            format: uuid
+            type: string
+         in: path
+         required: true
+      documentId:
+         name: documentId
+         description: The id of the document
+         schema:
+            format: uuid
+            type: string
+         in: path
+         required: true
+      uuid:
+         name: id
+         description: The id of the document
+         schema:
+            format: uuid
+            type: string
+         in: path
+         required: true
+      userId:
+         name: userId
+         description: The UUID of a User
+         schema:
+            format: uuid
+            type: string
+         in: query
+         required: false
+      userIdHeader:
+         name: X-UserId
+         in: header
+         description: User-Id des Gutachters bzw. des Gutachtermitarbeiters - Wird durch API-Gateway gesetzt
+         required: true
+         schema:
+            format: uuid
+            type: string
+      orgIdHeader:
+         name: X-OrgId
+         in: header
+         description: Organisations-Id des Gutachters und des Gutachtermitarbeiters - Wird durch API-Gateway gesetzt
+         schema:
+            format: uuid
+            type: string
+         required: true
+      gutachterIdHeader:
+         name: X-GutachterId
+         description: UserId des dem User zugeordneten Gutachters - Wird durch API-Gateway gesetzt
+         required: true
+         schema:
+            format: uuid
+            type: string
+         in: header
+      offset:
+         name: offset
+         description: The number of items to skip before starting to collect the result set.
+         schema:
+            default: 0
+            minimum: 0
+            type: integer
+         in: query
+         required: false
+      limit:
+         name: limit
+         description: Number of Items to return
+         schema:
+            default: 10
+            maximum: 9000
+            minimum: 1
+            type: integer
+         in: query
+         required: false
+   responses:
+      Bad_Request:
+         description: Request ist ungültig
+         content:
+            application/json:
+               schema:
+                  $ref: '#/components/schemas/ErrorResponseDto'
+      Gutachtenauftrag_404:
+         description: Gutachtenauftrag konnte nicht gefunden werden
+         content:
+            application/json:
+               schema:
+                  $ref: '#/components/schemas/ErrorResponseDto'
+      GutachtenauftragList:
+         description: Gutachtenauftragsliste erfolgreich
+         content:
+            application/json:
+               schema:
+                  $ref: '#/components/schemas/GutachtenauftragListDto'
+      DokumenteList:
+         description: Dokumentenliste erfolgreich
+         content:
+            application/json:
+               schema:
+                  $ref: '#/components/schemas/DokumentListDto'
+      Dokument_Found:
+         description: Dokument gefunden
+         content:
+            application/json:
+               schema:
+                  $ref: '#/components/schemas/DokumentDto'
+      Dokument_Not_Found:
+         description: Dokument nicht gefunden
+         content:
+            application/json:
+               schema:
+                  $ref: '#/components/schemas/ErrorResponseDto'
+      DocumentId:
+         description: Erzeugte DokumentenId
+         content:
+            application/json:
+               schema:
+                  $ref: '#/components/schemas/DocumentId'
+tags:
+-  name: Gutachtenauftrag
+   description: Assessment Orders
+-  name: Dokumente
+   description: Dokumente
+-  name: Gutachten
+   description: Gutachten
