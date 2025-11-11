@@ -521,42 +521,79 @@ Konfigurierbare Parameter:
 
 ---
 
-### UC-12: Statusänderungen Gutachtenauftrag
+### UC-12a: Gutachter ändert Auftragsstatus
 
-**Use Case ID:** UC-12  
-**Name:** Statusänderungen Gutachtenauftrag  
-**Primärer Akteur:** Gutachter, 8023-Mitarbeiter (in rvSMD)  
-**Sekundäre Akteure:** rvSMD-System, rvGutachten-System  
-**Auslöser:** Status eines Gutachtenauftrags wird in rvSMD geändert (z.B. angenommen, in Bearbeitung, abgeschlossen, storniert) und nach rvGutachten synchronisiert
+**Use Case ID:** UC-12a  
+**Name:** Gutachter ändert Auftragsstatus in rvGutachten  
+**Primärer Akteur:** Gutachter  
+**Sekundäre Akteure:** rvGutachten-System, rvSMD-System  
+**Auslöser:** Der Gutachter ändert den Status eines Auftrags in der rvGutachten-Anwendung.
 
 **Vorbedingungen:**
 
-- Auftrag ist in rvSMD vorhanden
-- Akteur ist berechtigt (in rvSMD)
+- Der Gutachter ist in rvGutachten authentifiziert.
+- Der Auftrag ist dem Gutachter zugewiesen.
 
 **Erfolgsszenario:**
 
-1. Akteur (Gutachter oder 8023-Mitarbeiter) öffnet Auftragsübersicht in rvSMD
-2. Auswahl eines Auftrags
-3. Auswahl gewünschter Statusänderung (angenommen, in Bearbeitung, abgeschlossen, storniert)
-4. rvSMD prüft Berechtigungen und Statusübergänge
-5. rvSMD setzt neuen Status und dokumentiert Änderung
-6. rvSMD stößt Synchronisation nach rvGutachten an
-7. rvGutachten übernimmt Statusänderung automatisch
-8. System informiert relevante Parteien (z.B. per E-Mail)
+1. Gutachter öffnet die Auftragsübersicht in rvGutachten.
+2. Er wählt einen Auftrag aus.
+3. Er wählt einen neuen Status (z.B. "in Bearbeitung", "abgeschlossen").
+4. rvGutachten prüft die Berechtigung für die Statusänderung.
+5. rvGutachten setzt den neuen Status und erstellt einen Audit-Log-Eintrag.
+6. rvGutachten stößt eine Synchronisation der Statusänderung nach rvSMD an.
+7. rvSMD übernimmt den neuen Status.
 
 **Alternativszenarien:**
 
-- **A1:** Ungültiger Statusübergang in rvSMD → Fehlermeldung
-- **A2:** Synchronisationsfehler → Logging, Support-Benachrichtigung
+- **A1:** Ungültiger Statusübergang → Fehlermeldung in rvGutachten.
+- **A2:** Synchronisationsfehler nach rvSMD → Logging und Benachrichtigung des Supports.
 
 **Nachbedingungen:**
 
-- Status des Auftrags ist aktualisiert
-- Audit-Log der Statusänderung ist erstellt
+- Der Status des Auftrags ist in beiden Systemen (rvGutachten und rvSMD) aktualisiert.
+- Die Statusänderung ist im Audit-Log dokumentiert.
 
-**Quell-Stories:** US-AM.04, US-AM.06, US-BN.02  
-**Priorität:** Mittel - Wichtig für Auftrags-Verwaltung
+**Quell-Stories:** US-AM.04, US-BN.02  
+**Priorität:** Mittel - Wichtig für die Auftrags-Verwaltung.
+
+---
+
+### UC-12b: DRV-Mitarbeiter ändert Auftragsstatus
+
+**Use Case ID:** UC-12b  
+**Name:** DRV-Mitarbeiter ändert Auftragsstatus in rvSMD  
+**Primärer Akteur:** 8023-Mitarbeiter  
+**Sekundäre Akteure:** rvSMD-System, rvGutachten-System  
+**Auslöser:** Ein 8023-Mitarbeiter ändert den Status eines Auftrags in rvSMD (z.B. bei Stornierung).
+
+**Vorbedingungen:**
+
+- Der 8023-Mitarbeiter ist in rvSMD authentifiziert.
+- Der Auftrag existiert in rvSMD.
+
+**Erfolgsszenario:**
+
+1. Der 8023-Mitarbeiter öffnet die Auftragsverwaltung in rvSMD.
+2. Er wählt einen Auftrag aus.
+3. Er wählt einen neuen Status (z.B. "storniert").
+4. rvSMD prüft die Berechtigung für die Statusänderung.
+5. rvSMD setzt den neuen Status und erstellt einen Audit-Log-Eintrag.
+6. rvSMD stößt eine Synchronisation der Statusänderung nach rvGutachten an.
+7. rvGutachten übernimmt den neuen Status automatisch.
+
+**Alternativszenarien:**
+
+- **A1:** Ungültiger Statusübergang → Fehlermeldung in rvSMD.
+- **A2:** Synchronisationsfehler nach rvGutachten → Logging und Benachrichtigung des Supports.
+
+**Nachbedingungen:**
+
+- Der Status des Auftrags ist in beiden Systemen (rvSMD und rvGutachten) aktualisiert.
+- Die Statusänderung ist im Audit-Log dokumentiert.
+
+**Quell-Stories:** US-AM.06, US-BN.02  
+**Priorität:** Mittel - Wichtig für die Auftrags-Verwaltung.
 
 ---
 

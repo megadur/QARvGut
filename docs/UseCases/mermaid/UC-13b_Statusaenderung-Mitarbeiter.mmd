@@ -1,0 +1,18 @@
+```mermaid
+sequenceDiagram
+    participant M as 8023-Mitarbeiter
+    participant SMD as rvSMD-System
+    participant RVG as rvGutachten-System
+
+    M->>SMD: Öffnet Auftragsverwaltung
+    M->>SMD: Wählt Auftrag & neuen Status (z.B. storniert)
+    SMD->>SMD: Prüft Berechtigung & Statusübergang
+    alt Gültiger Übergang
+        SMD->>SMD: Setzt neuen Status & Audit-Log
+        SMD->>RVG: Synchronisiere Statusänderung
+        RVG->>RVG: Übernimmt Status automatisch
+        SMD-->>M: Bestätigung
+    else Ungültiger Übergang
+        SMD-->>M: Fehlermeldung
+    end
+```
