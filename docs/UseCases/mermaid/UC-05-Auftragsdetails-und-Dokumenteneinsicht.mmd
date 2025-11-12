@@ -1,86 +1,86 @@
 sequenceDiagram
-    participant G as Gutachter
-    participant RG as rvGutachten System
+    participant GUT as Gutachter
+    participant RVG as rvGutachten System
     participant DB as Datenbank
     participant PUR as rvPuR/rvArchiv
     participant PDF as PDF-Viewer
-    participant AM as Audit Manager
+    participant AUD as Audit Manager
 
-    Note over G,AM: UC05 Auftragsdetails einsehen und Dokumente verwalten
+    Note over GUT,AM: UC05 Auftragsdetails einsehen und Dokumente verwalten
 
-    G->>RG: 1. Auf Auftrag in Übersicht klicken
-    RG->>DB: 2. Auftragsberechtigung prüfen
-    DB->>RG: 3. Berechtigung bestätigt
+    GUT->>RVG: 01. Auf Auftrag in Übersicht klicken
+    RVG->>DB: 02. Auftragsberechtigung prüfen
+    DB->>RVG: 03. Berechtigung bestätigt
 
     alt Berechtigung entzogen
-        RG->>G: 4a. Weiterleitung zur Übersicht + Hinweis
+        RVG->>GUT: 4a. Weiterleitung zur Übersicht + Hinweis
     else Berechtigung OK
-        RG->>DB: 4b. Erweiterte Auftragsinformationen laden
-        DB->>RG: 5. VSNR, Proband, Geburtsdatum, Status, etc.
+        RVG->>DB: 4b. Erweiterte Auftragsinformationen laden
+        DB->>RVG: 05. VSNR, Proband, Geburtsdatum, Status, etc.
 
         par Auftragsdaten anzeigen
-            RG->>G: 6a. Detailansicht mit erweiterten Informationen
+            RVG->>GUT: 6a. Detailansicht mit erweiterten Informationen
 
         and Dokumente laden
-            RG->>DB: 6b. Zugeordnete Dokumente abfragen
-            DB->>RG: 7. Dokumentenliste + Metadaten
-            RG->>G: 8. Dokumentenübersicht anzeigen
+            RVG->>DB: 6b. Zugeordnete Dokumente abfragen
+            DB->>RVG: 07. Dokumentenliste + Metadaten
+            RVG->>GUT: 08. Dokumentenübersicht anzeigen
         end
     end
 
-    Note over G,AM: Dokumentenmanagement
+    Note over GUT,AM: Dokumentenmanagement
 
-    G->>RG: 9. Dokument zum Öffnen auswählen
+    GUT->>RVG: 09. Dokument zum Öffnen auswählen
 
     alt Stornierter Auftrag
-        RG->>G: 10a. Eingeschränkte Funktionalität - nur Einsicht
+        RVG->>GUT: 10a. Eingeschränkte Funktionalität - nur Einsicht
     else Aktiver Auftrag
-        RG->>DB: 10b. Dokumentenzugriff protokollieren
-        DB->>AM: 11. Audit-Log erstellen
+        RVG->>DB: 10b. Dokumentenzugriff protokollieren
+        DB->>AUD: 11. Audit-Log erstellen
 
-        RG->>PUR: 12. Dokument anfordern
+        RVG->>PUR: 12. Dokument anfordern
         alt Dokument nicht verfügbar
-            PUR->>RG: 13a. Fehler - Dokument nicht gefunden
-            RG->>G: 14a. Fehlermeldung + Kontaktmöglichkeit
+            PUR->>RVG: 13a. Fehler - Dokument nicht gefunden
+            RVG->>GUT: 14a. Fehlermeldung + Kontaktmöglichkeit
         else Dokument verfügbar
-            PUR->>RG: 13b. Dokument-Stream + Metadaten
+            PUR->>RVG: 13b. Dokument-Stream + Metadaten
 
             alt PDF-Direktanzeige
-                RG->>PDF: 14b. PDF-Viewer initialisieren
-                PDF->>G: 15a. Dokument in Viewer anzeigen
-                Note over G,PDF: Zoom, Pan, Navigation verfügbar
+                RVG->>PDF: 14b. PDF-Viewer initialisieren
+                PDF->>GUT: 15a. Dokument in Viewer anzeigen
+                Note over GUT,PDF: Zoom, Pan, Navigation verfügbar
 
             else Download-Funktion
-                G->>RG: 15b. Download-Button klicken
-                RG->>RG: 16a. Watermark hinzufügen (falls erforderlich)
-                RG->>G: 17a. Sicherer Download starten
-                RG->>AM: 18a. Download protokollieren
+                GUT->>RVG: 15b. Download-Button klicken
+                RVG->>RVG: 16a. Watermark hinzufügen (falls erforderlich)
+                RVG->>GUT: 17a. Sicherer Download starten
+                RVG->>AUD: 18a. Download protokollieren
 
             else Druck-Funktion
-                G->>RG: 15c. Drucken-Button klicken
-                RG->>RG: 16b. Druckbare Version erstellen
-                RG->>G: 17b. Druckdialog öffnen (Formaterhaltung)
-                RG->>AM: 18b. Druckvorgang protokollieren
+                GUT->>RVG: 15c. Drucken-Button klicken
+                RVG->>RVG: 16b. Druckbare Version erstellen
+                RVG->>GUT: 17b. Druckdialog öffnen (Formaterhaltung)
+                RVG->>AUD: 18b. Druckvorgang protokollieren
             end
         end
     end
 
-    Note over G,AM: Notizenfunktion
+    Note over GUT,AM: Notizenfunktion
 
-    G->>RG: 19. Notiz zu Dokument erstellen/bearbeiten
-    RG->>DB: 20. Notiz speichern (dokumentenbezogen)
-    DB->>RG: 21. Speicherung bestätigt
-    RG->>G: 22. Notiz in Dokument-Kontext anzeigen
-    RG->>AM: 23. Notizen-Aktivität protokollieren
+    GUT->>RVG: 19. Notiz zu Dokument erstellen/bearbeiten
+    RVG->>DB: 20. Notiz speichern (dokumentenbezogen)
+    DB->>RVG: 21. Speicherung bestätigt
+    RVG->>GUT: 22. Notiz in Dokument-Kontext anzeigen
+    RVG->>AUD: 23. Notizen-Aktivität protokollieren
 
-    Note over G,AM: Navigation und Sicherheit
+    Note over GUT,AM: Navigation und Sicherheit
 
     alt Zurück zur Übersicht
-        G->>RG: 24. Zurück-Button/Navigation
-        RG->>G: 25. Rückkehr zur Auftragsübersicht
+        GUT->>RVG: 24. Zurück-Button/Navigation
+        RVG->>GUT: 25. Rückkehr zur Auftragsübersicht
     end
 
     Note over RG,AM: Kontinuierliche Sicherheitsüberwachung
-    RG->>AM: 26. Alle Dokumentenzugriffe auditieren
-    RG->>RG: 27. Schutz vor unbefugtem Zugriff
-    RG->>RG: 28. Session-Timeout überwachen
+    RVG->>AUD: 26. Alle Dokumentenzugriffe auditieren
+    RVG->>RVG: 27. Schutz vor unbefugtem Zugriff
+    RVG->>RVG: 28. Session-Timeout überwachen

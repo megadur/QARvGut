@@ -1,18 +1,18 @@
 ```mermaid
 sequenceDiagram
-    participant M as DRV-Mitarbeiter
-    participant S as rvGutachten-System
-    participant G as Gutachter
+    participant DRV as DRV-Mitarbeiter
+    participant RVG as rvGutachten-System
+    participant GUT as Gutachter
 
-    M->>S: Öffnet Gutachter-Verwaltung
-    M->>S: Klick auf "Neuen Gutachter anlegen"
-    M->>S: Eingabe Gutachterdaten
-    S->>S: Dublettenprüfung
+    DRV->>RVG: Öffnet Gutachter-Verwaltung
+    DRV->>RVG: Klick auf "Neuen Gutachter anlegen"
+    DRV->>RVG: Eingabe Gutachterdaten
+    RVG->>RVG: Dublettenprüfung
     alt Dublette erkannt
-        S-->>M: Hinweis, kein Anlegen möglich
+        S-->>DRV: Hinweis, kein Anlegen möglich
     else Keine Dublette
-        S->>S: Gutachter anlegen (Status: inaktiv)
-        S->>G: Einladung/Registrierungslink senden
-        S-->>M: Bestätigung Anlage
+        RVG->>RVG: Gutachter anlegen (Status: inaktiv)
+        RVG->>GUT: Einladung/Registrierungslink senden
+        S-->>DRV: Bestätigung Anlage
     end
 ```

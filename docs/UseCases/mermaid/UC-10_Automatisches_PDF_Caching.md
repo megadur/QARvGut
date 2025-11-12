@@ -21,32 +21,32 @@ Per UC-10 werden alle PDF-Dokumente automatisch bei der Auftragserstellung volls
 
 ```mermaid
 sequenceDiagram
-    participant RVS as rvSMD
+    participant SMD as rvSMD
     participant MQ as Message Queue
     participant BG as Background Worker
     participant DB as rvGutachten DB
     participant PUR as rvPuR (SOAP)
     participant ARC as rvArchiv
     participant API as REST API
-    participant G as Gutachter
+    participant GUT as Gutachter
 
-    Note over RVS,G: PHASE 1: Auftragserstellung & Sync-Trigger
+    Note over SMD,GUT: PHASE 1: Auftragserstellung & Sync-Trigger
 
-    RVS->>MQ: 1. ORDER_CREATED Event
-    Note right of RVS: auftragsId, VSNR,<br/>rvPurVorgangsID
-    MQ->>BG: 2. Consume Event
+    SMD->>MQ: 01. ORDER_CREATED Event
+    Note right of SMD: auftragsId, VSNR,<br/>rvPurVorgangsID
+    MQ->>BG: 02. Consume Event
     
     Note over BG,ARC: PHASE 2: Metadaten-Abruf von rvPuR
 
-    BG->>PUR: 3. sucheVorgaenge(VSNR)
-    PUR-->>BG: 4. Vorgang[vorgangsId]
-    BG->>PUR: 5. getVorgangDokIdents(vorgangsId)
-    PUR-->>BG: 6. List<IOID>
+    BG->>PUR: 03. sucheVorgaenge(VSNR)
+    PUR-->>BG: 04. Vorgang[vorgangsId]
+    BG->>PUR: 05. getVorgangDokIdents(vorgangsId)
+    PUR-->>BG: 06. List<IOID>
     
     loop Für jedes Dokument
-        BG->>PUR: 7. getDokumentMetainfo(IOID)
-        PUR-->>BG: 8. Metadaten (base64+gzip)
-        BG->>DB: 9. INSERT Document Metadata
+        BG->>PUR: 07. getDokumentMetainfo(IOID)
+        PUR-->>BG: 08. Metadaten (base64+gzip)
+        BG->>DB: 09. INSERT Document Metadata
     end
 
     Note over BG,ARC: PHASE 3: PDF-Download & Lokale Speicherung (UC-10!)

@@ -1,42 +1,42 @@
 sequenceDiagram
-    actor G as Gutachter
-    actor ADM as 8023 (DRV-MA)
-    participant RVS as rvSMD<br/>System
-    participant EL as eLogin<br/>System
+    actor GUT as Gutachter
+    actor DRV as 8023 (DRV-MA)
+    participant SMD as rvSMD<br/>System
+    participant ELG as eLogin<br/>System
     participant RVG as rvGutachten<br/>System
     participant POST as Postservice
-    participant EMAIL as E-Mail<br/>Service
+    participant EML as E-Mail<br/>Service
     
-    Note over G,EMAIL: UC-01 Version 4: administrierte Registrierung kompakt
+    Note over GUT,EML: UC-01 Version 4: administrierte Registrierung kompakt
     
     %% Phase 1: Initiale Interessensbekundung
-    G->>ADM: 01. Interesse an Teilnahme bekundet
-    ADM->>POST: 02. Brief zur Datenerhebung versenden
-    POST-->>G: Brief erhalten
+    GUT->>DRV: 01. Interesse an Teilnahme bekundet
+    DRV->>POST: 02. Brief zur Datenerhebung versenden
+    POST-->>GUT: Brief erhalten
     
     %% Phase 2: Datensammlung
-    G->>G: 03. Formular ausgefüllen<br/>(Name, EFN, E-Mail)
-    G->>POST: 04. Formular per Brief versenden
-    POST-->>ADM: Formular erhalten
+    GUT->>GUT: 03. Formular ausgefüllen<br/>(Name, EFN, E-Mail)
+    GUT->>POST: 04. Formular per Brief versenden
+    POST-->>DRV: Formular erhalten
     
     %% Phase 3: System-Setup durch Admin
-    ADM->>RVS: 05. Daten bei Gutachter ergänzen
-    RVS->>RVG: 06. Gutachter anlegen API<br/>(Name, Vorname, EFN, Träger KTAN)
+    DRV->>SMD: 05. Daten bei Gutachter ergänzen
+    SMD->>RVG: 06. Gutachter anlegen API<br/>(Name, Vorname, EFN, Träger KTAN)
     
     %% Phase 4: eLogin Account Creation
-    ADM->>EL: 07. Gutachter anlegen Dialog<br/>(Name, Vorname, Adresse, E-Mail)
-    EL->>EL: 08. eLogin-ID + Registrierungscode generieren
-    EL-->>ADM: eLogin-ID + Registrierungscode erstellt
-    ADM->>RVG: 09. eLogin-ID am Gutachter ergänzen (Liste+auswählen+eintragen )
+    DRV->>ELG: 07. Gutachter anlegen Dialog<br/>(Name, Vorname, Adresse, E-Mail)
+    ELG->>ELG: 08. eLogin-ID + Registrierungscode generieren
+    EL-->>DRV: eLogin-ID + Registrierungscode erstellt
+    DRV->>RVG: 09. eLogin-ID am Gutachter ergänzen (Liste+auswählen+eintragen )
     
     %% Phase 5: Data Verification & Linking
     alt Versand per E-Mail
-    EL->>EMAIL: 10. E-Mail mit Registrierungslink und Registrierungscode versenden
-    EMAIL-->>G: E-Mail erhalten
+    ELG->>EML: 10. E-Mail mit Registrierungslink und Registrierungscode versenden
+    EMAIL-->>GUT: E-Mail erhalten
     else Versand per Brief
     %% Phase 6: Postal Activation
-    ADM->>POST: 11. Brief mit Registrierungslink und Registrierungscode versenden
-    POST-->>G: Brief erhalten
+    DRV->>POST: 11. Brief mit Registrierungslink und Registrierungscode versenden
+    POST-->>GUT: Brief erhalten
     end 
     
     RVG->>RVG: 12. Gutachter anhand Name, Vorname auswählen
@@ -44,9 +44,9 @@ sequenceDiagram
     RVG->>RVG: 14. Verbinden von EFN und eLoginId
 
     %% Phase 7: Initial eLogin Activation
-    G->>EL: 15. Registrierungslink öffnen
-    G-->>EL: Registrierungscode eingeben
-    EL->>G: 16. Passwordseite anzeigen
-    G-->>EL: Password vergeben 
-    EL->>EL: 17. eLogin-Account aktiv
+    GUT->>ELG: 15. Registrierungslink öffnen
+    G-->>ELG: Registrierungscode eingeben
+    ELG->>GUT: 16. Passwordseite anzeigen
+    G-->>ELG: Password vergeben 
+    ELG->>ELG: 17. eLogin-Account aktiv
     

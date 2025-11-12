@@ -1,63 +1,63 @@
 sequenceDiagram
     participant SYS as System Event
-    participant RG as rvGutachten System
-    participant NM as Notification Manager
-    participant TM as Template Manager
+    participant RVG as rvGutachten System
+    participant NTF as Notification Manager
+    participant TPL as Template Manager
     participant DB as Datenbank
-    participant ES as E-Mail System
-    participant G as Gutachter/Benutzer
+    participant EML as E-Mail System
+    participant GUT as Gutachter/Benutzer
 
     Note over SYS,G: UC06 Automatische E-Mail-Benachrichtigungen
 
-    SYS->>RG: 1. Triggering Event (Neuer Auftrag/Status/Mahnung)
-    RG->>NM: 2. Event zur Verarbeitung weiterleiten
+    SYS->>RVG: 01. Triggering Event (Neuer Auftrag/Status/Mahnung)
+    RVG->>NTF: 02. Event zur Verarbeitung weiterleiten
 
-    NM->>DB: 3. Betroffenen Gutachter ermitteln
-    DB->>NM: 4. Gutachterliste + E-Mail-Präferenzen
+    NTF->>DB: 03. Betroffenen Gutachter ermitteln
+    DB->>NTF: 04. Gutachterliste + E-Mail-Präferenzen
 
     alt Benutzer hat Benachrichtigungen deaktiviert
-        NM->>RG: 5a. Event ignorieren (Opt-out respektieren)
+        NTF->>RVG: 5a. Event ignorieren (Opt-out respektieren)
     else Benachrichtigungen aktiv
-        NM->>TM: 5b. Geeignetes E-Mail-Template bestimmen
+        NTF->>TPL: 5b. Geeignetes E-Mail-Template bestimmen
 
         alt Neuer Auftrag zugewiesen
-            TM->>TM: 6a. Template "Neuer Auftrag" laden
-            TM->>DB: 7a. Auftragsdaten für Platzhalter abrufen
-            DB->>TM: 8a. {{auftrag_nummer}}, {{proband_name}}, {{frist_datum}}
+            TPL->>TPL: 6a. Template "Neuer Auftrag" laden
+            TPL->>DB: 7a. Auftragsdaten für Platzhalter abrufen
+            DB->>TPL: 8a. {{auftrag_nummer}}, {{proband_name}}, {{frist_datum}}
 
         else Auftragsstatus geändert
-            TM->>TM: 6b. Template "Statusänderung" laden
-            TM->>DB: 7b. Statusdaten abrufen
-            DB->>TM: 8b. Alter/Neuer Status, Zeitstempel
+            TPL->>TPL: 6b. Template "Statusänderung" laden
+            TPL->>DB: 7b. Statusdaten abrufen
+            DB->>TPL: 8b. Alter/Neuer Status, Zeitstempel
 
         else Mahnung eingegangen
-            TM->>TM: 6c. Template "Mahnung" (Priorität) laden
-            TM->>DB: 7c. Mahnungsdaten abrufen
-            DB->>TM: 8c. Mahnstufe, Fristdaten, Eskalationsstufe
+            TPL->>TPL: 6c. Template "Mahnung" (Priorität) laden
+            TPL->>DB: 7c. Mahnungsdaten abrufen
+            DB->>TPL: 8c. Mahnstufe, Fristdaten, Eskalationsstufe
 
         else System-Wartung
-            TM->>TM: 6d. Template "System-Info" laden
-            TM->>DB: 7d. Wartungsdetails abrufen
-            DB->>TM: 8d. Wartungsfenster, betroffene Services
+            TPL->>TPL: 6d. Template "System-Info" laden
+            TPL->>DB: 7d. Wartungsdetails abrufen
+            DB->>TPL: 8d. Wartungsfenster, betroffene Services
         end
 
-        TM->>TM: 9. Platzhalter ersetzen ({{gutachter_name}}, {{link_portal}})
-        TM->>NM: 10. Personalisierte Nachricht erstellen
+        TPL->>TPL: 09. Platzhalter ersetzen ({{gutachter_name}}, {{link_portal}})
+        TPL->>NTF: 10. Personalisierte Nachricht erstellen
 
-        NM->>ES: 11. E-Mail versenden
+        NTF->>EML: 11. E-Mail versenden
         alt SMTP-Fehler
-            ES->>NM: 12a. Versandfehler
-            NM->>NM: 13a. Retry-Mechanismus (3 Versuche)
+            EML->>NTF: 12a. Versandfehler
+            NTF->>NTF: 13a. Retry-Mechanismus (3 Versuche)
             alt Max. Versuche erreicht
-                NM->>DB: 14a. Fehlerhafte E-Mail-Adresse markieren
-                NM->>RG: 15a. Admin über Versandfehler informieren
+                NTF->>DB: 14a. Fehlerhafte E-Mail-Adresse markieren
+                NTF->>RVG: 15a. Admin über Versandfehler informieren
             else Retry erfolgreich
-                ES->>G: 14b. E-Mail zugestellt
-                NM->>DB: 15b. Erfolgreichen Versand protokollieren
+                EML->>GUT: 14b. E-Mail zugestellt
+                NTF->>DB: 15b. Erfolgreichen Versand protokollieren
             end
         else Versand erfolgreich
-            ES->>G: 12b. E-Mail zugestellt
-            NM->>DB: 13b. Versand im Audit-Log protokollieren
+            EML->>GUT: 12b. E-Mail zugestellt
+            NTF->>DB: 13b. Versand im Audit-Log protokollieren
         end
     end
 
@@ -65,17 +65,17 @@ sequenceDiagram
 
     alt Administrator konfiguriert Templates
         participant ADM as Administrator
-        ADM->>TM: 16. Template bearbeiten
-        TM->>DB: 17. Neue Template-Version speichern
-        TM->>ADM: 18. Änderungen bestätigt
+        DRV->>TPL: 16. Template bearbeiten
+        TPL->>DB: 17. Neue Template-Version speichern
+        TPL->>DRV: 18. Änderungen bestätigt
 
     else Gutachter ändert Präferenzen
-        G->>RG: 19. Benachrichtigungseinstellungen öffnen
-        RG->>DB: 20. Aktuelle Präferenzen laden
-        DB->>RG: 21. Einstellungen (Frequenz, Opt-outs)
-        RG->>G: 22. Einstellungsformular anzeigen
+        GUT->>RVG: 19. Benachrichtigungseinstellungen öffnen
+        RVG->>DB: 20. Aktuelle Präferenzen laden
+        DB->>RVG: 21. Einstellungen (Frequenz, Opt-outs)
+        RVG->>GUT: 22. Einstellungsformular anzeigen
 
-        G->>RG: 23. Präferenzen ändern (täglich/sofort/wöchentlich)
-        RG->>DB: 24. Neue Präferenzen speichern
-        RG->>G: 25. Änderungen bestätigt
+        GUT->>RVG: 23. Präferenzen ändern (täglich/sofort/wöchentlich)
+        RVG->>DB: 24. Neue Präferenzen speichern
+        RVG->>GUT: 25. Änderungen bestätigt
     end

@@ -1,84 +1,84 @@
 sequenceDiagram
-    participant G as Gutachter
-    participant RG as rvGutachten System
+    participant GUT as Gutachter
+    participant RVG as rvGutachten System
     participant DB as Datenbank
     participant SMD as rvSMD System
-    participant RT as Real-Time Updates
+    participant RTU as Real-Time Updates
 
-    Note over G,RT: Auftragsübersicht anzeigen und verwalten
+    Note over GUT,RT: Auftragsübersicht anzeigen und verwalten
 
-    G->>RG: 1. Zur Auftragsübersicht navigieren
-    RG->>DB: 2. Benutzer-authentifizierte Aufträge laden
-    DB->>RG: 3. Alle zugewiesenen Aufträge
+    GUT->>RVG: 01. Zur Auftragsübersicht navigieren
+    RVG->>DB: 02. Benutzer-authentifizierte Aufträge laden
+    DB->>RVG: 03. Alle zugewiesenen Aufträge
 
     alt Keine Aufträge vorhanden
-        RG->>G: 4a. Informative Meldung mit Hilfetext
+        RVG->>GUT: 4a. Informative Meldung mit Hilfetext
     else Aufträge vorhanden
-        RG->>G: 4b. Tabellarische Übersicht anzeigen
-        Note over G,RG: Spalten: Auftragsdatum, VSNR, Proband, Status
+        RVG->>GUT: 4b. Tabellarische Übersicht anzeigen
+        Note over GUT,RG: Spalten: Auftragsdatum, VSNR, Proband, Status
     end
 
     par Real-Time Updates
-        RT->>RG: 5a. Auto-Refresh Trigger (alle 5 Min)
-        RG->>DB: 6a. Aktualisierte Daten abfragen
-        DB->>RG: 7a. Neue/geänderte Aufträge
-        RG->>G: 8a. Dashboard aktualisieren
+        RTU->>RVG: 5a. Auto-Refresh Trigger (alle 5 Min)
+        RVG->>DB: 6a. Aktualisierte Daten abfragen
+        DB->>RVG: 7a. Neue/geänderte Aufträge
+        RVG->>GUT: 8a. Dashboard aktualisieren
 
     and Benutzer-Interaktionen
         alt Sortierung anwenden
-            G->>RG: 5b. Nach Spalte sortieren (Datum/Status/Proband)
-            RG->>RG: 6b. Client-seitige Sortierung
-            RG->>G: 7b. Sortierte Darstellung
+            GUT->>RVG: 5b. Nach Spalte sortieren (Datum/Status/Proband)
+            RVG->>RVG: 6b. Client-seitige Sortierung
+            RVG->>GUT: 7b. Sortierte Darstellung
 
         else Filter anwenden
-            G->>RG: 5c. Nach Status filtern (neu/in Bearbeitung/abgeschlossen)
-            RG->>RG: 6c. Filter anwenden
-            RG->>G: 7c. Gefilterte Aufträge anzeigen
+            GUT->>RVG: 5c. Nach Status filtern (neu/in Bearbeitung/abgeschlossen)
+            RVG->>RVG: 6c. Filter anwenden
+            RVG->>GUT: 7c. Gefilterte Aufträge anzeigen
 
         else Suchfunktion nutzen
-            G->>RG: 5d. Suchbegriff eingeben (VSNR/Proband)
-            RG->>RG: 6d. Lokale Suche durchführen (<1 Sek)
-            RG->>G: 7d. Suchergebnisse anzeigen
+            GUT->>RVG: 5d. Suchbegriff eingeben (VSNR/Proband)
+            RVG->>RVG: 6d. Lokale Suche durchführen (<1 Sek)
+            RVG->>GUT: 7d. Suchergebnisse anzeigen
         end
     end
 
-    Note over G,RT: Auftragsstatus verwalten
+    Note over GUT,RT: Auftragsstatus verwalten
 
-    G->>RG: 9. Auftragsstatus ändern
+    GUT->>RVG: 09. Auftragsstatus ändern
     alt Status "In Bearbeitung"
-        RG->>DB: 10a. Status aktualisieren + Zeitstempel
-        DB->>RG: 11a. Update bestätigt
-        RG->>SMD: 12a. Status-Sync (falls erforderlich)
-        RG->>G: 13a. Visuelle Statusänderung
+        RVG->>DB: 10a. Status aktualisieren + Zeitstempel
+        DB->>RVG: 11a. Update bestätigt
+        RVG->>SMD: 12a. Status-Sync (falls erforderlich)
+        RVG->>GUT: 13a. Visuelle Statusänderung
 
     else Status "Abgeschlossen"
-        RG->>DB: 10b. Abschluss-Zeitstempel setzen
-        DB->>RG: 11b. Update bestätigt
-        RG->>G: 13b. Abgeschlossen-Kennzeichnung
+        RVG->>DB: 10b. Abschluss-Zeitstempel setzen
+        DB->>RVG: 11b. Update bestätigt
+        RVG->>GUT: 13b. Abgeschlossen-Kennzeichnung
 
     else Stornierter Auftrag
-        RG->>RG: 10c. Auftrag sperren (keine Aktionen möglich)
-        RG->>G: 13c. Deutliche Sperrung mit roter Kennzeichnung
+        RVG->>RVG: 10c. Auftrag sperren (keine Aktionen möglich)
+        RVG->>GUT: 13c. Deutliche Sperrung mit roter Kennzeichnung
     end
 
-    Note over G,RT: Erweiterte Funktionen
+    Note over GUT,RT: Erweiterte Funktionen
 
     alt Auftrag mit Mahnung
-        RG->>G: 14a. Mahnung visuell hervorheben (Warnsymbol)
-        G->>RG: 15. Mahndetails anzeigen
-        RG->>DB: 16. Mahnungsinformationen laden
-        DB->>RG: 17. Mahnstufe + Fristdaten
-        RG->>G: 18. Detaillierte Mahninformationen
+        RVG->>GUT: 14a. Mahnung visuell hervorheben (Warnsymbol)
+        GUT->>RVG: 15. Mahndetails anzeigen
+        RVG->>DB: 16. Mahnungsinformationen laden
+        DB->>RVG: 17. Mahnstufe + Fristdaten
+        RVG->>GUT: 18. Detaillierte Mahninformationen
     end
 
     alt Auftragsdetails aufrufen
-        G->>RG: 14b. Auf Auftrag klicken
-        RG->>G: 19. Weiterleitung zur Detailansicht (UC-05)
+        GUT->>RVG: 14b. Auf Auftrag klicken
+        RVG->>GUT: 19. Weiterleitung zur Detailansicht (UC-05)
     end
 
     alt System-Timeout/Netzwerkfehler
-        RG->>RG: 20. Verbindungsfehler erkennen
-        RG->>G: 21. Offline-Indikator + Retry-Button
-        G->>RG: 22. Manuelles Neuladen
-        RG->>DB: 23. Daten neu laden
+        RVG->>RVG: 20. Verbindungsfehler erkennen
+        RVG->>GUT: 21. Offline-Indikator + Retry-Button
+        GUT->>RVG: 22. Manuelles Neuladen
+        RVG->>DB: 23. Daten neu laden
     end

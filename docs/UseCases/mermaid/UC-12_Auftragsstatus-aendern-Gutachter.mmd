@@ -1,18 +1,18 @@
 ```mermaid
 sequenceDiagram
-    participant G as Gutachter
+    participant GUT as Gutachter
     participant RVG as rvGutachten-System
     participant SMD as rvSMD-System
 
-    G->>RVG: Öffnet Auftragsübersicht
-    G->>RVG: Wählt Auftrag & neuen Status
+    GUT->>RVG: Öffnet Auftragsübersicht
+    GUT->>RVG: Wählt Auftrag & neuen Status
     RVG->>RVG: Prüft Berechtigung & Statusübergang
     alt Gültiger Übergang
         RVG->>RVG: Setzt neuen Status & Audit-Log
         RVG->>SMD: Synchronisiere Statusänderung
         SMD->>SMD: Übernimmt Status
-        RVG-->>G: Bestätigung
+        RVG-->>GUT: Bestätigung
     else Ungültiger Übergang
-        RVG-->>G: Fehlermeldung
+        RVG-->>GUT: Fehlermeldung
     end
 ```

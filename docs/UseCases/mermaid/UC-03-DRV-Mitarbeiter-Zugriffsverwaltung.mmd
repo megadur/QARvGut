@@ -1,79 +1,79 @@
 sequenceDiagram
     participant DRV as DRV-Mitarbeiter
     participant RGA as rvGutachtenAdmin
-    participant RG as rvGutachten System
-    participant EL as eLogin API
+    participant RVG as rvGutachten System
+    participant ELG as eLogin API
     participant DB as Datenbank
-    participant AM as Audit Manager
+    participant AUD as Audit Manager
 
     Note over DRV,AM: UC02 DRV-Mitarbeiter Support-Zugang beantragen
 
-    DRV->>RGA: 1. Support-Zugang beantragen
-    RGA->>RGA: 2. Antrag validieren
+    DRV->>RGA: 01. Support-Zugang beantragen
+    RGA->>RGA: 02. Antrag validieren
 
-    RGA->>EL: 3. Mitarbeiter-Status validieren
-    EL->>RGA: 4. Validierungsresultat
+    RGA->>ELG: 03. Mitarbeiter-Status validieren
+    ELG->>RGA: 04. Validierungsresultat
 
     alt eLogin Validierung fehlgeschlagen
         RGA->>DRV: 5a. Berechtigung ungültig
     else Validierung erfolgreich
         RGA->>RGA: 5b. Berechtigungsstufe bestimmen
 
-        RGA->>RG: 6. DRV-Account erstellen (Support-Rolle)
-        RG->>DB: 7. Account mit erweiterten Rechten speichern
-        DB->>RG: 8. Erstellungsbestätigung
+        RGA->>RVG: 06. DRV-Account erstellen (Support-Rolle)
+        RVG->>DB: 07. Account mit erweiterten Rechten speichern
+        DB->>RVG: 08. Erstellungsbestätigung
 
-        RG->>AM: 9. Account-Erstellung protokollieren
+        RVG->>AUD: 09. Account-Erstellung protokollieren
 
         alt Support Level 1 (Standard)
-            RG->>DB: 10a. Basis-Support-Rechte zuweisen
+            RVG->>DB: 10a. Basis-Support-Rechte zuweisen
             Note over RG: Auftragszuweisungen einsehen, Dokumentübersicht
         else Support Level 2 (Erweitert)
-            RG->>DB: 10b. Erweiterte Support-Rechte zuweisen
+            RVG->>DB: 10b. Erweiterte Support-Rechte zuweisen
             Note over RG: + System-Konfiguration, Benutzerverwaltung
         else Support Level 3 (Administrator)
-            RG->>DB: 10c. Administrator-Rechte zuweisen
+            RVG->>DB: 10c. Administrator-Rechte zuweisen
             Note over RG: + Vollzugriff auf alle Funktionen
         end
 
-        RG->>DRV: 11. Account erstellt - Login-Daten senden
-        RG->>AM: 12. Berechtigungserteilung protokollieren
+        RVG->>DRV: 11. Account erstellt - Login-Daten senden
+        RVG->>AUD: 12. Berechtigungserteilung protokollieren
     end
 
     Note over DRV,AM: DRV-Mitarbeiter nutzt Support-Funktionen
 
-    DRV->>RG: 13. Bei Support-Dashboard anmelden
-    RG->>DB: 14. Benutzer authentifizieren und Berechtigung prüfen
-    DB->>RG: 15. Authentifizierung + Rollenberechtigung
+    DRV->>RVG: 13. Bei Support-Dashboard anmelden
+    RVG->>DB: 14. Benutzer authentifizieren und Berechtigung prüfen
+    DB->>RVG: 15. Authentifizierung + Rollenberechtigung
 
     alt Zugriff auf Auftragszuweisungen
-        DRV->>RG: 16a. Auftragszuweisungen einsehen
-        RG->>DB: 17a. Aufträge laden (alle Gutachter)
-        DB->>RG: 18a. Auftragsdaten
-        RG->>DRV: 19a. Vollständige Auftragsliste anzeigen
-        RG->>AM: 20a. Auftragszugriff protokollieren
+        DRV->>RVG: 16a. Auftragszuweisungen einsehen
+        RVG->>DB: 17a. Aufträge laden (alle Gutachter)
+        DB->>RVG: 18a. Auftragsdaten
+        RVG->>DRV: 19a. Vollständige Auftragsliste anzeigen
+        RVG->>AUD: 20a. Auftragszugriff protokollieren
 
-        DRV->>RG: 21. Nach VSNR/Gutachter/EFN suchen
-        RG->>DB: 22. Filterabfrage ausführen
-        DB->>RG: 23. Gefilterte Ergebnisse
-        RG->>DRV: 24. Suchergebnisse anzeigen
+        DRV->>RVG: 21. Nach VSNR/Gutachter/EFN suchen
+        RVG->>DB: 22. Filterabfrage ausführen
+        DB->>RVG: 23. Gefilterte Ergebnisse
+        RVG->>DRV: 24. Suchergebnisse anzeigen
     end
 
     alt Zugriff auf Dokumentenübersicht
-        DRV->>RG: 16b. Dokumentenstatus prüfen
-        RG->>DB: 17b. Dokumentenvollständigkeit abfragen
-        DB->>RG: 18b. Dokument-Status pro Auftrag
-        RG->>DRV: 19b. Vollständigkeitsreport anzeigen
-        RG->>AM: 20b. Dokumentenzugriff protokollieren
+        DRV->>RVG: 16b. Dokumentenstatus prüfen
+        RVG->>DB: 17b. Dokumentenvollständigkeit abfragen
+        DB->>RVG: 18b. Dokument-Status pro Auftrag
+        RVG->>DRV: 19b. Vollständigkeitsreport anzeigen
+        RVG->>AUD: 20b. Dokumentenzugriff protokollieren
     end
 
     alt System-Konfiguration (Level 2+)
-        DRV->>RG: 16c. Gutachter-Registrierungen verwalten
-        RG->>DB: 17c. Pending-Registrierungen laden
-        DB->>RG: 18c. Registrierungsliste
-        RG->>DRV: 19c. Genehmigungsworkflow anzeigen
+        DRV->>RVG: 16c. Gutachter-Registrierungen verwalten
+        RVG->>DB: 17c. Pending-Registrierungen laden
+        DB->>RVG: 18c. Registrierungsliste
+        RVG->>DRV: 19c. Genehmigungsworkflow anzeigen
 
-        DRV->>RG: 25. Registrierung genehmigen/ablehnen
-        RG->>DB: 26. Status aktualisieren
-        RG->>AM: 27. Admin-Entscheidung protokollieren
+        DRV->>RVG: 25. Registrierung genehmigen/ablehnen
+        RVG->>DB: 26. Status aktualisieren
+        RVG->>AUD: 27. Admin-Entscheidung protokollieren
     end
