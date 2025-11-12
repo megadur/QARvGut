@@ -55,10 +55,10 @@
 | 17b | Druckdialog öffnen | - | Frontend | Print Dialog |
 | 18a | Download protokollieren | `POST /audit/document-download` | POST | Audit |
 | 18b | Druck protokollieren | `POST /audit/document-print` | POST | Audit |
-| 19 | Notiz erstellen/bearbeiten | `POST /gutachtenauftraege/{id}/notizen` | POST | Note Management |
+| 19 | Notiz erstellen/bearbeiten | `PUT /dokumente/{documentId}/note` | PUT | Note Management |
 | 20 | Notiz speichern | - | Backend | Database Write |
-| 21 | Speicherung bestätigt | Response: 201 Created | - | |
-| 22 | Notiz anzeigen | - | Frontend | Display |
+| 21 | Speicherung bestätigt | Response: 204 No Content | - | |
+| 22 | Notiz anzeigen | `GET /dokumente/{documentId}/note` | GET | Display |
 | 23 | Notizen-Aktivität protokollieren | `POST /audit/note-activity` | POST | Audit |
 | 24 | Zurück-Button | - | Frontend | Navigation |
 | 25 | Rückkehr zur Übersicht | - | Frontend | Route Change |
@@ -72,9 +72,9 @@
 
 ### Auftrag Business Object
 
-| Attribut | Typ | Kard | Step 2: Check Auth | Step 4b: Load Details | Step 5: Response | Step 6a: Display | Step 6b: Get Docs | Step 19: Create Note |
+| Attribut | Typ | Kard | Step 2: Check Auth | Step 4b: Load Details | Step 5: Response | Step 6a: Display | Step 6b: Get Docs | Step 22: Display Note |
 |----------|-----|------|-------------------|----------------------|------------------|------------------|-------------------|---------------------|
-| **auftragsId** | uuid | 1 | [AUTH] | [R] | [OK] | [OK] | [R] | [R] |
+| **auftragsId** | uuid | 1 | [AUTH] | [R] | [OK] | [OK] | [R] | - |
 | **rvPurAuftragsID** | string | ? | - | [R] | - | - | [R] | - |
 | **proband** | Proband | 1 | - | [R] | [OK] | [OK] | - | - |
 | **gutachter** | Gutachter | 1 | [AUTH] | [R] | [OK] | [OK] | - | - |
@@ -84,7 +84,7 @@
 | **auftragsDatum** | date | 1 | - | [R] | [OK] | [OK] | - | - |
 | **eingangsDatum** | datetime | 1 | - | [R] | [OK] | [OK] | - | - |
 | **stornierungsDatum** | datetime | ? | - | [R] | [OK] | [OK] | - | - |
-| **dokumente** | Document | + | - | [R] | [OK] | [OK] | [R] | [R] |
+| **dokumente** | Document | + | - | [R] | [OK] | [OK] | [R] | - |
 
 **Anmerkung:** Alle MVP-Attribute des Auftrags sind in diesem Use Case erforderlich für die Detailansicht.
 
@@ -120,17 +120,18 @@
 
 ### Document Business Object
 
-| Attribut | Typ | Kard | Step 6b: Get Docs | Step 7: Response | Step 8: Display | Step 12: Request Doc | Step 13b: Stream | Step 15a: View | Step 15b: Download | Step 18a: Audit |
-|----------|-----|------|-------------------|------------------|-----------------|----------------------|------------------|----------------|-------------------|-----------------|
-| **documentId** | uuid | 1 | [R] | [OK] | [OK] | [R] | [OK] | [OK] | [OK] | [AUDIT] |
-| **name** | string | 1 | [R] | [OK] | [OK] | - | [OK] | [OK] | [OK] | - |
-| **filename** | string | 1 | [R] | [OK] | [OK] | - | [OK] | - | [OK] | - |
-| **filetype** | string | 1 | [R] | [OK] | [OK] | - | [OK] | [OK] | [OK] | - |
-| **filesize** | int | ? | [R] | [OK] | [OK] | - | [OK] | - | [OK] | - |
-| **data** | binary | 1 | - | - | - | [R] | [OK] | [OK] | [OK] | - |
-| **metadata** | DocumentMetadata | 1 | [R] | [OK] | [OK] | [R] | [OK] | - | - | - |
+| Attribut | Typ | Kard | Step 6b: Get Docs | Step 7: Response | Step 8: Display | Step 12: Request Doc | Step 13b: Stream | Step 15a: View | Step 15b: Download | Step 18a: Audit | Step 19: Update Note | Step 22: Display Note |
+|----------|-----|------|-------------------|------------------|-----------------|----------------------|------------------|----------------|-------------------|-----------------|---------------------|----------------------|
+| **documentId** | uuid | 1 | [R] | [OK] | [OK] | [R] | [OK] | [OK] | [OK] | [AUDIT] | [R] | [R] |
+| **name** | string | 1 | [R] | [OK] | [OK] | - | [OK] | [OK] | [OK] | - | - | - |
+| **filename** | string | 1 | [R] | [OK] | [OK] | - | [OK] | - | [OK] | - | - | - |
+| **filetype** | string | 1 | [R] | [OK] | [OK] | - | [OK] | [OK] | [OK] | - | - | - |
+| **filesize** | int | ? | [R] | [OK] | [OK] | - | [OK] | - | [OK] | - | - | - |
+| **data** | binary | 1 | - | - | - | [R] | [OK] | [OK] | [OK] | - | - | - |
+| **metadata** | DocumentMetadata | 1 | [R] | [OK] | [OK] | [R] | [OK] | - | - | - | - | - |
+| **note** | DocumentNote | ? | - | - | - | - | [OK] | - | - | - | [U] | [OK] |
 
-**Anmerkung:** Dokument-Daten sind zentral für UC-05. Metadaten werden separat vom Binär-Stream geladen für Performance.
+**Anmerkung:** Dokument-Daten sind zentral für UC-05. Metadaten werden separat vom Binär-Stream geladen für Performance. Notizen sind pro Dokument gespeichert (DocumentNoteDto mit headline und content als base64).
 
 ---
 
@@ -255,22 +256,24 @@ Response: 201 Created
 
 ---
 
-### 6. Notiz erstellen/bearbeiten
+### 6. Notiz erstellen/bearbeiten (pro Dokument)
 ```
-POST /api/v1/gutachtenauftraege/{auftragsId}/notizen
-PUT /api/v1/gutachtenauftraege/{auftragsId}/notizen/{notizId}
+GET /api/v1/dokumente/{documentId}/note
+PUT /api/v1/dokumente/{documentId}/note
 Headers:
   X-UserId: {userId}
   X-GutachterId: {gutachterId}
-Body: {
-  "documentId": "{documentId}",  // optional: dokumentenbezogen
-  "text": "Notiztext",
-  "timestamp": "2025-11-11T14:30:00Z"
+  X-OrgId: {orgId}
+Body (PUT): {
+  "headline": "base64-encoded-headline",
+  "content": "base64-encoded-content"
 }
-Response: 201 Created / 200 OK
+Response: 
+  GET 200 OK - DocumentNoteDto
+  PUT 204 No Content
 ```
 
-**Anmerkung:** Notizen sind nicht im MVP Business Object Model, gehören aber zur Funktionalität. Potentieller Kandidat für Erweiterung.
+**Anmerkung:** Notizen werden pro Dokument gespeichert (siehe `DocumentNoteDto` in OpenAPI). Headline und Content sind base64-kodiert.
 
 ---
 
