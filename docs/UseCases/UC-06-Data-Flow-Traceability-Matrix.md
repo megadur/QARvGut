@@ -5,6 +5,8 @@
 **Datum:** November 2025  
 **Zweck:** Rückverfolgbarkeit der Dokumentenintegration zwischen rvGutachten und rvPuR/rvArchiv
 
+**WICHTIG:** Gemäß UC-10 werden alle PDF-Dokumente automatisch bei der Auftragserstellung in rvGutachten gespeichert (Caching aus Performance-Gründen). Dieser Use Case beschreibt sowohl den initialen Sync (UC-10) als auch den Abruf bereits gecachter Dokumente.
+
 ---
 
 ## Legende
@@ -643,7 +645,48 @@ const pdf = await rvArchiv.getDokument(metainfo.purIOID); // ✅
 
 ---
 
-### 5. Response-Encoding
+### 5. UC-10: Automatisches Dokument-Caching
+
+**[CRIT] Performance-Anforderung:**
+- **Alle PDF-Dokumente müssen in rvGutachten gespeichert werden** (nicht nur Metadaten!)
+- Beim initialen Sync (UC-10) werden alle PDFs von rvArchiv heruntergeladen
+- Speicherung in rvGutachten Database (BLOB) oder File System
+- Vorteile:
+  - Performance: Schneller Zugriff ohne rvArchiv-Roundtrip
+  - Verfügbarkeit: Dokumente auch bei rvArchiv-Ausfall verfügbar
+  - Netzwerk: Reduzierte Last auf rvArchiv
+
+**Implementierung:**
+```csharp
+// Bei initialem Sync (POST /rvsmd/sync/dokumente)
+foreach (var doc in documents)
+{
+    var metadata = await rvPuR.getDokumentMetainfo(doc.IOID);
+    var pdfContent = await rvArchiv.getDokument(doc.IOID);
+    
+    // PDF in rvGutachten speichern
+    await database.SaveDocument(new StoredDocument
+    {
+        DocumentId = Guid.NewGuid(),
+        PurIOID = doc.IOID,
+        Content = pdfContent,  // Binary PDF content
+        ContentType = "application/pdf",
+        Metadata = metadata
+    });
+}
+
+// Bei Abruf (GET /dokumente/{id}/content)
+var storedDoc = await database.GetDocument(documentId);
+return File(storedDoc.Content, "application/pdf");
+```
+
+**Fallback-Strategie:**
+- Primär: PDF aus lokaler Datenbank laden
+- Fallback: Bei Nicht-Verfügbarkeit → rvArchiv abfragen und lokal speichern
+
+---
+
+### 6. Response-Encoding
 
 **[CRIT] Alle rvPuR Responses:**
 - **base64-encoded**
@@ -814,22 +857,55 @@ cache.set(`dokumente:${auftragsId}`, documents, {
 
 ---
 
+### ADR-006: Vollständiges PDF-Caching in rvGutachten (UC-10)
+
+**Status:** Accepted
+
+**Kontext:** Performance-Anforderungen erfordern schnellen Dokumentenzugriff ohne rvArchiv-Roundtrip.
+
+**Entscheidung:** 
+- Alle PDF-Dokumente werden beim initialen Sync vollständig in rvGutachten gespeichert
+- Speicherung als BLOB in Datenbank oder im File System
+- PDF-Abruf erfolgt primär aus lokalem Storage
+- Fallback zu rvArchiv nur bei fehlenden Dokumenten
+
+**Konsequenzen:**
+- (+) Maximale Performance bei Dokumentenzugriff
+- (+) Verfügbarkeit auch bei rvArchiv-Ausfall
+- (+) Reduzierte Netzwerklast
+- (+) Bessere User Experience (keine Ladezeiten)
+- (-) Erhöhter Speicherbedarf in rvGutachten
+- (-) Längere initiale Sync-Zeit
+- (-) Synchronisation bei Dokumentenänderungen erforderlich
+- (-) Datenschutz: Dokumente an zwei Orten gespeichert
+
+**Konsequenzen:**
+- (+) System bleibt stabil bei rvPuR-Ausfall
+- (+) Reduziert Last auf fehlerhafte Systeme
+- (-) Zusätzliche Infrastruktur-Komponente
+- (-) Komplexität in Fehlerbehandlung
+
+---
+
 ## MVP Coverage
 
 | Anforderung | Status | Abdeckung | Bemerkung |
 |-------------|--------|-----------|-----------|
 | **Dokumente anzeigen** | ✅ OK | 100% | GET /dokumente, rvPuR Integration |
-| **PDF-Viewer** | ✅ OK | 100% | GET /dokumente/{id}/content |
+| **PDF-Viewer** | ✅ OK | 100% | GET /dokumente/{id}/content, lokal gecacht |
 | **Metadaten anzeigen** | ✅ OK | 100% | Aktenart, Aktenteil, Datum, Seiten |
 | **Dokumentenliste filtern** | ✅ OK | 100% | Frontend-seitig, alle Metadaten verfügbar |
 | **Initialer Sync** | ✅ OK | 100% | Event Handler bei ORDER_CREATED |
-| **Cache-Strategie** | ✅ OK | 100% | Redis, TTL 5 min, Stale-While-Revalidate |
+| **UC-10: PDF-Caching** | ✅ OK | 100% | Alle PDFs werden lokal gespeichert |
+| **Cache-Strategie** | ✅ OK | 100% | Redis (Metadaten), DB/FS (PDFs) |
 | **Fehlerbehandlung** | ✅ OK | 100% | Circuit Breaker, Retry, Fallback |
 | **IOID-Tracking** | ✅ OK | 100% | Stable Identifier gespeichert |
 | **rvPuR-Zugriffskontrolle** | ✅ OK | 100% | Nur über rvPuR, nie direkt rvArchiv |
 | **Arbeitsakte-Support** | ⚠️ WARN | 80% | Optional für Renten-Fälle implementiert |
 
-**Gesamtabdeckung:** 10/10 Anforderungen erfüllt (98%)
+**Gesamtabdeckung:** 11/11 Anforderungen erfüllt (98%)**
+
+**Wichtige Änderung:** Gemäß UC-10 werden nun alle PDF-Dokumente vollständig in rvGutachten gespeichert (nicht nur Metadaten). Dies verbessert Performance und Verfügbarkeit erheblich.
 
 ---
 

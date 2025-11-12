@@ -1,0 +1,1121 @@
+openapi: 3.0.3
+info:
+  title: rvGutachten API - rvPuR Document Integration
+  description: |
+    REST API for accessing medical documents retrieved from rvPuR for Gutachtenaufträge.
+    
+    **Key Features:**
+    - Document metadata retrieval from rvPuR
+    - PDF content streaming from rvArchiv
+    - Automatic caching (5-minute TTL)
+    - Circuit breaker for rvPuR failures
+    - Stale-while-revalidate fallback
+    
+    **Related Documents:**
+    - UC-06: Data Flow Traceability Matrix
+    - rvPuR-Systemuebersicht.md: Comprehensive rvPuR system description
+    - rvPuR-brief.md: Original interface specification
+  version: 1.0.0
+  contact:
+    name: Development Team rvGutachten
+    email: dev@rvgutachten.drv.de
+  license:
+    name: Proprietary
+    
+servers:
+  - url: https://rvgutachten.drv.de/api/v1
+    description: Production server
+  - url: https://rvgutachten-test.drv.de/api/v1
+    description: Test server
+  - url: http://localhost:5000/api/v1
+    description: Local development
+
+tags:
+  - name: Documents
+    description: Document retrieval and metadata operations
+  - name: Content
+    description: PDF content streaming
+  - name: Sync
+    description: Internal synchronization endpoints
+  - name: Cache
+    description: Cache management and monitoring
+
+security:
+  - bearerAuth: []
+
+paths:
+  /gutachtenauftraege/{auftragsId}/dokumente:
+    get:
+      tags:
+        - Documents
+      summary: Get documents for Gutachtenauftrag
+      description: |
+        Retrieves all medical documents for a specific Gutachtenauftrag from rvPuR.
+        
+        **Business Logic:**
+        1. Load Auftrag from database → Extract VSNR
+        2. Check cache: `dokumente:{auftragsId}` (metadata only)
+        3. On cache miss:
+           - Call `VorgangService.sucheVorgaenge(purAnkerID=VSNR)`
+           - Identify relevant Vorgang
+           - Call `VorgangService.getVorgangDokIdents(vorgangsId)`
+           - For each IOID: Call `DokumentService.getDokumentMetainfo(IOID)`
+           - Optional: Call `AkteService.sucheAkte(VSNR)` for Arbeitsakte filtering
+        4. Map to DocumentDto + write cache
+        5. Return response
+        
+        **Note:** Per UC-10, all document PDFs are automatically downloaded and stored 
+        in rvGutachten database during initial sync for performance reasons. This endpoint 
+        returns metadata; actual PDFs are served from local storage.
+      operationId: getDocumentsForAuftrag
+      parameters:
+        - $ref: '#/components/parameters/AuftragsId'
+        - name: includeArbeitsakte
+          in: query
+          description: Filter by Arbeitsakte (pension cases only)
+          required: false
+          schema:
+            type: boolean
+            default: true
+        - name: refresh
+          in: query
+          description: Force cache refresh
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: aktenart
+          in: query
+          description: Filter by Aktenart code (e.g., "04" for Sozialmedizin)
+          required: false
+          schema:
+            type: string
+            example: "04"
+        - name: fromDate
+          in: query
+          description: Filter documents from date (ISO 8601)
+          required: false
+          schema:
+            type: string
+            format: date
+            example: "2023-01-01"
+        - name: toDate
+          in: query
+          description: Filter documents to date (ISO 8601)
+          required: false
+          schema:
+            type: string
+            format: date
+            example: "2023-12-31"
+        - $ref: '#/components/parameters/IfNoneMatch'
+      responses:
+        '200':
+          description: Documents retrieved successfully
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+            Cache-Control:
+              $ref: '#/components/headers/CacheControl'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/RateLimitLimit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimitRemaining'
+            X-RateLimit-Reset:
+              $ref: '#/components/headers/RateLimitReset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DokumenteResponse'
+              examples:
+                success:
+                  $ref: '#/components/examples/DokumenteResponseExample'
+        '304':
+          description: Not Modified (ETag match)
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+            Cache-Control:
+              $ref: '#/components/headers/CacheControl'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+
+  /dokumente/{documentId}:
+    get:
+      tags:
+        - Documents
+      summary: Get document metadata
+      description: Retrieves metadata for a specific document
+      operationId: getDocumentMetadata
+      parameters:
+        - $ref: '#/components/parameters/DocumentId'
+      responses:
+        '200':
+          description: Document metadata retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentDto'
+              examples:
+                success:
+                  $ref: '#/components/examples/DocumentDtoExample'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /dokumente/{documentId}/content:
+    get:
+      tags:
+        - Content
+      summary: Get document PDF content
+      description: |
+        Retrieves the PDF content of a document from rvArchiv.
+        
+        **Business Logic (Updated per UC-10):**
+        1. Load document metadata from database
+        2. Check if PDF is stored locally (per UC-10 automatic caching)
+        3. If PDF exists locally:
+           - Stream PDF from local storage (database/file system)
+        4. If PDF not found locally (fallback):
+           - Extract `purIOID`
+           - Call `rvArchiv.getDokument(purIOID)`
+           - Store PDF locally for future requests
+           - Stream PDF with appropriate headers
+        5. Set cache headers (1 hour)
+        
+        **Note:** Per UC-10, all document PDFs are automatically downloaded and stored 
+        in rvGutachten during initial sync. This ensures performance and availability 
+        even when rvArchiv is unavailable.
+        
+        **Security:**
+        - Verify user has access to the parent Auftrag
+        - Log document access for audit trail
+      operationId: getDocumentContent
+      parameters:
+        - $ref: '#/components/parameters/DocumentId'
+        - name: inline
+          in: query
+          description: Display inline (true) or download (false)
+          required: false
+          schema:
+            type: boolean
+            default: true
+      responses:
+        '200':
+          description: PDF content retrieved successfully
+          headers:
+            Content-Disposition:
+              schema:
+                type: string
+              description: Content disposition (inline or attachment)
+              example: 'inline; filename="Reha-Entlassungsbericht_2023-07-20.pdf"'
+            Cache-Control:
+              schema:
+                type: string
+              description: Cache control header
+              example: 'private, max-age=3600'
+            ETag:
+              $ref: '#/components/headers/ETag'
+            Last-Modified:
+              schema:
+                type: string
+                format: date-time
+              description: Last modified timestamp
+            X-Document-ID:
+              schema:
+                type: string
+              description: Internal document ID
+            X-PurIOID:
+              schema:
+                type: string
+              description: rvPuR IOID
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+    
+    head:
+      tags:
+        - Content
+      summary: Get document content metadata
+      description: Retrieves metadata for document content without downloading
+      operationId: getDocumentContentMetadata
+      parameters:
+        - $ref: '#/components/parameters/DocumentId'
+      responses:
+        '200':
+          description: Metadata retrieved successfully
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/pdf
+            Content-Length:
+              schema:
+                type: integer
+              example: 245678
+            Cache-Control:
+              schema:
+                type: string
+              example: 'private, max-age=3600'
+            ETag:
+              $ref: '#/components/headers/ETag'
+            Last-Modified:
+              schema:
+                type: string
+                format: date-time
+            X-Document-ID:
+              schema:
+                type: string
+            X-PurIOID:
+              schema:
+                type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /rvsmd/sync/dokumente:
+    post:
+      tags:
+        - Sync
+      summary: Synchronize documents (Internal)
+      description: |
+        **[INTERNAL]** Synchronizes document references when an Auftrag is created or updated from rvSMD.
+        
+        **Authentication:** Internal service token (not user token)
+        
+        **Business Logic (Updated per UC-10):**
+        1. Receive event from message queue
+        2. Store rvPuR metadata in Auftrag
+        3. Load document metadata from rvPuR
+        4. Store document references in database
+        5. **Download all PDF files from rvArchiv** (UC-10 requirement)
+           - For each document: Call `rvArchiv.getDokument(purIOID)`
+           - Store PDF in local storage (database BLOB or file system)
+           - Handle large files appropriately
+        6. Return sync status
+        
+        **Note:** Per UC-10, this endpoint performs automatic document caching. All PDFs 
+        are downloaded and stored locally during initial sync to ensure performance and 
+        availability.
+      operationId: syncDocuments
+      security:
+        - serviceToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SyncRequest'
+            examples:
+              initial:
+                $ref: '#/components/examples/SyncRequestExample'
+      responses:
+        '200':
+          description: Sync completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SyncResponse'
+              examples:
+                success:
+                  $ref: '#/components/examples/SyncResponseSuccessExample'
+        '207':
+          description: Sync completed with warnings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SyncResponse'
+              examples:
+                partial:
+                  $ref: '#/components/examples/SyncResponsePartialExample'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+
+  /cache/dokumente/{auftragsId}:
+    delete:
+      tags:
+        - Cache
+      summary: Invalidate document cache (Internal)
+      description: |
+        **[INTERNAL]** Invalidates the document cache for a specific Auftrag.
+        
+        **Use Cases:**
+        - Auftrag cancelled (UC-13)
+        - Manual cache invalidation by administrator
+        - Forced refresh after rvPuR update notification
+      operationId: invalidateDocumentCache
+      security:
+        - serviceToken: []
+      parameters:
+        - $ref: '#/components/parameters/AuftragsId'
+      responses:
+        '204':
+          description: Cache invalidated successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /cache/status:
+    get:
+      tags:
+        - Cache
+      summary: Get cache status (Admin)
+      description: '**[ADMIN]** Retrieves cache statistics and health status'
+      operationId: getCacheStatus
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Cache status retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CacheStatus'
+              examples:
+                success:
+                  $ref: '#/components/examples/CacheStatusExample'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT Bearer token for user authentication
+    serviceToken:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT Bearer token for service-to-service authentication
+
+  parameters:
+    AuftragsId:
+      name: auftragsId
+      in: path
+      required: true
+      description: Unique identifier of the Gutachtenauftrag
+      schema:
+        type: string
+        format: uuid
+      example: 123e4567-e89b-12d3-a456-426614174000
+    
+    DocumentId:
+      name: documentId
+      in: path
+      required: true
+      description: Unique identifier of the document
+      schema:
+        type: string
+      example: doc-001
+    
+    IfNoneMatch:
+      name: If-None-Match
+      in: header
+      required: false
+      description: ETag for conditional requests
+      schema:
+        type: string
+      example: '"33a64df551425fcc55e4d42a148795d9f25f89d4"'
+
+  headers:
+    ETag:
+      schema:
+        type: string
+      description: Entity tag for cache validation
+      example: '"33a64df551425fcc55e4d42a148795d9f25f89d4"'
+    
+    CacheControl:
+      schema:
+        type: string
+      description: Cache control directives
+      example: 'private, max-age=300'
+    
+    RateLimitLimit:
+      schema:
+        type: integer
+      description: Request limit per hour
+      example: 1000
+    
+    RateLimitRemaining:
+      schema:
+        type: integer
+      description: Remaining requests in current window
+      example: 999
+    
+    RateLimitReset:
+      schema:
+        type: integer
+        format: int64
+      description: Unix timestamp when rate limit resets
+      example: 1699800000
+
+  schemas:
+    DocumentDto:
+      type: object
+      required:
+        - documentId
+        - purIOID
+        - purArchivPID
+        - purDocKlasse
+        - aktenart
+        - aktenteil
+        - datum
+        - seiten
+        - format
+      properties:
+        documentId:
+          type: string
+          description: Internal UUID identifier
+          example: doc-001
+        purIOID:
+          type: string
+          description: Stable IOID from rvPuR
+          example: 8879b4a2a9b6491898f51b1f6001e74d
+        purArchivPID:
+          type: string
+          description: Technical rvArchiv PID
+          example: 93 3 ICM8 ENTEXXLS13 purRVDokument59 26 A3001001A23G20B90034I0493118
+        purDocKlasse:
+          type: string
+          description: Document class code
+          example: "23"
+        docKlasseBezeichnung:
+          type: string
+          description: Document class description
+          example: Reha-Entlassungsbericht
+        aktenart:
+          type: string
+          description: Aktenart code
+          example: "04"
+        aktenartBezeichnung:
+          type: string
+          description: Aktenart description
+          example: Sozialmedizin
+        aktenteil:
+          type: string
+          description: Aktenteil code
+          example: "18"
+        aktenteilBezeichnung:
+          type: string
+          description: Aktenteil description
+          example: Medizinische Leistungen zur Rehabilitation
+        aktenteilNr:
+          type: string
+          description: Aktenteil number
+          example: "01"
+        bezeichnung:
+          type: string
+          nullable: true
+          description: Document title
+        datum:
+          type: string
+          format: date
+          description: Document date
+          example: "2023-07-20"
+        seiten:
+          type: integer
+          description: Number of pages
+          example: 4
+        format:
+          type: string
+          description: MIME type
+          example: application/pdf
+        importDatum:
+          type: string
+          format: date-time
+          description: Import timestamp
+          example: "2023-07-20T10:13:54.910Z"
+        hasNotes:
+          type: boolean
+          description: Has notes flag
+          example: false
+        hasAnnotations:
+          type: boolean
+          description: Has annotations flag
+          example: false
+        isDeleted:
+          type: boolean
+          description: Deletion request flag
+          example: false
+        producer:
+          type: string
+          description: Producer/Creator
+          example: KlinikDS
+        modifier:
+          type: string
+          description: Last modifier
+          example: Dienst (PURBATCH-2742)
+        modifierDate:
+          type: string
+          format: date-time
+          description: Last modified timestamp
+          example: "2023-07-20T00:00:00Z"
+        auftragsId:
+          type: string
+          format: uuid
+          description: Parent Auftrag ID
+        _links:
+          type: object
+          description: HATEOAS links
+          properties:
+            self:
+              type: object
+              properties:
+                href:
+                  type: string
+            content:
+              type: object
+              properties:
+                href:
+                  type: string
+            auftrag:
+              type: object
+              properties:
+                href:
+                  type: string
+
+    DokumenteResponse:
+      type: object
+      required:
+        - auftragsId
+        - dokumente
+        - metadata
+      properties:
+        auftragsId:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        dokumente:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentDto'
+        metadata:
+          type: object
+          required:
+            - rvPurVorgangsID
+            - rvPurVorgangKennung
+            - lastSync
+            - source
+            - cacheStatus
+          properties:
+            rvPurVorgangsID:
+              type: integer
+              format: int64
+              example: 116722
+            rvPurVorgangKennung:
+              type: string
+              example: V220000039RV01
+            rvPurAuftragsID:
+              type: integer
+              format: int64
+              example: 134569
+            rvPurAuftragsKennung:
+              type: string
+              example: A250000002RVX1
+            arbeitsakte:
+              type: object
+              nullable: true
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                titel:
+                  type: string
+                dokumenteAnzahl:
+                  type: integer
+            lastSync:
+              type: string
+              format: date-time
+              example: "2025-11-12T14:30:00Z"
+            source:
+              type: string
+              enum: [rvPuR, cache]
+              example: rvPuR
+            cacheStatus:
+              type: string
+              enum: [hit, miss, stale]
+              example: hit
+        _pagination:
+          type: object
+          properties:
+            total:
+              type: integer
+              example: 1
+            offset:
+              type: integer
+              example: 0
+            limit:
+              type: integer
+              example: 100
+
+    SyncRequest:
+      type: object
+      required:
+        - auftragsId
+        - rvPurVorgangsID
+        - rvPurAuftragsID
+        - vsnr
+        - syncType
+      properties:
+        auftragsId:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        rvPurVorgangsID:
+          type: integer
+          format: int64
+          example: 116722
+        rvPurAuftragsID:
+          type: string
+          example: A250000002RVX1
+        vsnr:
+          type: string
+          pattern: '^\d{12}$'
+          description: 12-digit VSNR
+          example: "65100248X858"
+        syncType:
+          type: string
+          enum: [INITIAL, UPDATE, REFRESH]
+          example: INITIAL
+
+    SyncResponse:
+      type: object
+      required:
+        - auftragsId
+        - dokumenteAnzahl
+        - syncTimestamp
+        - status
+        - details
+      properties:
+        auftragsId:
+          type: string
+          format: uuid
+        dokumenteAnzahl:
+          type: integer
+        syncTimestamp:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum: [SUCCESS, PARTIAL_SUCCESS, FAILED]
+        details:
+          type: object
+          properties:
+            vorgangProcessed:
+              type: boolean
+            auftragProcessed:
+              type: boolean
+            arbeitsakteProcessed:
+              type: boolean
+            documentsCreated:
+              type: integer
+            documentsUpdated:
+              type: integer
+            errors:
+              type: array
+              items:
+                $ref: '#/components/schemas/SyncError'
+
+    SyncError:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        severity:
+          type: string
+          enum: [ERROR, WARNING, INFO]
+
+    CacheStatus:
+      type: object
+      properties:
+        redis:
+          type: object
+          properties:
+            status:
+              type: string
+              example: CONNECTED
+            host:
+              type: string
+              example: redis-cluster.drv.local
+            uptime:
+              type: integer
+              example: 86400
+            memoryUsed:
+              type: string
+              example: 512MB
+            memoryMax:
+              type: string
+              example: 2GB
+        cacheMetrics:
+          type: object
+          properties:
+            hitRate:
+              type: number
+              format: double
+              example: 0.85
+            missRate:
+              type: number
+              format: double
+              example: 0.15
+            totalKeys:
+              type: integer
+              example: 1234
+            totalHits:
+              type: integer
+              example: 45678
+            totalMisses:
+              type: integer
+              example: 8901
+            avgResponseTime:
+              type: integer
+              description: Average response time in milliseconds
+              example: 12
+        dokumenteCache:
+          type: object
+          properties:
+            keyPattern:
+              type: string
+              example: "dokumente:*"
+            totalKeys:
+              type: integer
+              example: 456
+            ttl:
+              type: integer
+              description: TTL in seconds
+              example: 300
+            evictionPolicy:
+              type: string
+              example: allkeys-lru
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+        - message
+        - timestamp
+        - path
+      properties:
+        error:
+          type: string
+          description: Error code
+          example: ORDER_NOT_FOUND
+        message:
+          type: string
+          description: Human-readable error message
+          example: Gutachtenauftrag nicht gefunden
+        timestamp:
+          type: string
+          format: date-time
+          example: "2025-11-12T14:30:00Z"
+        path:
+          type: string
+          example: /api/v1/gutachtenauftraege/123e4567-e89b-12d3-a456-426614174000/dokumente
+        details:
+          type: object
+          additionalProperties: true
+          description: Additional error context
+        retryAfter:
+          type: integer
+          description: Retry-After in seconds
+          example: 300
+
+  responses:
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: INVALID_VSNR
+            message: Invalid VSNR format
+            timestamp: "2025-11-12T14:30:00Z"
+            path: /api/v1/rvsmd/sync/dokumente
+
+    Unauthorized:
+      description: Missing or invalid authentication
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: UNAUTHORIZED
+            message: Missing or invalid authentication token
+            timestamp: "2025-11-12T14:30:00Z"
+            path: /api/v1/gutachtenauftraege/123e4567-e89b-12d3-a456-426614174000/dokumente
+
+    Forbidden:
+      description: Insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: FORBIDDEN
+            message: Insufficient permissions to access this resource
+            timestamp: "2025-11-12T14:30:00Z"
+            path: /api/v1/gutachtenauftraege/123e4567-e89b-12d3-a456-426614174000/dokumente
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: ORDER_NOT_FOUND
+            message: Gutachtenauftrag nicht gefunden
+            auftragsId: 123e4567-e89b-12d3-a456-426614174000
+            timestamp: "2025-11-12T14:30:00Z"
+            path: /api/v1/gutachtenauftraege/123e4567-e89b-12d3-a456-426614174000/dokumente
+
+    TooManyRequests:
+      description: Rate limit exceeded
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+          description: Seconds to wait before retry
+          example: 3600
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: RATE_LIMIT_EXCEEDED
+            message: Rate limit überschritten. Bitte versuchen Sie es später erneut.
+            retryAfter: 3600
+            timestamp: "2025-11-12T14:30:00Z"
+            path: /api/v1/gutachtenauftraege/123e4567-e89b-12d3-a456-426614174000/dokumente
+            details:
+              limit: 1000
+              remaining: 0
+              reset: 1699800000
+
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: INTERNAL_ERROR
+            message: An unexpected error occurred
+            timestamp: "2025-11-12T14:30:00Z"
+            path: /api/v1/gutachtenauftraege/123e4567-e89b-12d3-a456-426614174000/dokumente
+
+    ServiceUnavailable:
+      description: rvPuR or rvArchiv unavailable
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+          description: Seconds to wait before retry
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            rvPurUnavailable:
+              value:
+                error: RVPUR_UNAVAILABLE
+                message: rvPuR ist derzeit nicht erreichbar. Bitte versuchen Sie es später erneut.
+                retryAfter: 300
+                timestamp: "2025-11-12T14:30:00Z"
+                path: /api/v1/gutachtenauftraege/123e4567-e89b-12d3-a456-426614174000/dokumente
+                details:
+                  service: rvPuR
+                  circuitBreaker: OPEN
+                  lastFailure: "2025-11-12T14:29:45Z"
+            rvArchivUnavailable:
+              value:
+                error: RVARCHIV_UNAVAILABLE
+                message: rvArchiv ist derzeit nicht erreichbar
+                retryAfter: 60
+                timestamp: "2025-11-12T14:30:00Z"
+                path: /api/v1/dokumente/doc-001/content
+                details:
+                  service: rvArchiv
+                  circuitBreaker: OPEN
+
+  examples:
+    DocumentDtoExample:
+      value:
+        documentId: doc-001
+        purIOID: 8879b4a2a9b6491898f51b1f6001e74d
+        purArchivPID: 93 3 ICM8 ENTEXXLS13 purRVDokument59 26 A3001001A23G20B90034I0493118
+        purDocKlasse: "23"
+        docKlasseBezeichnung: Reha-Entlassungsbericht
+        aktenart: "04"
+        aktenartBezeichnung: Sozialmedizin
+        aktenteil: "18"
+        aktenteilBezeichnung: Medizinische Leistungen zur Rehabilitation
+        aktenteilNr: "01"
+        bezeichnung: null
+        datum: "2023-07-20"
+        seiten: 4
+        format: application/pdf
+        importDatum: "2023-07-20T10:13:54.910Z"
+        hasNotes: false
+        hasAnnotations: false
+        isDeleted: false
+        producer: KlinikDS
+        modifier: Dienst (PURBATCH-2742)
+        modifierDate: "2023-07-20T00:00:00Z"
+        auftragsId: 123e4567-e89b-12d3-a456-426614174000
+        _links:
+          self:
+            href: /api/v1/dokumente/doc-001
+          content:
+            href: /api/v1/dokumente/doc-001/content
+          auftrag:
+            href: /api/v1/gutachtenauftraege/123e4567-e89b-12d3-a456-426614174000
+
+    DokumenteResponseExample:
+      value:
+        auftragsId: 123e4567-e89b-12d3-a456-426614174000
+        dokumente:
+          - documentId: doc-001
+            purIOID: 8879b4a2a9b6491898f51b1f6001e74d
+            purArchivPID: 93 3 ICM8 ENTEXXLS13 purRVDokument59 26 A3001001A23G20B90034I0493118
+            purDocKlasse: "23"
+            docKlasseBezeichnung: Reha-Entlassungsbericht
+            aktenart: "04"
+            aktenartBezeichnung: Sozialmedizin
+            aktenteil: "18"
+            aktenteilBezeichnung: Medizinische Leistungen zur Rehabilitation
+            aktenteilNr: "01"
+            bezeichnung: null
+            datum: "2023-07-20"
+            seiten: 4
+            format: application/pdf
+            importDatum: "2023-07-20T10:13:54.910Z"
+            hasNotes: false
+            hasAnnotations: false
+            isDeleted: false
+            producer: KlinikDS
+            modifier: Dienst (PURBATCH-2742)
+            modifierDate: "2023-07-20T00:00:00Z"
+            _links:
+              self:
+                href: /api/v1/dokumente/doc-001
+              content:
+                href: /api/v1/dokumente/doc-001/content
+        metadata:
+          rvPurVorgangsID: 116722
+          rvPurVorgangKennung: V220000039RV01
+          rvPurAuftragsID: 134569
+          rvPurAuftragsKennung: A250000002RVX1
+          arbeitsakte:
+            id: cc2adbb8-3eef-447d-a9bf-f82c17ad1a2a
+            titel: Test Arbeitsakte
+            dokumenteAnzahl: 1
+          lastSync: "2025-11-12T14:30:00Z"
+          source: rvPuR
+          cacheStatus: hit
+        _pagination:
+          total: 1
+          offset: 0
+          limit: 100
+
+    SyncRequestExample:
+      value:
+        auftragsId: 123e4567-e89b-12d3-a456-426614174000
+        rvPurVorgangsID: 116722
+        rvPurAuftragsID: A250000002RVX1
+        vsnr: "65100248X858"
+        syncType: INITIAL
+
+    SyncResponseSuccessExample:
+      value:
+        auftragsId: 123e4567-e89b-12d3-a456-426614174000
+        dokumenteAnzahl: 5
+        syncTimestamp: "2025-11-12T14:30:00Z"
+        status: SUCCESS
+        details:
+          vorgangProcessed: true
+          auftragProcessed: true
+          arbeitsakteProcessed: false
+          documentsCreated: 5
+          documentsUpdated: 0
+          errors: []
+
+    SyncResponsePartialExample:
+      value:
+        auftragsId: 123e4567-e89b-12d3-a456-426614174000
+        dokumenteAnzahl: 3
+        syncTimestamp: "2025-11-12T14:30:00Z"
+        status: PARTIAL_SUCCESS
+        details:
+          vorgangProcessed: true
+          auftragProcessed: false
+          arbeitsakteProcessed: false
+          documentsCreated: 3
+          documentsUpdated: 0
+          errors:
+            - code: AUFTRAG_NOT_FOUND
+              message: Auftrag A250000002RVX1 not found in rvPuR
+              severity: WARNING
+
+    CacheStatusExample:
+      value:
+        redis:
+          status: CONNECTED
+          host: redis-cluster.drv.local
+          uptime: 86400
+          memoryUsed: 512MB
+          memoryMax: 2GB
+        cacheMetrics:
+          hitRate: 0.85
+          missRate: 0.15
+          totalKeys: 1234
+          totalHits: 45678
+          totalMisses: 8901
+          avgResponseTime: 12
+        dokumenteCache:
+          keyPattern: "dokumente:*"
+          totalKeys: 456
+          ttl: 300
+          evictionPolicy: allkeys-lru
