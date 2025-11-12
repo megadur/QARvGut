@@ -657,27 +657,28 @@ const pdf = await rvArchiv.getDokument(metainfo.purIOID); // ✅
   - Netzwerk: Reduzierte Last auf rvArchiv
 
 **Implementierung:**
-```csharp
+```java
 // Bei initialem Sync (POST /rvsmd/sync/dokumente)
-foreach (var doc in documents)
-{
-    var metadata = await rvPuR.getDokumentMetainfo(doc.IOID);
-    var pdfContent = await rvArchiv.getDokument(doc.IOID);
+for (Document doc : documents) {
+    DokumentMetainfo metadata = rvPurClient.getDokumentMetainfo(doc.getIOID());
+    byte[] pdfContent = rvArchivClient.getDokument(doc.getIOID());
     
     // PDF in rvGutachten speichern
-    await database.SaveDocument(new StoredDocument
-    {
-        DocumentId = Guid.NewGuid(),
-        PurIOID = doc.IOID,
-        Content = pdfContent,  // Binary PDF content
-        ContentType = "application/pdf",
-        Metadata = metadata
-    });
+    storedDocumentRepository.save(StoredDocument.builder()
+        .documentId(UUID.randomUUID())
+        .purIOID(doc.getIOID())
+        .content(pdfContent)  // Binary PDF content
+        .contentType("application/pdf")
+        .metadata(metadata)
+        .build());
 }
 
 // Bei Abruf (GET /dokumente/{id}/content)
-var storedDoc = await database.GetDocument(documentId);
-return File(storedDoc.Content, "application/pdf");
+StoredDocument storedDoc = storedDocumentRepository.findById(documentId)
+    .orElseThrow(() -> new DocumentNotFoundException(documentId));
+return ResponseEntity.ok()
+    .contentType(MediaType.APPLICATION_PDF)
+    .body(new ByteArrayResource(storedDoc.getContent()));
 ```
 
 **Fallback-Strategie:**
@@ -694,14 +695,18 @@ return File(storedDoc.Content, "application/pdf");
 - Muss vor Parsing dekodiert werden
 
 **Implementierung:**
-```csharp
-// C# Example
-byte[] base64Bytes = Convert.FromBase64String(response);
-using (var gzipStream = new GZipStream(new MemoryStream(base64Bytes), CompressionMode.Decompress))
-using (var reader = new StreamReader(gzipStream, Encoding.UTF8))
-{
-    string xml = reader.ReadToEnd();
-    var dao = XmlSerializer.Deserialize<RSDao>(xml);
+```java
+// Java Spring Example
+byte[] base64Bytes = Base64.getDecoder().decode(response);
+try (ByteArrayInputStream bais = new ByteArrayInputStream(base64Bytes);
+     GZIPInputStream gzipStream = new GZIPInputStream(bais);
+     InputStreamReader reader = new InputStreamReader(gzipStream, StandardCharsets.UTF_8);
+     BufferedReader bufferedReader = new BufferedReader(reader)) {
+    
+    String xml = bufferedReader.lines().collect(Collectors.joining("\n"));
+    JAXBContext context = JAXBContext.newInstance(RSDao.class);
+    Unmarshaller unmarshaller = context.createUnmarshaller();
+    RSDao dao = (RSDao) unmarshaller.unmarshal(new StringReader(xml));
 }
 ```
 
@@ -914,19 +919,25 @@ cache.set(`dokumente:${auftragsId}`, documents, {
 ### Technologie-Stack
 
 **rvGutachten Backend:**
-- .NET 8 / C#
+- Java (Spring Boot)
 - REST API (OpenAPI/Swagger)
 - Redis Cache
 - Message Queue (RabbitMQ/Kafka)
+- PostgreSQL/Oracle Database
+
+**rvGutachten Frontend:**
+- TypeScript / Angular
+- PDF.js für PDF-Anzeige
+- RxJS für Reactive Programming
 
 **rvPuR Integration:**
-- SOAP Client (WCF oder SoapCore)
-- Base64 + GZip Decoder
-- XML Serializer/Deserializer
+- SOAP Client (JAX-WS oder Spring WS)
+- Base64 + GZip Decoder (java.util.Base64, java.util.zip.GZIPInputStream)
+- XML Unmarshaller (JAXB)
 
 **rvArchiv Integration:**
 - Binary Stream Handler
-- PDF Content-Type Support
+- PDF Content-Type Support (application/pdf)
 
 ---
 
