@@ -48,80 +48,80 @@
 
 ### Auftrag Business Object
 
-| Attribut | Typ | Kard | Step 2: Set Status | Step 4: Set Date | Step 6: Trigger Sync | Step 8: Load Order | Step 10: Update Status | Step 11: Set Date | Step 12: Audit | Step 17: List | Step 20: Details | Step 27: Delete Metadata |
-|----------|-----|------|-------------------|------------------|---------------------|-------------------|----------------------|------------------|---------------|--------------|----------------|------------------------|
-| **auftragsId** | uuid | 1 | [R] | [R] | [SYNC] | [R] | [R] | [R] | [AUDIT] | [OK] | [OK] | [R] |
-| **rvPurAuftragsID** | string | ? | - | - | [SYNC] | [R] | - | - | - | - | - | - |
-| **proband** | Proband | 1 | - | - | - | [R] | - | - | - | [OK] | [OK] | [D] |
-| **gutachter** | Gutachter | 1 | - | - | [SYNC] | [R] | - | - | - | [OK] | [OK] | [D] |
-| **gutachtenstatus** | Gutachtenstatus | + | [U] | - | [SYNC] | [R] | [U] | - | [AUDIT] | [OK] | [OK] | [D] |
-| **anhang** | Document | * | - | - | - | [R] | - | - | - | [OK] | [OK] | [D] |
-| **auftraggeber** | Träger | 1 | - | - | - | [R] | - | - | - | [OK] | [OK] | [D] |
-| **auftragsDatum** | date | 1 | - | - | - | [R] | - | - | - | [OK] | [OK] | [D] |
-| **eingangsDatum** | datetime | 1 | - | - | - | [R] | - | - | - | [OK] | [OK] | [D] |
-| **stornierungsDatum** | datetime | ? | - | [C] | [SYNC] | [R] | - | [U] | [AUDIT] | [OK] | [OK] | [D] |
-| **dokumente** | Document | + | - | - | - | [R] | - | - | - | [OK] | [OK] | [D] |
+| Attribut | Typ | Kard | S02: Set Status | S04: Update & Audit | S05: Sync | S08: Apply Status | S10: Email | S12: Receive |
+|----------|-----|------|-----------------|--------------------|-----------|-------------------|------------|-------------|
+| **auftragsId** | uuid | 1 | [R] | [R] | [SYNC] | [R] | [R] | - |
+| **rvPurAuftragsID** | string | ? | - | - | [SYNC] | - | - | - |
+| **proband** | Proband | 1 | [R] | - | [SYNC] | [R] | [R] | - |
+| **gutachter** | Gutachter | 1 | [R] | - | [SYNC] | [R] | [R] | [OK] |
+| **gutachtenstatus** | Gutachtenstatus | + | [U] | [AUDIT] | [SYNC] | [U] | [R] | [OK] |
+| **anhang** | Document | * | - | - | - | - | - | - |
+| **auftraggeber** | Träger | 1 | - | - | - | - | - | - |
+| **auftragsDatum** | date | 1 | - | - | [SYNC] | - | [R] | [OK] |
+| **eingangsDatum** | datetime | 1 | - | - | - | - | - | - |
+| **stornierungsDatum** | datetime | ? | - | [C] | [SYNC] | [U] | [R] | [OK] |
+| **dokumente** | Document | + | - | - | - | - | - | - |
 
-**Anmerkung:** `stornierungsDatum` wird in rvSMD gesetzt und zu rvGutachten synchronisiert. Nach 30 Tagen werden Auftragsdaten gelöscht.
+**Anmerkung:** `stornierungsDatum` wird in rvSMD gesetzt (S04) und zu rvGutachten synchronisiert (S05, S08).
 
 ---
 
 ### Gutachtenstatus Business Object
 
-| Attribut | Typ | Kard | Step 2: rvSMD Update | Step 6: Sync Event | Step 10: rvGut Update | Step 12: Audit | Step 17: Display | Step 20: Display |
-|----------|-----|------|---------------------|-------------------|----------------------|---------------|-----------------|-----------------|
-| **status** | enum | 1 | [U] | [SYNC] | [U] | [AUDIT] | [OK] | [OK] |
-| **changedOn** | timestamp | 1 | [U] | [SYNC] | [U] | [AUDIT] | [OK] | [OK] |
-| **changedBy** | string | ? | [C] | [SYNC] | [U] | [AUDIT] | - | [OK] |
+| Attribut | Typ | Kard | S02: Set Status | S04: Audit | S05: Sync | S08: Apply | S12: Notify Gutachter |
+|----------|-----|------|-----------------|-----------|-----------|------------|--------------------|
+| **status** | enum | 1 | [U] | [AUDIT] | [SYNC] | [U] | [OK] |
+| **changedOn** | timestamp | 1 | [U] | [AUDIT] | [SYNC] | [U] | [OK] |
+| **changedBy** | string | ? | [C] | [AUDIT] | [SYNC] | [U] | - |
 
 **Enum-Werte:** `neu`, `einbestellt`, `in_bearbeitung`, `abgeschlossen`, `storniert`
 
-**Anmerkung:** Status "storniert" wird von rvSMD gesetzt und synchronisiert. `changedBy` enthält DRV-Mitarbeiter-ID.
+**Anmerkung:** Status "storniert" wird von rvSMD gesetzt (S02) und synchronisiert (S05, S08). `changedBy` enthält DRV-Mitarbeiter-ID.
 
 ---
 
 ### Document Business Object
 
-| Attribut | Typ | Kard | Step 13: Mark Read-Only | Step 22: Display | Step 28: Delete |
-|----------|-----|------|------------------------|-----------------|----------------|
-| **documentId** | uuid | 1 | [R] | [OK] | [D] |
-| **name** | string | 1 | - | [OK] | [D] |
-| **filename** | string | 1 | - | [OK] | [D] |
-| **filetype** | string | 1 | - | [OK] | [D] |
-| **filesize** | int | ? | - | [OK] | [D] |
-| **data** | binary | 1 | - | - | [D] |
-| **metadata** | DocumentMetadata | 1 | [U] | [OK] | [D] |
-| **readOnly** | boolean | 1 | [U] | - | - |
+| Attribut | Typ | Kard | S08: Mark Read-Only |
+|----------|-----|------|-------------------|
+| **documentId** | uuid | 1 | [R] |
+| **name** | string | 1 | - |
+| **filename** | string | 1 | - |
+| **filetype** | string | 1 | - |
+| **filesize** | int | ? | - |
+| **data** | binary | 1 | - |
+| **metadata** | DocumentMetadata | 1 | [U] |
+| **readOnly** | boolean | 1 | [U] |
 
-**Anmerkung:** Dokumente werden sofort nach Stornierung als Read-Only markiert und nach Bestätigung der Stornierung gelöscht.
+**Anmerkung:** Dokumente werden nach Stornierung als Read-Only markiert (implizit durch Status).
 
 ---
 
 ### Proband Business Object
 
-| Attribut | Typ | Kard | Step 17: Display List | Step 20: Display Details | Step 27: Delete |
-|----------|-----|------|---------------------|-------------------------|----------------|
-| **vsnr** | string | 1 | [OK] | [OK] | [D] |
-| **gebdatum** | date | 1 | [OK] | [OK] | [D] |
-| **name** | string | 1 | [OK] | [OK] | [D] |
-| **vorname** | string | 1 | [OK] | [OK] | [D] |
+| Attribut | Typ | Kard | S05: Sync | S10: Email | S12: Notify |
+|----------|-----|------|-----------|------------|-----------|
+| **vsnr** | string | 1 | [SYNC] | [R] | [OK] |
+| **gebdatum** | date | 1 | - | - | - |
+| **name** | string | 1 | - | [R] | [OK] |
+| **vorname** | string | 1 | - | [R] | [OK] |
 
-**Anmerkung:** Probandendaten werden nach Ablauf der 30-Tage-Frist gelöscht (DSGVO).
+**Anmerkung:** Probandendaten werden für E-Mail-Benachrichtigung und Synchronisation verwendet.
 
 ---
 
 ### Gutachter Business Object
 
-| Attribut | Typ | Kard | Step 8: Load | Step 14: Notification | Step 17: Display |
-|----------|-----|------|-------------|----------------------|-----------------|
-| **userId** | uuid | 1 | [R] | [R] | [OK] |
-| **efn** | number | 1 | [R] | - | [OK] |
-| **email** | string | 1 | [R] | [R] | - |
-| **anrede** | string | 1 | - | [R] | [OK] |
-| **nachname** | string | 1 | [R] | [R] | [OK] |
-| **vorname** | string | 1 | [R] | [R] | [OK] |
+| Attribut | Typ | Kard | S05: Sync | S08: Apply | S10: Email | S12: Notify |
+|----------|-----|------|-----------|------------|------------|-----------|
+| **userId** | uuid | 1 | [SYNC] | [R] | [R] | - |
+| **efn** | number | 1 | [SYNC] | [R] | - | - |
+| **email** | string | 1 | - | - | [R] | [OK] |
+| **anrede** | string | 1 | - | - | [R] | - |
+| **nachname** | string | 1 | [SYNC] | [R] | [R] | [OK] |
+| **vorname** | string | 1 | [SYNC] | [R] | [R] | [OK] |
 
-**Anmerkung:** Gutachter-E-Mail wird für Stornierungsbenachrichtigung verwendet.
+**Anmerkung:** Gutachter-E-Mail wird für Stornierungsbenachrichtigung verwendet (S10, S12).
 
 ---
 
