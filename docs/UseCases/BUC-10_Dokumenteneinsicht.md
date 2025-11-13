@@ -77,6 +77,69 @@ Der Gutachter prüft, ob alle erforderlichen Unterlagen vorliegen.
 
 ---
 
+## Geschäftsprozess-Diagramm (Swimlane)
+
+```mermaid
+graph TB
+    subgraph DRV[DRV-Sachbearbeiter]
+        D1[Auftrag erstellen und<br/>Gutachter zuweisen]
+        D2[Unterlagen bereitstellen]
+        D3[Fehlende Unterlagen<br/>nachfordern]
+        D4[Vollständigkeit<br/>bestätigen]
+    end
+    
+    subgraph ARCH[DRV-Archiv]
+        A1[Dokumente aus Akte<br/>zusammenstellen]
+        A2[Dokumente digital<br/>bereitstellen]
+        A3[Zusatzdokumente<br/>beschaffen]
+    end
+    
+    subgraph GUT[Gutachter]
+        G1[Auftrag in Arbeitsliste<br/>sehen]
+        G2[Fall öffnen]
+        G3[Fallübersicht prüfen]
+        G4[Dokumentenliste<br/>einsehen]
+        G5{Alle Dokumente<br/>vorhanden?}
+        G6[Fehlende Unterlagen<br/>melden]
+        G7[Dokument öffnen]
+        G8[Dokument lesen und<br/>Befunde notieren]
+        G9{Weitere Dokumente<br/>zu prüfen?}
+        G10[Vollständigkeit<br/>bestätigen]
+        G11[Mit Gutachten-<br/>erstellung beginnen]
+    end
+    
+    D1 --> D2
+    D2 --> A1
+    A1 --> A2
+    A2 --> G1
+    G1 --> G2
+    G2 --> G3
+    G3 --> G4
+    G4 --> G5
+    G5 -->|Nein| G6
+    G6 --> D3
+    D3 --> A3
+    A3 --> D4
+    D4 --> G4
+    G5 -->|Ja| G7
+    G7 --> G8
+    G8 --> G9
+    G9 -->|Ja| G7
+    G9 -->|Nein| G10
+    G10 --> G11
+    
+    style DRV fill:#e1f5ff
+    style ARCH fill:#fff4e1
+    style GUT fill:#e8f5e9
+```
+
+**Legende:**
+- **Blau**: Administrative Tätigkeiten (DRV-Sachbearbeiter)
+- **Gelb**: Dokumentenbereitstellung (Archiv)
+- **Grün**: Begutachtungstätigkeiten (Gutachter)
+
+---
+
 ## Alternative Szenarien
 
 ### A1: Dokumente fehlen
