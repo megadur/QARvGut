@@ -492,9 +492,9 @@ sequenceDiagram
     participant API as API Gateway
     participant DB as Datenbank
     participant PUR as rvPuR/rvArchiv
-    participant AUDIT as Audit Manager
+    participant AUD as Audit Manager
     
-    Note over UI,AUDIT: Step 6b-15a: Dokumente laden und anzeigen
+    Note over UI,AUD: Step 6b-15a: Dokumente laden und anzeigen
     
     UI->>API: Step 6b: GET /gutachtenauftraege/:id/dokumente
     Note right of API: Verwendet Auftrag.rvPurAuftragsID
@@ -509,8 +509,8 @@ sequenceDiagram
         Note over UI: Read-Only Mode aktiviert
         Note over UI: Download/Druck deaktiviert
     else Aktiver Auftrag (Step 10b-11)
-        API->>AUDIT: Dokumentenzugriff protokollieren
-        AUDIT-->>API: Audit-Log erstellt
+        API->>AUD: Dokumentenzugriff protokollieren
+        AUD-->>API: Audit-Log erstellt
     end
     
     UI->>API: Step 12: GET /dokumente/:documentId

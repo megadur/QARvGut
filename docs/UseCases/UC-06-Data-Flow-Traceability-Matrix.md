@@ -432,60 +432,60 @@ Cache-Control: private, max-age=3600
 
 ```mermaid
 sequenceDiagram
-    participant G as Gutachter
-    participant F as Frontend
+    participant GUT as Gutachter
+    participant UI as Frontend
     participant API as rvGutachten API
-    participant C as Cache (Redis)
+    participant CACHE as Cache (Redis)
     participant DB as rvGutachten DB
-    participant P as rvPuR
-    participant A as rvArchiv
+    participant PUR as rvPuR
+    participant ARC as rvArchiv
 
-    G->>F: Auftragsdetails öffnen
-    F->>API: GET /gutachtenauftraege/{id}
+    GUT->>UI: Auftragsdetails öffnen
+    UI->>API: GET /gutachtenauftraege/{id}
     API->>DB: Load Auftrag + VSNR
     DB-->>API: Auftragsdaten
-    API-->>F: AuftragDto
+    API-->>UI: AuftragDto
     
-    F->>API: GET /gutachtenauftraege/{id}/dokumente
-    API->>C: Cache Check (dokumente:{id})
+    UI->>API: GET /gutachtenauftraege/{id}/dokumente
+    API->>CACHE: Cache Check (dokumente:{id})
     
     alt Cache Hit
-        C-->>API: Cached DocumentDto[]
+        CACHE-->>API: Cached DocumentDto[]
     else Cache Miss
-        API->>P: VorgangService.sucheVorgaenge(VSNR)
-        P-->>API: RS_DAO (Vorgänge)
+        API->>PUR: VorgangService.sucheVorgaenge(VSNR)
+        PUR-->>API: RS_DAO (Vorgänge)
         API->>API: Decode base64+gzip
         API->>API: Passenden Vorgang identifizieren
         
-        API->>P: VorgangService.getVorgangDokIdents(vorgangsId)
-        P-->>API: DokIdentListDao (IOIDs)
+        API->>PUR: VorgangService.getVorgangDokIdents(vorgangsId)
+        PUR-->>API: DokIdentListDao (IOIDs)
         
         loop Für jedes Dokument
-            API->>P: DokumentService.getDokumentMetainfo(IOID)
-            P-->>API: FoDao (Metadaten)
+            API->>PUR: DokumentService.getDokumentMetainfo(IOID)
+            PUR-->>API: FoDao (Metadaten)
             API->>API: Decode + Map zu DocumentDto
         end
         
         opt Renten-Fall
-            API->>P: AkteService.sucheAkte(VSNR)
-            P-->>API: TreeRSDao (Arbeitsakte)
+            API->>PUR: AkteService.sucheAkte(VSNR)
+            PUR-->>API: TreeRSDao (Arbeitsakte)
             API->>API: Filter Gutachter-relevante Docs
         end
         
-        API->>C: Cache Write (TTL: 5 min)
+        API->>CACHE: Cache Write (TTL: 5 min)
     end
     
-    API-->>F: DocumentDto[]
-    F->>F: Dokumentenliste anzeigen
+    API-->>UI: DocumentDto[]
+    UI->>UI: Dokumentenliste anzeigen
     
-    G->>F: Dokument auswählen
-    F->>API: GET /dokumente/{docId}/content
+    GUT->>UI: Dokument auswählen
+    UI->>API: GET /dokumente/{docId}/content
     API->>DB: Load Document Metadata
     DB-->>API: purIOID
-    API->>A: getDokument(purIOID)
-    A-->>API: PDF Binary Stream
-    API-->>F: PDF (application/pdf)
-    F->>F: PDF im Viewer anzeigen
+    API->>ARC: getDokument(purIOID)
+    ARC-->>API: PDF Binary Stream
+    API-->>UI: PDF (application/pdf)
+    UI->>UI: PDF im Viewer anzeigen
 ```
 
 ---
@@ -494,33 +494,33 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant S as rvSMD
+    participant SMD as rvSMD
     participant MQ as Message Queue
     participant API as rvGutachten
     participant DB as rvGutachten DB
-    participant P as rvPuR
+    participant PUR as rvPuR
 
-    S->>MQ: Publish ORDER_CREATED Event
+    SMD->>MQ: Publish ORDER_CREATED Event
     Note over MQ: Event enthält:<br/>auftragsId, VSNR,<br/>rvPurVorgangsID,<br/>rvPurAuftragsID
     
     MQ->>API: Consume Event
     API->>DB: Save Auftrag
     API->>DB: Store rvPuR IDs
     
-    API->>P: VorgangService.sucheVorgaenge(VSNR)
-    P-->>API: Vorgänge
+    API->>PUR: VorgangService.sucheVorgaenge(VSNR)
+    PUR-->>API: Vorgänge
     
-    API->>P: VorgangService.getVorgangDokIdents(vorgangsId)
-    P-->>API: Dokument-IDs
+    API->>PUR: VorgangService.getVorgangDokIdents(vorgangsId)
+    PUR-->>API: Dokument-IDs
     
     loop Für jedes Dokument
-        API->>P: DokumentService.getDokumentMetainfo(IOID)
-        P-->>API: Metadaten
+        API->>PUR: DokumentService.getDokumentMetainfo(IOID)
+        PUR-->>API: Metadaten
         API->>DB: Save Document Reference
     end
     
     API->>MQ: Publish DOCUMENTS_SYNCED Event
-    API-->>S: Sync Complete (async)
+    API-->>SMD: Sync Complete (async)
 ```
 
 ---
@@ -529,31 +529,31 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant F as Frontend
+    participant UI as Frontend
     participant API as rvGutachten API
-    participant C as Cache
-    participant P as rvPuR
+    participant CACHE as Cache
+    participant PUR as rvPuR
 
-    F->>API: GET /gutachtenauftraege/{id}/dokumente
-    API->>C: Cache Check
-    C-->>API: Cache Miss
+    UI->>API: GET /gutachtenauftraege/{id}/dokumente
+    API->>CACHE: Cache Check
+    CACHE-->>API: Cache Miss
     
-    API->>P: VorgangService.sucheVorgaenge(VSNR)
-    P--xAPI: Timeout / Connection Error
+    API->>PUR: VorgangService.sucheVorgaenge(VSNR)
+    PUR--xAPI: Timeout / Connection Error
     
     API->>API: Retry (Exponential Backoff)
-    API->>P: VorgangService.sucheVorgaenge(VSNR)
-    P--xAPI: Still failing
+    API->>PUR: VorgangService.sucheVorgaenge(VSNR)
+    PUR--xAPI: Still failing
     
     API->>API: Check Circuit Breaker
     
     alt Circuit Open
-        API-->>F: 503 Service Unavailable
-        Note over F: Zeige Fehlermeldung:<br/>"Dokumente temporär nicht verfügbar"
+        API-->>UI: 503 Service Unavailable
+        Note over UI: Zeige Fehlermeldung:<br/>"Dokumente temporär nicht verfügbar"
     else Circuit Closed
         API->>API: Fallback: Return empty list
-        API-->>F: 200 OK (dokumente: [])
-        Note over F: Zeige Warnung:<br/>"Keine Dokumente geladen"
+        API-->>UI: 200 OK (dokumente: [])
+        Note over UI: Zeige Warnung:<br/>"Keine Dokumente geladen"
     end
 ```
 

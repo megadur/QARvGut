@@ -478,13 +478,13 @@ Response: 200 OK
 sequenceDiagram
     participant DRV as DRV-Mitarbeiter
     participant SMD as rvSMD
-    participant Q as Message Queue
-    participant GUT as rvGutachten
+    participant MQ as Message Queue
+    participant RVG as rvGutachten
     participant DB as Database
-    participant MAIL as E-Mail Service
-    participant GT as Gutachter
+    participant EML as E-Mail Service
+    participant GUT as Gutachter
     
-    Note over DRV,GT: Auftragsstornierung durch DRV
+    Note over DRV,GUT: Auftragsstornierung durch DRV
     
     DRV->>SMD: 1. Auftrag öffnen
     DRV->>SMD: 2. Status auf "storniert" setzen
@@ -492,30 +492,30 @@ sequenceDiagram
     SMD->>SMD: 4. stornierungsDatum setzen (UTC)
     SMD->>SMD: 5. Audit-Log erstellen
     
-    SMD->>Q: 6. Status-Change Event publizieren
-    Note right of Q: Event persistiert
+    SMD->>MQ: 6. Status-Change Event publizieren
+    Note right of MQ: Event persistiert
     
-    Q->>GUT: 7. Event konsumieren
+    MQ->>RVG: 7. Event konsumieren
     GUT->>DB: 8. Auftrag laden
-    GUT->>GUT: 9. System-Auth prüfen
+    RVG->>RVG: 9. System-Auth prüfen
     
-    GUT->>DB: 10. PATCH Status "storniert"
-    GUT->>DB: 11. stornierungsDatum setzen
-    GUT->>DB: 12. Audit-Log erstellen
-    GUT->>DB: 13. Dokumente als Read-Only markieren
+    RVG->>DB: 10. PATCH Status "storniert"
+    RVG->>DB: 11. stornierungsDatum setzen
+    RVG->>DB: 12. Audit-Log erstellen
+    RVG->>DB: 13. Dokumente als Read-Only markieren
     
-    GUT->>MAIL: 14. E-Mail-Benachrichtigung
-    MAIL->>GT: 15. E-Mail versenden
+    RVG->>EML: 14. E-Mail-Benachrichtigung
+    EML->>GUT: 15. E-Mail versenden
     
-    Note over GUT,GT: Gutachter sieht Stornierung
+    Note over RVG,GUT: Gutachter sieht Stornierung
     
-    GT->>GUT: 16-17. Portal öffnen, Liste laden
-    GUT->>GT: 18. Stornierung anzeigen (Icon/Badge)
-    GT->>GUT: 19. Stornierten Auftrag klicken
-    GUT->>GT: 20. Details anzeigen
-    Note over GT: Read-Only Mode aktiv
-    GUT->>GT: 22. Dokumente (nur Ansicht)
-    Note over GT: Download/Druck deaktiviert
+    GUT->>RVG: 16-17. Portal öffnen, Liste laden
+    RVG->>GUT: 18. Stornierung anzeigen (Icon/Badge)
+    GUT->>RVG: 19. Stornierten Auftrag klicken
+    RVG->>GUT: 20. Details anzeigen
+    Note over GUT: Read-Only Mode aktiv
+    RVG->>GUT: 22. Dokumente (nur Ansicht)
+    Note over GUT: Download/Druck deaktiviert
 ```
 
 ### Zeitgesteuerte Löschung
@@ -523,32 +523,32 @@ sequenceDiagram
 ```mermaid
 sequenceDiagram
     participant CRON as Cron Job
-    participant GUT as rvGutachten
+    participant RVG as rvGutachten
     participant DB as Database
-    participant AUDIT as Audit Service
+    participant AUD as Audit Service
     participant SMD as rvSMD
     
     Note over CRON,SMD: 30 Tage nach Stornierung
     
-    CRON->>GUT: 24. Täglich 02:00 UTC starten
-    GUT->>DB: Aufträge mit stornierungsDatum < NOW() - 30d
+    CRON->>RVG: 24. Täglich 02:00 UTC starten
+    RVG->>DB: Aufträge mit stornierungsDatum < NOW() - 30d
     
     loop Für jeden abgelaufenen Auftrag
-        GUT->>GUT: 25. Lösch-Job planen
+        RVG->>RVG: 25. Lösch-Job planen
         
-        Note over GUT: 26. Löschfrist erreicht
+        Note over RVG: 26. Löschfrist erreicht
         
-        GUT->>DB: 27. DELETE Auftrag-Metadaten
+        RVG->>DB: 27. DELETE Auftrag-Metadaten
         Note right of DB: Proband, Gutachter-Ref, Status
         
-        GUT->>DB: 28. DELETE Dokumente
+        RVG->>DB: 28. DELETE Dokumente
         Note right of DB: Sofort gelöscht
         
-        GUT->>AUDIT: 29. Löschung protokollieren
-        AUDIT-->>GUT: Audit-Eintrag erstellt
+        RVG->>AUD: 29. Löschung protokollieren
+        AUD-->>RVG: Audit-Eintrag erstellt
         
-        GUT->>SMD: 30. Sync Deletion Complete
-        SMD-->>GUT: Bestätigung
+        RVG->>SMD: 30. Sync Deletion Complete
+        SMD-->>RVG: Bestätigung
     end
     
     Note over CRON,SMD: Nächster Lauf in 24h
