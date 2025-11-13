@@ -88,49 +88,20 @@
 
 ### UC-05: Auftragsdetails und Dokumenteneinsicht
 
-**Use Case ID:** UC-05  
-**Name:** Auftragsdetails einsehen und Dokumente verwalten  
-**Primärer Akteur:** Registrierter Gutachter/Gutachtermitarbeiter  
-**Auslöser:** Benutzer möchte Details zu einem spezifischen Auftrag einsehen  
-
-**Vorbedingungen:**
-- Benutzer ist authentifiziert
-- Auftrag ist dem Benutzer zugewiesen
-- Auftrag ist nicht gelöscht
-
-**Erfolgsszenario:**
-1. Benutzer klickt auf Auftrag in der Übersicht
-2. System öffnet Auftragsdetail-Ansicht
-3. System zeigt erweiterte Auftragsinformationen (VSNR, Proband, Geburtsdatum, etc.)
-4. System lädt alle zugeordneten Dokumente
-5. Benutzer kann Dokumente einzeln öffnen und einsehen
-6. Benutzer kann druckbare Dokumente ausdrucken
-7. Benutzer kann Notizen zu einzelnen Dokumenten erstellen
-
-**Dokumentenmanagement:**
-- **D1:** PDF-Viewer für direkte Anzeige
-- **D2:** Downloadfunktion für lokale Speicherung
-- **D3:** Druckfunktion mit Formaterhaltung
-- **D4:** Notizen pro Dokument (US-NF.01)
-
-**Alternativszenarien:**
-- **A1:** Dokument nicht verfügbar → Fehlermeldung mit Kontaktmöglichkeit
-- **A2:** Auftrag storniert → Eingeschränkte Funktionalität, keine neuen Aktionen
-- **A3:** Berechtigung entzogen → Weiterleitung zur Übersicht mit Hinweis
-
-**Sicherheitsanforderungen:**
-- Nur berechtigte Nutzer haben Dokumentenzugriff
-- Alle Dokumentenzugriffe werden protokolliert
-- Sensible Dokumente sind gekennzeichnet
-- Schutz vor unbefugtem Download
-
-**Nachbedingungen:**
-- Benutzer hat vollständige Auftragsinformationen erhalten
-- Alle relevanten Dokumente sind zugänglich
-- Navigation zurück zur Übersicht ist möglich
-
-**Quell-Stories:** US-AM.02, US-AM.03, US-AM.05, US-NF.01  
-**Priorität:** Hoch - Essentiell für Auftragsbearbeitung  
+| **Attribut** | **Beschreibung** |
+|--------------|------------------|
+| **ID** | UC-05 |
+| **Name** | Auftragsdetails einsehen und Dokumente verwalten |
+| **Akteur** | **Primär:** Registrierter Gutachter/Gutachtermitarbeiter |
+| **Bemerkung** | Sicherheitsanforderungen: Nur berechtigte Nutzer haben Dokumentenzugriff, alle Dokumentenzugriffe werden protokolliert, sensible Dokumente sind gekennzeichnet, Schutz vor unbefugtem Download |
+| **Auslöser** | Benutzer möchte Details zu einem spezifischen Auftrag einsehen |
+| **Hauptablauf** | 1. Benutzer klickt auf Auftrag in der Übersicht<br>2. System öffnet Auftragsdetail-Ansicht<br>3. System zeigt erweiterte Auftragsinformationen (VSNR, Proband, Geburtsdatum, etc.)<br>4. System lädt alle zugeordneten Dokumente<br>5. Benutzer kann Dokumente einzeln öffnen und einsehen<br>6. Benutzer kann druckbare Dokumente ausdrucken<br>7. Benutzer kann Notizen zu einzelnen Dokumenten erstellen |
+| **Ausnahmeablauf** | **A1:** Dokument nicht verfügbar → Fehlermeldung mit Kontaktmöglichkeit<br>**A2:** Auftrag storniert → Eingeschränkte Funktionalität, keine neuen Aktionen<br>**A3:** Berechtigung entzogen → Weiterleitung zur Übersicht mit Hinweis |
+| **Anfangsbedingung** | - Benutzer ist authentifiziert<br>- Auftrag ist dem Benutzer zugewiesen<br>- Auftrag ist nicht gelöscht |
+| **Abschlussbedingung** | - Benutzer hat vollständige Auftragsinformationen erhalten<br>- Alle relevanten Dokumente sind zugänglich<br>- Navigation zurück zur Übersicht ist möglich |
+| **Erweiterte Verwaltung** | **D1:** PDF-Viewer für direkte Anzeige<br>**D2:** Downloadfunktion für lokale Speicherung<br>**D3:** Druckfunktion mit Formaterhaltung<br>**D4:** Notizen pro Dokument (US-NF.01) |
+| **zugehörige User Stories** | US-AM.02, US-AM.03, US-AM.05, US-NF.01 |
+| **Priorität** | Hoch - Essentiell für Auftragsbearbeitung |  
 
 ---
 
@@ -138,110 +109,39 @@
 
 ### UC-06: E-Mail-Benachrichtigungssystem
 
-**Use Case ID:** UC-06  
-**Name:** Automatische E-Mail-Benachrichtigungen verwalten  
-**Primärer Akteur:** System (automatisch), Konfiguration durch DRV-Mitarbeiter  
-**Sekundäre Akteure:** Gutachter/Gutachtermitarbeiter  
-**Auslöser:** Relevante Ereignisse im System (neuer Auftrag, Statusänderung, etc.)  
-
-**Vorbedingungen:**
-- E-Mail-System ist verfügbar und konfiguriert
-- Benutzer haben gültige E-Mail-Adressen hinterlegt
-- Benachrichtigungsregeln sind definiert
-
-**Automatische Benachrichtigungen:**
-1. **Neuer Auftrag zugewiesen** → Sofortige E-Mail an Gutachter
-2. **Auftragsstatus geändert** → Benachrichtigung an relevante Parteien
-3. **Mahnung eingegangen** → Prioritäts-E-Mail mit Fristen
-4. **Dokumente nachgereicht** → Information über neue Unterlagen
-5. **System-Wartung geplant** → Vorankündigung an alle Benutzer
-
-**Konfigurierbare Einstellungen:**
-- **K1:** E-Mail-Templates mit Platzhaltern (Name, Auftragsnummer, etc.)
-- **K2:** Benachrichtigungsfrequenz (sofort, täglich, wöchentlich)
-- **K3:** Opt-out Möglichkeiten für nicht-kritische Nachrichten
-- **K4:** Eskalations-E-Mails bei kritischen Ereignissen
-
-**Template-Management:**
-```
-Platzhalter verfügbar:
-{{gutachter_name}} - Name des Gutachters
-{{auftrag_nummer}} - Auftragsnummer 
-{{proband_name}} - Name des Probanden
-{{frist_datum}} - Relevante Fristen
-{{link_portal}} - Link zum Portal
-```
-
-**Nachbedingungen:**
-- Relevante Parteien sind zeitnah informiert
-- E-Mail-Versand ist dokumentiert
-- Fehlerhafte E-Mail-Adressen sind identifiziert
-
-**Geschäftsregeln:**
-- E-Mails müssen zuverlässig zugestellt werden
-- Personalisierte Nachrichten mit relevanten Fallinformationen
-- Wiederholungsversuche bei Zustellproblemen
-- DSGVO-konforme E-Mail-Verarbeitung
-
-**Quell-Stories:** US-BN.01, US-BN.02, US-BN.04, US-BN.05  
-**Priorität:** Mittel - Verbessert Benutzerexperience erheblich  
+| **Attribut** | **Beschreibung** |
+|--------------|------------------|
+| **ID** | UC-06 |
+| **Name** | Automatische E-Mail-Benachrichtigungen verwalten |
+| **Akteur** | **Primär:** System (automatisch), Konfiguration durch DRV-Mitarbeiter<br>**Sekundär:** Gutachter/Gutachtermitarbeiter |
+| **Bemerkung** | E-Mails müssen zuverlässig zugestellt werden; Personalisierte Nachrichten mit relevanten Fallinformationen; Wiederholungsversuche bei Zustellproblemen; DSGVO-konforme E-Mail-Verarbeitung |
+| **Auslöser** | Relevante Ereignisse im System (neuer Auftrag, Statusänderung, etc.) |
+| **Hauptablauf** | 1. **Neuer Auftrag zugewiesen** → Sofortige E-Mail an Gutachter<br>2. **Auftragsstatus geändert** → Benachrichtigung an relevante Parteien<br>3. **Mahnung eingegangen** → Prioritäts-E-Mail mit Fristen<br>4. **Dokumente nachgereicht** → Information über neue Unterlagen<br>5. **System-Wartung geplant** → Vorankündigung an alle Benutzer |
+| **Ausnahmeablauf** | - |
+| **Anfangsbedingung** | - E-Mail-System ist verfügbar und konfiguriert<br>- Benutzer haben gültige E-Mail-Adressen hinterlegt<br>- Benachrichtigungsregeln sind definiert |
+| **Abschlussbedingung** | - Relevante Parteien sind zeitnah informiert<br>- E-Mail-Versand ist dokumentiert<br>- Fehlerhafte E-Mail-Adressen sind identifiziert |
+| **Erweiterte Verwaltung** | **K1:** E-Mail-Templates mit Platzhaltern (Name, Auftragsnummer, etc.)<br>**K2:** Benachrichtigungsfrequenz (sofort, täglich, wöchentlich)<br>**K3:** Opt-out Möglichkeiten für nicht-kritische Nachrichten<br>**K4:** Eskalations-E-Mails bei kritischen Ereignissen<br>**Template-Platzhalter:** {{gutachter_name}}, {{auftrag_nummer}}, {{proband_name}}, {{frist_datum}}, {{link_portal}} |
+| **zugehörige User Stories** | US-BN.01, US-BN.02, US-BN.04, US-BN.05 |
+| **Priorität** | Mittel - Verbessert Benutzerexperience erheblich |  
 
 ---
 
 ### UC-09: Datenaufbewahrung und Löschung (DSGVO)
 
-**Use Case ID:** UC-09  
-**Name:** Automatische Datenaufbewahrung und -löschung  
-**Primärer Akteur:** System (automatisch)  
-**Sekundäre Akteure:** DRV-Mitarbeiter (Konfiguration)  
-**Auslöser:** Zeitbasierte Trigger oder Auftragsstatusänderungen  
-
-**Vorbedingungen:**
-- Löschrichtlinien sind konfiguriert
-- Aufträge haben definierte Statuswerte
-- Backup-System ist verfügbar
-
-**Aufbewahrungsregeln:**
-1. **Abgeschlossene Aufträge:** Aufbewahrung 90 Tage nach Abschluss
-2. **Stornierte Aufträge:** Auftragsinformationen 30 Tage, Dokumente sofort löschen
-3. **Persönliche Notizen:** Mit Auftragslöschung entfernen
-4. **Audit-Logs:** Separate Aufbewahrung nach gesetzlichen Vorgaben
-5. **Inaktive Accounts:** Nach 2 Jahren ohne Login zur Überprüfung
-
-**Löschprozess:**
-1. System identifiziert löschbare Datensätze
-2. Automatische Benachrichtigung an betroffene Gutachter (7 Tage vorher)
-3. Daten-Export für Archivierung (falls erforderlich)
-4. Sichere Löschung aus produktiver Datenbank
-5. Bestätigung und Dokumentation der Löschung
-
-**Ausnahmebehandlung:**
-- **A1:** Laufende Verfahren → Löschung pausieren bis Abschluss
-- **A2:** Rechtliche Aufbewahrungspflicht → Archivierung statt Löschung
-- **A3:** Benutzer-Widerspruch → Manuelle Prüfung erforderlich
-
-**Konfiguration durch Administrator:**
-```
-Konfigurierbare Parameter:
-- Aufbewahrungszeiten pro Auftragstyp
-- Benachrichtigungsvorlauf 
-- Löschung-Batch-Größen
-- Ausnahmeregeln für spezielle Fälle
-```
-
-**Nachbedingungen:**
-- DSGVO-Compliance ist sichergestellt
-- Speicherplatz wird optimiert
-- Löschvorgänge sind vollständig dokumentiert
-
-**Sicherheitsanforderungen:**
-- Sichere, nicht-wiederherstellbare Löschung
-- Verschlüsselte Archivierung bei Aufbewahrungspflicht
-- Zwei-Faktor-Bestätigung für manuelle Löschvorgänge
-- Regelmäßige Compliance-Audits
-
-**Quell-Stories:** US-LA.01, US-LA.02, US-LA.03, US-AM.07  
-**Priorität:** Mittel - Rechtliche Compliance erforderlich  
+| **Attribut** | **Beschreibung** |
+|--------------|------------------|
+| **ID** | UC-09 |
+| **Name** | Automatische Datenaufbewahrung und -löschung |
+| **Akteur** | **Primär:** System (automatisch)<br>**Sekundär:** DRV-Mitarbeiter (Konfiguration) |
+| **Bemerkung** | Sichere, nicht-wiederherstellbare Löschung; Verschlüsselte Archivierung bei Aufbewahrungspflicht; Zwei-Faktor-Bestätigung für manuelle Löschvorgänge; Regelmäßige Compliance-Audits |
+| **Auslöser** | Zeitbasierte Trigger oder Auftragsstatusänderungen |
+| **Hauptablauf** | **Aufbewahrungsregeln:**<br>1. **Abgeschlossene Aufträge:** Aufbewahrung 90 Tage nach Abschluss<br>2. **Stornierte Aufträge:** Auftragsinformationen 30 Tage, Dokumente sofort löschen<br>3. **Persönliche Notizen:** Mit Auftragslöschung entfernen<br>4. **Audit-Logs:** Separate Aufbewahrung nach gesetzlichen Vorgaben<br>5. **Inaktive Accounts:** Nach 2 Jahren ohne Login zur Überprüfung<br>**Löschprozess:**<br>1. System identifiziert löschbare Datensätze<br>2. Automatische Benachrichtigung an betroffene Gutachter (7 Tage vorher)<br>3. Daten-Export für Archivierung (falls erforderlich)<br>4. Sichere Löschung aus produktiver Datenbank<br>5. Bestätigung und Dokumentation der Löschung |
+| **Ausnahmeablauf** | **A1:** Laufende Verfahren → Löschung pausieren bis Abschluss<br>**A2:** Rechtliche Aufbewahrungspflicht → Archivierung statt Löschung<br>**A3:** Benutzer-Widerspruch → Manuelle Prüfung erforderlich |
+| **Anfangsbedingung** | - Löschrichtlinien sind konfiguriert<br>- Aufträge haben definierte Statuswerte<br>- Backup-System ist verfügbar |
+| **Abschlussbedingung** | - DSGVO-Compliance ist sichergestellt<br>- Speicherplatz wird optimiert<br>- Löschvorgänge sind vollständig dokumentiert |
+| **Erweiterte Verwaltung** | Konfigurierbare Parameter: Aufbewahrungszeiten pro Auftragstyp, Benachrichtigungsvorlauf, Löschung-Batch-Größen, Ausnahmeregeln für spezielle Fälle |
+| **zugehörige User Stories** | US-LA.01, US-LA.02, US-LA.03, US-AM.07 |
+| **Priorität** | Mittel - Rechtliche Compliance erforderlich |  
 
 ---
 
@@ -249,43 +149,20 @@ Konfigurierbare Parameter:
 
 ### UC-07: Support-Dashboard und Überwachung
 
-**Use Case ID:** UC-07  
-**Name:** DRV-Support Dashboard und Systemüberwachung  
-**Primärer Akteur:** DRV-Mitarbeiter (Support-Rolle)  
-**Auslöser:** Support-Mitarbeiter benötigt Systemüberblick oder Support-Information  
-
-**Vorbedingungen:**
-- DRV-Mitarbeiter hat Support-Berechtigung
-- System-Monitoring ist aktiv
-- Dashboard-Daten sind aktuell
-
-**Dashboard-Funktionen:**
-1. **Auftragszuweisungen überwachen** (US-SL.01)
-   - Vollständige Liste aller Zuweisungen
-   - Suchfunktion nach VSNR, Gutachter-Name, EFN
-   - Filterung nach Status, Zeitraum, Region
-   
-2. **Dokumentenübersicht** (US-SL.02)
-   - Prüfung der bereitgestellten Dokumente pro Auftrag
-   - Identifikation fehlender oder problematischer Dokumente
-   - Vollständigkeits-Check für Support-Fälle
-
-3. **System-Gesundheit**
-   - Aktive Benutzer-Sessions
-   - Performance-Metriken (Response-Zeiten, Fehlerrate)
-   - E-Mail-Versand Status
-   - Integration-Status (eLogin, rvSMD)
-
-**Support-Werkzeuge:**
-- **S1:** Benutzer-Impersonation (mit Audit-Trail)
-- **S2:** Manual-Override für blockierte Accounts
-- **S3:** Bulk-Operationen für Massenereignisse
-- **S4:** Eskalations-Workflows für kritische Probleme
-
-**Nachbedingungen:**
-- Support-Mitarbeiter haben vollständigen Systemüberblick
-- Probleme können schnell identifiziert und behoben werden
-- Alle Support-Aktionen sind auditiert
+| **Attribut** | **Beschreibung** |
+|--------------|------------------|
+| **ID** | UC-07 |
+| **Name** | DRV-Support Dashboard und Systemüberwachung |
+| **Akteur** | **Primär:** DRV-Mitarbeiter (Support-Rolle) |
+| **Bemerkung** | Alle Support-Aktionen sind auditiert |
+| **Auslöser** | Support-Mitarbeiter benötigt Systemüberblick oder Support-Information |
+| **Hauptablauf** | 1. **Auftragszuweisungen überwachen** (US-SL.01) - Vollständige Liste aller Zuweisungen, Suchfunktion nach VSNR/Gutachter-Name/EFN, Filterung nach Status/Zeitraum/Region<br>2. **Dokumentenübersicht** (US-SL.02) - Prüfung der bereitgestellten Dokumente pro Auftrag, Identifikation fehlender oder problematischer Dokumente, Vollständigkeits-Check für Support-Fälle<br>3. **System-Gesundheit** - Aktive Benutzer-Sessions, Performance-Metriken (Response-Zeiten, Fehlerrate), E-Mail-Versand Status, Integration-Status (eLogin, rvSMD) |
+| **Ausnahmeablauf** | - |
+| **Anfangsbedingung** | - DRV-Mitarbeiter hat Support-Berechtigung<br>- System-Monitoring ist aktiv<br>- Dashboard-Daten sind aktuell |
+| **Abschlussbedingung** | - Support-Mitarbeiter haben vollständigen Systemüberblick<br>- Probleme können schnell identifiziert und behoben werden<br>- Alle Support-Aktionen sind auditiert |
+| **Erweiterte Verwaltung** | **S1:** Benutzer-Impersonation (mit Audit-Trail)<br>**S2:** Manual-Override für blockierte Accounts<br>**S3:** Bulk-Operationen für Massenereignisse<br>**S4:** Eskalations-Workflows für kritische Probleme |
+| **zugehörige User Stories** | US-SL.01, US-SL.02 |
+| **Priorität** | Niedrig |
 
 **Quell-Stories:** US-SL.01, US-SL.02, US-SL.03, US-SL.04  
 **Priorität:** Niedrig - Wichtig für operative Exzellenz  
@@ -294,202 +171,97 @@ Konfigurierbare Parameter:
 
 ### UC-08: Erweiterte Gutachtermitarbeiter-Verwaltung
 
-**Use Case ID:** UC-08  
-**Name:** Gutachtermitarbeiter-Registrierung und -Verwaltung  
-**Primärer Akteur:** Gutachter  
-**Sekundäre Akteure:** Gutachtermitarbeiter, DRV-Mitarbeiter  
-**Auslöser:** Gutachter möchte Mitarbeiter für das System anmelden  
-
-**Vorbedingungen:**
-- Gutachter ist registriert und aktiviert
-- Mitarbeiter hat gültige eLogin-Berechtigung
-- DRV-Genehmigungsprozess ist verfügbar
-
-**Anmeldeprozess:**
-1. Gutachter öffnet Mitarbeiter-Verwaltung
-2. Gutachter füllt Anmeldeformular für Mitarbeiter aus
-3. System validiert Mitarbeiterdaten gegen eLogin
-4. Anmeldung wird zur Genehmigung an DRV weitergeleitet
-5. DRV-Mitarbeiter prüft und genehmigt Anmeldung
-6. Mitarbeiter erhält Aktivierungscode
-7. Mitarbeiter aktiviert sich mit dem erhaltenen Code
-
-**Erweiterte Verwaltung:**
-- **V1:** Mitarbeiter-Status einsehen und verwalten
-- **V2:** Berechtigungen pro Mitarbeiter konfigurieren  
-- **V3:** Mitarbeiter-Deaktivierung durch Gutachter
-- **V4:** Audit-Trail aller Mitarbeiter-Aktivitäten
-
-**Alternativszenarien:**
-- **A1:** Mitarbeiter bereits in anderem Kontext registriert → Zuordnung prüfen
-- **A2:** Gutachter-Account wird deaktiviert → Alle Mitarbeiter automatisch deaktivieren
-- **A3:** Mitarbeiter verlässt Praxis → Formeller Abmeldeprozess
-
-**Nachbedingungen:**
-- Mitarbeiter können im Namen des Gutachters arbeiten
-- Alle Aktivitäten sind dem verantwortlichen Gutachter zugeordnet
-- Audit-Trail ist vollständig
-
-**Quell-Stories:** US-RL.02, US-RL.03, US-RL.09, US-RL.10  
-**Priorität:** Niedrig - Erweiterte Funktionalität für größere Praxen
+| **Attribut** | **Beschreibung** |
+|--------------|------------------|
+| **ID** | UC-08 |
+| **Name** | Gutachtermitarbeiter-Registrierung und -Verwaltung |
+| **Akteur** | **Primär:** Gutachter<br>**Sekundär:** Gutachtermitarbeiter, DRV-Mitarbeiter |
+| **Bemerkung** | Erweiterte Funktionalität für größere Praxen; Alle Aktivitäten sind dem verantwortlichen Gutachter zugeordnet |
+| **Auslöser** | Gutachter möchte Mitarbeiter für das System anmelden |
+| **Hauptablauf** | 1. Gutachter öffnet Mitarbeiter-Verwaltung<br>2. Gutachter füllt Anmeldeformular für Mitarbeiter aus<br>3. System validiert Mitarbeiterdaten gegen eLogin<br>4. Anmeldung wird zur Genehmigung an DRV weitergeleitet<br>5. DRV-Mitarbeiter prüft und genehmigt Anmeldung<br>6. Mitarbeiter erhält Aktivierungscode<br>7. Mitarbeiter aktiviert sich mit dem erhaltenen Code |
+| **Ausnahmeablauf** | **A1:** Mitarbeiter bereits in anderem Kontext registriert → Zuordnung prüfen<br>**A2:** Gutachter-Account wird deaktiviert → Alle Mitarbeiter automatisch deaktivieren<br>**A3:** Mitarbeiter verlässt Praxis → Formeller Abmeldeprozess |
+| **Anfangsbedingung** | - Gutachter ist registriert und aktiviert<br>- Mitarbeiter hat gültige eLogin-Berechtigung<br>- DRV-Genehmigungsprozess ist verfügbar |
+| **Abschlussbedingung** | - Mitarbeiter können im Namen des Gutachters arbeiten<br>- Alle Aktivitäten sind dem verantwortlichen Gutachter zugeordnet<br>- Audit-Trail ist vollständig |
+| **Erweiterte Verwaltung** | **V1:** Mitarbeiter-Status einsehen und verwalten<br>**V2:** Berechtigungen pro Mitarbeiter konfigurieren<br>**V3:** Mitarbeiter-Deaktivierung durch Gutachter<br>**V4:** Audit-Trail aller Mitarbeiter-Aktivitäten |
+| **zugehörige User Stories** | US-RL.02, US-RL.03, US-RL.09, US-RL.10 |
+| **Priorität** | Niedrig - Erweiterte Funktionalität für größere Praxen |
 
 ---
 
 ### UC-10: Automatische Dokumentenbereitstellung (rvPUR → rvGutachten)
 
-**Use Case ID:** UC-10  
-**Name:** Automatische Dokumentenbereitstellung bei neuem Auftrag  
-**Primärer Akteur:** Systemautomatik  
-**Sekundäre Akteure:** Gutachter, rvSMD (Auftragsverwaltung), rvPUR (Dokumentenarchiv)  
-**Auslöser:** Neuer Gutachtenauftrag wird erstellt/übertragen
-
-**Vorbedingungen:**
-- Auftrag ist in rvGutachten angelegt
-- Dokumente zu diesem Auftrag sind im rvPUR-Archiv vorhanden
-- Zugriff auf rvPUR-Dokumentenarchiv ist verfügbar
-
-**Erfolgsszenario:**
-1. rvSMD überträgt neuen Gutachtenauftrag an rvGutachten
-2. rvGutachten legt Auftrag an und startet Dokumentenbeschaffung
-3. System fordert alle relevanten Dokumente zu diesem Auftrag aus rvPUR-Archiv an
-4. Dokumente werden für schnellen Zugriff in rvGutachten bereitgestellt
-5. Gutachter kann Dokumente sofort einsehen und bearbeiten
-6. Bei neuen/aktualisierten Dokumenten wird die Bereitstellung aktualisiert
-
-**Alternativszenarien:**
-- **A1:** rvPUR-Archiv nicht erreichbar → Wiederholungsversuch, Benachrichtigung an Support
-- **A2:** Keine Dokumente vorhanden → Hinweis an Gutachter
-- **A3:** Fehler bei Dokumentenbeschaffung → Protokollierung, erneuter Versuch, ggf. manuelle Nachbearbeitung
-
-**Nachbedingungen:**
-- Alle relevanten Dokumente sind im Auftrag verfügbar
-- Dokumentenzugriff ist schnell und zuverlässig auch bei Archivausfall
-- Alle Dokumentenzugriffe sind protokolliert
-
-**Geschäftswert:**
-- Gutachter haben sofortigen Zugriff auf alle Unterlagen
-- Keine Wartezeiten beim Dokumentenabruf
-- Arbeiten ist auch bei temporären Archivstörungen möglich
-- Effiziente Fallbearbeitung
-
-**Quell-Stories:** US-AM.02, US-AM.03, US-AM.05, US-NF.01  
-**Priorität:** Mittel/Hoch – Voraussetzung für effiziente Auftragsbearbeitung
+| **Attribut** | **Beschreibung** |
+|--------------|------------------|
+| **ID** | UC-10 |
+| **Name** | Automatische Dokumentenbereitstellung bei neuem Auftrag |
+| **Akteur** | **Primär:** Systemautomatik<br>**Sekundär:** Gutachter, rvSMD (Auftragsverwaltung), rvPUR (Dokumentenarchiv) |
+| **Bemerkung** | Geschäftswert: Gutachter haben sofortigen Zugriff auf alle Unterlagen; Keine Wartezeiten beim Dokumentenabruf; Arbeiten ist auch bei temporären Archivstörungen möglich; Effiziente Fallbearbeitung |
+| **Auslöser** | Neuer Gutachtenauftrag wird erstellt/übertragen |
+| **Hauptablauf** | 1. rvSMD überträgt neuen Gutachtenauftrag an rvGutachten<br>2. rvGutachten legt Auftrag an und startet Dokumentenbeschaffung<br>3. System fordert alle relevanten Dokumente zu diesem Auftrag aus rvPUR-Archiv an<br>4. Dokumente werden für schnellen Zugriff in rvGutachten bereitgestellt<br>5. Gutachter kann Dokumente sofort einsehen und bearbeiten<br>6. Bei neuen/aktualisierten Dokumenten wird die Bereitstellung aktualisiert |
+| **Ausnahmeablauf** | **A1:** rvPUR-Archiv nicht erreichbar → Wiederholungsversuch, Benachrichtigung an Support<br>**A2:** Keine Dokumente vorhanden → Hinweis an Gutachter<br>**A3:** Fehler bei Dokumentenbeschaffung → Protokollierung, erneuter Versuch, ggf. manuelle Nachbearbeitung |
+| **Anfangsbedingung** | - Auftrag ist in rvGutachten angelegt<br>- Dokumente zu diesem Auftrag sind im rvPUR-Archiv vorhanden<br>- Zugriff auf rvPUR-Dokumentenarchiv ist verfügbar |
+| **Abschlussbedingung** | - Alle relevanten Dokumente sind im Auftrag verfügbar<br>- Dokumentenzugriff ist schnell und zuverlässig auch bei Archivausfall<br>- Alle Dokumentenzugriffe sind protokolliert |
+| **Erweiterte Verwaltung** | - |
+| **zugehörige User Stories** | US-AM.02, US-AM.03, US-AM.05, US-NF.01 |
+| **Priorität** | Mittel/Hoch – Voraussetzung für effiziente Auftragsbearbeitung |
 
 
 ---
 
 ### UC-11: Statusänderungen Gutachter
 
-**Use Case ID:** UC-11  
-**Name:** Statusänderungen Gutachter  
-**Primärer Akteur:** 8023-Mitarbeiter (in rvSMD)  
-**Sekundäre Akteure:** rvSMD-System, rvGutachten-System  
-**Auslöser:** Status eines Gutachters wird in rvSMD geändert (z.B. Aktivierung, Sperrung, Reaktivierung)
-
-**Vorbedingungen:**
-
-- 8023-Mitarbeiter ist authentifiziert und autorisiert
-- Gutachter ist in rvSMD vorhanden
-
-**Erfolgsszenario:**
-
-1. 8023-Mitarbeiter öffnet Gutachter-Verwaltung in rvSMD
-2. Auswahl eines Gutachters
-3. Auswahl gewünschter Statusänderung (aktiv, gesperrt, reaktiviert, gelöscht)
-4. rvSMD prüft Berechtigungen und Statusübergänge
-5. rvSMD setzt neuen Status und dokumentiert Änderung
-6. rvSMD stößt Synchronisation nach rvGutachten an
-7. rvGutachten übernimmt Statusänderung automatisch
-8. System informiert Gutachter (z.B. per E-Mail)
-
-**Alternativszenarien:**
-
-- **A1:** Ungültiger Statusübergang in rvSMD → Fehlermeldung
-- **A2:** Synchronisationsfehler → Logging, Support-Benachrichtigung
-
-**Nachbedingungen:**
-
-- Status des Gutachters ist aktualisiert
-- Audit-Log der Statusänderung ist erstellt
-
-**Quell-Stories:** US-RL.09, US-RL.10  
-**Priorität:** Mittel - Wichtig für Gutachter-Verwaltung
+| **Attribut** | **Beschreibung** |
+|--------------|------------------|
+| **ID** | UC-11 |
+| **Name** | Statusänderungen Gutachter |
+| **Akteur** | **Primär:** 8023-Mitarbeiter (in rvSMD)<br>**Sekundär:** rvSMD-System, rvGutachten-System |
+| **Bemerkung** | - |
+| **Auslöser** | Status eines Gutachters wird in rvSMD geändert (z.B. Aktivierung, Sperrung, Reaktivierung) |
+| **Hauptablauf** | 1. 8023-Mitarbeiter öffnet Gutachter-Verwaltung in rvSMD<br>2. Auswahl eines Gutachters<br>3. Auswahl gewünschter Statusänderung (aktiv, gesperrt, reaktiviert, gelöscht)<br>4. rvSMD prüft Berechtigungen und Statusübergänge<br>5. rvSMD setzt neuen Status und dokumentiert Änderung<br>6. rvSMD stößt Synchronisation nach rvGutachten an<br>7. rvGutachten übernimmt Statusänderung automatisch<br>8. System informiert Gutachter (z.B. per E-Mail) |
+| **Ausnahmeablauf** | **A1:** Ungültiger Statusübergang in rvSMD → Fehlermeldung<br>**A2:** Synchronisationsfehler → Logging, Support-Benachrichtigung |
+| **Anfangsbedingung** | - 8023-Mitarbeiter ist authentifiziert und autorisiert<br>- Gutachter ist in rvSMD vorhanden |
+| **Abschlussbedingung** | - Status des Gutachters ist aktualisiert<br>- Audit-Log der Statusänderung ist erstellt |
+| **Erweiterte Verwaltung** | - |
+| **zugehörige User Stories** | US-RL.09, US-RL.10 |
+| **Priorität** | Mittel - Wichtig für Gutachter-Verwaltung |
 
 ---
 
 ### UC-12a: Gutachter ändert Auftragsstatus
 
-**Use Case ID:** UC-12a  
-**Name:** Gutachter ändert Auftragsstatus in rvGutachten  
-**Primärer Akteur:** Gutachter  
-**Sekundäre Akteure:** rvGutachten-System, rvSMD-System  
-**Auslöser:** Der Gutachter ändert den Status eines Auftrags in der rvGutachten-Anwendung.
-
-**Vorbedingungen:**
-
-- Der Gutachter ist in rvGutachten authentifiziert.
-- Der Auftrag ist dem Gutachter zugewiesen.
-
-**Erfolgsszenario:**
-
-1. Gutachter öffnet die Auftragsübersicht in rvGutachten.
-2. Er wählt einen Auftrag aus.
-3. Er wählt einen neuen Status (z.B. "in Bearbeitung", "abgeschlossen").
-4. rvGutachten prüft die Berechtigung für die Statusänderung.
-5. rvGutachten setzt den neuen Status und erstellt einen Audit-Log-Eintrag.
-6. rvGutachten stößt eine Synchronisation der Statusänderung nach rvSMD an.
-7. rvSMD übernimmt den neuen Status.
-
-**Alternativszenarien:**
-
-- **A1:** Ungültiger Statusübergang → Fehlermeldung in rvGutachten.
-- **A2:** Synchronisationsfehler nach rvSMD → Logging und Benachrichtigung des Supports.
-
-**Nachbedingungen:**
-
-- Der Status des Auftrags ist in beiden Systemen (rvGutachten und rvSMD) aktualisiert.
-- Die Statusänderung ist im Audit-Log dokumentiert.
-
-**Quell-Stories:** US-AM.04, US-BN.02  
-**Priorität:** Mittel - Wichtig für die Auftrags-Verwaltung.
+| **Attribut** | **Beschreibung** |
+|--------------|------------------|
+| **ID** | UC-12a |
+| **Name** | Gutachter ändert Auftragsstatus in rvGutachten |
+| **Akteur** | **Primär:** Gutachter<br>**Sekundär:** rvGutachten-System, rvSMD-System |
+| **Bemerkung** | - |
+| **Auslöser** | Der Gutachter ändert den Status eines Auftrags in der rvGutachten-Anwendung |
+| **Hauptablauf** | 1. Gutachter öffnet die Auftragsübersicht in rvGutachten<br>2. Er wählt einen Auftrag aus<br>3. Er wählt einen neuen Status (z.B. "in Bearbeitung", "abgeschlossen")<br>4. rvGutachten prüft die Berechtigung für die Statusänderung<br>5. rvGutachten setzt den neuen Status und erstellt einen Audit-Log-Eintrag<br>6. rvGutachten stößt eine Synchronisation der Statusänderung nach rvSMD an<br>7. rvSMD übernimmt den neuen Status |
+| **Ausnahmeablauf** | **A1:** Ungültiger Statusübergang → Fehlermeldung in rvGutachten<br>**A2:** Synchronisationsfehler nach rvSMD → Logging und Benachrichtigung des Supports |
+| **Anfangsbedingung** | - Der Gutachter ist in rvGutachten authentifiziert<br>- Der Auftrag ist dem Gutachter zugewiesen |
+| **Abschlussbedingung** | - Der Status des Auftrags ist in beiden Systemen (rvGutachten und rvSMD) aktualisiert<br>- Die Statusänderung ist im Audit-Log dokumentiert |
+| **Erweiterte Verwaltung** | - |
+| **zugehörige User Stories** | US-AM.04, US-BN.02 |
+| **Priorität** | Mittel - Wichtig für die Auftrags-Verwaltung |
 
 ---
 
 ### UC-12b: DRV-Mitarbeiter ändert Auftragsstatus
 
-**Use Case ID:** UC-12b  
-**Name:** DRV-Mitarbeiter ändert Auftragsstatus in rvSMD  
-**Primärer Akteur:** 8023-Mitarbeiter  
-**Sekundäre Akteure:** rvSMD-System, rvGutachten-System  
-**Auslöser:** Ein 8023-Mitarbeiter ändert den Status eines Auftrags in rvSMD (z.B. bei Stornierung).
-
-**Vorbedingungen:**
-
-- Der 8023-Mitarbeiter ist in rvSMD authentifiziert.
-- Der Auftrag existiert in rvSMD.
-
-**Erfolgsszenario:**
-
-1. Der 8023-Mitarbeiter öffnet die Auftragsverwaltung in rvSMD.
-2. Er wählt einen Auftrag aus.
-3. Er wählt einen neuen Status (z.B. "storniert").
-4. rvSMD prüft die Berechtigung für die Statusänderung.
-5. rvSMD setzt den neuen Status und erstellt einen Audit-Log-Eintrag.
-6. rvSMD stößt eine Synchronisation der Statusänderung nach rvGutachten an.
-7. rvGutachten übernimmt den neuen Status automatisch.
-
-**Alternativszenarien:**
-
-- **A1:** Ungültiger Statusübergang → Fehlermeldung in rvSMD.
-- **A2:** Synchronisationsfehler nach rvGutachten → Logging und Benachrichtigung des Supports.
-
-**Nachbedingungen:**
-
-- Der Status des Auftrags ist in beiden Systemen (rvSMD und rvGutachten) aktualisiert.
-- Die Statusänderung ist im Audit-Log dokumentiert.
-
-**Quell-Stories:** US-AM.06, US-BN.02  
-**Priorität:** Mittel - Wichtig für die Auftrags-Verwaltung.
+| **Attribut** | **Beschreibung** |
+|--------------|------------------|
+| **ID** | UC-12b |
+| **Name** | DRV-Mitarbeiter ändert Auftragsstatus in rvSMD |
+| **Akteur** | **Primär:** 8023-Mitarbeiter<br>**Sekundär:** rvSMD-System, rvGutachten-System |
+| **Bemerkung** | - |
+| **Auslöser** | Ein 8023-Mitarbeiter ändert den Status eines Auftrags in rvSMD (z.B. bei Stornierung) |
+| **Hauptablauf** | 1. Der 8023-Mitarbeiter öffnet die Auftragsverwaltung in rvSMD<br>2. Er wählt einen Auftrag aus<br>3. Er wählt einen neuen Status (z.B. "storniert")<br>4. rvSMD prüft die Berechtigung für die Statusänderung<br>5. rvSMD setzt den neuen Status und erstellt einen Audit-Log-Eintrag<br>6. rvSMD stößt eine Synchronisation der Statusänderung nach rvGutachten an<br>7. rvGutachten übernimmt den neuen Status automatisch |
+| **Ausnahmeablauf** | **A1:** Ungültiger Statusübergang → Fehlermeldung in rvSMD<br>**A2:** Synchronisationsfehler nach rvGutachten → Logging und Benachrichtigung des Supports |
+| **Anfangsbedingung** | - Der 8023-Mitarbeiter ist in rvSMD authentifiziert<br>- Der Auftrag existiert in rvSMD |
+| **Abschlussbedingung** | - Der Status des Auftrags ist in beiden Systemen (rvSMD und rvGutachten) aktualisiert<br>- Die Statusänderung ist im Audit-Log dokumentiert |
+| **Erweiterte Verwaltung** | - |
+| **zugehörige User Stories** | US-AM.06, US-BN.02 |
+| **Priorität** | Mittel - Wichtig für die Auftrags-Verwaltung |
 
 ---
 
