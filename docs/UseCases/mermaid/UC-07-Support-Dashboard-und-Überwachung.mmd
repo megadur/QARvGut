@@ -1,0 +1,110 @@
+sequenceDiagram
+    participant DRV as DRV-Mitarbeiter
+    participant RG as rvGutachten System
+    participant DB as Datenbank
+    participant SMD as rvSMD System
+    participant MON as System Monitor
+    participant IMP as Impersonation Service
+    participant AM as Audit Manager
+
+    Note over DRV,AM: Support-Dashboard und Systemüberwachung
+
+    DRV->>RG: 1. Support-Dashboard aufrufen
+    RG->>DB: 2. Support-Berechtigung validieren
+    DB->>RG: 3. Berechtigung bestätigt
+
+    par Dashboard-Initialisierung
+        RG->>DB: 4a. Auftragszuweisungen laden (alle Gutachter)
+        DB->>RG: 5a. Vollständige Auftragsliste
+
+    and System-Metriken laden
+        RG->>MON: 4b. Aktuelle System-Gesundheit abfragen
+        MON->>RG: 5b. Performance-Metriken, Fehlerrate, Sessions
+
+    and Integration-Status prüfen
+        RG->>SMD: 4c. rvSMD-Verbindung testen
+        SMD->>RG: 5c. Verbindungsstatus
+        par
+            RG->>RG: 6a. eLogin-Status prüfen
+        and
+            RG->>RG: 6b. E-Mail-System-Status prüfen
+        end
+    end
+
+    RG->>DRV: 7. Vollständiges Dashboard anzeigen
+
+    Note over DRV,AM: Auftragszuweisungen überwachen
+
+    DRV->>RG: 8. Auftragszuweisungen durchsuchen
+    alt Suche nach VSNR
+        DRV->>RG: 9a. VSNR eingeben
+        RG->>DB: 10a. VSNR-basierte Suche
+        DB->>RG: 11a. Zugehörige Aufträge + Gutachter-Info
+
+    else Suche nach Gutachter-Name
+        DRV->>RG: 9b. Gutachter-Name eingeben
+        RG->>DB: 10b. Gutachter-basierte Auftragssuche
+        DB->>RG: 11b. Alle Aufträge des Gutachters
+
+    else Suche nach EFN
+        DRV->>RG: 9c. EFN eingeben
+        RG->>DB: 10c. EFN-Zuordnung auflösen
+        DB->>RG: 11c. Gutachter + alle Aufträge
+    end
+
+    RG->>DRV: 12. Gefilterte Ergebnisse anzeigen
+    RG->>AM: 13. Support-Suche protokollieren
+
+    Note over DRV,AM: Dokumentenübersicht verwalten
+
+    DRV->>RG: 14. Dokumentenstatus für Auftrag prüfen
+    RG->>DB: 15. Auftragsdokumente laden
+    DB->>RG: 16. Dokumentenliste + Status
+    RG->>RG: 17. Vollständigkeits-Check durchführen
+
+    alt Dokumente vollständig
+        RG->>DRV: 18a. Vollständigkeits-Bestätigung (grün)
+    else Dokumente fehlen
+        RG->>DRV: 18b. Fehlende Dokumente hervorheben (rot)
+        DRV->>RG: 19. Problematische Dokumente zur Nachverfolgung markieren
+    end
+
+    RG->>AM: 20. Dokumentenprüfung protokollieren
+
+    Note over DRV,AM: Support-Werkzeuge nutzen
+
+    alt Benutzer-Impersonation (kritische Funktion)
+        DRV->>RG: 21a. Gutachter-Account impersonieren
+        RG->>IMP: 22a. Impersonation-Session starten
+        IMP->>AM: 23a. Kritische Aktion protokollieren (Wer, Wen, Wann)
+        IMP->>RG: 24a. Temporäre Gutachter-Berechtigung gewähren
+        RG->>DRV: 25a. Als Gutachter agieren (mit Watermark)
+
+        DRV->>RG: 26. Support-Problem lösen
+        DRV->>RG: 27. Impersonation beenden
+        RG->>IMP: 28. Session beenden
+        IMP->>AM: 29. Impersonation-Ende protokollieren
+
+    else Account-Override für gesperrte Accounts
+        DRV->>RG: 21b. Gesperrten Account entsperren
+        RG->>DB: 22b. Account-Status auf aktiv setzen
+        RG->>AM: 23b. Manual-Override protokollieren
+        RG->>DRV: 24b. Account-Entsperrung bestätigt
+
+    else Bulk-Operationen für Massenereignisse
+        DRV->>RG: 21c. Bulk-Operation definieren (z.B. Status-Updates)
+        RG->>DB: 22c. Batch-Update durchführen
+        DB->>RG: 23c. Anzahl betroffener Datensätze
+        RG->>AM: 24c. Bulk-Operation protokollieren
+        RG->>DRV: 25c. Operation erfolgreich (Anzahl verarbeitet)
+    end
+
+    Note over DRV,AM: Eskalations-Workflows
+
+    alt Kritisches Problem identifiziert
+        DRV->>RG: 30. Eskalation initiieren
+        RG->>RG: 31. Eskalations-Workflow starten
+        RG->>AM: 32. Eskalation protokollieren
+        RG->>RG: 33. Benachrichtigung an höhere Support-Level
+        RG->>DRV: 34. Eskalation bestätigt + Ticket-Nummer
+    end
