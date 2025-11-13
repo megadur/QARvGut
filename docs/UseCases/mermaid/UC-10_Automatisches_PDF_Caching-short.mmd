@@ -1,0 +1,23 @@
+sequenceDiagram
+    participant RVS as rvSMD
+    participant RVG as rvGutachten
+    participant JOB as Background Job
+    participant PUR as rvPUR
+    participant RVA as rvArchiv
+    participant GUT as Gutachter
+
+   Note over RVS,GUT: UC-10 Auftragsdetails einsehen und Dokumente verwalten
+
+    RVS->>RVG: 01. Neuer Gutachtenauftrag (Auftragsdaten)
+    RVG->>RVG: 02. Auftrag anlegen
+    RVG->>JOB: 03. Dokumentenabruf-Job starten
+    JOB->>PUR: 04. DokumentIDs zu Auftrag abrufen
+    Loop DokumentIDs vorhanden
+        JOB->>PUR: 05. Dokument-Metadaten zu DokumentID abrufen
+        PUR-->>JOB: Dokument-Metadaten
+        JOB->>RVA: 06. Dokument-Dateien mit Metadaten-Link abrufen
+        RVA-->>JOB: Dokument-Datei
+    end    
+    JOB->>RVG: 07. Dokumente im Cache speichern
+    RVS->>RVG: 08. Status setzen (aktiv)
+    Note over JOB,PUR: Bei neuen/aktualisierten Dokumenten: Cache-Refresh

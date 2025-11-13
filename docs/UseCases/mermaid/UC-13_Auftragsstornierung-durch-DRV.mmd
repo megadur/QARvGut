@@ -1,18 +1,32 @@
 ```mermaid
-sequenceDiagram
-    participant DRV as 8023-Mitarbeiter
-    participant SMD as rvSMD-System
-    participant RVG as rvGutachten-System
 
-    DRV->>SMD: Öffnet Auftragsverwaltung
-    DRV->>SMD: Wählt Auftrag & neuen Status (z.B. storniert)
-    SMD->>SMD: Prüft Berechtigung & Statusübergang
-    alt Gültiger Übergang
-        SMD->>SMD: Setzt neuen Status & Audit-Log
-        SMD->>RVG: Synchronisiere Statusänderung
-        RVG->>RVG: Übernimmt Status automatisch
-        SMD-->>DRV: Bestätigung
-    else Ungültiger Übergang
-        SMD-->>DRV: Fehlermeldung
-    end
+sequenceDiagram
+   actor M as 8023-Mitarbeiter
+   participant G as Gutachter
+   participant SMD as rvSMD-System
+   participant RVG as rvGutachten-System
+   participant ES as E-Mail System
+   participant AM as Audit Manager
+
+   Note over M,AM: UC-13 Auftragsstornierung
+
+   M->>SMD: 01. Öffnet Auftragsverwaltung
+   M->>SMD: 02. Wählt Auftrag & neuen Status (z.B. storniert)
+   SMD->>SMD: 03. Prüft Berechtigung & Statusübergang
+   alt Gültiger Übergang
+       SMD->>SMD: 04. Setzt neuen Status & Audit-Log
+       alt Syncronisation erfolgreich
+           SMD->>RVG: 05. Synchronisiere Statusänderung
+       else
+           SMD-->>M: 06. Fehlermeldung Synchronisationsfehler
+           SMD->>AM: 07. Protokollierung Synchronisationsfehler
+       end
+       RVG->>RVG: 08. Übernimmt Status automatisch
+       SMD-->>M: 09. Bestätigung
+       SMD->>ES: 10. Benachrichtigung erzeugen
+       ES-->>G: 12. Benachrichtigung empfangen
+   else Ungültiger Übergang
+       SMD-->>M: 13. Fehlermeldung Ungültiger Übergang
+       SMD->>AM: 14. Protokollierung Ungültiger Übergang
+   end
 ```
