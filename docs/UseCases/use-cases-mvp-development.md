@@ -1,10 +1,13 @@
-# QARvGut MVP - Use Cases für die Entwicklung
+# QARvGut MVP - Business Use Cases
 
-**Dokument Version:** 1.0  
+**Dokument Version:** 2.0  
 **Projekt:** QARvGut Enhanced User Management  
-**Typ:** MVP Use Case Spezifikation  
+**Typ:** Business Use Case Spezifikation  
 **Erstellt:** 29. September 2025  
+**Aktualisiert:** 13. November 2025  
 **Product Owner:** Sarah  
+
+**Hinweis:** Dieses Dokument beschreibt Geschäftsprozesse aus Anwendersicht. Technische Implementierungsdetails finden sich in separaten System Design Dokumenten.  
 ### UC-01: Gutachter-Onboarding-Prozess
 
 **Use Case ID:** UC-01  
@@ -42,13 +45,12 @@
 - Gutachter-Account ist aktiv und einsatzbereit
 - Gutachter kann sich anmelden und Aufträge einsehen
 - Für jeden Auftrag sind alle relevanten Dokumente gemäß UC-10 automatisch im System verfügbar
-- Audit-Log der Registrierung ist erstellt
+- Registrierungsvorgang ist dokumentiert
 
-**Technische Anforderungen:**
-- Integration mit eLogin-API
-- Integration mit rvSMD-Datenabgleich
-- E-Mail-Versand-Funktionalität
-- DSGVO-konforme Datenspeicherung
+**Geschäftsregeln:**
+- Nur Gutachter mit gültiger Zulassung können registriert werden
+- Freischaltung erfordert DRV-Mitarbeiter-Genehmigung
+- E-Mail-Adresse muss eindeutig sein
 
 **Quell-Stories:** US-RL.01, US-RL.04, US-RL.05  
 **Priorität:** Kritisch - Blocker für alle anderen Features  
@@ -71,9 +73,9 @@
 1. Benutzer navigiert zur Login-Seite
 2. Benutzer gibt E-Mail-Adresse ein
 3. Benutzer gibt Passwort ein
-4. System validiert Anmeldedaten gegen Datenbank
+4. System validiert Anmeldedaten
 5. System prüft Account-Status (aktiv/gesperrt)
-6. System erstellt Session und Security-Token
+6. System meldet Benutzer an
 7. System leitet zur Auftragsübersicht weiter
 
 **Alternativszenarien:**
@@ -90,14 +92,14 @@
 
 **Nachbedingungen:**
 - Benutzer ist authentifiziert und autorisiert
-- Session ist aktiv und gültig
+- Anmeldung ist aktiv
 - Navigation zu geschützten Bereichen möglich
 
 **Sicherheitsanforderungen:**
-- Passwort-Hashing (bcrypt/Argon2)
-- Brute-Force-Schutz
-- Sichere Session-Management
-- HTTPS-Verschlüsselung
+- Sichere Passwortverwaltung
+- Schutz vor unbefugten Zugriffsversuchen
+- Sichere Datenübertragung
+- Zeitlich begrenzte Anmeldung
 
 **Quell-Stories:** US-RL.07, US-RL.08  
 **Priorität:** Kritisch - Grundlage für alle authentifizierten Features  
@@ -180,10 +182,10 @@
 - Aktuelle Daten sind geladen und angezeigt
 - Filterungen und Sortierungen bleiben aktiv
 
-**Performance-Anforderungen:**
-- Ladezeit < 3 Sekunden für bis zu 500 Aufträge
-- Such-Response < 1 Sekunde
-- Auto-Refresh alle 5 Minuten
+**Qualitätsanforderungen:**
+- Schnelle Ladezeiten auch bei vielen Aufträgen
+- Sofortige Suchergebnisse
+- Aktuelle Daten ohne manuelles Neuladen
 
 **Quell-Stories:** US-AM.01, US-AM.04, US-AM.06, US-AM.08  
 **Priorität:** Hoch - Kernfunktionalität für täglichen Betrieb  
@@ -224,8 +226,8 @@
 
 **Sicherheitsanforderungen:**
 - Nur berechtigte Nutzer haben Dokumentenzugriff
-- Audit-Log für alle Dokumentenzugriffe
-- Watermarking für sensible Dokumente
+- Alle Dokumentenzugriffe werden protokolliert
+- Sensible Dokumente sind gekennzeichnet
 - Schutz vor unbefugtem Download
 
 **Nachbedingungen:**
@@ -278,13 +280,13 @@ Platzhalter verfügbar:
 
 **Nachbedingungen:**
 - Relevante Parteien sind zeitnah informiert
-- E-Mail-Versand ist in Audit-Log dokumentiert
+- E-Mail-Versand ist dokumentiert
 - Fehlerhafte E-Mail-Adressen sind identifiziert
 
-**Technische Anforderungen:**
-- SMTP-Integration mit Fehlerbehandlung
-- Template-Engine für personalisierte Nachrichten  
-- Retry-Mechanismus bei Versandfehlern
+**Geschäftsregeln:**
+- E-Mails müssen zuverlässig zugestellt werden
+- Personalisierte Nachrichten mit relevanten Fallinformationen
+- Wiederholungsversuche bei Zustellproblemen
 - DSGVO-konforme E-Mail-Verarbeitung
 
 **Quell-Stories:** US-BN.01, US-BN.02, US-BN.04, US-BN.05  
@@ -439,42 +441,42 @@ Konfigurierbare Parameter:
 
 ---
 
-### UC-10: Automatischer Dokumentenabruf und Caching (rvPUR → rvGutachten)
+### UC-10: Automatische Dokumentenbereitstellung (rvPUR → rvGutachten)
 
 **Use Case ID:** UC-10  
-**Name:** Automatischer Dokumentenabruf und Zwischenspeicherung bei neuem Auftrag  
-**Primärer Akteur:** System (rvGutachten, Hintergrundprozess)  
-**Sekundäre Akteure:** Gutachter, rvSMD, rvPUR  
+**Name:** Automatische Dokumentenbereitstellung bei neuem Auftrag  
+**Primärer Akteur:** Systemautomatik  
+**Sekundäre Akteure:** Gutachter, rvSMD (Auftragsverwaltung), rvPUR (Dokumentenarchiv)  
 **Auslöser:** Neuer Gutachtenauftrag wird erstellt/übertragen
 
 **Vorbedingungen:**
 - Auftrag ist in rvGutachten angelegt
-- Dokumente zu diesem Auftrag sind in rvPUR vorhanden
-- System hat Zugriff auf rvPUR-API
+- Dokumente zu diesem Auftrag sind im rvPUR-Archiv vorhanden
+- Zugriff auf rvPUR-Dokumentenarchiv ist verfügbar
 
 **Erfolgsszenario:**
 1. rvSMD überträgt neuen Gutachtenauftrag an rvGutachten
-2. rvGutachten legt Auftrag an und stößt Hintergrundprozess an
-3. Hintergrundprozess fragt alle relevanten Dokumente zu diesem Auftrag aus rvPUR ab
-4. Dokumente werden in rvGutachten zwischengespeichert (Cache)
-5. Gutachter kann Dokumente direkt in rvGutachten einsehen und bearbeiten
-6. Bei neuen/aktualisierten Dokumenten wird der Cache aktualisiert
+2. rvGutachten legt Auftrag an und startet Dokumentenbeschaffung
+3. System fordert alle relevanten Dokumente zu diesem Auftrag aus rvPUR-Archiv an
+4. Dokumente werden für schnellen Zugriff in rvGutachten bereitgestellt
+5. Gutachter kann Dokumente sofort einsehen und bearbeiten
+6. Bei neuen/aktualisierten Dokumenten wird die Bereitstellung aktualisiert
 
 **Alternativszenarien:**
-- **A1:** rvPUR nicht erreichbar → Wiederholungsversuch, Fehlerbenachrichtigung an Support
+- **A1:** rvPUR-Archiv nicht erreichbar → Wiederholungsversuch, Benachrichtigung an Support
 - **A2:** Keine Dokumente vorhanden → Hinweis an Gutachter
-- **A3:** Fehler beim Caching → Logging, Retry, ggf. manuelle Nachbearbeitung
+- **A3:** Fehler bei Dokumentenbeschaffung → Protokollierung, erneuter Versuch, ggf. manuelle Nachbearbeitung
 
 **Nachbedingungen:**
-- Alle relevanten Dokumente sind im Auftrag in rvGutachten verfügbar
-- Dokumentenzugriff ist performant und ausfallsicher
-- Audit-Log für alle Dokumentenzugriffe vorhanden
+- Alle relevanten Dokumente sind im Auftrag verfügbar
+- Dokumentenzugriff ist schnell und zuverlässig auch bei Archivausfall
+- Alle Dokumentenzugriffe sind protokolliert
 
-**Technische Anforderungen:**
-- Integration mit rvPUR-API (Dokumentenabruf)
-- Caching-Mechanismus in rvGutachten
-- Fehler- und Retry-Handling für Hintergrundprozess
-- Rechteprüfung bei jedem Dokumentenzugriff
+**Geschäftswert:**
+- Gutachter haben sofortigen Zugriff auf alle Unterlagen
+- Keine Wartezeiten beim Dokumentenabruf
+- Arbeiten ist auch bei temporären Archivstörungen möglich
+- Effiziente Fallbearbeitung
 
 **Quell-Stories:** US-AM.02, US-AM.03, US-AM.05, US-NF.01  
 **Priorität:** Mittel/Hoch – Voraussetzung für effiziente Auftragsbearbeitung
