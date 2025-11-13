@@ -26,38 +26,21 @@
 
 ## Sequenzschritte zu API-Aufrufen Mapping
 
-| Schritt | Aktion | API Aufruf | Methode | Anmerkung |
-|---------|--------|------------|---------|-----------|
-| 1 | DRV-Mitarbeiter öffnet Auftrag in rvSMD | - | rvSMD | Backend System |
-| 2 | Status auf "storniert" setzen | rvSMD Internal API | POST | rvSMD Backend |
-| 3 | Berechtigung prüfen | rvSMD Authorization | - | Permission Check |
-| 4 | Stornierungsdatum setzen | rvSMD Data Update | - | Current Timestamp |
-| 5 | Audit-Log in rvSMD | rvSMD Audit | POST | Log Entry |
-| 6 | Sync-Event triggern | `POST /sync/status-change` | POST | Event to rvGutachten |
-| 7 | rvGutachten empfängt Event | Webhook/Message Queue | - | Async Reception |
-| 8 | Auftrag in rvGutachten laden | `GET /gutachtenauftraege/{id}` | GET | Internal Query |
-| 9 | Berechtigung für Sync prüfen | Authorization Service | - | System-to-System |
-| 10 | Status aktualisieren | `PATCH /gutachtenauftraege/{id}` | PATCH | Status Update |
-| 11 | stornierungsDatum setzen | Database Update | - | Set Timestamp |
-| 12 | Audit-Log in rvGutachten | `POST /audit/status-change` | POST | Log Sync Event |
-| 13 | Dokumente kennzeichnen | Database Update | - | Mark as Read-Only |
-| 14 | E-Mail-Benachrichtigung | `POST /notifications/email` | POST | Notify Gutachter |
-| 15 | E-Mail-Versand | SMTP Service | - | Email Delivery |
-| 16 | Gutachter öffnet Portal | - | Frontend | User Action |
-| 17 | Auftragsübersicht laden | `GET /gutachtenauftraege` | GET | List Orders |
-| 18 | Stornierung anzeigen | - | Frontend | Visual Indicator |
-| 19 | Auf stornierten Auftrag klicken | - | Frontend | Navigation |
-| 20 | Auftragdetails laden | `GET /gutachtenauftraege/{id}` | GET | Detail View |
-| 21 | Read-Only Mode aktivieren | - | Frontend | UI Restriction |
-| 22 | Dokumente anzeigen (Read-Only) | `GET /gutachtenauftraege/{id}/dokumente` | GET | Limited Access |
-| 23 | Download/Druck deaktivieren | - | Frontend | UI Lockdown |
-| 24 | Löschfrist berechnen | - | Backend | 30 Days Calculation |
-| 25 | Lösch-Job Schedule | Cron/Scheduler | - | Background Task |
-| 26 | Löschfrist erreicht | Timer Trigger | - | After 30 Days |
-| 27 | Auftragsinformationen löschen | `DELETE /gutachtenauftraege/{id}/metadata` | DELETE | Keep Minimal Data |
-| 28 | Dokumente sofort löschen | `DELETE /dokumente/{id}` | DELETE | Immediate Deletion |
-| 29 | Audit-Log Löschung | `POST /audit/data-deletion` | POST | DSGVO Compliance |
-| 30 | Sync Löschung zu rvSMD | `POST /sync/deletion-complete` | POST | Confirm Deletion |
+| Schritt | Richtung | Quelle | Ziel | API Call / Operation | Methode | Beschreibung |
+|---------|----------|--------|------|---------------------|---------|--------------|
+| 01 | M->>SMD | 8023-MA | rvSMD | `GET /auftraege` oder UI Navigation | GET | Öffnet Auftragsverwaltung |
+| 02 | M->>SMD | 8023-MA | rvSMD | `POST /auftraege/{id}/status` | POST | Wählt Auftrag & neuen Status (z.B. storniert) |
+| 03 | SMD->>SMD | rvSMD | rvSMD | Internal: `validateStatusTransition()` | Internal | Prüft Berechtigung & Statusübergang |
+| 04 | SMD->>SMD | rvSMD | rvSMD | Internal: `updateStatus()` + `auditLog.create()` | Internal | Setzt neuen Status & Audit-Log |
+| 05 | SMD->>RVG | rvSMD | rvGutachten | `POST /api/sync/auftrag-status` oder Message Queue Event | POST/MQ | Synchronisiere Statusänderung |
+| 06 | SMD-->>M | rvSMD | 8023-MA | `HTTP 500` oder Error Response | Response | Fehlermeldung Synchronisationsfehler |
+| 07 | SMD->>AM | rvSMD | Audit Manager | `POST /audit/log` Event: SYNC_ERROR | POST | Protokollierung Synchronisationsfehler |
+| 08 | RVG->>RVG | rvGutachten | rvGutachten | Internal: `applyStatusUpdate()` | Internal | Übernimmt Status automatisch |
+| 09 | SMD-->>M | rvSMD | 8023-MA | `HTTP 200` Success Response | Response | Bestätigung |
+| 10 | SMD->>ES | rvSMD | E-Mail System | `POST /email/send` | POST | Benachrichtigung erzeugen |
+| 12 | ES-->>G | E-Mail System | Gutachter | SMTP E-Mail Delivery | SMTP | Benachrichtigung empfangen |
+| 13 | SMD-->>M | rvSMD | 8023-MA | `HTTP 400` Bad Request | Response | Fehlermeldung Ungültiger Übergang |
+| 14 | SMD->>AM | rvSMD | Audit Manager | `POST /audit/log` Event: INVALID_TRANSITION | POST | Protokollierung Ungültiger Übergang |
 
 ---
 
