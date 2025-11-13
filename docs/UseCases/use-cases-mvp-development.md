@@ -10,136 +10,58 @@
 **Hinweis:** Dieses Dokument beschreibt Geschäftsprozesse aus Anwendersicht. Technische Implementierungsdetails finden sich in separaten System Design Dokumenten.  
 ### UC-01: Gutachter-Onboarding-Prozess
 
-**Use Case ID:** UC-01  
-**Name:** Gutachter-Registrierung und -Aktivierung  
-**Primärer Akteur:** Neuer Gutachter  
-**Sekundäre Akteure:** DRV-Mitarbeiter, eLogin-System, rvSMD-System  
-**Auslöser:** Gutachter möchte Zugang zu rvGutachten  
-
-**Vorbedingungen:**
-- Gutachter hat gültige Zulassung für Begutachtung
-- eLogin-System ist verfügbar
-- rvSMD-System ist verfügbar
-- DRV-Mitarbeiter für Freischaltung verfügbar
-
-**Erfolgsszenario:**
-1. Gutachter ruft Registrierungsseite auf
-2. Gutachter füllt Registrierungsformular aus (Name, E-Mail, EFN)
-3. System validiert Eingaben gegen eLogin/rvSMD
-4. System erstellt Benutzer-Account mit Status "pending"
-5. System benachrichtigt DRV-Mitarbeiter über neue Registrierung
-6. DRV-Mitarbeiter prüft Gutachter-Berechtigung in internen Systemen
-7. DRV-Mitarbeiter genehmigt Registrierung im System
-8. System generiert und sendet Aktivierungscode per E-Mail
-9. Gutachter gibt Aktivierungscode ein
-10. System aktiviert Account und gewährt vollen Zugang
-
-**Alternativszenarien:**
-- **A1:** Ungültige E-Mail → Fehlermeldung, Eingabe wiederholen
-- **A2:** Gutachter bereits registriert → Hinweis auf bestehenden Account
-- **A3:** eLogin/rvSMD nicht erreichbar → Registrierung temporär gesperrt
-- **A4:** DRV-Mitarbeiter lehnt ab → Account wird deaktiviert, Gutachter informiert
-- **A5:** Aktivierungscode falsch → Erneute Eingabe erlauben (3 Versuche)
-
-**Nachbedingungen:**
-- Gutachter-Account ist aktiv und einsatzbereit
-- Gutachter kann sich anmelden und Aufträge einsehen
-- Für jeden Auftrag sind alle relevanten Dokumente gemäß UC-10 automatisch im System verfügbar
-- Registrierungsvorgang ist dokumentiert
-
-**Geschäftsregeln:**
-- Nur Gutachter mit gültiger Zulassung können registriert werden
-- Freischaltung erfordert DRV-Mitarbeiter-Genehmigung
-- E-Mail-Adresse muss eindeutig sein
-
-**Quell-Stories:** US-RL.01, US-RL.04, US-RL.05  
-**Priorität:** Kritisch - Blocker für alle anderen Features  
+| **Attribut** | **Beschreibung** |
+|--------------|------------------|
+| **ID** | UC-01 |
+| **Name** | Gutachter-Registrierung und -Aktivierung |
+| **Akteur** | **Primär:** Neuer Gutachter<br>**Sekundär:** DRV-Mitarbeiter, eLogin (Identitätsverwaltung), rvSMD (Stammdatenverwaltung) |
+| **Bemerkung** | Geschäftsregel: Nur Gutachter mit gültiger Zulassung können registriert werden. Freischaltung erfordert DRV-Mitarbeiter-Genehmigung. E-Mail-Adresse muss eindeutig sein. |
+| **Auslöser** | Gutachter möchte Zugang zu rvGutachten |
+| **Hauptablauf** | 1. Gutachter ruft Registrierungsseite auf<br>2. Gutachter füllt Registrierungsformular aus (Name, E-Mail, EFN)<br>3. System validiert Eingaben gegen eLogin/rvSMD<br>4. System erstellt Benutzer-Account mit Status "pending"<br>5. System benachrichtigt DRV-Mitarbeiter über neue Registrierung<br>6. DRV-Mitarbeiter prüft Gutachter-Berechtigung in internen Systemen<br>7. DRV-Mitarbeiter genehmigt Registrierung im System<br>8. System generiert und sendet Aktivierungscode per E-Mail<br>9. Gutachter gibt Aktivierungscode ein<br>10. System aktiviert Account und gewährt vollen Zugang |
+| **Ausnahmeablauf** | **A1:** Ungültige E-Mail → Fehlermeldung, Eingabe wiederholen<br>**A2:** Gutachter bereits registriert → Hinweis auf bestehenden Account<br>**A3:** eLogin/rvSMD nicht erreichbar → Registrierung temporär gesperrt<br>**A4:** DRV-Mitarbeiter lehnt ab → Account wird deaktiviert, Gutachter informiert<br>**A5:** Aktivierungscode falsch → Erneute Eingabe erlauben (3 Versuche) |
+| **Anfangsbedingung** | - Gutachter hat gültige Zulassung für Begutachtung<br>- eLogin-System ist verfügbar<br>- rvSMD-System ist verfügbar<br>- DRV-Mitarbeiter für Freischaltung verfügbar |
+| **Abschlussbedingung** | - Gutachter-Account ist aktiv und einsatzbereit<br>- Gutachter kann sich anmelden und Aufträge einsehen<br>- Für jeden Auftrag sind alle relevanten Dokumente gemäß UC-10 automatisch im System verfügbar<br>- Registrierungsvorgang ist dokumentiert |
+| **Erweiterte Verwaltung** | - |
+| **zugehörige User Stories** | US-RL.01, US-RL.04, US-RL.05 |
+| **Priorität** | Kritisch - Blocker für alle anderen Features |  
 
 ---
 
 ### UC-02: System-Authentifizierung
 
-**Use Case ID:** UC-02  
-**Name:** Benutzer-Anmeldung am System  
-**Primärer Akteur:** Registrierter Benutzer (Gutachter/Mitarbeiter)  
-**Auslöser:** Benutzer möchte auf rvGutachten zugreifen  
-
-**Vorbedingungen:**
-- Benutzer hat aktivierten Account
-- System ist verfügbar
-- Browser unterstützt erforderliche Standards
-
-**Erfolgsszenario:**
-1. Benutzer navigiert zur Login-Seite
-2. Benutzer gibt E-Mail-Adresse ein
-3. Benutzer gibt Passwort ein
-4. System validiert Anmeldedaten
-5. System prüft Account-Status (aktiv/gesperrt)
-6. System meldet Benutzer an
-7. System leitet zur Auftragsübersicht weiter
-
-**Alternativszenarien:**
-- **A1:** Falsche E-Mail/Passwort → Fehlermeldung, erneute Eingabe
-- **A2:** Account gesperrt → Informative Meldung, Kontakt-Information
-- **A3:** Zu viele Fehlversuche → Account temporär sperren (30 Min)
-- **A4:** Session-Timeout → Automatische Weiterleitung zur Login-Seite
-- **A5:** "Angemeldet bleiben" → Extended Session (7 Tage)
-
-**Erweiterte Funktionen:**
-- **E1:** Passwort vergessen → E-Mail mit Reset-Link senden
-- **E2:** Erster Login → Passwort-Änderung erzwingen
-- **E3:** Verdächtige Anmeldung → Zusätzliche Verifikation
-
-**Nachbedingungen:**
-- Benutzer ist authentifiziert und autorisiert
-- Anmeldung ist aktiv
-- Navigation zu geschützten Bereichen möglich
-
-**Sicherheitsanforderungen:**
-- Sichere Passwortverwaltung
-- Schutz vor unbefugten Zugriffsversuchen
-- Sichere Datenübertragung
-- Zeitlich begrenzte Anmeldung
-
-**Quell-Stories:** US-RL.07, US-RL.08  
-**Priorität:** Kritisch - Grundlage für alle authentifizierten Features  
-**Status:** ⚠️ In Prüfung - Signaturkarte wird evaluiert  
+| **Attribut** | **Beschreibung** |
+|--------------|------------------|
+| **ID** | UC-02 |
+| **Name** | Benutzer-Anmeldung am System |
+| **Akteur** | **Primär:** Registrierter Benutzer (Gutachter/Mitarbeiter) |
+| **Bemerkung** | Sicherheitsanforderungen: Sichere Passwortverwaltung, Schutz vor unbefugten Zugriffsversuchen, sichere Datenübertragung, zeitlich begrenzte Anmeldung<br>**Status:** ⚠️ In Prüfung - Signaturkarte wird evaluiert |
+| **Auslöser** | Benutzer möchte auf rvGutachten zugreifen |
+| **Hauptablauf** | 1. Benutzer navigiert zur Login-Seite<br>2. Benutzer gibt E-Mail-Adresse ein<br>3. Benutzer gibt Passwort ein<br>4. System validiert Anmeldedaten<br>5. System prüft Account-Status (aktiv/gesperrt)<br>6. System meldet Benutzer an<br>7. System leitet zur Auftragsübersicht weiter |
+| **Ausnahmeablauf** | **A1:** Falsche E-Mail/Passwort → Fehlermeldung, erneute Eingabe<br>**A2:** Account gesperrt → Informative Meldung, Kontakt-Information<br>**A3:** Zu viele Fehlversuche → Account temporär sperren (30 Min)<br>**A4:** Session-Timeout → Automatische Weiterleitung zur Login-Seite<br>**A5:** "Angemeldet bleiben" → Extended Session (7 Tage) |
+| **Anfangsbedingung** | - Benutzer hat aktivierten Account<br>- System ist verfügbar<br>- Browser unterstützt erforderliche Standards |
+| **Abschlussbedingung** | - Benutzer ist authentifiziert und autorisiert<br>- Anmeldung ist aktiv<br>- Navigation zu geschützten Bereichen möglich |
+| **Erweiterte Verwaltung** | **E1:** Passwort vergessen → E-Mail mit Reset-Link senden<br>**E2:** Erster Login → Passwort-Änderung erzwingen<br>**E3:** Verdächtige Anmeldung → Zusätzliche Verifikation |
+| **zugehörige User Stories** | US-RL.07, US-RL.08 |
+| **Priorität** | Kritisch - Grundlage für alle authentifizierten Features |  
 
 ---
 
 ### UC-03: DRV-Mitarbeiter-Zugriffsverwaltung
 
-**Use Case ID:** UC-03  
-**Name:** DRV-Mitarbeiter-Registrierung und Support-Zugang  
-**Primärer Akteur:** DRV-Mitarbeiter  
-**Sekundäre Akteure:** rvGutachtenAdmin, eLogin-System  
-**Auslöser:** DRV-Mitarbeiter benötigt Zugang für Support-Tätigkeiten  
-
-**Vorbedingungen:**
-- Mitarbeiter hat gültige DRV-Berechtigung
-- rvGutachtenAdmin-System verfügbar
-- eLogin-Integration funktional
-
-**Erfolgsszenario:**
-1. DRV-Mitarbeiter beantragt Zugang über rvGutachtenAdmin
-2. System validiert Mitarbeiter-Status über eLogin
-3. System prüft erforderliche Berechtigungsstufe
-4. Admin genehmigt Support-Zugang
-5. System erstellt DRV-Mitarbeiter-Account mit erweiterten Rechten
-6. System gewährt Zugriff auf Support-Funktionen
-
-**Erweiterte Berechtigungen:**
-- Auftragszuweisungen einsehen
-- Dokumenten-Übersicht verwalten
-- Gutachter-Registrierungen verwalten
-- System-Konfiguration (je nach Rolle)
-
-**Nachbedingungen:**
-- DRV-Mitarbeiter kann Support-Funktionen ausführen
-- Audit-Trail für alle administrativen Aktionen aktiv
-
-**Quell-Stories:** US-RL.06  
-**Priorität:** Kritisch - Notwendig für Betrieb und Support  
+| **Attribut** | **Beschreibung** |
+|--------------|------------------|
+| **ID** | UC-03 |
+| **Name** | DRV-Mitarbeiter-Registrierung und Support-Zugang |
+| **Akteur** | **Primär:** DRV-Mitarbeiter<br>**Sekundär:** rvGutachtenAdmin, eLogin (Identitätsverwaltung) |
+| **Bemerkung** | - |
+| **Auslöser** | DRV-Mitarbeiter benötigt Zugang für Support-Tätigkeiten |
+| **Hauptablauf** | 1. DRV-Mitarbeiter beantragt Zugang über rvGutachtenAdmin<br>2. System validiert Mitarbeiter-Status über eLogin<br>3. System prüft erforderliche Berechtigungsstufe<br>4. Admin genehmigt Support-Zugang<br>5. System erstellt DRV-Mitarbeiter-Account mit erweiterten Rechten<br>6. System gewährt Zugriff auf Support-Funktionen |
+| **Ausnahmeablauf** | - |
+| **Anfangsbedingung** | - Mitarbeiter hat gültige DRV-Berechtigung<br>- rvGutachtenAdmin-System verfügbar<br>- eLogin-Integration funktional |
+| **Abschlussbedingung** | - DRV-Mitarbeiter kann Support-Funktionen ausführen<br>- Audit-Trail für alle administrativen Aktionen aktiv |
+| **Erweiterte Verwaltung** | - Auftragszuweisungen einsehen<br>- Dokumenten-Übersicht verwalten<br>- Gutachter-Registrierungen verwalten<br>- System-Konfiguration (je nach Rolle) |
+| **zugehörige User Stories** | US-RL.06 |
+| **Priorität** | Kritisch - Notwendig für Betrieb und Support |  
 
 ---
 
@@ -147,48 +69,20 @@
 
 ### UC-04: Auftragsübersicht und -verwaltung
 
-**Use Case ID:** UC-04  
-**Name:** Auftragsübersicht anzeigen und verwalten  
-**Primärer Akteur:** Registrierter Gutachter/Gutachtermitarbeiter  
-**Auslöser:** Benutzer möchte seine Aufträge einsehen und verwalten  
-
-**Vorbedingungen:**
-- Benutzer ist authentifiziert und autorisiert
-- Aufträge sind dem Benutzer zugewiesen
-- System ist verfügbar
-
-**Erfolgsszenario:**
-1. Benutzer navigiert zur Auftragsübersicht
-2. System lädt alle dem Benutzer zugewiesenen Aufträge
-3. System zeigt tabellarische Übersicht mit: Auftragsdatum, VSNR, Proband, Status
-4. Benutzer kann Aufträge nach verschiedenen Kriterien sortieren
-5. Benutzer kann Aufträge nach Status filtern
-6. Benutzer kann über Suchfunktion spezifische Aufträge finden
-7. System aktualisiert Daten in Echtzeit
-
-**Erweiterte Funktionen:**
-- **E1:** Auftragsstatus ändern → "in Bearbeitung", "abgeschlossen"
-- **E2:** Auftragsdetails aufrufen → Detailansicht öffnen
-- **E3:** Stornierte Aufträge → Deutliche Kennzeichnung mit Sperrung
-- **E4:** Mahnungen → Visuelle Hervorhebung mit Mahnstufe
-
-**Alternativszenarien:**
-- **A1:** Keine Aufträge vorhanden → Informative Meldung mit Hilfetext
-- **A2:** System-Timeout → Automatisches Neuladen der Daten
-- **A3:** Netzwerkfehler → Offline-Indikator mit Retry-Option
-
-**Nachbedingungen:**
-- Benutzer hat vollständigen Überblick über seine Aufträge
-- Aktuelle Daten sind geladen und angezeigt
-- Filterungen und Sortierungen bleiben aktiv
-
-**Qualitätsanforderungen:**
-- Schnelle Ladezeiten auch bei vielen Aufträgen
-- Sofortige Suchergebnisse
-- Aktuelle Daten ohne manuelles Neuladen
-
-**Quell-Stories:** US-AM.01, US-AM.04, US-AM.06, US-AM.08  
-**Priorität:** Hoch - Kernfunktionalität für täglichen Betrieb  
+| **Attribut** | **Beschreibung** |
+|--------------|------------------|
+| **ID** | UC-04 |
+| **Name** | Auftragsübersicht anzeigen und verwalten |
+| **Akteur** | **Primär:** Registrierter Gutachter/Gutachtermitarbeiter |
+| **Bemerkung** | Qualitätsanforderungen: Schnelle Ladezeiten auch bei vielen Aufträgen, sofortige Suchergebnisse, aktuelle Daten ohne manuelles Neuladen |
+| **Auslöser** | Benutzer möchte seine Aufträge einsehen und verwalten |
+| **Hauptablauf** | 1. Benutzer navigiert zur Auftragsübersicht<br>2. System lädt alle dem Benutzer zugewiesenen Aufträge<br>3. System zeigt tabellarische Übersicht mit: Auftragsdatum, VSNR, Proband, Status<br>4. Benutzer kann Aufträge nach verschiedenen Kriterien sortieren<br>5. Benutzer kann Aufträge nach Status filtern<br>6. Benutzer kann über Suchfunktion spezifische Aufträge finden<br>7. System aktualisiert Daten in Echtzeit |
+| **Ausnahmeablauf** | **A1:** Keine Aufträge vorhanden → Informative Meldung mit Hilfetext<br>**A2:** System-Timeout → Automatisches Neuladen der Daten<br>**A3:** Netzwerkfehler → Offline-Indikator mit Retry-Option |
+| **Anfangsbedingung** | - Benutzer ist authentifiziert und autorisiert<br>- Aufträge sind dem Benutzer zugewiesen<br>- System ist verfügbar |
+| **Abschlussbedingung** | - Benutzer hat vollständigen Überblick über seine Aufträge<br>- Aktuelle Daten sind geladen und angezeigt<br>- Filterungen und Sortierungen bleiben aktiv |
+| **Erweiterte Verwaltung** | **E1:** Auftragsstatus ändern → "in Bearbeitung", "abgeschlossen"<br>**E2:** Auftragsdetails aufrufen → Detailansicht öffnen<br>**E3:** Stornierte Aufträge → Deutliche Kennzeichnung mit Sperrung<br>**E4:** Mahnungen → Visuelle Hervorhebung mit Mahnstufe |
+| **zugehörige User Stories** | US-AM.01, US-AM.04, US-AM.06, US-AM.08 |
+| **Priorität** | Hoch - Kernfunktionalität für täglichen Betrieb |  
 
 ---
 
