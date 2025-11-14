@@ -69,39 +69,91 @@
 
 ### UC-04: Auftragsübersicht und -verwaltung
 
-| **Attribut** | **Beschreibung** |
-|--------------|------------------|
-| **ID** | UC-04 |
+| ID | UC-04 |
+| :---- | :---- |
 | **Name** | Auftragsübersicht anzeigen und verwalten |
-| **Akteur** | **Primär:** Registrierter Gutachter/Gutachtermitarbeiter |
-| **Bemerkung** | Qualitätsanforderungen: Schnelle Ladezeiten auch bei vielen Aufträgen, sofortige Suchergebnisse, aktuelle Daten ohne manuelles Neuladen |
-| **Auslöser** | Benutzer möchte seine Aufträge einsehen und verwalten |
-| **Hauptablauf** | 1. Benutzer navigiert zur Auftragsübersicht<br>2. System lädt alle dem Benutzer zugewiesenen Aufträge<br>3. System zeigt tabellarische Übersicht mit: Auftragsdatum, VSNR, Proband, Status<br>4. Benutzer kann Aufträge nach verschiedenen Kriterien sortieren<br>5. Benutzer kann Aufträge nach Status filtern<br>6. Benutzer kann über Suchfunktion spezifische Aufträge finden<br>7. System aktualisiert Daten in Echtzeit |
-| **Ausnahmeablauf** | **A1:** Keine Aufträge vorhanden → Informative Meldung mit Hilfetext<br>**A2:** System-Timeout → Automatisches Neuladen der Daten<br>**A3:** Netzwerkfehler → Offline-Indikator mit Retry-Option |
-| **Anfangsbedingung** | - Benutzer ist authentifiziert und autorisiert<br>- Aufträge sind dem Benutzer zugewiesen<br>- System ist verfügbar |
-| **Abschlussbedingung** | - Benutzer hat vollständigen Überblick über seine Aufträge<br>- Aktuelle Daten sind geladen und angezeigt<br>- Filterungen und Sortierungen bleiben aktiv |
-| **Erweiterte Verwaltung** | **E1:** Auftragsstatus ändern → "in Bearbeitung", "abgeschlossen"<br>**E2:** Auftragsdetails aufrufen → Detailansicht öffnen<br>**E3:** Stornierte Aufträge → Deutliche Kennzeichnung mit Sperrung<br>**E4:** Mahnungen → Visuelle Hervorhebung mit Mahnstufe |
+| **Akteur** | primärer Akteur: Gutachter/Gutachtermitarbeiter sekundär: rvGutachten-System |
+| **Bemerkung** | keine |
+| **Auslöser** | Gutachter/Gutachtermitarbeiter möchte zugewiesene Aufträge einsehen und verwalten |
+| **Hauptablauf** | Gutachter/Gutachtermitarbeiter navigiert zur Auftragsübersicht
+System lädt alle dem Gutachter zugewiesenen Aufträge 
+System zeigt tabellarische Übersicht mit: Auftragsdatum, VSNR, Proband, Status 
+Gutachter/Gutachtermitarbeiter kann Aufträge nach verschiedenen Kriterien sortieren 
+Gutachter/Gutachtermitarbeiter kann Aufträge nach Status filtern 
+Gutachter/Gutachtermitarbeiter kann über Suchfunktion spezifische Aufträge 
+finden System aktualisiert Daten in Echtzeit |
+| **Ausnahmeablauf** | **A1:** Keine Aufträge vorhanden → Informative Meldung mit Hilfetext 
+**A2:** System-Timeout → Automatisches Neuladen der Daten 
+**A3:** Netzwerkfehler → Offline-Indikator mit Retry-Option 
+**A4**: Suche liefert keine Treffer → Hinweistext, dass es keine Treffer gibt 
+**A5**: Statusfilterung liefert keine Treffer → Hinweistext, dass es keine Treffer gibt |
+| **Anfangsbedingung** | Gutachter/Gutachtermitarbeiter ist registriert 
+Gutachter/Gutachtermitarbeiter ist authentifiziert 
+Gutachter/Gutachtermitarbeiter ist autorisiert 
+Aufträge sind dem Gutachter zugewiesen System ist verfügbar |
+| **Abschlussbedingung** | Gutachter/Gutachtermitarbeiter hat vollständigen Überblick über seine Aufträge 
+Aktuelle Daten sind geladen und angezeigt Filterungen und Sortierungen bleiben aktiv |
+| **Performance-Anforderungen** | Ladezeit \< 3 Sekunden für bis zu 500 Aufträge 
+Such-Response \< 1 Sekunde Auto-Refresh alle 5 Minuten |
 | **zugehörige User Stories** | US-AM.01, US-AM.04, US-AM.06, US-AM.08 |
-| **Priorität** | Hoch - Kernfunktionalität für täglichen Betrieb |  
+| **Priorität** | Hoch \- Kernfunktionalität für täglichen Betrieb |
 
----
+## **UC-05: Auftragsdetails und Dokumenteneinsicht** {#uc-05:-auftragsdetails-und-dokumenteneinsicht}
 
-### UC-05: Auftragsdetails und Dokumenteneinsicht
-
-| **Attribut** | **Beschreibung** |
-|--------------|------------------|
-| **ID** | UC-05 |
+| ID | UC-05 |
+| :---- | :---- |
 | **Name** | Auftragsdetails einsehen und Dokumente verwalten |
-| **Akteur** | **Primär:** Registrierter Gutachter/Gutachtermitarbeiter |
-| **Bemerkung** | Sicherheitsanforderungen: Nur berechtigte Nutzer haben Dokumentenzugriff, alle Dokumentenzugriffe werden protokolliert, sensible Dokumente sind gekennzeichnet, Schutz vor unbefugtem Download |
-| **Auslöser** | Benutzer möchte Details zu einem spezifischen Auftrag einsehen |
-| **Hauptablauf** | 1. Benutzer klickt auf Auftrag in der Übersicht<br>2. System öffnet Auftragsdetail-Ansicht<br>3. System zeigt erweiterte Auftragsinformationen (VSNR, Proband, Geburtsdatum, etc.)<br>4. System lädt alle zugeordneten Dokumente<br>5. Benutzer kann Dokumente einzeln öffnen und einsehen<br>6. Benutzer kann druckbare Dokumente ausdrucken<br>7. Benutzer kann Notizen zu einzelnen Dokumenten erstellen |
-| **Ausnahmeablauf** | **A1:** Dokument nicht verfügbar → Fehlermeldung mit Kontaktmöglichkeit<br>**A2:** Auftrag storniert → Eingeschränkte Funktionalität, keine neuen Aktionen<br>**A3:** Berechtigung entzogen → Weiterleitung zur Übersicht mit Hinweis |
-| **Anfangsbedingung** | - Benutzer ist authentifiziert<br>- Auftrag ist dem Benutzer zugewiesen<br>- Auftrag ist nicht gelöscht |
-| **Abschlussbedingung** | - Benutzer hat vollständige Auftragsinformationen erhalten<br>- Alle relevanten Dokumente sind zugänglich<br>- Navigation zurück zur Übersicht ist möglich |
-| **Erweiterte Verwaltung** | **D1:** PDF-Viewer für direkte Anzeige<br>**D2:** Downloadfunktion für lokale Speicherung<br>**D3:** Druckfunktion mit Formaterhaltung<br>**D4:** Notizen pro Dokument (US-NF.01) |
+| **Akteur** | primärer Akteur: Gutachter/Gutachtermitarbeiter sekundär: rvGutachten-System   |
+| **Bemerkung** | keine |
+| **Auslöser** | Gutachter/Gutachtermitarbeiter möchte Details zu einem spezifischen Auftrag einsehen |
+| **Hauptablauf** | Gutachter/Gutachtermitarbeiter klickt auf Auftrag in der Übersicht 
+System öffnet Auftragsdetail-Ansicht System zeigt erweiterte Auftragsinformationen (VSNR, Proband, Geburtsdatum, etc.) 
+System lädt alle zugeordneten Dokumente 
+Gutachter/Gutachtermitarbeiter kann über Suchfunktion spezifische Dokumente finden 
+System aktualisiert Daten in Echtzeit 
+Gutachter/Gutachtermitarbeiter kann den Status des Auftrags ändern (siehe UC-12) 
+Gutachter/Gutachtermitarbeiter kann Dokumente einzeln öffnen und einsehen 
+Gutachter/Gutachtermitarbeiter kann druckbare Dokumente ausdrucken 
+Gutachter/Gutachtermitarbeiter kann Notizen zu einzelnen Dokumenten erstellen |
+| **Ausnahmeablauf** | **A1:** Dokument nicht verfügbar → Fehlermeldung mit Kontaktmöglichkeit 
+**A2:** Auftrag storniert → Eingeschränkte Funktionalität, keine neuen Aktionen 
+**A3:** Berechtigung entzogen → Weiterleitung zur Übersicht mit Hinweis 
+**A4**: Suche liefert keine Treffer → Hinweistext, dass es keine Treffer gibt |
+| **Anfangsbedingung** | Gutachter/Gutachtermitarbeiter ist registriert 
+Gutachter/Gutachtermitarbeiter ist authentifiziert 
+Gutachter/Gutachtermitarbeiter ist autorisiert 
+Auftrag ist dem Gutachter zugewiesen 
+Auftrag ist nicht gelöscht Auftrag ist nicht storniert |
+| **Abschlussbedingung** | Benutzer hat vollständige Auftragsinformationen erhalten 
+Alle dem Auftrag zugeordneten Dokumente sind zugänglich 
+Notizen zu einem Dokument sind gespeichert 
+Navigation zurück zur Übersicht ist möglich |
+| **Systemanforderungen** | **D1:** PDF-Viewer für direkte Anzeige 
+**D2:** Druckfunktion mit Formaterhaltung 
+**D3:** Notizen pro Dokument (US-NF.01) |
 | **zugehörige User Stories** | US-AM.02, US-AM.03, US-AM.05, US-NF.01 |
-| **Priorität** | Hoch - Essentiell für Auftragsbearbeitung |  
+| **Priorität** | Hoch \- Essentiell für Auftragsbearbeitung |
+
+## **UC-13: Auftragsstornierung** {#uc-13:-auftragsstornierung}
+
+| ID | UC-13 |
+| :---- | :---- |
+| **Name** | Auftragsstornierung |
+| **Akteur** | 8023-Mitarbeiter (in rvSMD)
+sekundär: rvSMD-System, rvGutachten-System   |
+| **Bemerkung** |  keine |
+| **Auslöser** | 8023-Mitarbeiter storniert Gutachtenauftrag wird in rvSMD |
+| **Hauptablauf** | 1\. rvSMD stößt Synchronisation nach rvGutachten an
+2\. rvGutachten übernimmt Statusänderung automatisch und setzt den Auftragsstatus auf "storniert"
+3\. rvGutachten löscht Auftragsdokumente (includes UC-09)
+4\. System informiert relevante Parteien (z.B. per E-Mail) (includes UC-06) |
+| **Ausnahmeablauf** | A1: Ungültiger Statusübergang in rvSMD → Fehlermeldung
+A2: Synchronisationsfehler → Logging, Support-Benachrichtigung |
+| **Anfangsbedingung** | Auftrag ist in rvSMD vorhanden und es erfolgte die digitale Beauftragung über rvGutachten Akteur ist berechtigt (in rvSMD) den Auftrag zu stornieren |
+| **Abschlussbedingung** | Status des Auftrags ist in rvGutachten aktualisiert und hat den Status "Storniert" Audit-Log der Statusänderung ist erstellt |
+| **zugehörige User Stories** | US-AM.06, US-BN.02 |
+| **Priorität** | Mittel \- Wichtig für Auftragsverwaltung |
+
 
 ---
 
