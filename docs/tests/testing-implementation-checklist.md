@@ -3,6 +3,9 @@
 **Purpose:** Practical step-by-step implementation guide for the development team  
 **Timeline:** 6 days  
 **Status:** Ready for Execution  
+**Related Documents:** 
+- [Fachliche Abnahmetests MVP](./fachliche-abnahmetests-mvp.md) - Business acceptance test specifications
+- [Comprehensive Testing Strategy](./comprehensive-testing-strategy.md) - Overall testing approach  
 
 ## 📋 Phase 1: Backend Testing Foundation (Days 1-3)
 
@@ -173,16 +176,21 @@ npx playwright install
 ```
 
 **Files to Create:**
-- [ ] `auth-regression.spec.ts` - Login/logout flows
-- [ ] `user-management-crud.spec.ts` - Complete user management workflow
-- [ ] `bulk-operations.spec.ts` - Bulk import/export scenarios
-- [ ] `search-and-filter.spec.ts` - Advanced search functionality
+- [ ] `auth-regression.spec.ts` - Login/logout flows (Maps to: TC-BUC02.*)
+- [ ] `user-management-crud.spec.ts` - Complete user management workflow (Maps to: TC-BUC01.*, TC-BUC03.*)
+- [ ] `bulk-operations.spec.ts` - Bulk import/export scenarios (Maps to: TC-BUC04.*)
+- [ ] `search-and-filter.spec.ts` - Advanced search functionality (Maps to: TC-BUC04.4)
+- [ ] `assignment-workflow.spec.ts` - Complete assignment lifecycle (Maps to: TC-E2E03.1)
+- [ ] `document-viewer.spec.ts` - PDF document viewing with BUC-10 cache integration (Maps to: TC-BUC05.2, TC-BUC05.7, TC-BUC05.8)
+- [ ] `cancellation-workflow.spec.ts` - Assignment cancellation process (Maps to: TC-BUC13.*)
+- [ ] `onboarding-e2e.spec.ts` - Complete onboarding workflow (Maps to: TC-E2E01.1)
 
 **Implementation Steps:**
 - [ ] Implement Page Object Model pattern
 - [ ] Create reusable test utilities
 - [ ] Test critical user journeys end-to-end
 - [ ] Verify cross-browser compatibility
+- [ ] Validate against acceptance criteria in `fachliche-abnahmetests-mvp.md`
 
 ## 📋 Phase 3: Integration and Validation (Day 6)
 
@@ -328,12 +336,54 @@ npx playwright show-report
 - [Comprehensive Testing Strategy](./comprehensive-testing-strategy.md)
 - [Backend Testing Patterns](./testing-patterns-backend.md)
 - [Frontend Testing Guide](./testing-patterns-frontend.md)
+- [Fachliche Abnahmetests MVP](./fachliche-abnahmetests-mvp.md) - **Business acceptance criteria**
 
 ### Team Contacts
 - **Testing Lead:** Development Team Lead
 - **CI/CD Support:** DevOps Team  
 - **Architecture Questions:** System Architect
 - **Product Questions:** Product Owner (Sarah)
+
+---
+
+## 🔗 Mapping to Business Acceptance Tests
+
+This technical implementation checklist supports the functional acceptance tests defined in `fachliche-abnahmetests-mvp.md`:
+
+### Sprint 1 - Critical Use Cases
+- **BUC-01 (Gutachter Onboarding):** Backend authentication tests (Task 2.1), E2E onboarding workflow (Task 5.2)
+- **BUC-02 (System Authentication):** Unit tests for auth service (Task 4.1), Integration tests (Task 2.1), E2E auth flows (Task 5.2)
+- **BUC-03 (DRV Staff Access):** Role-based authorization tests (Task 2.3), Admin functionality tests (Task 2.1)
+
+### Sprint 2 - High Priority Use Cases
+- **BUC-04 (Assignment Overview):** Search service tests (Task 1.3), API integration tests (Task 2.1), E2E workflows (Task 5.2)
+- **BUC-05 (Assignment Details & Documents):** Document viewing integration with BUC-10 cache, PDF performance tests, E2E document viewer (Task 5.2)
+- **BUC-10 (Automatic Document Provisioning):** PDF caching tests, rvPUR integration tests, performance tests for large documents (Task 2.1, Task 5.2)
+- **BUC-12a (Gutachter Status Changes):** Status transition tests, rvSMD synchronization tests, audit logging (Task 2.1, Task 5.2)
+- **BUC-13 (Assignment Cancellation):** Status change integration tests (Task 2.1), E2E cancellation workflow (Task 5.2)
+
+### Sprint 3 - Medium Priority Use Cases
+- **BUC-06 (Email Notifications):** Notification service tests, Email template validation
+- **BUC-09 (DSGVO Data Retention):** Data lifecycle tests, Deletion verification tests
+- **BUC-11 (Gutachter Status Management):** Status transition tests by DRV staff, rvSMD-to-rvGutachten synchronization, active assignment handling (Task 2.1)
+
+### End-to-End Integration Tests
+- **E2E-01:** Complete onboarding workflow → `onboarding-e2e.spec.ts`
+- **E2E-03:** Assignment workflow → `assignment-workflow.spec.ts`
+- **E2E-04:** DSGVO compliance lifecycle → Data retention integration tests
+
+### Acceptance Criteria Validation
+
+All E2E tests in Task 5.2 must validate against the acceptance criteria defined in:
+- Part I: Use Case-specific test cases (TC-BUC01 through TC-BUC13, excluding BUC-12b)
+- Part II: End-to-End integration tests (TC-E2E01 through TC-E2E05)
+
+**Definition of Done:** E2E tests pass AND corresponding acceptance test cases in `fachliche-abnahmetests-mvp.md` are validated.
+
+**Test Coverage Status:**
+- ✅ All 13 use cases have acceptance tests defined
+- ✅ 85+ test cases covering positive, negative, edge cases, security, and performance
+- ✅ Complete E2E workflows for critical business processes
 
 ---
 

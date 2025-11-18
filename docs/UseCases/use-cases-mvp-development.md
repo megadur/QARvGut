@@ -1,18 +1,22 @@
 # QARvGut MVP - Business Use Cases
 
-**Dokument Version:** 2.0  
+**Dokument Version:** 2.1  
 **Projekt:** QARvGut Enhanced User Management  
 **Typ:** Business Use Case Spezifikation  
 **Erstellt:** 29. September 2025  
-**Aktualisiert:** 13. November 2025  
-**Product Owner:** Sarah  
+**Aktualisiert:** 18. November 2025  
+**Product Owner:** Sarah
+
+**Änderungshistorie v2.1:**
+- 🔄 Umbenennung: UC- → BUC- (Business Use Case) für alle Use Case IDs
+- ✅ Entfernt: BUC-12b (konsolidiert in BUC-13)  
 
 **Hinweis:** Dieses Dokument beschreibt Geschäftsprozesse aus Anwendersicht. Technische Implementierungsdetails finden sich in separaten System Design Dokumenten.  
-### UC-01: Gutachter-Onboarding-Prozess
+### BUC-01: Gutachter-Onboarding-Prozess
 
 | **Attribut** | **Beschreibung** |
 |--------------|------------------|
-| **ID** | UC-01 |
+| **ID** | BUC-01 |
 | **Name** | Gutachter-Registrierung und -Aktivierung |
 | **Akteur** | **Primär:** Neuer Gutachter<br>**Sekundär:** DRV-Mitarbeiter, eLogin (Identitätsverwaltung), rvSMD (Stammdatenverwaltung) |
 | **Bemerkung** | Geschäftsregel: Nur Gutachter mit gültiger Zulassung können registriert werden. Freischaltung erfordert DRV-Mitarbeiter-Genehmigung. E-Mail-Adresse muss eindeutig sein. |
@@ -20,18 +24,18 @@
 | **Hauptablauf** | 1. Gutachter ruft Registrierungsseite auf<br>2. Gutachter füllt Registrierungsformular aus (Name, E-Mail, EFN)<br>3. System validiert Eingaben gegen eLogin/rvSMD<br>4. System erstellt Benutzer-Account mit Status "pending"<br>5. System benachrichtigt DRV-Mitarbeiter über neue Registrierung<br>6. DRV-Mitarbeiter prüft Gutachter-Berechtigung in internen Systemen<br>7. DRV-Mitarbeiter genehmigt Registrierung im System<br>8. System generiert und sendet Aktivierungscode per E-Mail<br>9. Gutachter gibt Aktivierungscode ein<br>10. System aktiviert Account und gewährt vollen Zugang |
 | **Ausnahmeablauf** | **A1:** Ungültige E-Mail → Fehlermeldung, Eingabe wiederholen<br>**A2:** Gutachter bereits registriert → Hinweis auf bestehenden Account<br>**A3:** eLogin/rvSMD nicht erreichbar → Registrierung temporär gesperrt<br>**A4:** DRV-Mitarbeiter lehnt ab → Account wird deaktiviert, Gutachter informiert<br>**A5:** Aktivierungscode falsch → Erneute Eingabe erlauben (3 Versuche) |
 | **Anfangsbedingung** | - Gutachter hat gültige Zulassung für Begutachtung<br>- eLogin-System ist verfügbar<br>- rvSMD-System ist verfügbar<br>- DRV-Mitarbeiter für Freischaltung verfügbar |
-| **Abschlussbedingung** | - Gutachter-Account ist aktiv und einsatzbereit<br>- Gutachter kann sich anmelden und Aufträge einsehen<br>- Für jeden Auftrag sind alle relevanten Dokumente gemäß UC-10 automatisch im System verfügbar<br>- Registrierungsvorgang ist dokumentiert |
+| **Abschlussbedingung** | - Gutachter-Account ist aktiv und einsatzbereit<br>- Gutachter kann sich anmelden und Aufträge einsehen<br>- Für jeden Auftrag sind alle relevanten Dokumente gemäß BUC-10 automatisch im System verfügbar<br>- Registrierungsvorgang ist dokumentiert |
 | **Erweiterte Verwaltung** | - |
 | **zugehörige User Stories** | US-RL.01, US-RL.04, US-RL.05 |
 | **Priorität** | Kritisch - Blocker für alle anderen Features |  
 
 ---
 
-### UC-02: System-Authentifizierung
+### BUC-02: System-Authentifizierung
 
 | **Attribut** | **Beschreibung** |
 |--------------|------------------|
-| **ID** | UC-02 |
+| **ID** | BUC-02 |
 | **Name** | Benutzer-Anmeldung am System |
 | **Akteur** | **Primär:** Registrierter Benutzer (Gutachter/Mitarbeiter) |
 | **Bemerkung** | Sicherheitsanforderungen: Sichere Passwortverwaltung, Schutz vor unbefugten Zugriffsversuchen, sichere Datenübertragung, zeitlich begrenzte Anmeldung<br>**Status:** ⚠️ In Prüfung - Signaturkarte wird evaluiert |
@@ -46,11 +50,11 @@
 
 ---
 
-### UC-03: DRV-Mitarbeiter-Zugriffsverwaltung
+### BUC-03: DRV-Mitarbeiter-Zugriffsverwaltung
 
 | **Attribut** | **Beschreibung** |
 |--------------|------------------|
-| **ID** | UC-03 |
+| **ID** | BUC-03 |
 | **Name** | DRV-Mitarbeiter-Registrierung und Support-Zugang |
 | **Akteur** | **Primär:** DRV-Mitarbeiter<br>**Sekundär:** rvGutachtenAdmin, eLogin (Identitätsverwaltung) |
 | **Bemerkung** | - |
@@ -67,9 +71,9 @@
 
 ## 🟡 Hohe Priorität Use Cases (Sprint 2)
 
-### UC-04: Auftragsübersicht und -verwaltung
+### BUC-04: Auftragsübersicht und -verwaltung
 
-| ID | UC-04 |
+| ID | BUC-04 |
 | :---- | :---- |
 | **Name** | Auftragsübersicht anzeigen und verwalten |
 | **Akteur** | primärer Akteur: Gutachter/Gutachtermitarbeiter sekundär: rvGutachten-System |
@@ -98,9 +102,9 @@ Such-Response \< 1 Sekunde Auto-Refresh alle 5 Minuten |
 | **zugehörige User Stories** | US-AM.01, US-AM.04, US-AM.06, US-AM.08 |
 | **Priorität** | Hoch \- Kernfunktionalität für täglichen Betrieb |
 
-## **UC-05: Auftragsdetails und Dokumenteneinsicht** {#uc-05:-auftragsdetails-und-dokumenteneinsicht}
+## **BUC-05: Auftragsdetails und Dokumenteneinsicht** {#uc-05:-auftragsdetails-und-dokumenteneinsicht}
 
-| ID | UC-05 |
+| ID | BUC-05 |
 | :---- | :---- |
 | **Name** | Auftragsdetails einsehen und Dokumente verwalten |
 | **Akteur** | primärer Akteur: Gutachter/Gutachtermitarbeiter sekundär: rvGutachten-System   |
@@ -134,9 +138,9 @@ Navigation zurück zur Übersicht ist möglich |
 | **zugehörige User Stories** | US-AM.02, US-AM.03, US-AM.05, US-NF.01 |
 | **Priorität** | Hoch \- Essentiell für Auftragsbearbeitung |
 
-## **UC-13: Auftragsstornierung** {#uc-13:-auftragsstornierung}
+## **BUC-13: Auftragsstornierung** {#uc-13:-auftragsstornierung}
 
-| ID | UC-13 |
+| ID | BUC-13 |
 | :---- | :---- |
 | **Name** | Auftragsstornierung |
 | **Akteur** | 8023-Mitarbeiter (in rvSMD)
@@ -159,11 +163,11 @@ A2: Synchronisationsfehler → Logging, Support-Benachrichtigung |
 
 ## 🔵 Mittlere Priorität Use Cases (Sprint 3)
 
-### UC-06: E-Mail-Benachrichtigungssystem
+### BUC-06: E-Mail-Benachrichtigungssystem
 
 | **Attribut** | **Beschreibung** |
 |--------------|------------------|
-| **ID** | UC-06 |
+| **ID** | BUC-06 |
 | **Name** | Automatische E-Mail-Benachrichtigungen verwalten |
 | **Akteur** | **Primär:** System (automatisch), Konfiguration durch DRV-Mitarbeiter<br>**Sekundär:** Gutachter/Gutachtermitarbeiter |
 | **Bemerkung** | E-Mails müssen zuverlässig zugestellt werden; Personalisierte Nachrichten mit relevanten Fallinformationen; Wiederholungsversuche bei Zustellproblemen; DSGVO-konforme E-Mail-Verarbeitung |
@@ -178,11 +182,11 @@ A2: Synchronisationsfehler → Logging, Support-Benachrichtigung |
 
 ---
 
-### UC-09: Datenaufbewahrung und Löschung (DSGVO)
+### BUC-09: Datenaufbewahrung und Löschung (DSGVO)
 
 | **Attribut** | **Beschreibung** |
 |--------------|------------------|
-| **ID** | UC-09 |
+| **ID** | BUC-09 |
 | **Name** | Automatische Datenaufbewahrung und -löschung |
 | **Akteur** | **Primär:** System (automatisch)<br>**Sekundär:** DRV-Mitarbeiter (Konfiguration) |
 | **Bemerkung** | Sichere, nicht-wiederherstellbare Löschung; Verschlüsselte Archivierung bei Aufbewahrungspflicht; Zwei-Faktor-Bestätigung für manuelle Löschvorgänge; Regelmäßige Compliance-Audits |
@@ -199,11 +203,11 @@ A2: Synchronisationsfehler → Logging, Support-Benachrichtigung |
 
 ## 🔴 Niedrige Priorität Use Cases (Sprint 3+)
 
-### UC-07: Support-Dashboard und Überwachung
+### BUC-07: Support-Dashboard und Überwachung
 
 | **Attribut** | **Beschreibung** |
 |--------------|------------------|
-| **ID** | UC-07 |
+| **ID** | BUC-07 |
 | **Name** | DRV-Support Dashboard und Systemüberwachung |
 | **Akteur** | **Primär:** DRV-Mitarbeiter (Support-Rolle) |
 | **Bemerkung** | Alle Support-Aktionen sind auditiert |
@@ -221,11 +225,11 @@ A2: Synchronisationsfehler → Logging, Support-Benachrichtigung |
 
 ---
 
-### UC-08: Erweiterte Gutachtermitarbeiter-Verwaltung
+### BUC-08: Erweiterte Gutachtermitarbeiter-Verwaltung
 
 | **Attribut** | **Beschreibung** |
 |--------------|------------------|
-| **ID** | UC-08 |
+| **ID** | BUC-08 |
 | **Name** | Gutachtermitarbeiter-Registrierung und -Verwaltung |
 | **Akteur** | **Primär:** Gutachter<br>**Sekundär:** Gutachtermitarbeiter, DRV-Mitarbeiter |
 | **Bemerkung** | Erweiterte Funktionalität für größere Praxen; Alle Aktivitäten sind dem verantwortlichen Gutachter zugeordnet |
@@ -240,11 +244,11 @@ A2: Synchronisationsfehler → Logging, Support-Benachrichtigung |
 
 ---
 
-### UC-10: Automatische Dokumentenbereitstellung (rvPUR → rvGutachten)
+### BUC-10: Automatische Dokumentenbereitstellung (rvPUR → rvGutachten)
 
 | **Attribut** | **Beschreibung** |
 |--------------|------------------|
-| **ID** | UC-10 |
+| **ID** | BUC-10 |
 | **Name** | Automatische Dokumentenbereitstellung bei neuem Auftrag |
 | **Akteur** | **Primär:** Systemautomatik<br>**Sekundär:** Gutachter, rvSMD (Auftragsverwaltung), rvPUR (Dokumentenarchiv) |
 | **Bemerkung** | Geschäftswert: Gutachter haben sofortigen Zugriff auf alle Unterlagen; Keine Wartezeiten beim Dokumentenabruf; Arbeiten ist auch bei temporären Archivstörungen möglich; Effiziente Fallbearbeitung |
@@ -260,11 +264,11 @@ A2: Synchronisationsfehler → Logging, Support-Benachrichtigung |
 
 ---
 
-### UC-11: Statusänderungen Gutachter
+### BUC-11: Statusänderungen Gutachter
 
 | **Attribut** | **Beschreibung** |
 |--------------|------------------|
-| **ID** | UC-11 |
+| **ID** | BUC-11 |
 | **Name** | Statusänderungen Gutachter |
 | **Akteur** | **Primär:** 8023-Mitarbeiter (in rvSMD)<br>**Sekundär:** rvSMD-System, rvGutachten-System |
 | **Bemerkung** | - |
@@ -279,11 +283,11 @@ A2: Synchronisationsfehler → Logging, Support-Benachrichtigung |
 
 ---
 
-### UC-12a: Gutachter ändert Auftragsstatus
+### BUC-12a: Gutachter ändert Auftragsstatus
 
 | **Attribut** | **Beschreibung** |
 |--------------|------------------|
-| **ID** | UC-12a |
+| **ID** | BUC-12a |
 | **Name** | Gutachter ändert Auftragsstatus in rvGutachten |
 | **Akteur** | **Primär:** Gutachter<br>**Sekundär:** rvGutachten-System, rvSMD-System |
 | **Bemerkung** | - |
@@ -298,22 +302,7 @@ A2: Synchronisationsfehler → Logging, Support-Benachrichtigung |
 
 ---
 
-### UC-12b: DRV-Mitarbeiter ändert Auftragsstatus
-
-| **Attribut** | **Beschreibung** |
-|--------------|------------------|
-| **ID** | UC-12b |
-| **Name** | DRV-Mitarbeiter ändert Auftragsstatus in rvSMD |
-| **Akteur** | **Primär:** 8023-Mitarbeiter<br>**Sekundär:** rvSMD-System, rvGutachten-System |
-| **Bemerkung** | - |
-| **Auslöser** | Ein 8023-Mitarbeiter ändert den Status eines Auftrags in rvSMD (z.B. bei Stornierung) |
-| **Hauptablauf** | 1. Der 8023-Mitarbeiter öffnet die Auftragsverwaltung in rvSMD<br>2. Er wählt einen Auftrag aus<br>3. Er wählt einen neuen Status (z.B. "storniert")<br>4. rvSMD prüft die Berechtigung für die Statusänderung<br>5. rvSMD setzt den neuen Status und erstellt einen Audit-Log-Eintrag<br>6. rvSMD stößt eine Synchronisation der Statusänderung nach rvGutachten an<br>7. rvGutachten übernimmt den neuen Status automatisch |
-| **Ausnahmeablauf** | **A1:** Ungültiger Statusübergang → Fehlermeldung in rvSMD<br>**A2:** Synchronisationsfehler nach rvGutachten → Logging und Benachrichtigung des Supports |
-| **Anfangsbedingung** | - Der 8023-Mitarbeiter ist in rvSMD authentifiziert<br>- Der Auftrag existiert in rvSMD |
-| **Abschlussbedingung** | - Der Status des Auftrags ist in beiden Systemen (rvSMD und rvGutachten) aktualisiert<br>- Die Statusänderung ist im Audit-Log dokumentiert |
-| **Erweiterte Verwaltung** | - |
-| **zugehörige User Stories** | US-AM.06, US-BN.02 |
-| **Priorität** | Mittel - Wichtig für die Auftrags-Verwaltung |
+**Note:** BUC-12b (DRV-Mitarbeiter ändert Auftragsstatus) has been consolidated into UC-13 (Auftragsstornierung) as they describe the same process - DRV staff initiating status changes in rvSMD that synchronize to rvGutachten. UC-13 provides the specific, most common case (cancellation) while covering the general pattern.
 
 ---
 
