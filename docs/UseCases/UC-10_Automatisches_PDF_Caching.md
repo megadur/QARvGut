@@ -35,117 +35,106 @@ sequenceDiagram
     SMD->>MQ: 01. ORDER_CREATED Event
     Note right of SMD: auftragsId, VSNR,<br/>rvPurVorgangsID
     MQ->>BG: 02. Consume Event
-    
+   
     Note over BG,ARC: PHASE 2: Metadaten-Abruf von rvPuR
 
     BG->>PUR: 03. getVorgangDokIdents(auftragsId)
     PUR-->>BG: 04. List<IOID>
-    
+   
     loop Für jedes Dokument-IOID
         BG->>PUR: 05. getDokumentMetainfo(IOID)
-        Note right of PUR: Enthält Referenzen zu<br/>Subdokumenten im ZIP
-        PUR-->>BG: 06. Metadaten mit Subdokument-Refs
-        BG->>DB: 07. INSERT Document Metadata
+        Note right of PUR: Enthält Referenzen zu<br/>Subdokumenten
+        PUR-->>BG: 06. Metadaten mit Dokument-Ref
+        BG->>BG: 07. Filter irrelevante Dokumente
+        Note right of BG: Filter-Kriterien: TBD<br/>(z.B. docKlasse, status)
+        BG->>DB: 08. INSERT Document Metadata
     end
 
-    Note over BG,ARC: PHASE 3: ZIP-Download, Extraktion & Filterung (UC-10!)
+    Note over BG,ARC: PHASE 3: Dokument-Download, Extraktion & Filterung (UC-10!)
 
     loop Für jedes Dokument-IOID
         loop Für jeden Teil (falls mehrteilig)
-            BG->>ARC: 08. getDokument(IOID, partNumber)
-            Note right of BG: Via rvPuR DokumentService<br/>ZIP-Archiv (base64+gzip)
-            ARC-->>BG: 09. ZIP Binary
-            BG->>BG: 10. Decode, Decompress & Extract ZIP
-            Note right of BG: Enthält mehrere PDFs
-        end
-        
-        BG->>BG: 11. Filter irrelevante Subdokumente
-        Note right of BG: Filter-Kriterien: TBD<br/>(z.B. docKlasse, status)
-        
-        loop Für jedes relevante Subdokument-PDF
-            BG->>DB: 12. STORE PDF (BLOB/FileSystem)
-            Note right of DB: SubdocumentId: UUID<br/>Content: byte[]<br/>Size: Calculated<br/>Hash: SHA-256
+            BG->>ARC: 09. getDokument(link aus Metadaten)
+            Note right of BG: Via rvArchiv DokumentService<br/>(base64+gzip)
+            ARC-->>BG: 10. PDF Binary            
+        end      
+       
+        loop Für jedes PDF
+            BG->>DB: 11. STORE PDF (BLOB/FileSystem)            
         end
     end
 
-    BG->>DB: 13. UPDATE Auftrag: lastSync, status
-    BG-->>MQ: 14. SYNC_COMPLETED Event
+    BG->>DB: 12. UPDATE Auftrag: lastSync, status
+    BG-->>MQ: 13. SYNC_COMPLETED Event
 
     Note over API,GUT: PHASE 4: Gutachter-Zugriff (lokales PDF)
 
-    G->>API: 14. GET /auftraege/{id}/dokumente
+    GUT->>API: 14. GET /auftraege/{id}/dokumente
     API->>DB: 15. SELECT Document Metadata
     DB-->>API: 16. List<DocumentDto>
-    API-->>G: 17. JSON Response (Metadata only)
+    API-->>GUT: 17. JSON Response (Metadata only)
 
-    G->>API: 18. GET /dokumente/{id}/content
+    GUT->>API: 18. GET /dokumente/{id}/content
     API->>DB: 19. SELECT PDF from local storage
     Note right of API: PRIMARY: Local DB/FS<br/>FALLBACK: rvArchiv
-    
+   
     alt PDF exists locally (UC-10 cached)
         DB-->>API: 20a. PDF Binary
-        API-->>G: 21a. Stream PDF (200 OK)
-        Note right of G: Fast! No rvArchiv call
+        API-->>GUT: 21a. Stream PDF (200 OK)
+        Note right of GUT: Fast! No rvArchiv call
     else PDF not found locally (fallback)
         API->>ARC: 20b. getDokument(IOID)
         ARC-->>API: 21b. PDF Binary
         API->>DB: 22b. STORE PDF for future
-        API-->>G: 23b. Stream PDF (200 OK)
-        Note right of G: Slower, rvArchiv required
+        API-->>GUT: 23b. Stream PDF (200 OK)
+        Note right of GUT: Slower, rvArchiv required
     end
 
     Note over BG,GUT: PHASE 5: Cache-Aktualisierung (bei Bedarf)
 
     opt Neue Dokumente in rvPuR
-        MQ->>BG: 26. DOCUMENT_UPDATED Event
-        BG->>PUR: 27. getDokumentMetainfo(IOID)
-        PUR-->>BG: 28. Updated Metadata
-        BG->>ARC: 29. getDokument(IOID)
-        ARC-->>BG: 30. New/Updated ZIP
-        BG->>BG: 31. Extract & Filter
-        BG->>DB: 32. UPDATE/INSERT PDFs
+        MQ->>BG: 24. DOCUMENT_UPDATED Event
+        BG->>PUR: 25. getDokumentMetainfo(IOID)
+        PUR-->>BG: 26. Updated Metadata
+        BG->>BG: 27. Filter relevante Dokumente
+        BG->>ARC: 28. getDokument(link aus Metadaten)
+        ARC-->>BG: 29. New/Updated PDF
+        BG->>DB: 30. UPDATE/INSERT PDFs
     end
 ```
 
 ---
 
-## ZIP-Archiv-Struktur & Subdokument-Filterung
+## Dokument-Filterung & Download-Links
 
-**rvArchiv Dokumentenstruktur:**
-```
-dokument_{IOID}.zip (möglicherweise mehrteilig)
-├── subdoc_001.pdf  (z.B. Ärztlicher Bericht)
-├── subdoc_002.pdf  (z.B. Röntgenbilder)
-├── subdoc_003.pdf  (z.B. Laborergebnisse - nicht relevant)
-├── subdoc_004.pdf  (z.B. Verwaltungsdokument - nicht relevant)
-└── metadata.xml
-```
+**Metadaten-Struktur:**
+Die `getDokumentMetainfo(IOID)`-Antwort von rvPuR enthält:
+- Dokumentmetadaten (docKlasse, datum, status, etc.)
+- Referenzen zu Subdokumenten mit Download-Links
+- Liste aller verfügbaren Dokumente/Teile
 
-**Mehrteilige Archive:**
-Große Dokumente können in mehrere ZIP-Teile aufgeteilt sein:
-- `dokument_{IOID}.z01`
-- `dokument_{IOID}.z02`
-- `dokument_{IOID}.zip` (letzter Teil)
-
-Der Background Worker muss alle Teile herunterladen und zusammenfügen.
+**Filterung in PHASE 2:**
+Die Filterung irrelevanter Dokumente erfolgt bereits in PHASE 2 (Schritt 07) basierend auf den Metadaten, **bevor** der Download von rvArchiv startet. Dies reduziert unnötigen Netzwerkverkehr.
 
 **Filter-Kriterien (TBD):**
-Noch zu definierende Kriterien für relevante Subdokumente:
+Noch zu definierende Kriterien für relevante Dokumente:
 - `docKlasse`: Nur bestimmte Dokumentklassen (z.B. medizinische Berichte)
 - `status`: Nur finalisierte Dokumente
 - `relevanzKennzeichen`: Explizites Flag in Metadaten
-- `dateiname`: Pattern-basierte Filterung (z.B. `*_bericht_*.pdf`)
 - `größe`: Mindest-/Maximalgröße
 
 **Beispiel-Filterlogik:**
 ```java
-private boolean isRelevantSubdocument(SubdocumentReference ref) {
+private boolean isRelevantDocument(DokumentMetainfo metainfo) {
     // TODO: Replace with actual business rules
-    return ref.getDocKlasse().equals("MEDIZINISCHER_BERICHT") 
-        && ref.getStatus().equals("FINALIZED")
-        && !ref.getFilename().contains("_verwaltung_");
+    return metainfo.getDocKlasse().equals("MEDIZINISCHER_BERICHT") 
+        && metainfo.getStatus().equals("FINALIZED")
+        && metainfo.getRelevanzKennzeichen();
 }
 ```
+
+**Mehrteilige Dokumente:**
+Große Dokumente können in mehrere Teile aufgeteilt sein. Die Metadaten enthalten Links zu allen Teilen, die nacheinander heruntergeladen und lokal gespeichert werden.
 
 ---
 
@@ -155,19 +144,20 @@ private boolean isRelevantSubdocument(SubdocumentReference ref) {
 UC-10 erfordert vollständiges PDF-Caching für Performance und Verfügbarkeit.
 
 **Entscheidung:**
-Alle relevanten PDFs werden während der initialen Synchronisation aus ZIP-Archiven extrahiert und vollständig in rvGutachten gespeichert (Database BLOB oder File System). Irrelevante Subdokumente werden gefiltert.
+Alle relevanten PDFs werden während der initialen Synchronisation vollständig in rvGutachten gespeichert (Database BLOB oder File System). Die Filterung erfolgt bereits in PHASE 2 basierend auf Metadaten, bevor der Download startet.
 
 **Vorteile:**
 - Keine Netzwerk-Roundtrips zu rvArchiv beim Dokumentenabruf
 - Verfügbar auch bei rvArchiv-Ausfall
 - Konsistente Performance (< 100ms statt 500-2000ms)
 - Reduzierte Last auf rvArchiv
-- Geringerer Speicherbedarf durch Filterung irrelevanter Subdokumente
+- Geringerer Speicherbedarf durch frühe Filterung (PHASE 2)
+- Weniger Netzwerkverkehr durch Filterung vor Download
 
 **Nachteile:**
 - Erhöhter Speicherbedarf in rvGutachten (auch nach Filterung)
-- Längere initiale Synchronisation (ZIP-Download, Extraktion, Filterung)
-- Komplexität durch mehrteilige Archive
+- Längere initiale Synchronisation bei vielen Dokumenten
+- Komplexität durch mehrteilige Dokumente
 - Datenschutz: PDFs länger vorgehalten
 - Synchronisation bei Dokumentenänderungen nötig
 - Filter-Kriterien müssen definiert und gewartet werden
@@ -203,104 +193,53 @@ public class DocumentSyncService {
         for (String ioid : ioids) {
             DokumentMetainfo metainfo = rvPurClient.getDokumentMetainfo(ioid);
             
-            // Metadaten speichern
+            // Phase 2: Filter irrelevante Dokumente (Schritt 07)
+            if (!isRelevantDocument(metainfo)) {
+                logger.info("UC-10: Skipping irrelevant document IOID {}, docKlasse: {}",
+                    ioid, metainfo.getDocKlasse());
+                continue;
+            }
+            
+            // Metadaten speichern (Schritt 08)
             Document document = documentRepository.save(Document.builder()
                 .auftragsId(auftragsId)
                 .purIOID(ioid)
                 .docKlasse(metainfo.getDocKlasse())
                 .datum(metainfo.getDatum())
-                .subdocumentRefs(metainfo.getSubdocumentReferences())
+                .documentLinks(metainfo.getDocumentLinks())
                 // ... weitere Felder
                 .build());
             
-            // Phase 3: UC-10 - ZIP-Archiv herunterladen und PDFs extrahieren
-            // Mehrteilige Archive unterstützen
-            int totalParts = metainfo.getTotalParts();
-            List<byte[]> zipParts = new ArrayList<>();
+            // Phase 3: UC-10 - PDFs direkt von rvArchiv herunterladen
+            // Mehrteilige Dokumente unterstützen (Schritt 09-10)
+            List<DocumentLink> links = metainfo.getDocumentLinks();
             
-            for (int partNumber = 1; partNumber <= totalParts; partNumber++) {
-                byte[] zipPart = rvArchivClient.getDokument(ioid, partNumber);
-                zipParts.add(zipPart);
-            }
-            
-            // ZIP zusammensetzen und extrahieren
-            byte[] completeZip = combineZipParts(zipParts);
-            Map<String, byte[]> extractedPdfs = extractPdfsFromZip(completeZip);
-            
-            // Phase 3: Subdokumente filtern und speichern
-            List<byte[]> relevantPdfs = filterRelevantSubdocuments(
-                extractedPdfs, 
-                metainfo.getSubdocumentReferences()
-            );
-            
-            for (Map.Entry<String, byte[]> pdfEntry : relevantPdfs.entrySet()) {
-                String subdocId = pdfEntry.getKey();
-                byte[] pdfBinary = pdfEntry.getValue();
+            for (DocumentLink link : links) {
+                byte[] pdfBinary = rvArchivClient.getDokument(link.getUrl());
                 
+                // Schritt 11: PDF lokal speichern
                 pdfStorageService.storePdf(StoredDocument.builder()
                     .documentId(document.getId())
-                    .subdocumentId(subdocId)
+                    .partNumber(link.getPartNumber())
                     .purIOID(ioid)
-                    .content(pdfBinary)  // Extrahierter PDF-Inhalt
+                    .content(pdfBinary)
                     .contentType("application/pdf")
                     .size((long) pdfBinary.length)
                     .hash(computeSHA256(pdfBinary))
                     .storedAt(Instant.now())
                     .build());
                 
-                logger.info("UC-10: PDF cached locally for Document {}, IOID {}, SubdocId {}, Size {} bytes",
-                    document.getId(), ioid, subdocId, pdfBinary.length);
+                logger.info("UC-10: PDF cached locally for Document {}, IOID {}, Part {}, Size {} bytes",
+                    document.getId(), ioid, link.getPartNumber(), pdfBinary.length);
             }
         }
     }
     
-    private byte[] combineZipParts(List<byte[]> parts) {
-        // Combine multi-part ZIP archive
-        int totalSize = parts.stream().mapToInt(p -> p.length).sum();
-        byte[] combined = new byte[totalSize];
-        int offset = 0;
-        for (byte[] part : parts) {
-            System.arraycopy(part, 0, combined, offset, part.length);
-            offset += part.length;
-        }
-        return combined;
-    }
-    
-    private Map<String, byte[]> extractPdfsFromZip(byte[] zipData) {
-        Map<String, byte[]> pdfs = new HashMap<>();
-        try (ZipInputStream zis = new ZipInputStream(new ByteArrayInputStream(zipData))) {
-            ZipEntry entry;
-            while ((entry = zis.getNextEntry()) != null) {
-                if (!entry.isDirectory() && entry.getName().toLowerCase().endsWith(".pdf")) {
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    byte[] buffer = new byte[8192];
-                    int len;
-                    while ((len = zis.read(buffer)) > 0) {
-                        baos.write(buffer, 0, len);
-                    }
-                    pdfs.put(entry.getName(), baos.toByteArray());
-                }
-                zis.closeEntry();
-            }
-        } catch (IOException e) {
-            logger.error("UC-10: Error extracting PDFs from ZIP", e);
-            throw new DocumentProcessingException("Failed to extract PDFs from ZIP archive", e);
-        }
-        return pdfs;
-    }
-    
-    private Map<String, byte[]> filterRelevantSubdocuments(
-            Map<String, byte[]> allPdfs, 
-            List<SubdocumentReference> references) {
+    private boolean isRelevantDocument(DokumentMetainfo metainfo) {
         // TODO: Implement filtering logic based on criteria (docKlasse, status, etc.)
-        // For now, return all PDFs that match the references
-        Map<String, byte[]> filtered = new HashMap<>();
-        for (SubdocumentReference ref : references) {
-            if (allPdfs.containsKey(ref.getFilename())) {
-                filtered.put(ref.getSubdocumentId(), allPdfs.get(ref.getFilename()));
-            }
-        }
-        return filtered;
+        return metainfo.getDocKlasse().equals("MEDIZINISCHER_BERICHT") 
+            && metainfo.getStatus().equals("FINALIZED")
+            && metainfo.getRelevanzKennzeichen();
     }
     
     private String computeSHA256(byte[] data) {
@@ -359,17 +298,14 @@ public class DocumentContentController {
         logger.warn("UC-10: PDF not in local cache, falling back to rvArchiv for Document {}", 
             documentId);
         
-        byte[] zipBinary = rvArchivClient.getDokument(document.getPurIOID());
-        Map<String, byte[]> extractedPdfs = extractPdfsFromZip(zipBinary);
-        
-        // Filter und finde relevantes Subdokument
-        // TODO: Implement proper subdocument matching logic
-        byte[] pdfBinary = extractedPdfs.values().iterator().next(); // Simplified
+        // Hole Download-Link aus Dokumentmetadaten
+        String downloadLink = document.getDocumentLinks().get(0).getUrl();
+        byte[] pdfBinary = rvArchivClient.getDokument(downloadLink);
         
         // Für zukünftige Anfragen speichern
         pdfStorageService.storePdf(StoredDocument.builder()
             .documentId(documentId)
-            .subdocumentId("default") // TODO: Get actual subdocument ID
+            .partNumber(1)
             .purIOID(document.getPurIOID())
             .content(pdfBinary)
             .contentType("application/pdf")
@@ -473,17 +409,16 @@ export class DocumentService {
 CREATE TABLE StoredDocuments (
     Id UNIQUEIDENTIFIER PRIMARY KEY,
     DocumentId UNIQUEIDENTIFIER NOT NULL,
-    SubdocumentId NVARCHAR(100) NOT NULL,
+    PartNumber INT NOT NULL DEFAULT 1,
     PurIOID NVARCHAR(50) NOT NULL,
-    Content VARBINARY(MAX) NOT NULL,  -- Extracted PDF binary from ZIP
+    Content VARBINARY(MAX) NOT NULL,  -- PDF binary
     ContentType NVARCHAR(100) NOT NULL,
     Size BIGINT NOT NULL,
     Hash NVARCHAR(64) NOT NULL,       -- SHA-256
     StoredAt DATETIME2 NOT NULL,
-    IsFiltered BIT NOT NULL DEFAULT 0, -- False = relevant, True = filtered out
     CONSTRAINT FK_StoredDocuments_Documents 
         FOREIGN KEY (DocumentId) REFERENCES Documents(Id),
-    CONSTRAINT UQ_StoredDocuments_SubdocId UNIQUE (DocumentId, SubdocumentId)
+    CONSTRAINT UQ_StoredDocuments_Part UNIQUE (DocumentId, PartNumber)
 );
 ```
 
@@ -550,17 +485,16 @@ graph TD
 
 **Zu überwachen:**
 - Anzahl gecachter PDFs pro Auftrag (nach Filterung)
-- Anzahl gefilterter Subdokumente (irrelevant)
+- Anzahl gefilterter Dokumente (irrelevant, in PHASE 2)
 - Durchschnittliche PDF-Größe
-- Durchschnittliche ZIP-Größe
 - Gesamtspeicherverbrauch
 - Cache-Hit-Rate (sollte > 95% sein)
 - Fallback-zu-rvArchiv-Rate (sollte < 5% sein)
 - Sync-Dauer pro Auftrag
-- ZIP-Extraktionsdauer
-- Fehlerrate beim ZIP-Download/Extraktion
-- Anzahl mehrteiliger Archive
-- Filter-Effizienz (% gefilterte Subdokumente)
+- Download-Dauer pro Dokument
+- Fehlerrate beim PDF-Download
+- Anzahl mehrteiliger Dokumente
+- Filter-Effizienz (% gefilterte Dokumente in PHASE 2)
 
 **Alerts:**
 - Cache-Hit-Rate < 90%
