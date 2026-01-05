@@ -1,0 +1,155 @@
+<mxfile host="app.diagrams.net" modified="2026-01-05T12:00:00.000Z" agent="5.0" etag="uml002" version="28.2.5" type="device">
+  <diagram name="UML-02 Auftrags-Verwaltung Gutachter" id="uml-uc02">
+    <mxGraphModel dx="1426" dy="743" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <mxCell id="system-boundary" value="rvGutachten System" style="shape=rect;html=1;verticalAlign=top;fontStyle=1;whiteSpace=wrap;align=center;fillColor=#f5f5f5;strokeColor=#666666;strokeWidth=2;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="250" y="80" width="700" height="550" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="uc04" value="BUC-04:&#xa;Auftragsübersicht&#xa;und -verwaltung" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="380" y="150" width="150" height="90" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="uc05" value="BUC-05:&#xa;Auftragsdetails und&#xa;Dokumenteneinsicht" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="380" y="280" width="150" height="90" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="uc10" value="BUC-10:&#xa;Automatische&#xa;Dokumentenbereitstellung" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="650" y="280" width="160" height="90" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="uc12" value="BUC-12a:&#xa;Gutachter ändert&#xa;Auftragsstatus" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="380" y="420" width="150" height="90" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="actor-ga" value="" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="80" y="260" width="40" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="actor-ga-label" value="Gutachter" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="345" width="100" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="actor-gm" value="" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="80" y="420" width="40" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="actor-gm-label" value="Gutachter-&#xa;mitarbeiter" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="505" width="100" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="system-rvsmd" value="rvSMD&#xa;(Stammdaten)" style="shape=rect;html=1;verticalAlign=top;fontStyle=0;whiteSpace=wrap;align=center;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="150" width="100" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="system-rvpur" value="rvPUR&#xa;(Dokumentarchiv)" style="shape=rect;html=1;verticalAlign=top;fontStyle=0;whiteSpace=wrap;align=center;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="295" width="100" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="assoc-ga-uc04" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" parent="1" source="actor-ga" target="uc04">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="assoc-ga-uc05" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" parent="1" source="actor-ga" target="uc05">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="assoc-ga-uc12" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" parent="1" source="actor-ga" target="uc12">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="assoc-gm-uc04" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" parent="1" source="actor-gm" target="uc04">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="assoc-gm-uc05" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" parent="1" source="actor-gm" target="uc05">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="assoc-gm-uc12" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" parent="1" source="actor-gm" target="uc12">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="include-uc05-uc04" value="include" style="endArrow=open;html=1;rounded=0;strokeWidth=1.5;strokeColor=#666666;dashed=1;dashPattern=5 5;endFill=0;" edge="1" parent="1" source="uc04" target="uc05">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="include-uc05-uc10" value="include" style="endArrow=open;html=1;rounded=0;strokeWidth=1.5;strokeColor=#666666;dashed=1;dashPattern=5 5;endFill=0;" edge="1" parent="1" source="uc05" target="uc10">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="extend-uc12-uc05" value="extend" style="endArrow=open;html=1;rounded=0;strokeWidth=1.5;strokeColor=#666666;dashed=1;dashPattern=5 5;endFill=0;" edge="1" parent="1" source="uc12" target="uc05">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="dep-uc04-rvsmd" value="lädt Daten" style="endArrow=open;html=1;rounded=0;strokeWidth=1.5;strokeColor=#9673a6;dashed=1;dashPattern=5 5;endFill=0;" edge="1" parent="1" source="uc04" target="system-rvsmd">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="dep-uc10-rvpur" value="ruft ab" style="endArrow=open;html=1;rounded=0;strokeWidth=1.5;strokeColor=#9673a6;dashed=1;dashPattern=5 5;endFill=0;" edge="1" parent="1" source="uc10" target="system-rvpur">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="dep-uc12-rvsmd" value="synchronisiert" style="endArrow=open;html=1;rounded=0;strokeWidth=1.5;strokeColor=#9673a6;dashed=1;dashPattern=5 5;endFill=0;" edge="1" parent="1" source="uc12" target="system-rvsmd">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="title" value="UML Anwendungsfall-Diagramm: Auftrags-Verwaltung (Gutachter-Perspektive)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="30" width="700" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="note-box" value="" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#fff2cc;strokeColor=#d6b656;size=15;" vertex="1" parent="1">
+          <mxGeometry x="70" y="650" width="300" height="120" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="note-title" value="Hinweise:" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="85" y="660" width="270" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="note-text" value="BUC-04, BUC-05: Hohe Priorität (Sprint 2)&#xa;BUC-10: Hoch/Mittel (Sprint 2-3)&#xa;BUC-12a: Mittel (Sprint 3)&#xa;BUC-05 nutzt BUC-10 für Dokumentanzeige&#xa;BUC-12a erweitert BUC-05 um Statusänderung" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="85" y="685" width="270" height="75" as="geometry" />
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

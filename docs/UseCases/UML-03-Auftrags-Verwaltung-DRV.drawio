@@ -1,0 +1,97 @@
+<mxfile host="app.diagrams.net" modified="2026-01-05T12:00:00.000Z" agent="5.0" etag="uml003" version="28.2.5" type="device">
+  <diagram name="UML-03 Auftrags-Verwaltung DRV" id="uml-uc03">
+    <mxGraphModel dx="1426" dy="743" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <mxCell id="system-boundary" value="rvGutachten System" style="shape=rect;html=1;verticalAlign=top;fontStyle=1;whiteSpace=wrap;align=center;fillColor=#f5f5f5;strokeColor=#666666;strokeWidth=2;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="350" y="150" width="500" height="350" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="uc11" value="BUC-11:&#xa;Statusänderungen&#xa;Gutachter" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="220" width="150" height="90" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="uc13" value="BUC-13:&#xa;Auftragsstornierung" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="360" width="150" height="90" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="actor-sm" value="" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="150" y="280" width="40" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="actor-sm-label" value="8023-Mitarbeiter&#xa;(rvSMD-Betreiber)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="365" width="100" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="system-rvsmd" value="rvSMD&#xa;(Stammdaten)" style="shape=rect;html=1;verticalAlign=top;fontStyle=0;whiteSpace=wrap;align=center;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="930" y="240" width="100" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="system-rvgut" value="rvGutachten&#xa;(Kern-System)" style="shape=rect;html=1;verticalAlign=top;fontStyle=0;whiteSpace=wrap;align=center;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="930" y="360" width="100" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="assoc-sm-uc11" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" parent="1" source="actor-sm" target="uc11">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="assoc-sm-uc13" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" parent="1" source="actor-sm" target="uc13">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="dep-uc11-rvsmd" value="ändert in" style="endArrow=open;html=1;rounded=0;strokeWidth=1.5;strokeColor=#9673a6;dashed=1;dashPattern=5 5;endFill=0;" edge="1" parent="1" source="uc11" target="system-rvsmd">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="dep-uc11-rvgut" value="synchronisiert zu" style="endArrow=open;html=1;rounded=0;strokeWidth=1.5;strokeColor=#9673a6;dashed=1;dashPattern=5 5;endFill=0;" edge="1" parent="1" source="uc11" target="system-rvgut">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="dep-uc13-rvsmd" value="initiiert in" style="endArrow=open;html=1;rounded=0;strokeWidth=1.5;strokeColor=#9673a6;dashed=1;dashPattern=5 5;endFill=0;" edge="1" parent="1" source="uc13" target="system-rvsmd">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="dep-uc13-rvgut" value="synchronisiert zu" style="endArrow=open;html=1;rounded=0;strokeWidth=1.5;strokeColor=#9673a6;dashed=1;dashPattern=5 5;endFill=0;" edge="1" parent="1" source="uc13" target="system-rvgut">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="title" value="UML Anwendungsfall-Diagramm: Auftrags-Verwaltung (DRV-Perspektive)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="80" width="600" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="note-box" value="" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#fff2cc;strokeColor=#d6b656;size=15;" vertex="1" parent="1">
+          <mxGeometry x="150" y="560" width="350" height="110" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="note-title" value="Hinweise:" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="165" y="570" width="320" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="note-text" value="Beide Use Cases: Mittel (Sprint 3)&#xa;8023-Mitarbeiter arbeitet in rvSMD&#xa;Änderungen werden automatisch zu rvGutachten synchronisiert&#xa;Bidirektionale Datensynchronisation zwischen Systemen&#xa;BUC-13 triggert BUC-09 (Datenlöschung) und BUC-06 (Benachrichtigungen)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="165" y="595" width="320" height="65" as="geometry" />
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
