@@ -1,0 +1,338 @@
+<mxfile host="app.diagrams.net" modified="2026-01-05T12:00:00.000Z" agent="5.0" etag="dataflow001" version="28.2.5" type="device">
+  <diagram name="System Integration and Data Flow" id="dataflow-001">
+    <mxGraphModel dx="1426" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Title -->
+        <mxCell id="title" value="QARvGut - Systemintegrations- und Datenflussmodell" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="20" width="1000" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- Left Column: Actors and Processes -->
+        <!-- Neuer Gutachter -->
+        <mxCell id="actor-ng" value="Neuer Gutachter" style="shape=rect;html=1;verticalAlign=middle;fontStyle=1;whiteSpace=wrap;align=center;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="50" y="100" width="120" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- BUC-01 -->
+        <mxCell id="buc01" value="BUC-01: Onboarding" style="shape=rect;html=1;verticalAlign=middle;fontStyle=1;whiteSpace=wrap;align=center;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="50" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- BUC-02 -->
+        <mxCell id="buc02" value="BUC-02: Login" style="shape=rect;html=1;verticalAlign=middle;fontStyle=1;whiteSpace=wrap;align=center;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="50" y="300" width="120" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- Gutachter -->
+        <mxCell id="actor-ga" value="Gutachter&#xa;Gutachtermitarbeiter" style="shape=rect;html=1;verticalAlign=middle;fontStyle=1;whiteSpace=wrap;align=center;fillColor=#dae8fc;strokeColor:#6c8ebf;strokeWidth=2;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="50" y="450" width="120" height="70" as="geometry" />
+        </mxCell>
+        
+        <!-- BUC-04/05 -->
+        <mxCell id="buc0405" value="BUC-04, BUC-05&#xa;Auftrags-Verwaltung" style="shape=rect;html=1;verticalAlign=middle;fontStyle=1;whiteSpace=wrap;align=center;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="50" y="570" width="120" height="70" as="geometry" />
+        </mxCell>
+        
+        <!-- BUC-10 -->
+        <mxCell id="buc10" value="BUC-10&#xa;Auto-Dokumente" style="shape=rect;html=1;verticalAlign=middle;fontStyle=1;whiteSpace=wrap;align=center;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="50" y="700" width="120" height="70" as="geometry" />
+        </mxCell>
+        
+        <!-- BUC-12a -->
+        <mxCell id="buc12a" value="BUC-12a&#xa;Status-Änderung" style="shape=rect;html=1;verticalAlign=middle;fontStyle=1;whiteSpace=wrap;align=center;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="50" y="830" width="120" height="70" as="geometry" />
+        </mxCell>
+        
+        <!-- 8023-Mitarbeiter -->
+        <mxCell id="actor-8023" value="8023-Mitarbeiter&#xa;(rvSMD)" style="shape=rect;html=1;verticalAlign=middle;fontStyle=1;whiteSpace=wrap;align=center;fillColor=#dae8fc;strokeColor:#6c8ebf;strokeWidth=2;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="50" y="960" width="120" height="70" as="geometry" />
+        </mxCell>
+        
+        <!-- BUC-11 -->
+        <mxCell id="buc11" value="BUC-11&#xa;Gutachter-Status" style="shape=rect;html=1;verticalAlign=middle;fontStyle=1;whiteSpace=wrap;align=center;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="50" y="1090" width="120" height="70" as="geometry" />
+        </mxCell>
+        
+        <!-- BUC-13 -->
+        <mxCell id="buc13" value="BUC-13&#xa;Auftragsstornierung" style="shape=rect;html=1;verticalAlign=middle;fontStyle=1;whiteSpace=wrap;align=center;fillColor=#fff2cc;strokeColor:#d6b656;strokeWidth=2;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="50" y="1220" width="120" height="70" as="geometry" />
+        </mxCell>
+        
+        <!-- DRV-Mitarbeiter -->
+        <mxCell id="actor-drv" value="DRV-Mitarbeiter" style="shape=rect;html=1;verticalAlign=middle;fontStyle=1;whiteSpace=wrap;align=center;fillColor=#dae8fc;strokeColor:#6c8ebf;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="50" y="1350" width="120" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- Center Column: Core Systems -->
+        <!-- eLogin -->
+        <mxCell id="elogin" value="eLogin&#xa;(Identitätsverwaltung)" style="shape=rect;html=1;verticalAlign=middle;fontStyle=0;whiteSpace=wrap;align=center;fillColor=#e1d5e7;strokeColor:#9673a6;strokeWidth=2;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="300" y="150" width="120" height="70" as="geometry" />
+        </mxCell>
+        
+        <!-- rvSMD -->
+        <mxCell id="rvsmd" value="rvSMD&#xa;(Stammdaten)" style="shape=rect;html=1;verticalAlign=middle;fontStyle=0;whiteSpace=wrap;align=center;fillColor=#e1d5e7;strokeColor:#9673a6;strokeWidth=2;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="300" y="300" width="120" height="70" as="geometry" />
+        </mxCell>
+        
+        <!-- rvGutachten -->
+        <mxCell id="rvgutachten" value="rvGutachten&#xa;(Kern-System)" style="shape=rect;html=1;verticalAlign=middle;fontStyle=1;whiteSpace=wrap;align=center;fillColor=#f0f0f0;strokeColor=#666666;strokeWidth=3;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="300" y="500" width="120" height="70" as="geometry" />
+        </mxCell>
+        
+        <!-- rvPUR -->
+        <mxCell id="rvpur" value="rvPUR&#xa;(Dokumentarchiv)" style="shape=rect;html=1;verticalAlign=middle;fontStyle=0;whiteSpace=wrap;align=center;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="300" y="700" width="120" height="70" as="geometry" />
+        </mxCell>
+        
+        <!-- Right Column: Automated Processes -->
+        <!-- BUC-06 -->
+        <mxCell id="buc06" value="BUC-06&#xa;E-Mail-Benachrichtigungen" style="shape=rect;html=1;verticalAlign=middle;fontStyle=1;whiteSpace=wrap;align=center;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="550" y="200" width="120" height="70" as="geometry" />
+        </mxCell>
+        
+        <!-- BUC-09 -->
+        <mxCell id="buc09" value="BUC-09&#xa;Datenlöschung" style="shape=rect;html=1;verticalAlign=middle;fontStyle=1;whiteSpace=wrap;align=center;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="550" y="330" width="120" height="70" as="geometry" />
+        </mxCell>
+        
+        <!-- BUC-07 -->
+        <mxCell id="buc07" value="BUC-07&#xa;Support-Dashboard" style="shape=rect;html=1;verticalAlign=middle;fontStyle=1;whiteSpace=wrap;align=center;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="550" y="500" width="120" height="70" as="geometry" />
+        </mxCell>
+        
+        <!-- Flows: Actors to Use Cases -->
+        <mxCell id="flow1" value="" style="endArrow=open;html=1;rounded=0;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" parent="1" source="actor-ng" target="buc01">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="flow2" value="" style="endArrow=open;html=1;rounded=0;strokeWidth=2;strokeColor:#6c8ebf;" edge="1" parent="1" source="buc01" target="buc02">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="flow3" value="" style="endArrow=open;html=1;rounded=0;strokeWidth=2;strokeColor:#6c8ebf;" edge="1" parent="1" source="actor-ga" target="buc0405">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="flow4" value="" style="endArrow=open;html=1;rounded=0;strokeWidth=2;strokeColor:#6c8ebf;" edge="1" parent="1" source="buc0405" target="buc10">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="flow5" value="" style="endArrow=open;html=1;rounded=0;strokeWidth=2;strokeColor:#6c8ebf;" edge="1" parent="1" source="buc0405" target="buc12a">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="flow6" value="" style="endArrow=open;html=1;rounded=0;strokeWidth=2;strokeColor:#6c8ebf;" edge="1" parent="1" source="actor-8023" target="buc11">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="flow7" value="" style="endArrow=open;html=1;rounded=0;strokeWidth=2;strokeColor:#6c8ebf;" edge="1" parent="1" source="actor-8023" target="buc13">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Flows: Use Cases to Systems -->
+        <!-- BUC-01 to eLogin -->
+        <mxCell id="flow8" value="validiert" style="endArrow=open;html=1;rounded=0;strokeWidth=1.5;strokeColor:#9673a6;dashed=1;dashPattern=5 5;endFill=0;" edge="1" parent="1" source="buc01" target="elogin">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- BUC-01 to rvSMD -->
+        <mxCell id="flow9" value="validiert" style="endArrow=open;html=1;rounded=0;strokeWidth=1.5;strokeColor:#9673a6;dashed=1;dashPattern=5 5;endFill=0;" edge="1" parent="1" source="buc01" target="rvsmd">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- BUC-01 to rvGutachten -->
+        <mxCell id="flow10" value="erstellt Konto" style="endArrow=open;html=1;rounded=0;strokeWidth=1.5;strokeColor:#666666;dashed=1;dashPattern=5 5;endFill=0;" edge="1" parent="1" source="buc01" target="rvgutachten">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- BUC-02 to rvGutachten -->
+        <mxCell id="flow11" value="authentifiziert" style="endArrow=open;html=1;rounded=0;strokeWidth=1.5;strokeColor=#666666;dashed=1;dashPattern=5 5;endFill=0;" edge="1" parent="1" source="buc02" target="rvgutachten">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- BUC-04/05 to rvGutachten -->
+        <mxCell id="flow12" value="lädt Daten" style="endArrow=open;html=1;rounded=0;strokeWidth=2;strokeColor:#666666;" edge="1" parent="1" source="buc0405" target="rvgutachten">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- BUC-10 to rvPUR -->
+        <mxCell id="flow13" value="ruft ab" style="endArrow=open;html=1;rounded=0;strokeWidth=2;strokeColor:#666666;" edge="1" parent="1" source="buc10" target="rvpur">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- BUC-10 to rvGutachten -->
+        <mxCell id="flow14" value="bereitgestellt in" style="endArrow=open;html=1;rounded=0;strokeWidth=1.5;strokeColor:#666666;dashed=1;dashPattern=5 5;endFill=0;" edge="1" parent="1" source="buc10" target="rvgutachten">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- BUC-12a to rvGutachten and rvSMD -->
+        <mxCell id="flow15" value="synchronisiert" style="endArrow=open;html=1;rounded=0;strokeWidth=1.5;strokeColor:#666666;dashed=1;dashPattern=5 5;endFill=0;" edge="1" parent="1" source="buc12a" target="rvgutachten">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="flow16" value="synchronisiert" style="endArrow=open;html=1;rounded=0;strokeWidth=1.5;strokeColor:#666666;dashed=1;dashPattern=5 5;endFill=0;" edge="1" parent="1" source="buc12a" target="rvsmd">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- BUC-11 and BUC-13 to systems -->
+        <mxCell id="flow17" value="ändert in" style="endArrow=open;html=1;rounded=0;strokeWidth=1.5;strokeColor:#666666;dashed=1;dashPattern=5 5;endFill=0;" edge="1" parent="1" source="buc11" target="rvsmd">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="flow18" value="synchronisiert" style="endArrow=open;html=1;rounded=0;strokeWidth=1.5;strokeColor:#666666;dashed=1;dashPattern=5 5;endFill=0;" edge="1" parent="1" source="buc11" target="rvgutachten">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="flow19" value="initiiert" style="endArrow=open;html=1;rounded=0;strokeWidth=1.5;strokeColor:#666666;dashed=1;dashPattern=5 5;endFill=0;" edge="1" parent="1" source="buc13" target="rvsmd">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="flow20" value="synchronisiert" style="endArrow=open;html=1;rounded=0;strokeWidth=1.5;strokeColor:#666666;dashed=1;dashPattern=5 5;endFill=0;" edge="1" parent="1" source="buc13" target="rvgutachten">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- BUC-13 triggers BUC-09 and BUC-06 -->
+        <mxCell id="flow21" value="triggert" style="endArrow=open;html=1;rounded=0;strokeWidth=1.5;strokeColor:#666666;dashed=1;dashPattern=5 5;endFill=0;" edge="1" parent="1" source="buc13" target="buc09">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="flow22" value="triggert" style="endArrow=open;html=1;rounded=0;strokeWidth=1.5;strokeColor:#666666;dashed=1;dashPattern=5 5;endFill=0;" edge="1" parent="1" source="buc13" target="buc06">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- BUC-06 and BUC-09 to rvGutachten -->
+        <mxCell id="flow23" value="nutzt" style="endArrow=open;html=1;rounded=0;strokeWidth=1.5;strokeColor:#666666;dashed=1;dashPattern=5 5;endFill=0;" edge="1" parent="1" source="buc06" target="rvgutachten">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="flow24" value="nutzt" style="endArrow=open;html=1;rounded=0;strokeWidth=1.5;strokeColor:#666666;dashed=1;dashPattern=5 5;endFill=0;" edge="1" parent="1" source="buc09" target="rvgutachten">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- BUC-07 to rvGutachten -->
+        <mxCell id="flow25" value="überwacht" style="endArrow=open;html=1;rounded=0;strokeWidth=1.5;strokeColor:#666666;dashed=1;dashPattern=5 5;endFill=0;" edge="1" parent="1" source="buc07" target="rvgutachten">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- System Bidirectional Synchronization -->
+        <mxCell id="sync-rvsmd-rvgut" value="Bidirektionale Synchronisation" style="endArrow=open;html=1;rounded=0;strokeWidth=2;strokeColor:#666666;endFill=0;" edge="1" parent="1" source="rvsmd" target="rvgutachten">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="360" y="370" as="sourcePoint" />
+            <mxPoint x="360" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="sync-rvgut-rvsmd" value="" style="endArrow=open;html=1;rounded=0;strokeWidth=2;strokeColor:#666666;endFill=0;" edge="1" parent="1" source="rvgutachten" target="rvsmd">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="340" y="500" as="sourcePoint" />
+            <mxPoint x="340" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Legend -->
+        <mxCell id="legend-box" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="1450" width="600" height="120" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend-title" value="Legende" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="65" y="1460" width="100" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend-actor" value="Blau = Menschliche Akteure (Benutzer)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="65" y="1485" width="250" height="15" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend-usecase" value="Gelb/Gruen = Anwendungsfälle" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="65" y="1505" width="250" height="15" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend-system" value="Lila = Externe Systeme" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="65" y="1525" width="250" height="15" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend-flow" value="Pfeil = Datenfluss (durchgezogen=direkt, gestrichelt=async/event)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="320" y="1485" width="320" height="30" as="geometry" />
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
