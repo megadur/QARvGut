@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QARvGut MVP - Fachliche Abnahmetests</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/white.css">
+    <style>
+        .reveal {
+            font-size: 32px;
+        }
+        .reveal h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+        }
+        .reveal h2 {
+            font-size: 1.8em;
+            color: #3498db;
+        }
+        .reveal h3 {
+            font-size: 1.4em;
+            color: #27ae60;
+        }
+        .reveal table {
+            font-size: 0.7em;
+        }
+        .reveal code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        .reveal pre code {
+            font-size: 0.6em;
+            line-height: 1.4;
+        }
+        .highlight {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .success {
+            color: #27ae60;
+        }
+        .info {
+            background: #ebf5fb;
+            padding: 20px;
+            border-left: 5px solid #3498db;
+            margin: 20px 0;
+        }
+        .small-text {
+            font-size: 0.8em;
+        }
+        .smaller-text {
+            font-size: 0.6em;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            
+            <!-- Titelfolie -->
+            <section>
+                <h1>QARvGut MVP</h1>
+                <h2>Fachliche Abnahmetests</h2>
+                <p>Präsentation für Stakeholder</p>
+                <p class="small-text">Januar 2026</p>
+            </section>
+
+            <!-- Agenda -->
+            <section>
+                <h2>📊 Agenda</h2>
+                <ol>
+                    <li>Überblick über Testkonzept</li>
+                    <li>Teil I: Fachliche Abnahmetests (BUC)</li>
+                    <li>Teil II: End-to-End Integration Tests (E2E)</li>
+                    <li>Test-Kategorien & Ausführungsstrategie</li>
+                    <li>Definition of Done</li>
+                    <li>Nächste Schritte</li>
+                </ol>
+            </section>
+
+            <!-- Warum Fachliche Abnahmetests? -->
+            <section>
+                <section>
+                    <h2>🎯 Warum Fachliche Abnahmetests?</h2>
+                    <h3>Qualitätssicherung auf Geschäftsebene</h3>
+                </section>
+                
+                <section>
+                    <h3>5 Gründe für Fachliche Abnahmetests</h3>
+                    <ul>
+                        <li class="fragment">✅ <strong>Validierung der Anforderungen</strong><br/>
+                            <span class="small-text">Jeder Test verifiziert eine konkrete Geschäftsanforderung</span>
+                        </li>
+                        <li class="fragment">✅ <strong>Risikominderung</strong><br/>
+                            <span class="small-text">Frühe Erkennung von Fehlern vor Produktiv-Deployment</span>
+                        </li>
+                        <li class="fragment">✅ <strong>Dokumentation</strong><br/>
+                            <span class="small-text">Tests dienen als lebende Dokumentation des Systems</span>
+                        </li>
+                        <li class="fragment">✅ <strong>Kundenzufriedenheit</strong><br/>
+                            <span class="small-text">Stellt sicher, dass die Lösung tatsächlich den Bedarf erfüllt</span>
+                        </li>
+                        <li class="fragment">✅ <strong>Compliance</strong><br/>
+                            <span class="small-text">Besonders wichtig für DSGVO und regulatorische Anforderungen</span>
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Unser Ansatz</h3>
+                    <div class="info">
+                        <p><strong>Zweigleisiges Test-Konzept:</strong></p>
+                        <ol>
+                            <li><strong>Isolierte Tests</strong> → Einzelne Use Cases getestet (Teil I)</li>
+                            <li><strong>Integrierte Tests</strong> → Übergreifende Workflows getestet (Teil II)</li>
+                        </ol>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Teil I: Fachliche Abnahmetests -->
+            <section>
+                <section>
+                    <h2>📋 Teil I: Fachliche Abnahmetests</h2>
+                    <h3>Umfang & Struktur</h3>
+                </section>
+
+                <section>
+                    <h3>Gesamtübersicht</h3>
+                    <table class="smaller-text">
+                        <thead>
+                            <tr>
+                                <th>Kategorie</th>
+                                <th>Use Cases</th>
+                                <th>Testfälle</th>
+                                <th>Fokus</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="fragment">
+                                <td><strong>Sprint 1 - Kritisch</strong></td>
+                                <td>3</td>
+                                <td>13</td>
+                                <td>Authentifizierung, Onboarding</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td><strong>Sprint 2 - Hoch</strong></td>
+                                <td>5</td>
+                                <td>43</td>
+                                <td>Aufträge, Dokumente, Synchronisation</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td><strong>Sprint 3 - Mittel</strong></td>
+                                <td>3</td>
+                                <td>23</td>
+                                <td>E-Mail, Datenaufbewahrung, Support</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td><strong>Sprint 3+ - Niedrig</strong></td>
+                                <td>2</td>
+                                <td>6</td>
+                                <td>Erweiterte Verwaltung</td>
+                            </tr>
+                            <tr class="fragment highlight">
+                                <td><strong>GESAMT</strong></td>
+                                <td><strong>13</strong></td>
+                                <td><strong>85+</strong></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section>
+                    <h3>Sprint 1 - Kritische Foundation</h3>
+                    <ul>
+                        <li class="fragment">🔹 <strong>BUC-01</strong> Gutachter-Onboarding <span class="small-text">(4 Tests)</span></li>
+                        <li class="fragment">🔹 <strong>BUC-02</strong> System-Authentifizierung <span class="small-text">(5 Tests)</span></li>
+                        <li class="fragment">🔹 <strong>BUC-03</strong> DRV-Mitarbeiter-Zugriffsverwaltung <span class="small-text">(4 Tests)</span></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Sprint 2 - Kern-Funktionalität</h3>
+                    <ul class="smaller-text">
+                        <li class="fragment">🔸 <strong>BUC-04</strong> Auftragsübersicht & -verwaltung <span class="small-text">(6 Tests)</span></li>
+                        <li class="fragment">🔸 <strong>BUC-05</strong> Auftragsdetails & Dokumenteneinsicht <span class="small-text">(8 Tests)</span></li>
+                        <li class="fragment">🔸 <strong>BUC-10</strong> Automatische Dokumentenbereitstellung <span class="small-text">(7 Tests)</span></li>
+                        <li class="fragment">🔸 <strong>BUC-12a</strong> Gutachter ändern Auftragsstatus <span class="small-text">(6 Tests)</span></li>
+                        <li class="fragment">🔸 <strong>BUC-13</strong> Auftragsstornierung <span class="small-text">(6 Tests)</span></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Sprint 3 - Geschäftsprozesse</h3>
+                    <ul>
+                        <li class="fragment">🔷 <strong>BUC-06</strong> E-Mail-Benachrichtigungssystem <span class="small-text">(6 Tests)</span></li>
+                        <li class="fragment">🔷 <strong>BUC-09</strong> Datenaufbewahrung & DSGVO-Löschung <span class="small-text">(6 Tests)</span></li>
+                        <li class="fragment">🔷 <strong>BUC-11</strong> Statusänderungen Gutachter <span class="small-text">(7 Tests)</span></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Sprint 3+ - Erweiterte Features</h3>
+                    <ul>
+                        <li class="fragment">🔺 <strong>BUC-07</strong> Support-Dashboard & Überwachung <span class="small-text">(3 Tests)</span></li>
+                        <li class="fragment">🔺 <strong>BUC-08</strong> Erweiterte Gutachtermitarbeiter-Verwaltung <span class="small-text">(3 Tests)</span></li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- Testfall-Struktur -->
+            <section>
+                <section>
+                    <h2>📐 Testfall-Struktur</h2>
+                    <h3>Beispiel: BUC-01</h3>
+                </section>
+
+                <section>
+                    <h3>BUC-01: Gutachter-Onboarding-Prozess</h3>
+                    <table class="smaller-text">
+                        <tr>
+                            <th>Element</th>
+                            <th>Beschreibung</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Anforderung ID</strong></td>
+                            <td>BUC-01.01 - Erfolgreiche Gutachter-Registrierung</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Testfall ID</strong></td>
+                            <td>TC-BUC01.1</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Beschreibung</strong></td>
+                            <td>Kompletter Admin-verwalteter Registrierungsprozess</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Voraussetzungen</strong></td>
+                            <td>eLogin/rvSMD verfügbar, DRV-Mitarbeiter verfügbar</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Priorität</strong></td>
+                            <td><span class="highlight">Hoch</span></td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section>
+                    <h3>Testschritte BUC-01.01</h3>
+                    <ol class="smaller-text">
+                        <li class="fragment">EFN in rvSMD eintragen</li>
+                        <li class="fragment">eLogin-Account erstellen</li>
+                        <li class="fragment">Daten übertragen</li>
+                        <li class="fragment">Aktivierungscode senden</li>
+                        <li class="fragment">Account aktivieren</li>
+                    </ol>
+                    <div class="fragment info small-text">
+                        <strong>✅ Erwartetes Ergebnis:</strong> Account aktiv, Login möglich
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Test-Typen</h3>
+                    <p class="small-text">Für jeden Use Case werden verschiedene Testarten durchgeführt:</p>
+                    <ul class="smaller-text">
+                        <li class="fragment">🔴 <strong>Positive Tests</strong> - Erfolgsfall (Happy Path)</li>
+                        <li class="fragment">🟡 <strong>Negative Tests</strong> - Fehlerfälle</li>
+                        <li class="fragment">🟠 <strong>Edge Cases</strong> - Grenzfälle</li>
+                        <li class="fragment">🔵 <strong>Performance/Security Tests</strong> - Bei kritischen Features</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- Teil II: E2E Tests -->
+            <section>
+                <section>
+                    <h2>🔗 Teil II: End-to-End Integration Tests</h2>
+                    <h3>Zweck & Unterschied zu Teil I</h3>
+                </section>
+
+                <section>
+                    <h3>Teil I vs. Teil II</h3>
+                    <table class="smaller-text">
+                        <thead>
+                            <tr>
+                                <th>Aspekt</th>
+                                <th>Teil I (Fachlich)</th>
+                                <th>Teil II (E2E)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="fragment">
+                                <td><strong>Fokus</strong></td>
+                                <td>Einzelne Use Cases</td>
+                                <td>Übergreifende Workflows</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td><strong>Anzahl</strong></td>
+                                <td>85+ Tests</td>
+                                <td>5 Workflows</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td><strong>Komplexität</strong></td>
+                                <td>Isoliert</td>
+                                <td>Multi-System Integration</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td><strong>Timing</strong></td>
+                                <td>Früh im Projekt</td>
+                                <td>Nach Einzel-Tests abgenommen</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section>
+                    <h3>🚀 E2E-01: Gutachter-Onboarding</h3>
+                    <div class="smaller-text">
+                        <p>Registrierung → Admin-Genehmigung → Account-Aktivierung → Erste Anmeldung → Arbeitsbereitschaft</p>
+                    </div>
+                    <div class="fragment info small-text">
+                        ✅ <strong>Validiert:</strong> Kompletter Workflow ohne manuelle Eingriffe
+                    </div>
+                </section>
+
+                <section>
+                    <h3>👨‍💼 E2E-02: DRV-Support-Workflow</h3>
+                    <div class="smaller-text">
+                        <p>Support-Zugang → Gutachter-Verwaltung → Auftragszuweisung → Monitoring & Reporting</p>
+                    </div>
+                    <div class="fragment info small-text">
+                        ✅ <strong>Validiert:</strong> Support-Mitarbeiter können alle Tasks durchführen
+                    </div>
+                </section>
+
+                <section>
+                    <h3>📋 E2E-03: Gutachter Arbeitsalltag</h3>
+                    <div class="smaller-text">
+                        <p>Anmeldung → Auftragsübersicht → Auftragsdetails → Dokumente einsehen → Notizen → Status ändern → Benachrichtigung</p>
+                    </div>
+                    <div class="fragment info small-text">
+                        ✅ <strong>Validiert:</strong> Täglicher Arbeitsablauf ist produktiv
+                    </div>
+                </section>
+
+                <section>
+                    <h3>🔒 E2E-04: DSGVO-Compliance</h3>
+                    <div class="smaller-text">
+                        <p>Auftrag erstellen → Bearbeiten → Abschließen → (90 Tage) → Löschbenachrichtigung → Automatische Löschung</p>
+                    </div>
+                    <div class="fragment info small-text">
+                        ✅ <strong>Validiert:</strong> Datenschutz ist implementiert
+                    </div>
+                </section>
+
+                <section>
+                    <h3>👥 E2E-05: Multi-User Support</h3>
+                    <div class="smaller-text">
+                        <p>Mitarbeiter registrieren → DRV genehmigt → Berechtigungen setzen → Parallel-Bearbeitung → Support-Monitoring</p>
+                    </div>
+                    <div class="fragment info small-text">
+                        ✅ <strong>Validiert:</strong> Team-Arbeit ist möglich
+                    </div>
+                </section>
+            </section>
+
+            <!-- Test-Kategorien & Strategie -->
+            <section>
+                <section>
+                    <h2>📊 Test-Kategorien & Ausführungsstrategie</h2>
+                </section>
+
+                <section>
+                    <h3>Test-Kategorien</h3>
+                    <table class="smaller-text">
+                        <thead>
+                            <tr>
+                                <th>Kategorie</th>
+                                <th>Tests</th>
+                                <th>Frequenz</th>
+                                <th>Automatisierung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="fragment">
+                                <td><strong>Smoke Tests</strong></td>
+                                <td>5 Tests</td>
+                                <td>Jeden Build</td>
+                                <td>🟢 Hoch</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td><strong>Regression Tests</strong></td>
+                                <td>80+ Tests</td>
+                                <td>Vor Release</td>
+                                <td>🟡 Mittel</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td><strong>End-to-End Tests</strong></td>
+                                <td>5 Workflows</td>
+                                <td>Wöchentlich</td>
+                                <td>🔴 Niedrig</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td><strong>Performance Tests</strong></td>
+                                <td>3 Tests</td>
+                                <td>Große Änderungen</td>
+                                <td>🟡 Mittel</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td><strong>Security Tests</strong></td>
+                                <td>3 Tests</td>
+                                <td>Vor Release</td>
+                                <td>🔴 Niedrig</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td><strong>DSGVO-Compliance</strong></td>
+                                <td>6 Tests</td>
+                                <td>Monatlich</td>
+                                <td>🔴 Niedrig</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section>
+                    <h3>Test-Ausführungs-Timeline</h3>
+                    <pre class="smaller-text"><code data-line-numbers>Development-Phase
+├─ Kontinuierliche Smoke Tests (automatisiert)
+├─ Unit & Integration Tests
+│
+System-Integration Phase
+├─ Regression Tests (Fachliche Abnahmetests)
+├─ Performance Tests
+│
+UAT-Phase (User Acceptance Testing)
+├─ End-to-End Tests
+├─ Security Tests
+├─ DSGVO-Compliance Validierung
+│
+Production-Readiness
+└─ Finale Abnahmetests durch PO</code></pre>
+                </section>
+            </section>
+
+            <!-- Definition of Done -->
+            <section>
+                <section>
+                    <h2>✅ Definition of Done</h2>
+                    <h3>für Abnahmetests</h3>
+                </section>
+
+                <section>
+                    <h3>Funktionale Kriterien</h3>
+                    <ul class="smaller-text">
+                        <li class="fragment">✅ Alle Hauptszenarien erfolgreich getestet</li>
+                        <li class="fragment">✅ Mindestens 80% Alternativszenarien funktionieren</li>
+                        <li class="fragment">✅ Geschäftsprozess-Tests vollständig durchlaufen</li>
+                        <li class="fragment">✅ Alle kritischen Sicherheitsanforderungen erfüllt</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Qualitäts-Kriterien</h3>
+                    <ul class="smaller-text">
+                        <li class="fragment">✅ UI ist benutzerfreundlich & intuitiv</li>
+                        <li class="fragment">✅ Fehlermeldungen sind verständlich</li>
+                        <li class="fragment">✅ Performance erfüllt Anforderungen</li>
+                        <li class="fragment">✅ Cross-Browser Kompatibilität gegeben</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Dokumentation & Abnahme</h3>
+                    <ul class="smaller-text">
+                        <li class="fragment">✅ Test-Protokolle vollständig</li>
+                        <li class="fragment">✅ Alle Befunde dokumentiert</li>
+                        <li class="fragment">✅ Screenshots/Videos für kritische Workflows</li>
+                        <li class="fragment highlight">✅ <strong>Product Owner hat explizit abgenommen ✍️</strong></li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- Test-Beispiel -->
+            <section>
+                <section>
+                    <h2>🧪 Test-Beispiel Deep Dive</h2>
+                    <h3>BUC-04: Auftragsübersicht</h3>
+                </section>
+
+                <section>
+                    <h3>5 Kritische Szenarien</h3>
+                    <ol class="smaller-text">
+                        <li class="fragment"><strong>Positive Test:</strong> Vollständige Auftragsübersicht laden
+                            <ul>
+                                <li>50+ Aufträge gleichzeitig</li>
+                                <li>Performance: &lt; 3 Sekunden</li>
+                            </ul>
+                        </li>
+                        <li class="fragment"><strong>Negative Test:</strong> Stornierte Aufträge anzeigen
+                            <ul>
+                                <li>Gekennzeichnet & gesperrt</li>
+                            </ul>
+                        </li>
+                        <li class="fragment"><strong>Edge Case:</strong> Keine Aufträge vorhanden
+                            <ul>
+                                <li>Hilfreiche Meldung statt Fehler</li>
+                            </ul>
+                        </li>
+                        <li class="fragment"><strong>Security Test:</strong> Unbefugter Zugriff
+                            <ul>
+                                <li>Gutachter A sieht keine Aufträge von B</li>
+                            </ul>
+                        </li>
+                        <li class="fragment"><strong>Performance Test:</strong> 10 Gutachter gleichzeitig
+                            <ul>
+                                <li>Response: &lt; 200ms</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </section>
+            </section>
+
+            <!-- Testabdeckungs-Metriken -->
+            <section>
+                <section>
+                    <h2>📈 Testabdeckungs-Metriken</h2>
+                    <h3>Aktueller Status</h3>
+                </section>
+
+                <section>
+                    <h3>Business Use Cases</h3>
+                    <pre class="smaller-text"><code>Business Use Cases:     13/13 ✅ (100%)
+├─ Sprint 1:           3/3 ✅
+├─ Sprint 2:           5/5 ✅
+├─ Sprint 3:           3/3 ✅
+└─ Sprint 3+:          2/2 ✅
+
+Test Cases:            85+ ✅
+├─ Positive Tests:     ~45
+├─ Negative Tests:     ~25
+├─ Edge Cases:         ~12
+└─ Performance/Security: ~6
+
+End-to-End Workflows:  5/5 ✅</code></pre>
+                </section>
+
+                <section>
+                    <h3>Risikoabdeckung</h3>
+                    <table class="smaller-text">
+                        <thead>
+                            <tr>
+                                <th>Risikokategorie</th>
+                                <th>Abdeckung</th>
+                                <th>Testfälle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="fragment">
+                                <td><strong>Sicherheit</strong></td>
+                                <td>⭐⭐⭐⭐⭐</td>
+                                <td>8+ Security Tests</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td><strong>Datenschutz (DSGVO)</strong></td>
+                                <td>⭐⭐⭐⭐⭐</td>
+                                <td>6 Compliance Tests</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td><strong>Systemintegration</strong></td>
+                                <td>⭐⭐⭐⭐⭐</td>
+                                <td>5 E2E Workflows</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td><strong>Benutzerfreundlichkeit</strong></td>
+                                <td>⭐⭐⭐⭐☆</td>
+                                <td>40+ UI Tests</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td><strong>Performance</strong></td>
+                                <td>⭐⭐⭐⭐☆</td>
+                                <td>8 Performance Tests</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </section>
+
+            <!-- Testdaten & Umgebung -->
+            <section>
+                <section>
+                    <h2>🔧 Testdaten & Test-Umgebung</h2>
+                </section>
+
+                <section>
+                    <h3>Verwendete Testdaten</h3>
+                    <pre class="smaller-text"><code data-trim>Gutachter:
+  Max Mustermann:
+    EFN: EFN123456789
+    Email: max.mustermann@test-gutachter.de
+    Status: Aktiv
+  
+  Anna Schmidt:
+    EFN: EFN987654321
+    Email: anna.schmidt@test-gutachter.de
+    Status: Aktiv
+
+DRV-Mitarbeiter:
+  TestAdmin:
+    Email: testadmin@drv-test.de
+    Rolle: Support-Mitarbeiter</code></pre>
+                </section>
+
+                <section>
+                    <h3>Test-Umgebung</h3>
+                    <p class="small-text"><strong>Erforderliche Komponenten:</strong></p>
+                    <ul class="smaller-text">
+                        <li class="fragment">✅ eLogin (Test-Instance)</li>
+                        <li class="fragment">✅ rvSMD (Schnittstelle)</li>
+                        <li class="fragment">✅ rvArchiv (Dokument-Storage)</li>
+                        <li class="fragment">✅ E-Mail System (SMTP Test)</li>
+                        <li class="fragment">✅ QARvGut Development/Staging</li>
+                        <li class="fragment">✅ Datenbank (Reset zwischen Tests)</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- Defekt-Management -->
+            <section>
+                <section>
+                    <h2>📋 Defekt-Management</h2>
+                </section>
+
+                <section>
+                    <h3>Defekt-Klassifizierung</h3>
+                    <table class="smaller-text">
+                        <thead>
+                            <tr>
+                                <th>Priorität</th>
+                                <th>Auswirkung</th>
+                                <th>Beispiel</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="fragment">
+                                <td>🔴 <strong>Kritisch</strong></td>
+                                <td>System nicht benutzbar</td>
+                                <td>Kein Login möglich</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td>🟠 <strong>Hoch</strong></td>
+                                <td>Hauptfunktion nicht verfügbar</td>
+                                <td>Aufträge nicht sichtbar</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td>🟡 <strong>Mittel</strong></td>
+                                <td>Nebenfunktion beeinträchtigt</td>
+                                <td>Filter funktioniert nicht</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td>🟢 <strong>Niedrig</strong></td>
+                                <td>Kosmetische Probleme</td>
+                                <td>Button-Farbe falsch</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section>
+                    <h3>Defekt-Workflow</h3>
+                    <ol class="smaller-text">
+                        <li class="fragment">Defekt identifizieren & reproduzieren</li>
+                        <li class="fragment">Screenshot/Video als Beweismaterial</li>
+                        <li class="fragment">Im Tracking-System erfassen</li>
+                        <li class="fragment">Entwicklungsteam benachrichtigen</li>
+                        <li class="fragment">Fix verifizieren nach Implementierung</li>
+                    </ol>
+                </section>
+            </section>
+
+            <!-- Nächste Schritte -->
+            <section>
+                <section>
+                    <h2>🚀 Nächste Schritte</h2>
+                    <h3>Implementierungs-Roadmap</h3>
+                </section>
+
+                <section>
+                    <h3>Phase 1: Vorbereitung (2-3 Wochen)</h3>
+                    <ul class="smaller-text">
+                        <li class="fragment">☐ Test-Umgebung einrichten</li>
+                        <li class="fragment">☐ Testdaten-Sets erstellen</li>
+                        <li class="fragment">☐ Test-Automation Tools konfigurieren</li>
+                        <li class="fragment">☐ Team-Training durchführen</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Phase 2: Testausführung (4-6 Wochen)</h3>
+                    <ul class="smaller-text">
+                        <li class="fragment">☐ Smoke Tests laufen lassen</li>
+                        <li class="fragment">☐ Regression Tests durchführen</li>
+                        <li class="fragment">☐ Defekte dokumentieren & fixen</li>
+                        <li class="fragment">☐ Performance-Tests validieren</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Phase 3: UAT (2-3 Wochen)</h3>
+                    <ul class="smaller-text">
+                        <li class="fragment">☐ End-to-End Tests durchführen</li>
+                        <li class="fragment">☐ Security-Tests validieren</li>
+                        <li class="fragment">☐ DSGVO-Compliance checken</li>
+                        <li class="fragment">☐ Finale PO-Abnahme</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Phase 4: Production-Release</h3>
+                    <ul class="smaller-text">
+                        <li class="fragment">☐ Abnahme durch Stakeholder</li>
+                        <li class="fragment">☐ Deployment-Vorbereitung</li>
+                        <li class="fragment">☐ Support-Training</li>
+                        <li class="fragment">☐ Go-Live</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- FAQ -->
+            <section>
+                <section>
+                    <h2>💡 Häufig gestellte Fragen</h2>
+                </section>
+
+                <section>
+                    <h3>F1: Warum 85+ Testfälle?</h3>
+                    <p class="smaller-text"><strong>A:</strong> Wir folgen dem Ansatz "Test Every Use Case":</p>
+                    <ul class="smaller-text">
+                        <li>Positive Tests (Happy Path)</li>
+                        <li>Negative Tests (Fehlerszenarien)</li>
+                        <li>Edge Cases (Grenzfälle)</li>
+                        <li>Performance & Security Tests</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>F2: Können Tests automatisiert werden?</h3>
+                    <p class="smaller-text"><strong>A:</strong> Teilweise:</p>
+                    <ul class="smaller-text">
+                        <li>Smoke & Regression Tests: 🟢 100% automatisierbar</li>
+                        <li>E2E Tests: 🟡 50-70% automatisierbar</li>
+                        <li>UI-intensive Tests: 🔴 Manuell empfohlen</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>F3: Wie lange dauert die Testausführung?</h3>
+                    <ul class="smaller-text">
+                        <li>Smoke Tests: ~2 Stunden</li>
+                        <li>Regression Tests: ~30-40 Stunden</li>
+                        <li>E2E Tests: ~10-15 Stunden</li>
+                        <li class="highlight"><strong>Gesamt: ~50 Stunden (mit Team parallelisiert)</strong></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>F4: Was ist, wenn ein Test fehlschlägt?</h3>
+                    <ol class="smaller-text">
+                        <li class="fragment">Fehler dokumentieren</li>
+                        <li class="fragment">Bug im Tracking erfassen</li>
+                        <li class="fragment">Entwicklungsteam informieren</li>
+                        <li class="fragment">Regressions-Test durchführen</li>
+                        <li class="fragment">Test erneut ausführen</li>
+                    </ol>
+                </section>
+
+                <section>
+                    <h3>F5: Wer führt die Tests durch?</h3>
+                    <ul class="smaller-text">
+                        <li><strong>Smoke Tests:</strong> CI/CD Pipeline (automatisch)</li>
+                        <li><strong>Regression Tests:</strong> QA-Team (manuell + automatisiert)</li>
+                        <li><strong>E2E Tests:</strong> QA-Team + Product Owner</li>
+                        <li><strong>UAT:</strong> Fachexperten & Stakeholder</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- Zusammenfassung -->
+            <section>
+                <section>
+                    <h2>✨ Zusammenfassung</h2>
+                </section>
+
+                <section>
+                    <h3>Was wir erreicht haben</h3>
+                    <ul class="smaller-text">
+                        <li class="fragment">✅ <strong>13 Business Use Cases</strong> vollständig definiert</li>
+                        <li class="fragment">✅ <strong>85+ Testfälle</strong> für umfassende Abdeckung</li>
+                        <li class="fragment">✅ <strong>5 E2E Workflows</strong> für Integrationstests</li>
+                        <li class="fragment">✅ <strong>Definition of Done</strong> klar dokumentiert</li>
+                        <li class="fragment">✅ <strong>Testausführungsstrategie</strong> etabliert</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Was das bedeutet</h3>
+                    <ul class="smaller-text">
+                        <li class="fragment">🎯 <strong>Hohe Qualitätsstandards</strong> für die Lösung</li>
+                        <li class="fragment">🎯 <strong>Risikominderung</strong> durch frühe Fehlererkennung</li>
+                        <li class="fragment">🎯 <strong>Kundenzufriedenheit</strong> durch validierte Features</li>
+                        <li class="fragment">🎯 <strong>Compliance & Sicherheit</strong> gewährleistet</li>
+                        <li class="fragment">🎯 <strong>Schnellere Time-to-Market</strong> durch klare Kriterien</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- Fragen? -->
+            <section>
+                <h2>🙏 Fragen?</h2>
+                <div class="info">
+                    <p><strong>Vielen Dank für Ihre Aufmerksamkeit!</strong></p>
+                    <p class="small-text">Wir sind bereit für die Test-Phase und nehmen alle Anforderungen ernst. Zusammen werden wir ein qualitativ hochwertiges System liefern.</p>
+                </div>
+                <p class="fragment highlight" style="margin-top: 50px;">
+                    <strong>Nächster Schritt:</strong><br/>
+                    Test-Umgebung einrichten & Testlauf beginnen! 🚀
+                </p>
+            </section>
+
+            <!-- Kontakt -->
+            <section>
+                <h2>📞 Kontakt & Support</h2>
+                <div class="smaller-text">
+                    <p><strong>Bei Fragen zu den Tests:</strong></p>
+                    <ul>
+                        <li>📧 <strong>Product Owner:</strong> Sarah</li>
+                        <li>👨‍💻 <strong>QA-Leitung:</strong> [Name QA]</li>
+                        <li>🛠️ <strong>Tech Lead:</strong> [Name Tech]</li>
+                    </ul>
+                    <p style="margin-top: 30px;"><strong>Zeitplan für nächstes Treffen:</strong></p>
+                    <ul>
+                        <li>📅 Detaillierte Testplan-Review</li>
+                        <li>📅 Test-Environment Setup</li>
+                        <li>📅 Team-Training Durchführung</li>
+                    </ul>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            backgroundTransition: 'fade',
+            center: true,
+            slideNumber: 'c/t',
+            showSlideNumber: 'all',
+            controlsLayout: 'bottom-right',
+            progress: true,
+            history: true,
+            keyboard: true,
+            overview: true,
+            help: true,
+            fragments: true,
+            fragmentInURL: true,
+            plugins: [ RevealNotes, RevealHighlight ]
+        });
+    </script>
+</body>
+</html>
