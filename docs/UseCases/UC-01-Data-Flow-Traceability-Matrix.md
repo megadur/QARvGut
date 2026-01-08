@@ -28,34 +28,25 @@
 
 | Schritt | Aktor | Aktion | API Aufruf | Methode | System |
 |---------|-------|--------|------------|---------|--------|
-| 1 | Gutachter | Interesse bekundet | - | Offline | DRV |
+| 1 | Gutachter | Interesse an Teilnahme bekundet | - | Offline | DRV |
 | 2 | DRV-MA | Brief zur Datenerhebung versenden | - | Postal | Postservice |
-| 3 | Gutachter | Formular ausfüllen (Name, EFN, E-Mail) | - | Offline | - |
+| 3 | Gutachter | Formular ausgefüllt (Name, EFN, E-Mail) | - | Offline | - |
 | 4 | Gutachter | Formular per Brief versenden | - | Postal | Postservice |
 | 5 | DRV-MA | Daten bei Gutachter in rvSMD ergänzen | `rvSMD Web UI` | Manual | rvSMD |
 | 6 | rvSMD | Gutachter in rvGutachten anlegen | `POST /api/v1/gutachter` | POST | rvGutachten API |
-| 7 | DRV-MA | eLogin-Account anlegen (Dialog) | `eLogin Web UI` | Manual | eLogin |
+| 7 | DRV-MA | Gutachter anlegen Dialog (Name, Vorname, Adresse, E-Mail) | `eLogin Web UI` | Manual | eLogin |
 | 8 | eLogin | eLogin-ID + Registrierungscode generieren | Internal Process | - | eLogin |
-| 9 | DRV-MA | eLogin-ID am Gutachter ergänzen | `PUT /api/v1/gutachter/{id}/elogin` | PUT | rvGutachten API |
-| 10a | eLogin | Registrierungslink per E-Mail versenden | Email Service | - | E-Mail System |
-| 10b | DRV-MA | Registrierungslink per Brief versenden (Alt.) | - | Postal | Postservice |
-| 11 | rvGutachten | Gutachter nach Name/Vorname suchen | `GET /api/v1/gutachter?search=name` | GET | rvGutachten API |
-| 12 | rvGutachten | eLogin-ID nach Name/Vorname suchen | Cache/Internal Mapping | - | rvGutachten |
-| 13 | rvGutachten | EFN mit eLogin-ID verknüpfen | `PUT /api/v1/gutachter/{id}/link` | PUT | rvGutachten API |
-| 14 | Gutachter | Registrierungslink öffnen | `GET https://elogin.drv.de/activate?code=...` | GET | eLogin |
+| 9 | DRV-MA | eLogin-ID am Gutachter ergänzen (Liste+auswählen+eintragen) | `PUT /api/v1/gutachter/{id}/elogin` | PUT | rvGutachten API |
+| 10a | eLogin | E-Mail mit Registrierungslink und Registrierungscode versenden | Email Service | - | E-Mail System |
+| 10b | DRV-MA | Brief mit Registrierungslink und Registrierungscode versenden (Alt.) | - | Postal | Postservice |
+| 12 | rvGutachten | Gutachter anhand Name, Vorname auswählen | `GET /api/v1/gutachter?search=name` | GET | rvGutachten API |
+| 13 | rvGutachten | Auswahl der eLoginId anhand Name, Vorname | Internal Mapping | - | rvGutachten |
+| 14 | rvGutachten | Verbinden von EFN und eLoginId | `PUT /api/v1/gutachter/{id}/link` | PUT | rvGutachten API |
+| 15 | Gutachter | Registrierungslink öffnen | `GET https://elogin.drv.de/activate?code=...` | GET | eLogin |
 | 15 | Gutachter | Registrierungscode eingeben | `POST /activate/verify` | POST | eLogin |
-| 16 | eLogin | Passwortseite anzeigen | UI Rendering | - | eLogin Frontend |
-| 17 | Gutachter | Passwort vergeben | `POST /activate/password` | POST | eLogin |
-| 18 | eLogin | Account aktivieren | Database Update | - | eLogin DB |
-| 19 | eLogin | Aktivierung an rvGutachten melden | `POST /api/v1/webhooks/elogin/activation` | POST | rvGutachten API |
-| 20 | rvGutachten | Gutachter-Status auf "aktiv" setzen | Database Update | - | rvGutachten DB |
-| 21 | rvGutachten | Willkommens-E-Mail senden | Email Service | - | E-Mail System |
-| 22 | Gutachter | Erste Anmeldung durchführen | `POST /api/v1/auth/login` | POST | rvGutachten API |
-| 23 | rvGutachten | Credentials gegen eLogin validieren | `POST https://elogin.drv.de/api/validate` | POST | eLogin API |
-| 24 | rvGutachten | Session erstellen | Internal Process | - | Session Manager |
-| 25 | rvGutachten | JWT Token generieren | JWT Sign | - | Auth Service |
-| 26 | Frontend | Dashboard anzeigen | UI Rendering | - | Browser |
-| 27 | System | Audit-Log erstellen | Database Insert | - | Audit Manager |
+| 16 | eLogin | Passwordseite anzeigen | UI Rendering | - | eLogin Frontend |
+| 16 | Gutachter | Password vergeben | `POST /activate/password` | POST | eLogin |
+| 17 | eLogin | eLogin-Account aktiv | Database Update | - | eLogin DB |
 
 ---
 
@@ -63,29 +54,29 @@
 
 ### Gutachter Business Object
 
-| Attribut | Typ | MVP | S1-4: Postal | S5: rvSMD Entry | S6: Create API | S7-8: eLogin | S9: Link eLogin | S11-13: Mapping | S18: Activate | S20: Set Active | S22-25: Login | S27: Audit |
-|----------|-----|-----|-------------|----------------|----------------|--------------|----------------|----------------|---------------|----------------|--------------|------------|
-| **gutachterId** | uuid | 1 | - | - | [C] | - | [R] | [R] | - | [R] | [R] | [R] |
-| **efn** | string(15) | 1 | [OK] | [C] | [C] | - | - | [R] | - | - | [AUTH] | [OK] |
-| **anrede** | enum | 1 | [OK] | [C] | [C] | [OK] | - | - | - | - | - | - |
-| **titel** | string | ? | [OK] | [C] | [C] | [OK] | - | - | - | - | - | - |
-| **vorname** | string | 1 | [OK] | [C] | [C] | [OK] | - | [R] | - | - | [OK] | [OK] |
-| **nachname** | string | 1 | [OK] | [C] | [C] | [OK] | - | [R] | - | - | [OK] | [OK] |
-| **namenszusatz** | string | ? | [OK] | [C] | [C] | - | - | - | - | - | - | - |
-| **geburtsdatum** | date | ? | [OK] | [C] | [C] | - | - | - | - | - | - | - |
-| **email** | string | 1 | [OK] | [C] | [C] | [OK] | - | - | - | - | - | [OK] |
-| **adresse** | object | 1 | [OK] | [C] | [C] | [OK] | - | - | - | - | - | - |
-| **telefon** | string | ? | [OK] | [C] | [C] | - | - | - | - | - | - | - |
-| **traegerKtan** | string | 1 | - | [C] | [C] | - | - | - | - | - | [AUTH] | - |
-| **eLoginId** | string | 1 | - | - | - | [C] | [R] | [U] | - | - | [AUTH] | [OK] |
-| **eLoginRegistrierungscode** | string | 1 | - | - | - | [C] | - | - | - | - | - | - |
-| **status** | enum | 1 | - | - | [C] | - | - | - | [U] | [U] | [R] | [OK] |
-| **aktiviertAm** | datetime | 1 | - | - | - | - | - | - | [C] | [C] | [R] | [OK] |
-| **angelegtVon** | uuid | 1 | - | - | - | [C] | - | - | - | - | - | [OK] |
-| **angelegtAm** | datetime | 1 | - | - | - | [C] | - | - | - | - | - | [OK] |
-| **gesperrtSeit** | datetime | ? | - | - | - | - | - | - | - | - | [WARN] | [OK] |
-| **gesperrtGrund** | string | ? | - | - | - | - | - | - | - | - | [WARN] | [OK] |
-| **letzterLogin** | datetime | ? | - | - | - | - | - | - | - | - | [U] | [OK] |
+| Attribut | Typ | MVP | S1-4: Postal | S5: rvSMD Entry | S6: Create API | S7-8: eLogin | S9: Link eLogin | S12-14: Mapping & Link | S15-16: Activate | S17: Account Active |
+|----------|-----|-----|-------------|----------------|----------------|--------------|----------------|----------------------|-----------------|-------------------|
+| **gutachterId** | uuid | 1 | - | - | [C] | - | [R] | [R] | - | [R] |
+| **efn** | string(15) | 1 | [OK] | [C] | [C] | - | - | [R] | - | - |
+| **anrede** | enum | 1 | [OK] | [C] | [C] | [OK] | - | - | - | - |
+| **titel** | string | ? | [OK] | [C] | [C] | [OK] | - | - | - | - |
+| **vorname** | string | 1 | [OK] | [C] | [C] | [OK] | - | [R] | - | - |
+| **nachname** | string | 1 | [OK] | [C] | [C] | [OK] | - | [R] | - | - |
+| **namenszusatz** | string | ? | [OK] | [C] | [C] | - | - | - | - | - |
+| **geburtsdatum** | date | ? | [OK] | [C] | [C] | - | - | - | - | - |
+| **email** | string | 1 | [OK] | [C] | [C] | [OK] | - | - | - | - |
+| **adresse** | object | 1 | [OK] | [C] | [C] | [OK] | - | - | - | - |
+| **telefon** | string | ? | [OK] | [C] | [C] | - | - | - | - | - |
+| **traegerKtan** | string | 1 | - | [C] | [C] | - | - | - | - | - |
+| **eLoginId** | string | 1 | - | - | - | [C] | [R] | [U] | - | [R] |
+| **eLoginRegistrierungscode** | string | 1 | - | - | - | [C] | - | - | - | - |
+| **status** | enum | 1 | - | - | [C] | - | - | - | [U] | [U] |
+| **aktiviertAm** | datetime | 1 | - | - | - | - | - | - | [C] | [C] |
+| **angelegtVon** | uuid | 1 | - | - | - | [C] | - | - | - | - |
+| **angelegtAm** | datetime | 1 | - | - | - | [C] | - | - | - | - |
+| **gesperrtSeit** | datetime | ? | - | - | - | - | - | - | - | [WARN] |
+| **gesperrtGrund** | string | ? | - | - | - | - | - | - | - | [WARN] |
+| **letzterLogin** | datetime | ? | - | - | - | - | - | - | - | - |
 
 **[CRIT] Kritische Erkenntnisse:**
 
@@ -98,20 +89,22 @@
    - EFN: Identität in rvSMD
    - eLoginId: Identität in eLogin
    - gutachterId: Identität in rvGutachten
-   - Mapping erfolgt in Schritt 13
+   - Mapping erfolgt in Schritten 12-14
 
 3. **Zweistufiger Aktivierungsprozess:**
    - Phase 1: DRV-MA legt an (Status: "pending")
-   - Phase 2: Gutachter aktiviert eLogin (Status: "aktiv")
+   - Phase 2: Gutachter aktiviert eLogin (Status: "aktiv" in Schritt 17)
 
 4. **Status-Lifecycle:**
    ```
    [nicht vorhanden] 
         → [pending] (S6: Anlage in rvGutachten)
         → [elogin_pending] (S9: eLogin-ID verknüpft)
-        → [aktiv] (S18-20: eLogin aktiviert + Webhook)
+        → [aktiv] (S17: eLogin-Account aktiv)
         → [gesperrt] (optional, bei Problemen)
    ```
+
+**WICHTIG:** Der Prozess endet mit Schritt 17 beim eLogin-Account-Aktivierung. Nachfolgende Login- und Session-Management-Schritte sind Teil von UC-02 (System-Authentifizierung).
 
 ---
 
@@ -188,9 +181,38 @@
 
 ---
 
-### 3. POST /api/v1/webhooks/elogin/activation
+### 3. PUT /api/v1/gutachter/{id}/link
 
-**Zweck:** Webhook von eLogin bei erfolgreicher Account-Aktivierung
+**Zweck:** Verknüpft EFN mit eLogin-ID (interne Mapping-Tabelle)
+
+**Request:**
+```json
+{
+  "efn": "123456789012345",
+  "eLoginId": "EL-2025-123456"
+}
+```
+
+**Response 200 OK:**
+```json
+{
+  "gutachterId": "550e8400-e29b-41d4-a716-446655440000",
+  "efn": "123456789012345",
+  "eLoginId": "EL-2025-123456",
+  "linked": true,
+  "message": "EFN und eLogin-ID erfolgreich verknüpft"
+}
+```
+
+---
+
+## Zusätzliche API-Spezifikationen (außerhalb UC-01 Scope)
+
+Die folgenden APIs sind Teil von UC-02 (System-Authentifizierung) und werden hier nur zur Referenz dokumentiert:
+
+### POST /api/v1/webhooks/elogin/activation
+
+**Zweck:** Webhook von eLogin bei erfolgreicher Account-Aktivierung (Optional für zukünftige Integration)
 
 **Request (von eLogin):**
 ```json
@@ -212,19 +234,9 @@
 }
 ```
 
-**Businesslogik:**
-1. Webhook-Signatur validieren (HMAC)
-2. Gutachter anhand eLoginId suchen
-3. Status von "elogin_pending" → "aktiv" setzen
-4. aktiviertAm Timestamp setzen
-5. Willkommens-E-Mail senden
-6. Audit-Log schreiben
+### POST /api/v1/auth/login
 
----
-
-### 4. POST /api/v1/auth/login
-
-**Zweck:** Authentifizierung über eLogin
+**Zweck:** Authentifizierung über eLogin (siehe UC-02)
 
 **Request:**
 ```json
@@ -261,73 +273,82 @@
 ```mermaid
 sequenceDiagram
     actor GUT as Gutachter
-    actor DRV as DRV-Mitarbeiter
+    actor DRV as DRV-Mitarbeiter (8023)
     participant SMD as rvSMD System
     participant ELG as eLogin System
     participant RVG as rvGutachten System
     participant POST as Postservice
     participant EML as E-Mail Service
     
-    Note over GUT,EML: UC-01: Administrierte Gutachter-Registrierung
+    Note over GUT,EML: UC-01 Version 4: administrierte Registrierung kompakt
     
+    %% Phase 1: Initiale Interessensbekundung
     GUT->>DRV: 01. Interesse an Teilnahme bekundet
     DRV->>POST: 02. Brief zur Datenerhebung versenden
     POST-->>GUT: Brief erhalten
     
+    %% Phase 2: Datensammlung
     GUT->>GUT: 03. Formular ausgefüllt<br/>(Name, EFN, E-Mail)
     GUT->>POST: 04. Formular per Brief versenden
     POST-->>DRV: Formular erhalten
     
+    %% Phase 3: System-Setup durch Admin
     DRV->>SMD: 05. Daten bei Gutachter ergänzen
-    SMD->>RVG: 06. POST /api/v1/gutachter<br/>(EFN, Name, E-Mail, Träger)
-    RVG->>RVG: Dubletten prüfen
-    RVG->>RVG: Gutachter anlegen (Status: pending)
-    RVG-->>SMD: gutachterId + Status
+    SMD->>RVG: 06. Gutachter anlegen API<br/>(Name, Vorname, EFN, Träger KTAN)
     
+    %% Phase 4: eLogin Account Creation
     DRV->>ELG: 07. Gutachter anlegen Dialog<br/>(Name, Vorname, Adresse, E-Mail)
     ELG->>ELG: 08. eLogin-ID + Registrierungscode generieren
-    ELG-->>DRV: eLogin-ID + Code erstellt
+    ELG-->>DRV: eLogin-ID + Registrierungscode erstellt
+    DRV->>RVG: 09. eLogin-ID am Gutachter ergänzen<br/>(Liste+auswählen+eintragen)
     
-    DRV->>RVG: 09. PUT /api/v1/gutachter/{id}/elogin<br/>(eLoginId, Code)
-    RVG->>RVG: eLoginId verknüpfen
-    RVG->>RVG: Status: elogin_pending
-    RVG-->>DRV: Verknüpfung bestätigt
-    
+    %% Phase 5: Data Verification & Linking
     alt Versand per E-Mail
-        ELG->>EML: 10a. E-Mail mit Registrierungslink + Code
+        ELG->>EML: 10. E-Mail mit Registrierungslink und Registrierungscode
         EML-->>GUT: E-Mail erhalten
     else Versand per Brief
-        DRV->>POST: 10b. Brief mit Registrierungslink + Code
+        DRV->>POST: 11. Brief mit Registrierungslink und Registrierungscode
         POST-->>GUT: Brief erhalten
     end
     
-    GUT->>ELG: 14. Registrierungslink öffnen
-    GUT->>ELG: 15. Registrierungscode eingeben
-    ELG->>ELG: Code validieren
-    ELG-->>GUT: 16. Passwortseite anzeigen
+    RVG->>RVG: 12. Gutachter anhand Name, Vorname auswählen
+    RVG->>RVG: 13. Auswahl der eLoginId anhand Name, Vorname
+    RVG->>RVG: 14. Verbinden von EFN und eLoginId
     
-    GUT->>ELG: 17. Passwort vergeben
-    ELG->>ELG: Passwort-Policy prüfen
-    ELG->>ELG: 18. Account aktivieren (DB Update)
+    %% Phase 6: Initial eLogin Activation
+    GUT->>ELG: 15. Registrierungslink öffnen
+    GUT->>ELG: Registrierungscode eingeben
+    ELG->>GUT: 16. Passwordseite anzeigen
+    GUT->>ELG: Password vergeben
+    ELG->>ELG: 17. eLogin-Account aktiv
     
-    ELG->>RVG: 19. POST /webhooks/elogin/activation
-    RVG->>RVG: 20. Status: aktiv setzen
-    RVG->>RVG: aktiviertAm speichern
-    RVG->>EML: 21. Willkommens-E-Mail senden
-    EML-->>GUT: E-Mail erhalten
-    RVG-->>ELG: Webhook ACK
-    
-    GUT->>RVG: 22. POST /api/v1/auth/login
-    RVG->>ELG: 23. Credentials validieren
-    ELG-->>RVG: Validierung erfolgreich
-    RVG->>RVG: 24. Session erstellen
-    RVG->>RVG: 25. JWT Token generieren
-    RVG-->>GUT: 26. Token + User-Daten
-    
-    GUT->>RVG: Dashboard laden
-    RVG-->>GUT: Auftragsübersicht anzeigen
-    
-    Note over RVG: 27. Audit-Log: Onboarding komplett
+    Note over GUT,EML: Prozess endet hier. Login ist UC-02
+```
+```
+
+---
+
+## Zusätzliche API-Spezifikationen (außerhalb UC-01 Scope)
+
+Die folgenden APIs sind Teil von UC-02 (System-Authentifizierung) und werden hier nur zur Referenz dokumentiert:
+
+### POST /api/v1/webhooks/elogin/activation
+
+**Zweck:** Webhook von eLogin bei erfolgreicher Account-Aktivierung (Optional für zukünftige Integration)
+
+**Request (von eLogin):**
+```json
+{
+  "eLoginId": "EL-2025-123456",
+  "activatedAt": "2025-11-12T14:45:00Z",
+  "activationType": "EMAIL",
+  "verificationMethod": "CODE"
+}
+```
+
+### POST /api/v1/auth/login
+
+**Zweck:** Authentifizierung über eLogin (siehe UC-02)
 ```
 
 ---
@@ -376,40 +397,31 @@ sequenceDiagram
 
 ---
 
-### ADR-003: Webhook-basierte Aktivierungsbestätigung
+### ADR-003: Fokus auf Account-Aktivierung (UC-01 Scope)
 
 **Status:** Accepted  
-**Kontext:** rvGutachten muss wissen, wann ein Gutachter seinen eLogin-Account aktiviert hat.
+**Kontext:** UC-01 deckt nur die Registrierung und Account-Aktivierung ab. Login-Prozesse gehören zu UC-02.
 
 **Entscheidung:**  
-- eLogin sendet Webhook an rvGutachten bei Aktivierung
-- rvGutachten ändert Status von "elogin_pending" → "aktiv"
-- Willkommens-E-Mail wird automatisch versendet
+- UC-01 endet mit eLogin-Account-Aktivierung (Schritt 17)
+- Webhook-Integration für Statusänderungen ist optional (zukünftige Erweiterung)
+- Login und Session-Management sind Teil von UC-02
+- EFN↔eLoginId Mapping erfolgt in Schritten 12-14
 
 **Konsequenzen:**
-- ➕ Echtzeit-Benachrichtigung
-- ➕ Keine Polling-Notwendigkeit
-- ➖ Webhook muss zuverlässig sein (Retry-Mechanismus)
-- ➖ HMAC-Signatur-Validierung erforderlich
+- ➕ Klare Abgrenzung zwischen UC-01 und UC-02
+- ➕ Einfacherer MVP-Scope für UC-01
+- ➕ Webhook-Integration kann später nachgerüstet werden
+- ➖ Status-Synchronisation zwischen eLogin und rvGutachten muss anderweitig gelöst werden
 
 ---
 
-### ADR-004: JWT-basierte Authentifizierung mit eLogin-Delegation
+### ADR-004: JWT-basierte Authentifizierung (UC-02)
 
 **Status:** Accepted  
-**Kontext:** rvGutachten muss Benutzer authentifizieren, aber eLogin verwaltet Credentials.
+**Kontext:** Login-Prozess ist nicht Teil von UC-01, wird in UC-02 behandelt.
 
-**Entscheidung:**  
-- Login-Request an rvGutachten
-- rvGutachten validiert Credentials gegen eLogin API
-- Bei Erfolg: JWT Token von rvGutachten ausgestellt
-- JWT Claims: gutachterId, efn, role, eLoginId
-
-**Konsequenzen:**
-- ➕ Single Source of Truth für Credentials (eLogin)
-- ➕ rvGutachten speichert keine Passwörter
-- ➖ Abhängigkeit von eLogin-Verfügbarkeit bei Login
-- ➖ Network-Latenz bei jedem Login
+**Verweis:** Siehe UC-02 (System-Authentifizierung)
 
 ---
 
@@ -419,8 +431,7 @@ sequenceDiagram
 |-----------|--------|-----|------------|
 | POST /gutachter | < 500ms | 1s | Häufigkeit: ~20/Tag, unkritisch |
 | PUT /elogin | < 300ms | 500ms | DB Update only |
-| POST /webhooks/activation | < 200ms | 300ms | Kritisch: eLogin wartet auf ACK |
-| POST /auth/login | < 1s | 2s | Inkl. eLogin-Validierung (Network) |
+| PUT /link | < 200ms | 300ms | Mapping-Tabelle Update |
 | GET /gutachter?search | < 500ms | 1s | Inkl. LIKE-Query (optimiert mit Index) |
 
 ---
@@ -431,16 +442,18 @@ sequenceDiagram
 |-------------|-----------|-----------|
 | EFN-basierte Identifikation | ✅ | ADR-002 |
 | Administrierte Registrierung | ✅ | ADR-001 |
-| eLogin-Integration | ✅ | Webhook + Delegation |
-| Status-Tracking | ✅ | pending → elogin_pending → aktiv |
+| eLogin-Integration | ✅ | Schritte 7-9, 15-17 |
+| EFN↔eLoginId Mapping | ✅ | Schritte 12-14 |
+| Status-Tracking | ✅ | pending → elogin_pending → aktiv (S17) |
 | DSGVO-Konformität | ✅ | Verschlüsselung sensibler Daten |
 | Dubletten-Prüfung | ✅ | EFN + E-Mail Unique Constraints |
 | Audit-Trail | ✅ | Alle kritischen Operationen |
-| Timeout-Handling | ✅ | Automatische Erinnerungen |
-| Willkommens-E-Mail | ✅ | Nach Webhook-Aktivierung |
-| Erste Anmeldung | ✅ | JWT-basiert mit eLogin-Delegation |
+| Postal/Email Kommunikation | ✅ | Schritte 2, 4, 10a/10b |
+| eLogin Account Aktivierung | ✅ | Schritte 15-17 |
 
 **Status:** 10/10 MVP-Anforderungen erfüllt ✅
+
+**Hinweis:** Login- und Session-Management (frühere Schritte 19-27) sind jetzt Teil von UC-02
 
 ---
 
