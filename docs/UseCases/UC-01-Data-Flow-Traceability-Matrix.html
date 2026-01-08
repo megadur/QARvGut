@@ -740,155 +740,214 @@
     ELG-&gt;&gt;ELG: 17. eLogin-Account aktiv
     
     Note over GUT,EML: Prozess endet hier. Login ist UC-02
-</div><pre data-role="codeBlock" data-info="" class="language-text"><code>---
+</div><hr>
+<h2 id="zusätzliche-api-spezifikationen-außerhalb-uc-01-scope-1">Zusätzliche API-Spezifikationen (außerhalb UC-01 Scope) </h2>
+<p>Die folgenden APIs sind Teil von UC-02 (System-Authentifizierung) und werden hier nur zur Referenz dokumentiert:</p>
+<h3 id="post-apiv1webhookseloginactivation-1">POST /api/v1/webhooks/elogin/activation </h3>
+<p><strong>Zweck:</strong> Webhook von eLogin bei erfolgreicher Account-Aktivierung (Optional für zukünftige Integration)</p>
+<p><strong>Request (von eLogin):</strong></p>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token punctuation">{</span>
+  <span class="token property">"eLoginId"</span><span class="token operator">:</span> <span class="token string">"EL-2025-123456"</span><span class="token punctuation">,</span>
+  <span class="token property">"activatedAt"</span><span class="token operator">:</span> <span class="token string">"2025-11-12T14:45:00Z"</span><span class="token punctuation">,</span>
+  <span class="token property">"activationType"</span><span class="token operator">:</span> <span class="token string">"EMAIL"</span><span class="token punctuation">,</span>
+  <span class="token property">"verificationMethod"</span><span class="token operator">:</span> <span class="token string">"CODE"</span>
+<span class="token punctuation">}</span>
+</code></pre><h3 id="post-apiv1authlogin-1">POST /api/v1/auth/login </h3>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code>**Zweck<span class="token operator">:</span>** Authentifizierung über eLogin (siehe UC<span class="token number">-02</span>)
+</code></pre><hr>
+<h2 id="architecture-decision-records-adrs">Architecture Decision Records (ADRs) </h2>
+<h3 id="adr-001-administrierter-onboarding-prozess">ADR-001: Administrierter Onboarding-Prozess </h3>
+<p><strong>Status:</strong> Accepted<br>
+<strong>Kontext:</strong> Gutachter können sich nicht selbst im System registrieren.</p>
+<p><strong>Entscheidung:</strong></p>
+<ul>
+<li>Postalischer Prozess für initiale Datenerhebung</li>
+<li>DRV-Mitarbeiter legen Gutachter in rvSMD und rvGutachten an</li>
+<li>eLogin-Account wird manuell durch DRV-MA erstellt</li>
+<li>Verknüpfung EFN ↔ eLoginId erfolgt manuell</li>
+</ul>
+<p><strong>Konsequenzen:</strong></p>
+<ul>
+<li>➕ Hohe Datenqualität durch manuelle Prüfung</li>
+<li>➕ DSGVO-konform (explizite Einwilligung)</li>
+<li>➖ Zeitaufwändig (5-10 Werktage pro Gutachter)</li>
+<li>➖ Anfällig für manuelle Fehler</li>
+</ul>
+<p><strong>Mitigation:</strong></p>
+<ul>
+<li>Dubletten-Prüfung bei EFN und E-Mail</li>
+<li>UI-Validierung in rvSMD/rvGutachten</li>
+<li>Automatische Benachrichtigungen bei jedem Schritt</li>
+</ul>
+<hr>
+<h3 id="adr-002-efn-als-primärschlüssel-für-system-verknüpfung">ADR-002: EFN als Primärschlüssel für System-Verknüpfung </h3>
+<p><strong>Status:</strong> Accepted<br>
+<strong>Kontext:</strong> Drei Systeme (rvSMD, eLogin, rvGutachten) müssen denselben Gutachter identifizieren.</p>
+<p><strong>Entscheidung:</strong></p>
+<ul>
+<li>EFN (Einheitliche Fortbildungsnummer) ist der natürliche Schlüssel</li>
+<li>Jedes System hat eigenen technischen Schlüssel (UUID, eLoginId)</li>
+<li>Mapping-Tabelle in rvGutachten verknüpft alle Identifier</li>
+</ul>
+<p><strong>Konsequenzen:</strong></p>
+<ul>
+<li>➕ EFN ist stabil und unveränderlich</li>
+<li>➕ Eindeutige Identifikation über Systemgrenzen</li>
+<li>➖ EFN kann sensibles Datum sein (DSGVO-relevant)</li>
+<li>➖ Manuelle Verknüpfung erforderlich</li>
+</ul>
+<hr>
+<h3 id="adr-003-fokus-auf-account-aktivierung-uc-01-scope">ADR-003: Fokus auf Account-Aktivierung (UC-01 Scope) </h3>
+<p><strong>Status:</strong> Accepted<br>
+<strong>Kontext:</strong> UC-01 deckt nur die Registrierung und Account-Aktivierung ab. Login-Prozesse gehören zu UC-02.</p>
+<p><strong>Entscheidung:</strong></p>
+<ul>
+<li>UC-01 endet mit eLogin-Account-Aktivierung (Schritt 17)</li>
+<li>Webhook-Integration für Statusänderungen ist optional (zukünftige Erweiterung)</li>
+<li>Login und Session-Management sind Teil von UC-02</li>
+<li>EFN↔eLoginId Mapping erfolgt in Schritten 12-14</li>
+</ul>
+<p><strong>Konsequenzen:</strong></p>
+<ul>
+<li>➕ Klare Abgrenzung zwischen UC-01 und UC-02</li>
+<li>➕ Einfacherer MVP-Scope für UC-01</li>
+<li>➕ Webhook-Integration kann später nachgerüstet werden</li>
+<li>➖ Status-Synchronisation zwischen eLogin und rvGutachten muss anderweitig gelöst werden</li>
+</ul>
+<hr>
+<h3 id="adr-004-jwt-basierte-authentifizierung-uc-02">ADR-004: JWT-basierte Authentifizierung (UC-02) </h3>
+<p><strong>Status:</strong> Accepted<br>
+<strong>Kontext:</strong> Login-Prozess ist nicht Teil von UC-01, wird in UC-02 behandelt.</p>
+<p><strong>Verweis:</strong> Siehe UC-02 (System-Authentifizierung)</p>
+<hr>
+<h2 id="performance-anforderungen">Performance-Anforderungen </h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Target</th>
+<th>Max</th>
+<th>Begründung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>POST /gutachter</td>
+<td>&lt; 500ms</td>
+<td>1s</td>
+<td>Häufigkeit: ~20/Tag, unkritisch</td>
+</tr>
+<tr>
+<td>PUT /elogin</td>
+<td>&lt; 300ms</td>
+<td>500ms</td>
+<td>DB Update only</td>
+</tr>
+<tr>
+<td>PUT /link</td>
+<td>&lt; 200ms</td>
+<td>300ms</td>
+<td>Mapping-Tabelle Update</td>
+</tr>
+<tr>
+<td>GET /gutachter?search</td>
+<td>&lt; 500ms</td>
+<td>1s</td>
+<td>Inkl. LIKE-Query (optimiert mit Index)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="mvp-abdeckung">MVP-Abdeckung </h2>
+<table>
+<thead>
+<tr>
+<th>Anforderung</th>
+<th>Abgedeckt</th>
+<th>Bemerkung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EFN-basierte Identifikation</td>
+<td>✅</td>
+<td>ADR-002</td>
+</tr>
+<tr>
+<td>Administrierte Registrierung</td>
+<td>✅</td>
+<td>ADR-001</td>
+</tr>
+<tr>
+<td>eLogin-Integration</td>
+<td>✅</td>
+<td>Schritte 7-9, 15-17</td>
+</tr>
+<tr>
+<td>EFN↔eLoginId Mapping</td>
+<td>✅</td>
+<td>Schritte 12-14</td>
+</tr>
+<tr>
+<td>Status-Tracking</td>
+<td>✅</td>
+<td>pending → elogin_pending → aktiv (S17)</td>
+</tr>
+<tr>
+<td>DSGVO-Konformität</td>
+<td>✅</td>
+<td>Verschlüsselung sensibler Daten</td>
+</tr>
+<tr>
+<td>Dubletten-Prüfung</td>
+<td>✅</td>
+<td>EFN + E-Mail Unique Constraints</td>
+</tr>
+<tr>
+<td>Audit-Trail</td>
+<td>✅</td>
+<td>Alle kritischen Operationen</td>
+</tr>
+<tr>
+<td>Postal/Email Kommunikation</td>
+<td>✅</td>
+<td>Schritte 2, 4, 10a/10b</td>
+</tr>
+<tr>
+<td>eLogin Account Aktivierung</td>
+<td>✅</td>
+<td>Schritte 15-17</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> 10/10 MVP-Anforderungen erfüllt ✅</p>
+<p><strong>Hinweis:</strong> Login- und Session-Management (frühere Schritte 19-27) sind jetzt Teil von UC-02</p>
+<hr>
+<h2 id="quellverweise">Quellverweise </h2>
+<p><strong>User Stories:</strong></p>
+<ul>
+<li>US-RL.01: Registrierung Gutachter (Hauptstory)</li>
+<li>US-RL.04: Registrierung Gutachter beantragen (DRV-MA-Perspektive)</li>
+<li>US-RL.05: Registrierung Gutachter prüfen (DRV-MA-Perspektive)</li>
+</ul>
+<p><strong>Verwandte Use Cases:</strong></p>
+<ul>
+<li>UC-02: System-Authentifizierung (Login-Flow)</li>
+<li>UC-03: DRV-Mitarbeiter-Zugriffsverwaltung (Admin-Prozesse)</li>
+</ul>
+<p><strong>Architektur:</strong></p>
+<ul>
+<li><code>/docs/architecture/domain-model.drawio</code> (Gutachter Entity)</li>
+<li><code>/docs/architecture/brownfield-architecture-enhanced-user-management.md</code> (API Design)</li>
+</ul>
+<p><strong>Externe Systeme:</strong></p>
+<ul>
+<li>eLogin: Authentifizierungsservice der DRV</li>
+<li>rvSMD: Stammdatenverwaltung</li>
+</ul>
+<hr>
+<p><strong>Dokument-Ende</strong></p>
 
-## Zusätzliche API-Spezifikationen (außerhalb UC-01 Scope)
-
-Die folgenden APIs sind Teil von UC-02 (System-Authentifizierung) und werden hier nur zur Referenz dokumentiert:
-
-### POST /api/v1/webhooks/elogin/activation
-
-**Zweck:** Webhook von eLogin bei erfolgreicher Account-Aktivierung (Optional für zukünftige Integration)
-
-**Request (von eLogin):**
-```json
-{
-  "eLoginId": "EL-2025-123456",
-  "activatedAt": "2025-11-12T14:45:00Z",
-  "activationType": "EMAIL",
-  "verificationMethod": "CODE"
-}
-</code></pre><h3>POST /api/v1/auth/login</h3>
-<p><strong>Zweck:</strong> Authentifizierung über eLogin (siehe UC-02)</p>
-<pre data-role="codeBlock" data-info="" class="language-text"><code>---
-
-## Architecture Decision Records (ADRs) {#architecture-decision-records-adrs }
-
-### ADR-001: Administrierter Onboarding-Prozess {#adr-001-administrierter-onboarding-prozess }
-
-**Status:** Accepted  
-**Kontext:** Gutachter können sich nicht selbst im System registrieren.
-
-**Entscheidung:**  
-- Postalischer Prozess für initiale Datenerhebung
-- DRV-Mitarbeiter legen Gutachter in rvSMD und rvGutachten an
-- eLogin-Account wird manuell durch DRV-MA erstellt
-- Verknüpfung EFN ↔ eLoginId erfolgt manuell
-
-**Konsequenzen:**
-- ➕ Hohe Datenqualität durch manuelle Prüfung
-- ➕ DSGVO-konform (explizite Einwilligung)
-- ➖ Zeitaufwändig (5-10 Werktage pro Gutachter)
-- ➖ Anfällig für manuelle Fehler
-
-**Mitigation:**
-- Dubletten-Prüfung bei EFN und E-Mail
-- UI-Validierung in rvSMD/rvGutachten
-- Automatische Benachrichtigungen bei jedem Schritt
-
----
-
-### ADR-002: EFN als Primärschlüssel für System-Verknüpfung {#adr-002-efn-als-primärschlüssel-für-system-verknüpfung }
-
-**Status:** Accepted  
-**Kontext:** Drei Systeme (rvSMD, eLogin, rvGutachten) müssen denselben Gutachter identifizieren.
-
-**Entscheidung:**  
-- EFN (Einheitliche Fortbildungsnummer) ist der natürliche Schlüssel
-- Jedes System hat eigenen technischen Schlüssel (UUID, eLoginId)
-- Mapping-Tabelle in rvGutachten verknüpft alle Identifier
-
-**Konsequenzen:**
-- ➕ EFN ist stabil und unveränderlich
-- ➕ Eindeutige Identifikation über Systemgrenzen
-- ➖ EFN kann sensibles Datum sein (DSGVO-relevant)
-- ➖ Manuelle Verknüpfung erforderlich
-
----
-
-### ADR-003: Fokus auf Account-Aktivierung (UC-01 Scope) {#adr-003-fokus-auf-account-aktivierung-uc-01-scope }
-
-**Status:** Accepted  
-**Kontext:** UC-01 deckt nur die Registrierung und Account-Aktivierung ab. Login-Prozesse gehören zu UC-02.
-
-**Entscheidung:**  
-- UC-01 endet mit eLogin-Account-Aktivierung (Schritt 17)
-- Webhook-Integration für Statusänderungen ist optional (zukünftige Erweiterung)
-- Login und Session-Management sind Teil von UC-02
-- EFN↔eLoginId Mapping erfolgt in Schritten 12-14
-
-**Konsequenzen:**
-- ➕ Klare Abgrenzung zwischen UC-01 und UC-02
-- ➕ Einfacherer MVP-Scope für UC-01
-- ➕ Webhook-Integration kann später nachgerüstet werden
-- ➖ Status-Synchronisation zwischen eLogin und rvGutachten muss anderweitig gelöst werden
-
----
-
-### ADR-004: JWT-basierte Authentifizierung (UC-02) {#adr-004-jwt-basierte-authentifizierung-uc-02 }
-
-**Status:** Accepted  
-**Kontext:** Login-Prozess ist nicht Teil von UC-01, wird in UC-02 behandelt.
-
-**Verweis:** Siehe UC-02 (System-Authentifizierung)
-
----
-
-## Performance-Anforderungen {#performance-anforderungen }
-
-| Operation | Target | Max | Begründung |
-|-----------|--------|-----|------------|
-| POST /gutachter | &lt; 500ms | 1s | Häufigkeit: ~20/Tag, unkritisch |
-| PUT /elogin | &lt; 300ms | 500ms | DB Update only |
-| PUT /link | &lt; 200ms | 300ms | Mapping-Tabelle Update |
-| GET /gutachter?search | &lt; 500ms | 1s | Inkl. LIKE-Query (optimiert mit Index) |
-
----
-
-## MVP-Abdeckung {#mvp-abdeckung }
-
-| Anforderung | Abgedeckt | Bemerkung |
-|-------------|-----------|-----------|
-| EFN-basierte Identifikation | ✅ | ADR-002 |
-| Administrierte Registrierung | ✅ | ADR-001 |
-| eLogin-Integration | ✅ | Schritte 7-9, 15-17 |
-| EFN↔eLoginId Mapping | ✅ | Schritte 12-14 |
-| Status-Tracking | ✅ | pending → elogin_pending → aktiv (S17) |
-| DSGVO-Konformität | ✅ | Verschlüsselung sensibler Daten |
-| Dubletten-Prüfung | ✅ | EFN + E-Mail Unique Constraints |
-| Audit-Trail | ✅ | Alle kritischen Operationen |
-| Postal/Email Kommunikation | ✅ | Schritte 2, 4, 10a/10b |
-| eLogin Account Aktivierung | ✅ | Schritte 15-17 |
-
-**Status:** 10/10 MVP-Anforderungen erfüllt ✅
-
-**Hinweis:** Login- und Session-Management (frühere Schritte 19-27) sind jetzt Teil von UC-02
-
----
-
-## Quellverweise {#quellverweise }
-
-**User Stories:**
-- US-RL.01: Registrierung Gutachter (Hauptstory)
-- US-RL.04: Registrierung Gutachter beantragen (DRV-MA-Perspektive)
-- US-RL.05: Registrierung Gutachter prüfen (DRV-MA-Perspektive)
-
-**Verwandte Use Cases:**
-- UC-02: System-Authentifizierung (Login-Flow)
-- UC-03: DRV-Mitarbeiter-Zugriffsverwaltung (Admin-Prozesse)
-
-**Architektur:**
-- `/docs/architecture/domain-model.drawio` (Gutachter Entity)
-- `/docs/architecture/brownfield-architecture-enhanced-user-management.md` (API Design)
-
-**Externe Systeme:**
-- eLogin: Authentifizierungsservice der DRV
-- rvSMD: Stammdatenverwaltung
-
----
-
-**Dokument-Ende**
-</code></pre>
       </div>
       
       

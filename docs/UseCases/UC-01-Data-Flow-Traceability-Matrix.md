@@ -324,7 +324,7 @@ sequenceDiagram
     
     Note over GUT,EML: Prozess endet hier. Login ist UC-02
 ```
-```
+
 
 ---
 
@@ -347,6 +347,7 @@ Die folgenden APIs sind Teil von UC-02 (System-Authentifizierung) und werden hie
 ```
 
 ### POST /api/v1/auth/login
+```json
 
 **Zweck:** Authentifizierung über eLogin (siehe UC-02)
 ```
