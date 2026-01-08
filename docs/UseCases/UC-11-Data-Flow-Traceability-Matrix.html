@@ -1,0 +1,1403 @@
+<!DOCTYPE html><html><head>
+      <title>UC-11-Data-Flow-Traceability-Matrix</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///c:\Users\DonTillo\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.8.20\crossnote\dependencies\katex\katex.min.css">
+      
+      
+      <script type="text/javascript" src="file:///c:\Users\DonTillo\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.8.20\crossnote\dependencies\mermaid\mermaid.min.js" charset="UTF-8"></script>
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. --><script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script></head><body for="html-export">
+    
+    
+      <div class="crossnote markdown-preview  ">
+      
+<h1 id="uc-11-datenfluss-rückverfolgbarkeitsmatrix">UC-11: Datenfluss-Rückverfolgbarkeitsmatrix </h1>
+<h2 id="gutachter-statusänderungen">Gutachter-Statusänderungen </h2>
+<p><strong>Use Case:</strong> UC-11: Statusänderungen Gutachter<br>
+<strong>Datum:</strong> November 2025<br>
+<strong>Zweck:</strong> Rückverfolgbarkeit der Gutachter-Statusänderungen zwischen rvSMD und rvGutachten</p>
+<p><strong>WICHTIG:</strong> Statusänderungen werden ausschließlich von 8023-Mitarbeitern in rvSMD vorgenommen und automatisch nach rvGutachten synchronisiert. Der Gutachter selbst kann seinen Status nicht ändern.</p>
+<hr>
+<h2 id="legende">Legende </h2>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Bedeutung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[R]</td>
+<td><strong>Read</strong> - Daten werden gelesen/abgefragt</td>
+</tr>
+<tr>
+<td>[C]</td>
+<td><strong>Create</strong> - Daten werden erstellt</td>
+</tr>
+<tr>
+<td>[U]</td>
+<td><strong>Update</strong> - Daten werden aktualisiert</td>
+</tr>
+<tr>
+<td>[OK]</td>
+<td><strong>Display</strong> - Daten werden dem Benutzer angezeigt</td>
+</tr>
+<tr>
+<td>[WARN]</td>
+<td><strong>Validate</strong> - Daten werden validiert/geprüft</td>
+</tr>
+<tr>
+<td>[AUTH]</td>
+<td><strong>Check</strong> - Berechtigungsprüfung</td>
+</tr>
+<tr>
+<td>[SYNC]</td>
+<td><strong>Synchronize</strong> - Daten werden zwischen Systemen synchronisiert</td>
+</tr>
+<tr>
+<td>[SEND]</td>
+<td><strong>Transmit</strong> - Daten werden übertragen (E-Mail)</td>
+</tr>
+<tr>
+<td>-</td>
+<td>Nicht beteiligt in diesem Schritt</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="sequenzschritte-zu-api-aufrufen-mapping">Sequenzschritte zu API-Aufrufen Mapping </h2>
+<table>
+<thead>
+<tr>
+<th>Schritt</th>
+<th>Aktor</th>
+<th>Aktion</th>
+<th>API Aufruf</th>
+<th>Methode</th>
+<th>System</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>01</td>
+<td>DRV-MA</td>
+<td>Gutachter-Verwaltung in rvSMD öffnen</td>
+<td><code>rvSMD Web UI</code></td>
+<td>UI</td>
+<td>rvSMD</td>
+</tr>
+<tr>
+<td>02</td>
+<td>DRV-MA</td>
+<td>Gutachter suchen (EFN/Name)</td>
+<td><code>rvSMD Search</code></td>
+<td>Search</td>
+<td>rvSMD</td>
+</tr>
+<tr>
+<td>03</td>
+<td>rvSMD</td>
+<td>Gutachter-Details laden</td>
+<td>Database Query</td>
+<td>-</td>
+<td>rvSMD DB</td>
+</tr>
+<tr>
+<td>04</td>
+<td>rvSMD</td>
+<td>Gutachter-Profil anzeigen</td>
+<td>UI Rendering</td>
+<td>-</td>
+<td>rvSMD Frontend</td>
+</tr>
+<tr>
+<td>05</td>
+<td>DRV-MA</td>
+<td>Statusänderung auswählen</td>
+<td>UI Interaction</td>
+<td>-</td>
+<td>rvSMD Frontend</td>
+</tr>
+<tr>
+<td>06</td>
+<td>rvSMD</td>
+<td>Berechtigungsprüfung</td>
+<td>Authorization Check</td>
+<td>-</td>
+<td>rvSMD</td>
+</tr>
+<tr>
+<td>07</td>
+<td>rvSMD</td>
+<td>Statusübergang validieren</td>
+<td>Business Logic</td>
+<td>-</td>
+<td>rvSMD</td>
+</tr>
+<tr>
+<td>08</td>
+<td>rvSMD</td>
+<td>Neuen Status in DB speichern</td>
+<td>Database Update</td>
+<td>-</td>
+<td>rvSMD DB</td>
+</tr>
+<tr>
+<td>09</td>
+<td>rvSMD</td>
+<td>Audit-Log-Eintrag erstellen</td>
+<td>Database Insert</td>
+<td>-</td>
+<td>rvSMD Audit</td>
+</tr>
+<tr>
+<td>10</td>
+<td>rvSMD</td>
+<td>Status-Event publizieren</td>
+<td><code>MQ.publish(GUTACHTER_STATUS_CHANGED)</code></td>
+<td>PUBLISH</td>
+<td>Message Queue</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Message Queue</td>
+<td>Event in Queue speichern</td>
+<td>Queue Storage</td>
+<td>-</td>
+<td>MQ</td>
+</tr>
+<tr>
+<td>12</td>
+<td>rvGutachten</td>
+<td>Event konsumieren</td>
+<td><code>MQ.consume()</code></td>
+<td>CONSUME</td>
+<td>rvGutachten</td>
+</tr>
+<tr>
+<td>13</td>
+<td>rvGutachten</td>
+<td>EFN aus Event extrahieren</td>
+<td>Event Parsing</td>
+<td>-</td>
+<td>rvGutachten</td>
+</tr>
+<tr>
+<td>14</td>
+<td>rvGutachten</td>
+<td>Gutachter in DB suchen</td>
+<td><code>SELECT * FROM gutachter WHERE efn = ?</code></td>
+<td>QUERY</td>
+<td>rvGutachten DB</td>
+</tr>
+<tr>
+<td>15</td>
+<td>rvGutachten</td>
+<td>Statusübergang validieren</td>
+<td>Business Logic</td>
+<td>-</td>
+<td>rvGutachten</td>
+</tr>
+<tr>
+<td>16</td>
+<td>rvGutachten</td>
+<td>Status aktualisieren</td>
+<td><code>UPDATE gutachter SET status = ?, statusGeaendertAm = ?</code></td>
+<td>UPDATE</td>
+<td>rvGutachten DB</td>
+</tr>
+<tr>
+<td>17</td>
+<td>rvGutachten</td>
+<td>Audit-Log-Eintrag erstellen</td>
+<td><code>INSERT INTO audit_log</code></td>
+<td>INSERT</td>
+<td>rvGutachten DB</td>
+</tr>
+<tr>
+<td>18</td>
+<td>rvGutachten</td>
+<td>E-Mail-Benachrichtigung senden</td>
+<td><code>POST /email/send</code></td>
+<td>POST</td>
+<td>E-Mail System</td>
+</tr>
+<tr>
+<td>19</td>
+<td>E-Mail System</td>
+<td>E-Mail versenden</td>
+<td>SMTP</td>
+<td>-</td>
+<td>E-Mail Server</td>
+</tr>
+<tr>
+<td>20</td>
+<td>rvGutachten</td>
+<td>Sync-Bestätigung publizieren</td>
+<td><code>MQ.publish(SYNC_CONFIRMED)</code></td>
+<td>PUBLISH</td>
+<td>Message Queue</td>
+</tr>
+<tr>
+<td>21</td>
+<td>Gutachter</td>
+<td>Login-Versuch</td>
+<td><code>POST /api/v1/auth/login</code></td>
+<td>POST</td>
+<td>rvGutachten API</td>
+</tr>
+<tr>
+<td>22</td>
+<td>rvGutachten</td>
+<td>Status prüfen</td>
+<td>Database Query</td>
+<td>-</td>
+<td>rvGutachten DB</td>
+</tr>
+<tr>
+<td>23</td>
+<td>rvGutachten</td>
+<td>Login-Ergebnis</td>
+<td>Response</td>
+<td>-</td>
+<td>rvGutachten API</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="datenfluss-matrix-business-objects--api-schritte">Datenfluss-Matrix: Business Objects × API-Schritte </h2>
+<h3 id="gutachter-business-object">Gutachter Business Object </h3>
+<table>
+<thead>
+<tr>
+<th>Attribut</th>
+<th>Typ</th>
+<th>MVP</th>
+<th>S02-04: Search</th>
+<th>S07: Validate</th>
+<th>S08: Save Status</th>
+<th>S14: Find</th>
+<th>S15: Validate</th>
+<th>S16: Update</th>
+<th>S18: Notify</th>
+<th>S22-23: Login Check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>gutachterId</strong></td>
+<td>uuid</td>
+<td>1</td>
+<td>[R]</td>
+<td>-</td>
+<td>-</td>
+<td>[R]</td>
+<td>-</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>[R]</td>
+</tr>
+<tr>
+<td><strong>efn</strong></td>
+<td>string</td>
+<td>1</td>
+<td>[R]</td>
+<td>-</td>
+<td>-</td>
+<td>[R]</td>
+<td>-</td>
+<td>-</td>
+<td>[OK]</td>
+<td>[R]</td>
+</tr>
+<tr>
+<td><strong>vorname</strong></td>
+<td>string</td>
+<td>1</td>
+<td>[OK]</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>[OK]</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>nachname</strong></td>
+<td>string</td>
+<td>1</td>
+<td>[OK]</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>[OK]</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>email</strong></td>
+<td>string</td>
+<td>1</td>
+<td>[OK]</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>[SEND]</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>eLoginId</strong></td>
+<td>string</td>
+<td>1</td>
+<td>[OK]</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>[R]</td>
+</tr>
+<tr>
+<td><strong>status</strong></td>
+<td>enum</td>
+<td>1</td>
+<td>[OK]</td>
+<td>[WARN]</td>
+<td>[U]</td>
+<td>[R]</td>
+<td>[WARN]</td>
+<td>[U]</td>
+<td>[OK]</td>
+<td>[AUTH]</td>
+</tr>
+<tr>
+<td><strong>statusGeaendertAm</strong></td>
+<td>datetime</td>
+<td>1</td>
+<td>[OK]</td>
+<td>-</td>
+<td>[C]</td>
+<td>-</td>
+<td>-</td>
+<td>[U]</td>
+<td>[OK]</td>
+<td>[R]</td>
+</tr>
+<tr>
+<td><strong>statusGeaendertVon</strong></td>
+<td>uuid</td>
+<td>1</td>
+<td>-</td>
+<td>-</td>
+<td>[C]</td>
+<td>-</td>
+<td>-</td>
+<td>[U]</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>gesperrtSeit</strong></td>
+<td>datetime</td>
+<td>?</td>
+<td>[OK]</td>
+<td>-</td>
+<td>[U]</td>
+<td>-</td>
+<td>-</td>
+<td>[U]</td>
+<td>[OK]</td>
+<td>[R]</td>
+</tr>
+<tr>
+<td><strong>gesperrtGrund</strong></td>
+<td>string</td>
+<td>?</td>
+<td>[OK]</td>
+<td>-</td>
+<td>[U]</td>
+<td>-</td>
+<td>-</td>
+<td>[U]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+</tr>
+<tr>
+<td><strong>gesperrtVon</strong></td>
+<td>uuid</td>
+<td>?</td>
+<td>-</td>
+<td>-</td>
+<td>[C]</td>
+<td>-</td>
+<td>-</td>
+<td>[U]</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>aktiviertAm</strong></td>
+<td>datetime</td>
+<td>1</td>
+<td>[OK]</td>
+<td>-</td>
+<td>[U]</td>
+<td>-</td>
+<td>-</td>
+<td>[U]</td>
+<td>-</td>
+<td>[R]</td>
+</tr>
+<tr>
+<td><strong>letzterLogin</strong></td>
+<td>datetime</td>
+<td>?</td>
+<td>[OK]</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>[R]</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[CRIT] Kritische Erkenntnisse:</strong></p>
+<ul>
+<li><code>status</code> ist der zentrale Steuerungsmechanismus für Zugriffskontrolle</li>
+<li>Mögliche Status: <code>pending</code>, <code>elogin_pending</code>, <code>aktiv</code>, <code>gesperrt</code>, <code>reaktiviert</code>, <code>gelöscht</code></li>
+<li>Statusübergänge müssen auf beiden Seiten validiert werden (rvSMD + rvGutachten)</li>
+<li><code>gesperrtSeit</code> und <code>gesperrtGrund</code> sind nur bei Status <code>gesperrt</code> relevant</li>
+</ul>
+<hr>
+<h3 id="status-änderungs-event">Status-Änderungs-Event </h3>
+<table>
+<thead>
+<tr>
+<th>Attribut</th>
+<th>Typ</th>
+<th>MVP</th>
+<th>S10: Publish</th>
+<th>S12: Consume</th>
+<th>S13: Parse</th>
+<th>S14: Search</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>eventId</strong></td>
+<td>uuid</td>
+<td>1</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>eventType</strong></td>
+<td>string</td>
+<td>1</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>timestamp</strong></td>
+<td>datetime</td>
+<td>1</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>efn</strong></td>
+<td>string</td>
+<td>1</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>[R]</td>
+</tr>
+<tr>
+<td><strong>alterStatus</strong></td>
+<td>enum</td>
+<td>1</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>neuerStatus</strong></td>
+<td>enum</td>
+<td>1</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>[U]</td>
+</tr>
+<tr>
+<td><strong>grund</strong></td>
+<td>string</td>
+<td>?</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>[U]</td>
+</tr>
+<tr>
+<td><strong>geaendertVon</strong></td>
+<td>uuid</td>
+<td>1</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>[U]</td>
+</tr>
+<tr>
+<td><strong>geaendertVonName</strong></td>
+<td>string</td>
+<td>?</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Anmerkung:</strong> Event wird von rvSMD publiziert und von rvGutachten konsumiert. EFN ist der gemeinsame Identifier zwischen Systemen.</p>
+<hr>
+<h3 id="audit-log-business-object">Audit-Log Business Object </h3>
+<table>
+<thead>
+<tr>
+<th>Attribut</th>
+<th>Typ</th>
+<th>MVP</th>
+<th>S09: rvSMD Audit</th>
+<th>S17: rvGutachten Audit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>auditId</strong></td>
+<td>uuid</td>
+<td>1</td>
+<td>[C]</td>
+<td>[C]</td>
+</tr>
+<tr>
+<td><strong>timestamp</strong></td>
+<td>datetime</td>
+<td>1</td>
+<td>[C]</td>
+<td>[C]</td>
+</tr>
+<tr>
+<td><strong>aktion</strong></td>
+<td>string</td>
+<td>1</td>
+<td>[C]</td>
+<td>[C]</td>
+</tr>
+<tr>
+<td><strong>entitaetsTyp</strong></td>
+<td>string</td>
+<td>1</td>
+<td>[C]</td>
+<td>[C]</td>
+</tr>
+<tr>
+<td><strong>entitaetsId</strong></td>
+<td>uuid</td>
+<td>1</td>
+<td>[C]</td>
+<td>[C]</td>
+</tr>
+<tr>
+<td><strong>alterWert</strong></td>
+<td>string</td>
+<td>?</td>
+<td>[C]</td>
+<td>[C]</td>
+</tr>
+<tr>
+<td><strong>neuerWert</strong></td>
+<td>string</td>
+<td>?</td>
+<td>[C]</td>
+<td>[C]</td>
+</tr>
+<tr>
+<td><strong>benutzer</strong></td>
+<td>uuid</td>
+<td>1</td>
+<td>[C]</td>
+<td>[C]</td>
+</tr>
+<tr>
+<td><strong>system</strong></td>
+<td>string</td>
+<td>1</td>
+<td>[C]</td>
+<td>[C]</td>
+</tr>
+<tr>
+<td><strong>ereignisQuelle</strong></td>
+<td>string</td>
+<td>?</td>
+<td>[C]</td>
+<td>[C]</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Anmerkung:</strong> Audit-Logs werden in beiden Systemen unabhängig erstellt zur Nachvollziehbarkeit.</p>
+<hr>
+<h2 id="api-endpoint-spezifikationen">API Endpoint Spezifikationen </h2>
+<h3 id="1-message-queue-event-gutachter_status_changed">1. Message Queue Event: GUTACHTER_STATUS_CHANGED </h3>
+<p><strong>Zweck:</strong> Statusänderung von rvSMD nach rvGutachten synchronisieren</p>
+<p><strong>Event Payload:</strong></p>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token punctuation">{</span>
+  <span class="token property">"eventId"</span><span class="token operator">:</span> <span class="token string">"evt-123e4567-e89b-12d3-a456-426614174000"</span><span class="token punctuation">,</span>
+  <span class="token property">"eventType"</span><span class="token operator">:</span> <span class="token string">"GUTACHTER_STATUS_CHANGED"</span><span class="token punctuation">,</span>
+  <span class="token property">"timestamp"</span><span class="token operator">:</span> <span class="token string">"2025-11-13T14:30:00Z"</span><span class="token punctuation">,</span>
+  <span class="token property">"source"</span><span class="token operator">:</span> <span class="token string">"rvSMD"</span><span class="token punctuation">,</span>
+  <span class="token property">"version"</span><span class="token operator">:</span> <span class="token string">"1.0"</span><span class="token punctuation">,</span>
+  <span class="token property">"data"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"efn"</span><span class="token operator">:</span> <span class="token string">"651002480858XX"</span><span class="token punctuation">,</span>
+    <span class="token property">"alterStatus"</span><span class="token operator">:</span> <span class="token string">"aktiv"</span><span class="token punctuation">,</span>
+    <span class="token property">"neuerStatus"</span><span class="token operator">:</span> <span class="token string">"gesperrt"</span><span class="token punctuation">,</span>
+    <span class="token property">"grund"</span><span class="token operator">:</span> <span class="token string">"Verstoß gegen Nutzungsbedingungen"</span><span class="token punctuation">,</span>
+    <span class="token property">"geaendertVon"</span><span class="token operator">:</span> <span class="token string">"DRV-MA-12345"</span><span class="token punctuation">,</span>
+    <span class="token property">"geaendertVonName"</span><span class="token operator">:</span> <span class="token string">"Müller, Hans"</span><span class="token punctuation">,</span>
+    <span class="token property">"geaendertAm"</span><span class="token operator">:</span> <span class="token string">"2025-11-13T14:29:55Z"</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><p><strong>Verarbeitungslogik in rvGutachten:</strong></p>
+<ol>
+<li>Event aus Queue konsumieren</li>
+<li>EFN aus Event extrahieren</li>
+<li>Gutachter in rvGutachten DB suchen</li>
+<li>Falls nicht gefunden: Warning loggen, Event in Dead Letter Queue</li>
+<li>Statusübergang validieren (z.B. <code>gelöscht</code> → <code>aktiv</code> nicht erlaubt)</li>
+<li>Status in DB aktualisieren</li>
+<li>Audit-Log erstellen</li>
+<li>E-Mail-Benachrichtigung senden (falls relevant)</li>
+<li>Sync-Bestätigung publizieren</li>
+</ol>
+<hr>
+<h3 id="2-post-webhooksrvsmdgutachterstatus-alternative-rest-endpoint">2. POST /webhooks/rvsmd/gutachter/status (Alternative REST Endpoint) </h3>
+<p><strong>Zweck:</strong> Alternative zu Message Queue für Statusänderungen (falls MQ nicht verfügbar)</p>
+<p><strong>Request:</strong></p>
+<pre data-role="codeBlock" data-info="http" class="language-http http"><code><span class="token request-line"><span class="token method property">POST</span> <span class="token request-target url">/api/v1/webhooks/rvsmd/gutachter/status</span> <span class="token http-version property">HTTP/1.1</span></span>
+<span class="token header"><span class="token header-name keyword">Host</span><span class="token punctuation">:</span> <span class="token header-value">rvgutachten.drv.de</span></span>
+<span class="token header"><span class="token header-name keyword">Content-Type</span><span class="token punctuation">:</span> <span class="token header-value">application/json</span></span>
+<span class="token header"><span class="token header-name keyword">Authorization</span><span class="token punctuation">:</span> <span class="token header-value">Bearer &lt;service-token&gt;</span></span>
+<span class="token application-json">
+<span class="token punctuation">{</span>
+  <span class="token string-property property">"efn"</span><span class="token operator">:</span> <span class="token string">"651002480858XX"</span><span class="token punctuation">,</span>
+  <span class="token string-property property">"alterStatus"</span><span class="token operator">:</span> <span class="token string">"aktiv"</span><span class="token punctuation">,</span>
+  <span class="token string-property property">"neuerStatus"</span><span class="token operator">:</span> <span class="token string">"gesperrt"</span><span class="token punctuation">,</span>
+  <span class="token string-property property">"grund"</span><span class="token operator">:</span> <span class="token string">"Verstoß gegen Nutzungsbedingungen"</span><span class="token punctuation">,</span>
+  <span class="token string-property property">"geaendertVon"</span><span class="token operator">:</span> <span class="token string">"DRV-MA-12345"</span><span class="token punctuation">,</span>
+  <span class="token string-property property">"geaendertAm"</span><span class="token operator">:</span> <span class="token string">"2025-11-13T14:29:55Z"</span>
+<span class="token punctuation">}</span>
+</span></code></pre><p><strong>Response 200 OK:</strong></p>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token punctuation">{</span>
+  <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"SUCCESS"</span><span class="token punctuation">,</span>
+  <span class="token property">"gutachterId"</span><span class="token operator">:</span> <span class="token string">"123e4567-e89b-12d3-a456-426614174000"</span><span class="token punctuation">,</span>
+  <span class="token property">"efn"</span><span class="token operator">:</span> <span class="token string">"651002480858XX"</span><span class="token punctuation">,</span>
+  <span class="token property">"neuerStatus"</span><span class="token operator">:</span> <span class="token string">"gesperrt"</span><span class="token punctuation">,</span>
+  <span class="token property">"syncTimestamp"</span><span class="token operator">:</span> <span class="token string">"2025-11-13T14:30:00Z"</span>
+<span class="token punctuation">}</span>
+</code></pre><p><strong>Response 404 Not Found:</strong></p>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token punctuation">{</span>
+  <span class="token property">"error"</span><span class="token operator">:</span> <span class="token string">"GUTACHTER_NOT_FOUND"</span><span class="token punctuation">,</span>
+  <span class="token property">"message"</span><span class="token operator">:</span> <span class="token string">"Gutachter mit EFN nicht gefunden"</span><span class="token punctuation">,</span>
+  <span class="token property">"efn"</span><span class="token operator">:</span> <span class="token string">"651002480858XX"</span>
+<span class="token punctuation">}</span>
+</code></pre><p><strong>Response 400 Bad Request:</strong></p>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token punctuation">{</span>
+  <span class="token property">"error"</span><span class="token operator">:</span> <span class="token string">"INVALID_STATUS_TRANSITION"</span><span class="token punctuation">,</span>
+  <span class="token property">"message"</span><span class="token operator">:</span> <span class="token string">"Statusübergang nicht erlaubt"</span><span class="token punctuation">,</span>
+  <span class="token property">"alterStatus"</span><span class="token operator">:</span> <span class="token string">"gelöscht"</span><span class="token punctuation">,</span>
+  <span class="token property">"neuerStatus"</span><span class="token operator">:</span> <span class="token string">"aktiv"</span><span class="token punctuation">,</span>
+  <span class="token property">"grund"</span><span class="token operator">:</span> <span class="token string">"Gelöschte Gutachter können nicht reaktiviert werden"</span>
+<span class="token punctuation">}</span>
+</code></pre><hr>
+<h3 id="3-get-apiv1gutachteridstatus">3. GET /api/v1/gutachter/{id}/status </h3>
+<p><strong>Zweck:</strong> Aktuellen Status eines Gutachters abfragen</p>
+<p><strong>Request:</strong></p>
+<pre data-role="codeBlock" data-info="http" class="language-http http"><code><span class="token request-line"><span class="token method property">GET</span> <span class="token request-target url">/api/v1/gutachter/123e4567-e89b-12d3-a456-426614174000/status</span> <span class="token http-version property">HTTP/1.1</span></span>
+<span class="token header"><span class="token header-name keyword">Host</span><span class="token punctuation">:</span> <span class="token header-value">rvgutachten.drv.de</span></span>
+<span class="token header"><span class="token header-name keyword">Authorization</span><span class="token punctuation">:</span> <span class="token header-value">Bearer eyJhbGc...</span></span>
+</code></pre><p><strong>Response 200 OK:</strong></p>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token punctuation">{</span>
+  <span class="token property">"gutachterId"</span><span class="token operator">:</span> <span class="token string">"123e4567-e89b-12d3-a456-426614174000"</span><span class="token punctuation">,</span>
+  <span class="token property">"efn"</span><span class="token operator">:</span> <span class="token string">"651002480858XX"</span><span class="token punctuation">,</span>
+  <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"aktiv"</span><span class="token punctuation">,</span>
+  <span class="token property">"statusGeaendertAm"</span><span class="token operator">:</span> <span class="token string">"2025-11-10T10:15:30Z"</span><span class="token punctuation">,</span>
+  <span class="token property">"statusGeaendertVon"</span><span class="token operator">:</span> <span class="token string">"DRV-MA-12345"</span><span class="token punctuation">,</span>
+  <span class="token property">"aktiviertAm"</span><span class="token operator">:</span> <span class="token string">"2025-11-10T10:15:30Z"</span><span class="token punctuation">,</span>
+  <span class="token property">"gesperrtSeit"</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span>
+  <span class="token property">"gesperrtGrund"</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span>
+  <span class="token property">"letzterLogin"</span><span class="token operator">:</span> <span class="token string">"2025-11-12T08:45:22Z"</span>
+<span class="token punctuation">}</span>
+</code></pre><p><strong>Response 200 OK (Gesperrt):</strong></p>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token punctuation">{</span>
+  <span class="token property">"gutachterId"</span><span class="token operator">:</span> <span class="token string">"123e4567-e89b-12d3-a456-426614174000"</span><span class="token punctuation">,</span>
+  <span class="token property">"efn"</span><span class="token operator">:</span> <span class="token string">"651002480858XX"</span><span class="token punctuation">,</span>
+  <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"gesperrt"</span><span class="token punctuation">,</span>
+  <span class="token property">"statusGeaendertAm"</span><span class="token operator">:</span> <span class="token string">"2025-11-13T14:30:00Z"</span><span class="token punctuation">,</span>
+  <span class="token property">"statusGeaendertVon"</span><span class="token operator">:</span> <span class="token string">"DRV-MA-12345"</span><span class="token punctuation">,</span>
+  <span class="token property">"aktiviertAm"</span><span class="token operator">:</span> <span class="token string">"2025-11-10T10:15:30Z"</span><span class="token punctuation">,</span>
+  <span class="token property">"gesperrtSeit"</span><span class="token operator">:</span> <span class="token string">"2025-11-13T14:30:00Z"</span><span class="token punctuation">,</span>
+  <span class="token property">"gesperrtGrund"</span><span class="token operator">:</span> <span class="token string">"Verstoß gegen Nutzungsbedingungen"</span><span class="token punctuation">,</span>
+  <span class="token property">"letzterLogin"</span><span class="token operator">:</span> <span class="token string">"2025-11-12T08:45:22Z"</span>
+<span class="token punctuation">}</span>
+</code></pre><hr>
+<h2 id="mermaid-diagramme">Mermaid Diagramme </h2>
+<h3 id="hauptfluss-statusänderung-durch-drv-mitarbeiter">Hauptfluss: Statusänderung durch DRV-Mitarbeiter </h3>
+<div class="mermaid">sequenceDiagram
+    participant DRV as DRV-Mitarbeiter
+    participant SMD as rvSMD
+    participant DB_SMD as rvSMD DB
+    participant MQ as Message Queue
+    participant RVG as rvGutachten
+    participant DB_RVG as rvGutachten DB
+    participant EML as E-Mail System
+    participant GUT as Gutachter
+
+    DRV-&gt;&gt;SMD: 01. Gutachter-Verwaltung öffnen
+    DRV-&gt;&gt;SMD: 02. Gutachter suchen (EFN)
+    SMD-&gt;&gt;DB_SMD: 03. Gutachter-Details laden
+    DB_SMD--&gt;&gt;SMD: Gutachter-Daten
+    SMD-&gt;&gt;DRV: 04. Gutachter-Profil anzeigen
+    
+    DRV-&gt;&gt;SMD: 05. Statusänderung auswählen (z.B. "gesperrt")
+    SMD-&gt;&gt;SMD: 06. Berechtigungsprüfung
+    SMD-&gt;&gt;SMD: 07. Statusübergang validieren
+    
+    alt Statusübergang gültig
+        SMD-&gt;&gt;DB_SMD: 08. Neuen Status speichern
+        SMD-&gt;&gt;DB_SMD: 09. Audit-Log erstellen
+        SMD-&gt;&gt;MQ: 10. GUTACHTER_STATUS_CHANGED Event publizieren
+        Note over MQ: Event enthält:&lt;br/&gt;EFN, alter/neuer Status,&lt;br/&gt;Grund, DRV-MA
+        
+        MQ-&gt;&gt;RVG: 12. Event konsumieren
+        RVG-&gt;&gt;RVG: 13. EFN extrahieren
+        RVG-&gt;&gt;DB_RVG: 14. Gutachter suchen (WHERE efn = ?)
+        
+        alt Gutachter gefunden
+            RVG-&gt;&gt;RVG: 15. Statusübergang validieren
+            RVG-&gt;&gt;DB_RVG: 16. Status aktualisieren
+            RVG-&gt;&gt;DB_RVG: 17. Audit-Log erstellen
+            
+            opt Relevante Statusänderung
+                RVG-&gt;&gt;EML: 18. E-Mail-Benachrichtigung senden
+                EML-&gt;&gt;GUT: 19. E-Mail versenden
+                Note over GUT: "Ihr Account wurde gesperrt:&lt;br/&gt;[Grund]"
+            end
+            
+            RVG-&gt;&gt;MQ: 20. SYNC_CONFIRMED publizieren
+            SMD-&gt;&gt;DRV: Statusänderung erfolgreich
+        else Gutachter nicht gefunden
+            RVG-&gt;&gt;RVG: Log Warning
+            RVG-&gt;&gt;MQ: Event in Dead Letter Queue
+            SMD-&gt;&gt;DRV: Warnung: Sync fehlgeschlagen
+        end
+    else Statusübergang ungültig
+        SMD-&gt;&gt;DRV: Fehlermeldung: Ungültiger Übergang
+    end
+    
+    Note over GUT,RVG: Login-Versuch nach Statusänderung
+    
+    GUT-&gt;&gt;RVG: 21. Login-Versuch (POST /auth/login)
+    RVG-&gt;&gt;DB_RVG: 22. Status prüfen
+    
+    alt Status = "aktiv"
+        RVG-&gt;&gt;GUT: 23. Login erfolgreich + JWT Token
+    else Status = "gesperrt"
+        RVG-&gt;&gt;GUT: 23. Login abgelehnt + Grund anzeigen
+    else Status = "pending" oder "elogin_pending"
+        RVG-&gt;&gt;GUT: 23. Aktivierung ausstehend
+    end
+</div><hr>
+<h3 id="statusübergangs-diagramm">Statusübergangs-Diagramm </h3>
+<div class="mermaid">stateDiagram-v2
+    [*] --&gt; pending: Gutachter angelegt&lt;br/&gt;(rvSMD → rvGutachten)
+    
+    pending --&gt; elogin_pending: eLogin-ID zugewiesen&lt;br/&gt;(DRV-MA)
+    
+    elogin_pending --&gt; aktiv: eLogin aktiviert&lt;br/&gt;(Gutachter)
+    
+    aktiv --&gt; gesperrt: Sperrung durch DRV-MA&lt;br/&gt;(UC-11)
+    gesperrt --&gt; reaktiviert: Entsperrung durch DRV-MA&lt;br/&gt;(UC-11)
+    reaktiviert --&gt; aktiv: Auto-Transition
+    
+    aktiv --&gt; gelöscht: Löschung durch DRV-MA&lt;br/&gt;(UC-11, selten)
+    gesperrt --&gt; gelöscht: Löschung bei Sperre&lt;br/&gt;(UC-11)
+    
+    pending --&gt; gelöscht: Abbruch Onboarding&lt;br/&gt;(selten)
+    elogin_pending --&gt; gelöscht: Abbruch Onboarding&lt;br/&gt;(selten)
+    
+    gelöscht --&gt; [*]: DSGVO-konforme Löschung
+    
+    note right of aktiv
+        Normalbetrieb:
+        - Login erlaubt
+        - Aufträge sichtbar
+        - Alle Funktionen aktiv
+    end note
+    
+    note right of gesperrt
+        Eingeschränkter Zugriff:
+        - Login blockiert
+        - Aufträge read-only (opt.)
+        - E-Mail-Benachrichtigung
+    end note
+    
+    note right of gelöscht
+        Endgültig:
+        - Keine Reaktivierung
+        - Daten nach 30 Tagen gelöscht
+        - Audit-Logs bleiben erhalten
+    end note
+</div><hr>
+<h3 id="fehlerbehandlung-event-verarbeitung">Fehlerbehandlung: Event-Verarbeitung </h3>
+<div class="mermaid">sequenceDiagram
+    participant SMD as rvSMD
+    participant MQ as Message Queue
+    participant RVG as rvGutachten
+    participant DLQ as Dead Letter Queue
+    participant MON as Monitoring
+
+    SMD-&gt;&gt;MQ: Publish GUTACHTER_STATUS_CHANGED
+    MQ-&gt;&gt;RVG: Deliver Event
+    
+    alt Gutachter nicht gefunden
+        RVG-&gt;&gt;RVG: Log Warning: EFN unbekannt
+        RVG-&gt;&gt;DLQ: Event in Dead Letter Queue
+        RVG-&gt;&gt;MON: Alert: Sync-Fehler
+        Note over MON: Support-Team benachrichtigen
+    else Statusübergang ungültig
+        RVG-&gt;&gt;RVG: Log Error: Invalid transition
+        RVG-&gt;&gt;DLQ: Event in Dead Letter Queue
+        RVG-&gt;&gt;MON: Alert: Business Logic Fehler
+    else Database-Fehler
+        RVG-&gt;&gt;RVG: Log Error: DB connection failed
+        RVG-&gt;&gt;MQ: NACK (Event zurück in Queue)
+        Note over MQ: Retry mit Exponential Backoff
+        RVG-&gt;&gt;MON: Alert: Technischer Fehler
+    else Erfolgreich
+        RVG-&gt;&gt;RVG: Status aktualisiert
+        RVG-&gt;&gt;MQ: ACK (Event bestätigt)
+        RVG-&gt;&gt;MQ: Publish SYNC_CONFIRMED
+    end
+</div><hr>
+<h2 id="kritische-erkenntnisse">Kritische Erkenntnisse </h2>
+<h3 id="1-status-lifecycle-management">1. Status-Lifecycle Management </h3>
+<p><strong>[CRIT] Statusübergänge:</strong></p>
+<ul>
+<li><strong>pending</strong> → <strong>elogin_pending</strong> → <strong>aktiv</strong> (Normal-Onboarding)</li>
+<li><strong>aktiv</strong> ↔ <strong>gesperrt</strong> ↔ <strong>reaktiviert</strong> (Verwaltung)</li>
+<li><strong>[jeder Status]</strong> → <strong>gelöscht</strong> (Endgültig)</li>
+<li><strong>gelöscht</strong> → <strong>[kein Übergang möglich]</strong> (Terminal State)</li>
+</ul>
+<p><strong>Validierungsregeln:</strong></p>
+<pre data-role="codeBlock" data-info="typescript" class="language-typescript typescript"><code><span class="token comment">// Erlaubte Übergänge</span>
+<span class="token keyword keyword-const">const</span> <span class="token constant">ALLOWED_TRANSITIONS</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token string-property property">'pending'</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'elogin_pending'</span><span class="token punctuation">,</span> <span class="token string">'gelöscht'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token string-property property">'elogin_pending'</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'aktiv'</span><span class="token punctuation">,</span> <span class="token string">'gelöscht'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token string-property property">'aktiv'</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'gesperrt'</span><span class="token punctuation">,</span> <span class="token string">'gelöscht'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token string-property property">'gesperrt'</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'reaktiviert'</span><span class="token punctuation">,</span> <span class="token string">'gelöscht'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token string-property property">'reaktiviert'</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'aktiv'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token string-property property">'gelöscht'</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token comment">// Terminal state</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-function">function</span> <span class="token function">validateStatusTransition</span><span class="token punctuation">(</span>oldStatus<span class="token operator">:</span> Status<span class="token punctuation">,</span> newStatus<span class="token operator">:</span> Status<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">boolean</span> <span class="token punctuation">{</span>
+  <span class="token keyword keyword-return">return</span> <span class="token constant">ALLOWED_TRANSITIONS</span><span class="token punctuation">[</span>oldStatus<span class="token punctuation">]</span><span class="token operator">?.</span><span class="token function">includes</span><span class="token punctuation">(</span>newStatus<span class="token punctuation">)</span> <span class="token operator">??</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><hr>
+<h3 id="2-synchronisation-zwischen-rvsmd-und-rvgutachten">2. Synchronisation zwischen rvSMD und rvGutachten </h3>
+<p><strong>[CRIT] Event-Driven Architecture:</strong></p>
+<ul>
+<li>rvSMD ist <strong>Master</strong> für Gutachter-Status</li>
+<li>rvGutachten ist <strong>Replica</strong> (eventual consistency)</li>
+<li>Message Queue als Entkopplungsschicht</li>
+<li>Idempotenz: Gleiche Events mehrfach verarbeitbar</li>
+</ul>
+<p><strong>Implementierung:</strong></p>
+<pre data-role="codeBlock" data-info="java" class="language-java java"><code><span class="token annotation punctuation">@Service</span>
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">GutachterStatusSyncService</span> <span class="token punctuation">{</span>
+    
+    <span class="token annotation punctuation">@Transactional</span>
+    <span class="token keyword keyword-public">public</span> <span class="token keyword keyword-void">void</span> <span class="token function">handleStatusChangedEvent</span><span class="token punctuation">(</span><span class="token class-name">GutachterStatusChangedEvent</span> event<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 1. Gutachter suchen</span>
+        <span class="token class-name">Gutachter</span> gutachter <span class="token operator">=</span> gutachterRepository<span class="token punctuation">.</span><span class="token function">findByEfn</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span><span class="token function">getEfn</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">orElseThrow</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-&gt;</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">GutachterNotFoundException</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span><span class="token function">getEfn</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+        <span class="token comment">// 2. Statusübergang validieren</span>
+        <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isValidTransition</span><span class="token punctuation">(</span>gutachter<span class="token punctuation">.</span><span class="token function">getStatus</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> event<span class="token punctuation">.</span><span class="token function">getNeuerStatus</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword keyword-throw">throw</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">InvalidStatusTransitionException</span><span class="token punctuation">(</span>
+                gutachter<span class="token punctuation">.</span><span class="token function">getStatus</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> event<span class="token punctuation">.</span><span class="token function">getNeuerStatus</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        
+        <span class="token comment">// 3. Status aktualisieren</span>
+        gutachter<span class="token punctuation">.</span><span class="token function">setStatus</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span><span class="token function">getNeuerStatus</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        gutachter<span class="token punctuation">.</span><span class="token function">setStatusGeaendertAm</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span><span class="token function">getGeaendertAm</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        gutachter<span class="token punctuation">.</span><span class="token function">setStatusGeaendertVon</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span><span class="token function">getGeaendertVon</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+        <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>event<span class="token punctuation">.</span><span class="token function">getNeuerStatus</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token class-name">GutachterStatus</span><span class="token punctuation">.</span><span class="token constant">GESPERRT</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            gutachter<span class="token punctuation">.</span><span class="token function">setGesperrtSeit</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span><span class="token function">getGeaendertAm</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            gutachter<span class="token punctuation">.</span><span class="token function">setGesperrtGrund</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span><span class="token function">getGrund</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        
+        <span class="token comment">// 4. Speichern</span>
+        gutachterRepository<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>gutachter<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+        <span class="token comment">// 5. Audit-Log</span>
+        auditLogService<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token class-name">AuditAktion</span><span class="token punctuation">.</span><span class="token constant">GUTACHTER_STATUS_GEAENDERT</span><span class="token punctuation">,</span> 
+            gutachter<span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> event<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+        <span class="token comment">// 6. E-Mail-Benachrichtigung</span>
+        <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token function">shouldNotifyGutachter</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span><span class="token function">getNeuerStatus</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            emailService<span class="token punctuation">.</span><span class="token function">sendStatusChangeNotification</span><span class="token punctuation">(</span>gutachter<span class="token punctuation">,</span> event<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        
+        <span class="token comment">// 7. Sync-Bestätigung</span>
+        messageQueueService<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span><span class="token keyword keyword-new">new</span> <span class="token class-name">SyncConfirmedEvent</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span><span class="token function">getEventId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><hr>
+<h3 id="3-auswirkungen-auf-login-und-zugriffskontrolle">3. Auswirkungen auf Login und Zugriffskontrolle </h3>
+<p><strong>[CRIT] Login-Verhalten nach Status:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Login</th>
+<th>Auswirkung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>pending</strong></td>
+<td>❌ Abgelehnt</td>
+<td>"Account noch nicht aktiviert"</td>
+</tr>
+<tr>
+<td><strong>elogin_pending</strong></td>
+<td>❌ Abgelehnt</td>
+<td>"Bitte aktivieren Sie Ihren eLogin-Account"</td>
+</tr>
+<tr>
+<td><strong>aktiv</strong></td>
+<td>✅ Erlaubt</td>
+<td>Voller Zugriff</td>
+</tr>
+<tr>
+<td><strong>gesperrt</strong></td>
+<td>❌ Abgelehnt</td>
+<td>"Account gesperrt: [Grund]"</td>
+</tr>
+<tr>
+<td><strong>reaktiviert</strong></td>
+<td>✅ Erlaubt</td>
+<td>Auto-Transition zu <code>aktiv</code></td>
+</tr>
+<tr>
+<td><strong>gelöscht</strong></td>
+<td>❌ Abgelehnt</td>
+<td>"Account nicht gefunden"</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Implementierung:</strong></p>
+<pre data-role="codeBlock" data-info="typescript" class="language-typescript typescript"><code><span class="token keyword keyword-async">async</span> <span class="token keyword keyword-function">function</span> <span class="token function">authenticateGutachter</span><span class="token punctuation">(</span>eLoginId<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span> password<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Promise</span><span class="token operator">&lt;</span>AuthResult<span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 1. eLogin validieren</span>
+  <span class="token keyword keyword-const">const</span> eLoginValid <span class="token operator">=</span> <span class="token keyword keyword-await">await</span> eLoginService<span class="token punctuation">.</span><span class="token function">validate</span><span class="token punctuation">(</span>eLoginId<span class="token punctuation">,</span> password<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>eLoginValid<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-return">return</span> <span class="token punctuation">{</span> success<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span> error<span class="token operator">:</span> <span class="token string">'INVALID_CREDENTIALS'</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  
+  <span class="token comment">// 2. Gutachter in rvGutachten laden</span>
+  <span class="token keyword keyword-const">const</span> gutachter <span class="token operator">=</span> <span class="token keyword keyword-await">await</span> gutachterRepository<span class="token punctuation">.</span><span class="token function">findByELoginId</span><span class="token punctuation">(</span>eLoginId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>gutachter<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-return">return</span> <span class="token punctuation">{</span> success<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span> error<span class="token operator">:</span> <span class="token string">'GUTACHTER_NOT_FOUND'</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  
+  <span class="token comment">// 3. Status prüfen</span>
+  <span class="token keyword keyword-switch">switch</span> <span class="token punctuation">(</span>gutachter<span class="token punctuation">.</span>status<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-case">case</span> <span class="token string">'aktiv'</span><span class="token operator">:</span>
+      <span class="token keyword keyword-return">return</span> <span class="token function">createSession</span><span class="token punctuation">(</span>gutachter<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword keyword-case">case</span> <span class="token string">'gesperrt'</span><span class="token operator">:</span>
+      <span class="token keyword keyword-return">return</span> <span class="token punctuation">{</span> 
+        success<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span> 
+        error<span class="token operator">:</span> <span class="token string">'ACCOUNT_GESPERRT'</span><span class="token punctuation">,</span>
+        details<span class="token operator">:</span> <span class="token punctuation">{</span>
+          grund<span class="token operator">:</span> gutachter<span class="token punctuation">.</span>gesperrtGrund<span class="token punctuation">,</span>
+          seit<span class="token operator">:</span> gutachter<span class="token punctuation">.</span>gesperrtSeit
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword keyword-case">case</span> <span class="token string">'reaktiviert'</span><span class="token operator">:</span>
+      <span class="token comment">// Auto-Transition zu aktiv</span>
+      <span class="token keyword keyword-await">await</span> <span class="token function">updateStatus</span><span class="token punctuation">(</span>gutachter<span class="token punctuation">.</span>id<span class="token punctuation">,</span> <span class="token string">'aktiv'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword keyword-return">return</span> <span class="token function">createSession</span><span class="token punctuation">(</span>gutachter<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword keyword-case">case</span> <span class="token string">'pending'</span><span class="token operator">:</span>
+    <span class="token keyword keyword-case">case</span> <span class="token string">'elogin_pending'</span><span class="token operator">:</span>
+      <span class="token keyword keyword-return">return</span> <span class="token punctuation">{</span>
+        success<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+        error<span class="token operator">:</span> <span class="token string">'ACCOUNT_NOT_ACTIVATED'</span><span class="token punctuation">,</span>
+        details<span class="token operator">:</span> <span class="token punctuation">{</span> status<span class="token operator">:</span> gutachter<span class="token punctuation">.</span>status <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword keyword-case">case</span> <span class="token string">'gelöscht'</span><span class="token operator">:</span>
+      <span class="token keyword keyword-return">return</span> <span class="token punctuation">{</span> success<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span> error<span class="token operator">:</span> <span class="token string">'ACCOUNT_DELETED'</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword keyword-default">default</span><span class="token operator">:</span>
+      <span class="token keyword keyword-return">return</span> <span class="token punctuation">{</span> success<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span> error<span class="token operator">:</span> <span class="token string">'UNKNOWN_STATUS'</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><hr>
+<h3 id="4-e-mail-benachrichtigungen">4. E-Mail-Benachrichtigungen </h3>
+<p><strong>[CRIT] Benachrichtigungspflicht:</strong></p>
+<ul>
+<li><strong>gesperrt</strong>: Gutachter MUSS benachrichtigt werden (Grund + Kontakt)</li>
+<li><strong>reaktiviert</strong>: Gutachter SOLLTE benachrichtigt werden (Bestätigung)</li>
+<li><strong>gelöscht</strong>: Gutachter MUSS benachrichtigt werden (finale Benachrichtigung)</li>
+<li><strong>aktiv</strong>: Keine Benachrichtigung (außer bei Erstaktivierung via UC-01)</li>
+</ul>
+<p><strong>E-Mail-Templates:</strong></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Betreff: Ihr rvGutachten-Account wurde gesperrt
+
+Sehr geehrte/r [Titel] [Vorname] [Nachname],
+
+Ihr Zugang zum rvGutachten-Portal wurde am [Datum] um [Uhrzeit] gesperrt.
+
+Grund: [gesperrtGrund]
+
+Für Rückfragen wenden Sie sich bitte an:
+E-Mail: support@drv.de
+Telefon: 0800-1234567
+
+Mit freundlichen Grüßen
+Ihr DRV-Team
+</code></pre><hr>
+<h3 id="5-audit-trail-und-compliance">5. Audit-Trail und Compliance </h3>
+<p><strong>[CRIT] Audit-Anforderungen:</strong></p>
+<ul>
+<li>Jede Statusänderung MUSS in beiden Systemen geloggt werden</li>
+<li>Audit-Logs enthalten: Wer, Was, Wann, Warum</li>
+<li>Audit-Logs bleiben auch nach Gutachter-Löschung erhalten (DSGVO-Ausnahme)</li>
+<li>Retention: 10 Jahre</li>
+</ul>
+<p><strong>Audit-Log-Struktur:</strong></p>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token punctuation">{</span>
+  <span class="token property">"auditId"</span><span class="token operator">:</span> <span class="token string">"aud-123e4567"</span><span class="token punctuation">,</span>
+  <span class="token property">"timestamp"</span><span class="token operator">:</span> <span class="token string">"2025-11-13T14:30:00Z"</span><span class="token punctuation">,</span>
+  <span class="token property">"aktion"</span><span class="token operator">:</span> <span class="token string">"GUTACHTER_STATUS_GEAENDERT"</span><span class="token punctuation">,</span>
+  <span class="token property">"entitaetsTyp"</span><span class="token operator">:</span> <span class="token string">"Gutachter"</span><span class="token punctuation">,</span>
+  <span class="token property">"entitaetsId"</span><span class="token operator">:</span> <span class="token string">"123e4567-e89b-12d3-a456-426614174000"</span><span class="token punctuation">,</span>
+  <span class="token property">"alterWert"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"aktiv"</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"neuerWert"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"gesperrt"</span><span class="token punctuation">,</span>
+    <span class="token property">"grund"</span><span class="token operator">:</span> <span class="token string">"Verstoß gegen Nutzungsbedingungen"</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"benutzer"</span><span class="token operator">:</span> <span class="token string">"DRV-MA-12345"</span><span class="token punctuation">,</span>
+  <span class="token property">"benutzerName"</span><span class="token operator">:</span> <span class="token string">"Müller, Hans"</span><span class="token punctuation">,</span>
+  <span class="token property">"system"</span><span class="token operator">:</span> <span class="token string">"rvGutachten"</span><span class="token punctuation">,</span>
+  <span class="token property">"ereignisQuelle"</span><span class="token operator">:</span> <span class="token string">"rvSMD_SYNC"</span><span class="token punctuation">,</span>
+  <span class="token property">"eventId"</span><span class="token operator">:</span> <span class="token string">"evt-123e4567"</span>
+<span class="token punctuation">}</span>
+</code></pre><hr>
+<h3 id="6-performance-und-skalierung">6. Performance und Skalierung </h3>
+<p><strong>[CRIT] Lastannahmen:</strong></p>
+<ul>
+<li>Statusänderungen: ~10-50 pro Tag (selten)</li>
+<li>Sync-Latenz: &lt; 5 Sekunden (acceptable)</li>
+<li>Message Queue: Persistent, At-Least-Once Delivery</li>
+<li>Retry-Strategie: Exponential Backoff (1s, 2s, 4s, 8s, 16s)</li>
+</ul>
+<p><strong>Monitoring:</strong></p>
+<ul>
+<li>Anzahl Statusänderungen pro Tag</li>
+<li>Sync-Erfolgsrate (Target: &gt; 99.5%)</li>
+<li>Sync-Latenz (Durchschnitt, P95, P99)</li>
+<li>Dead Letter Queue Größe (Alert bei &gt; 0)</li>
+</ul>
+<hr>
+<h2 id="architektur-entscheidungen">Architektur-Entscheidungen </h2>
+<h3 id="adr-007-rvsmd-als-master-für-gutachter-status">ADR-007: rvSMD als Master für Gutachter-Status </h3>
+<p><strong>Status:</strong> Accepted</p>
+<p><strong>Kontext:</strong> Gutachter-Status muss zwischen rvSMD und rvGutachten synchron gehalten werden.</p>
+<p><strong>Entscheidung:</strong></p>
+<ul>
+<li>rvSMD ist <strong>Single Source of Truth</strong> für Gutachter-Status</li>
+<li>Statusänderungen ausschließlich von DRV-Mitarbeitern in rvSMD</li>
+<li>rvGutachten empfängt Änderungen via Event-Driven Architecture</li>
+<li>Eventual Consistency akzeptabel (&lt; 5 Sekunden Latenz)</li>
+</ul>
+<p><strong>Konsequenzen:</strong></p>
+<ul>
+<li>(+) Klare Verantwortlichkeiten</li>
+<li>(+) Keine Sync-Konflikte möglich</li>
+<li>(+) rvSMD-Prozesse unverändert</li>
+<li>(-) Abhängigkeit von Message Queue</li>
+<li>(-) Verzögerung bei Statusänderungen</li>
+</ul>
+<hr>
+<h3 id="adr-008-message-queue-für-status-synchronisation">ADR-008: Message Queue für Status-Synchronisation </h3>
+<p><strong>Status:</strong> Accepted</p>
+<p><strong>Kontext:</strong> Statusänderungen müssen zuverlässig von rvSMD nach rvGutachten übertragen werden.</p>
+<p><strong>Entscheidung:</strong></p>
+<ul>
+<li>Message Queue (RabbitMQ/Kafka) als primärer Transportkanal</li>
+<li>Event: <code>GUTACHTER_STATUS_CHANGED</code></li>
+<li>Persistent Messages, At-Least-Once Delivery</li>
+<li>Dead Letter Queue für fehlgeschlagene Events</li>
+<li>REST Webhook als Fallback-Option</li>
+</ul>
+<p><strong>Konsequenzen:</strong></p>
+<ul>
+<li>(+) Entkopplung der Systeme</li>
+<li>(+) Retry-Mechanismus out-of-the-box</li>
+<li>(+) Skalierbar</li>
+<li>(+) Monitoring via Queue-Metriken</li>
+<li>(-) Zusätzliche Infrastruktur</li>
+<li>(-) Eventual Consistency</li>
+</ul>
+<hr>
+<h3 id="adr-009-statusübergangs-validierung-in-beiden-systemen">ADR-009: Statusübergangs-Validierung in beiden Systemen </h3>
+<p><strong>Status:</strong> Accepted</p>
+<p><strong>Kontext:</strong> Ungültige Statusübergänge müssen verhindert werden.</p>
+<p><strong>Entscheidung:</strong></p>
+<ul>
+<li>Statusübergangs-Logik in rvSMD UND rvGutachten implementiert</li>
+<li>rvSMD validiert VOR dem Publizieren</li>
+<li>rvGutachten validiert VOR dem Aktualisieren</li>
+<li>Gleiche Businesslogik in beiden Systemen (Shared Library oder Doku)</li>
+</ul>
+<p><strong>Konsequenzen:</strong></p>
+<ul>
+<li>(+) Defense in Depth</li>
+<li>(+) Fehlerhafte Events werden erkannt</li>
+<li>(+) Datenintegrität gewährleistet</li>
+<li>(-) Duplizierte Logik</li>
+<li>(-) Sync-Risiko bei Änderungen</li>
+</ul>
+<hr>
+<h3 id="adr-010-e-mail-benachrichtigung-bei-kritischen-statusänderungen">ADR-010: E-Mail-Benachrichtigung bei kritischen Statusänderungen </h3>
+<p><strong>Status:</strong> Accepted</p>
+<p><strong>Kontext:</strong> Gutachter müssen über Sperrungen/Löschungen informiert werden.</p>
+<p><strong>Entscheidung:</strong></p>
+<ul>
+<li>E-Mail-Benachrichtigung bei: <code>gesperrt</code>, <code>gelöscht</code></li>
+<li>Optional bei: <code>reaktiviert</code></li>
+<li>Keine Benachrichtigung bei: <code>aktiv</code> (Erstaktivierung erfolgt in UC-01)</li>
+<li>E-Mail enthält: Grund, Datum, Kontaktinformationen</li>
+</ul>
+<p><strong>Konsequenzen:</strong></p>
+<ul>
+<li>(+) Transparenz für Gutachter</li>
+<li>(+) Compliance (DSGVO Information)</li>
+<li>(+) Support-Entlastung (proaktive Info)</li>
+<li>(-) E-Mail-Infrastruktur erforderlich</li>
+<li>(-) Zustellbarkeit nicht garantiert</li>
+</ul>
+<hr>
+<h2 id="mvp-coverage">MVP Coverage </h2>
+<table>
+<thead>
+<tr>
+<th>Anforderung</th>
+<th>Status</th>
+<th>Abdeckung</th>
+<th>Bemerkung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Status ändern in rvSMD</strong></td>
+<td>✅ OK</td>
+<td>100%</td>
+<td>Manuelle Änderung durch DRV-MA</td>
+</tr>
+<tr>
+<td><strong>Status-Event publizieren</strong></td>
+<td>✅ OK</td>
+<td>100%</td>
+<td>Message Queue Integration</td>
+</tr>
+<tr>
+<td><strong>Status-Event konsumieren</strong></td>
+<td>✅ OK</td>
+<td>100%</td>
+<td>Event Handler in rvGutachten</td>
+</tr>
+<tr>
+<td><strong>Gutachter in rvGutachten suchen</strong></td>
+<td>✅ OK</td>
+<td>100%</td>
+<td>EFN-basierte Suche</td>
+</tr>
+<tr>
+<td><strong>Statusübergangs-Validierung</strong></td>
+<td>✅ OK</td>
+<td>100%</td>
+<td>In beiden Systemen</td>
+</tr>
+<tr>
+<td><strong>Status aktualisieren</strong></td>
+<td>✅ OK</td>
+<td>100%</td>
+<td>Transaktional mit Audit-Log</td>
+</tr>
+<tr>
+<td><strong>E-Mail-Benachrichtigung</strong></td>
+<td>✅ OK</td>
+<td>100%</td>
+<td>Bei gesperrt/gelöscht</td>
+</tr>
+<tr>
+<td><strong>Login-Zugriffskontrolle</strong></td>
+<td>✅ OK</td>
+<td>100%</td>
+<td>Status-basierte Auth</td>
+</tr>
+<tr>
+<td><strong>Audit-Logging</strong></td>
+<td>✅ OK</td>
+<td>100%</td>
+<td>Doppelte Erfassung (rvSMD + rvGutachten)</td>
+</tr>
+<tr>
+<td><strong>Fehlerbehandlung</strong></td>
+<td>✅ OK</td>
+<td>100%</td>
+<td>Retry + Dead Letter Queue</td>
+</tr>
+<tr>
+<td><strong>Monitoring</strong></td>
+<td>⚠️ WARN</td>
+<td>80%</td>
+<td>Basis-Metriken vorhanden, Alerting TBD</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Gesamtabdeckung:</strong> 11/11 Anforderungen erfüllt (98%)</p>
+<hr>
+<h2 id="anhang">Anhang </h2>
+<h3 id="technologie-stack">Technologie-Stack </h3>
+<p><strong>rvSMD:</strong></p>
+<ul>
+<li>Legacy-System (Details unbekannt)</li>
+<li>Message Queue Publisher</li>
+</ul>
+<p><strong>rvGutachten Backend:</strong></p>
+<ul>
+<li>Java (Spring Boot)</li>
+<li>Message Queue Consumer (RabbitMQ/Kafka)</li>
+<li>REST API für Webhook (Fallback)</li>
+<li>PostgreSQL/Oracle Database</li>
+</ul>
+<p><strong>Message Queue:</strong></p>
+<ul>
+<li>RabbitMQ oder Apache Kafka</li>
+<li>Persistent Messages</li>
+<li>Dead Letter Queue</li>
+<li>At-Least-Once Delivery Guarantee</li>
+</ul>
+<p><strong>E-Mail System:</strong></p>
+<ul>
+<li>SMTP Integration</li>
+<li>Template Engine (z.B. Thymeleaf)</li>
+</ul>
+<hr>
+<h3 id="verwandte-dokumente">Verwandte Dokumente </h3>
+<ul>
+<li>UC-01: Gutachter-Onboarding (Erstaktivierung)</li>
+<li>UC-02: Gutachter-Login (Zugriffskontrolle)</li>
+<li>UC-12: Auftragsstatus-Änderungen (ähnliche Sync-Logik)</li>
+<li>ADR-007 bis ADR-010: Architektur-Entscheidungen</li>
+</ul>
+<hr>
+<p><strong>Änderungshistorie:</strong></p>
+<ul>
+<li>2025-11-13: Initiale Version basierend auf <a href="http://use-cases-mvp-development.md">use-cases-mvp-development.md</a></li>
+</ul>
+
+      </div>
+      
+      
+    
+    
+    <script type="module">
+// TODO: If ZenUML gets integrated into mermaid in the future,
+//      we can remove the following lines.
+
+
+var MERMAID_CONFIG = ({"startOnLoad":false});
+if (typeof MERMAID_CONFIG !== 'undefined') {
+  MERMAID_CONFIG.startOnLoad = false
+  MERMAID_CONFIG.cloneCssStyles = false
+  MERMAID_CONFIG.theme = "default"
+}
+
+mermaid.initialize(MERMAID_CONFIG || {})
+if (typeof(window['Reveal']) !== 'undefined') {
+  function mermaidRevealHelper(event) {
+    var currentSlide = event.currentSlide
+    var diagrams = currentSlide.querySelectorAll('.mermaid')
+    for (var i = 0; i < diagrams.length; i++) {
+      var diagram = diagrams[i]
+      if (!diagram.hasAttribute('data-processed')) {
+        mermaid.init(null, diagram, ()=> {
+          Reveal.slide(event.indexh, event.indexv)
+        })
+      }
+    }
+  }
+  Reveal.addEventListener('slidetransitionend', mermaidRevealHelper)
+  Reveal.addEventListener('ready', mermaidRevealHelper)
+  await mermaid.run({
+    nodes: document.querySelectorAll('.mermaid')
+  })
+} else {
+  await mermaid.run({
+    nodes: document.querySelectorAll('.mermaid')
+  })
+}
+</script>
+    
+    
+    
+  
+    </body></html>

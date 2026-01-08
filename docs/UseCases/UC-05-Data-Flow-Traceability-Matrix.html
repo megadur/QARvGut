@@ -1,0 +1,1492 @@
+<!DOCTYPE html><html><head>
+      <title>UC-05-Data-Flow-Traceability-Matrix</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///c:\Users\DonTillo\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.8.20\crossnote\dependencies\katex\katex.min.css">
+      
+      
+      <script type="text/javascript" src="file:///c:\Users\DonTillo\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.8.20\crossnote\dependencies\mermaid\mermaid.min.js" charset="UTF-8"></script>
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. --><script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script></head><body for="html-export">
+    
+    
+      <div class="crossnote markdown-preview  ">
+      
+<h1 id="uc-05-datenfluss-rückverfolgbarkeitsmatrix">UC-05: Datenfluss-Rückverfolgbarkeitsmatrix </h1>
+<h2 id="auftragsdetails-und-dokumenteneinsicht">Auftragsdetails und Dokumenteneinsicht </h2>
+<p><strong>Use Case:</strong> UC-05: Auftragsdetails und Dokumenteneinsicht<br>
+<strong>Datum:</strong> November 2025<br>
+<strong>Zweck:</strong> Rückverfolgbarkeit der MVP Business Objects und deren Attribute durch alle API-Aufrufe im Sequenzdiagramm</p>
+<hr>
+<h2 id="legende">Legende </h2>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Bedeutung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[R]</td>
+<td><strong>Read</strong> - Daten werden gelesen/abgefragt</td>
+</tr>
+<tr>
+<td>[C]</td>
+<td><strong>Create</strong> - Daten werden erstellt</td>
+</tr>
+<tr>
+<td>[U]</td>
+<td><strong>Update</strong> - Daten werden aktualisiert</td>
+</tr>
+<tr>
+<td>[D]</td>
+<td><strong>Delete</strong> - Daten werden gelöscht</td>
+</tr>
+<tr>
+<td>[OK]</td>
+<td><strong>Display</strong> - Daten werden dem Benutzer angezeigt</td>
+</tr>
+<tr>
+<td>[WARN]</td>
+<td><strong>Partial</strong> - Daten nur teilweise verfügbar</td>
+</tr>
+<tr>
+<td>[AUTH]</td>
+<td><strong>Authorization</strong> - Berechtigungsprüfung</td>
+</tr>
+<tr>
+<td>[AUDIT]</td>
+<td><strong>Audit</strong> - Auditprotokollierung</td>
+</tr>
+<tr>
+<td>-</td>
+<td>Nicht beteiligt in diesem Schritt</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="sequenzschritte-zu-api-aufrufen-mapping">Sequenzschritte zu API-Aufrufen Mapping </h2>
+<table>
+<thead>
+<tr>
+<th>Schritt</th>
+<th>Aktion</th>
+<th>API Aufruf</th>
+<th>Methode</th>
+<th>Anmerkung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Auf Auftrag klicken</td>
+<td>-</td>
+<td>Frontend</td>
+<td>Navigation</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Auftragsberechtigung prüfen</td>
+<td><code>GET /gutachtenauftraege/{id}/permissions</code></td>
+<td>GET</td>
+<td>Authorization Check</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Berechtigung bestätigt</td>
+<td>Response: <code>PermissionDto</code></td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>4a</td>
+<td>Berechtigung entzogen</td>
+<td>-</td>
+<td>Frontend</td>
+<td>Error Handling</td>
+</tr>
+<tr>
+<td>4b</td>
+<td>Erweiterte Infos laden</td>
+<td><code>GET /gutachtenauftraege/{id}</code></td>
+<td>GET</td>
+<td>Detail View</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Auftragsdaten</td>
+<td>Response: <code>GutachtenauftragDetailDto</code></td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>6a</td>
+<td>Detailansicht anzeigen</td>
+<td>-</td>
+<td>Frontend</td>
+<td>Display</td>
+</tr>
+<tr>
+<td>6b</td>
+<td>Dokumente abfragen</td>
+<td><code>GET /gutachtenauftraege/{id}/dokumente</code></td>
+<td>GET</td>
+<td>From rvPuR/rvArchiv</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Dokumentenliste</td>
+<td>Response: <code>DokumentDto[]</code></td>
+<td>-</td>
+<td>Metadata</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Dokumentenübersicht</td>
+<td>-</td>
+<td>Frontend</td>
+<td>Display</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Dokument auswählen</td>
+<td>-</td>
+<td>Frontend</td>
+<td>User Action</td>
+</tr>
+<tr>
+<td>10a</td>
+<td>Stornierter Auftrag</td>
+<td>-</td>
+<td>Frontend</td>
+<td>Read-Only Mode</td>
+</tr>
+<tr>
+<td>10b</td>
+<td>Zugriff protokollieren</td>
+<td><code>POST /audit/document-access</code></td>
+<td>POST</td>
+<td>Audit Log</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Audit-Log erstellen</td>
+<td>Response: 201 Created</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>12</td>
+<td>Dokument anfordern</td>
+<td><code>GET /dokumente/{documentId}</code></td>
+<td>GET</td>
+<td>Binary Stream</td>
+</tr>
+<tr>
+<td>13a</td>
+<td>Dokument nicht gefunden</td>
+<td>Response: 404 Not Found</td>
+<td>-</td>
+<td>Error</td>
+</tr>
+<tr>
+<td>13b</td>
+<td>Dokument-Stream</td>
+<td>Response: <code>DocumentStreamDto</code></td>
+<td>-</td>
+<td>Binary + Metadata</td>
+</tr>
+<tr>
+<td>14a</td>
+<td>Fehlermeldung</td>
+<td>-</td>
+<td>Frontend</td>
+<td>Error Display</td>
+</tr>
+<tr>
+<td>14b</td>
+<td>PDF-Viewer init</td>
+<td>-</td>
+<td>Frontend</td>
+<td>Viewer Component</td>
+</tr>
+<tr>
+<td>15a</td>
+<td>Dokument anzeigen</td>
+<td>-</td>
+<td>Frontend</td>
+<td>PDF Display</td>
+</tr>
+<tr>
+<td>15b</td>
+<td>Download klicken</td>
+<td>-</td>
+<td>Frontend</td>
+<td>User Action</td>
+</tr>
+<tr>
+<td>15c</td>
+<td>Drucken klicken</td>
+<td>-</td>
+<td>Frontend</td>
+<td>User Action</td>
+</tr>
+<tr>
+<td>16a</td>
+<td>Watermark hinzufügen</td>
+<td>-</td>
+<td>Backend</td>
+<td>Processing</td>
+</tr>
+<tr>
+<td>16b</td>
+<td>Druckversion erstellen</td>
+<td>-</td>
+<td>Backend</td>
+<td>Processing</td>
+</tr>
+<tr>
+<td>17a</td>
+<td>Download starten</td>
+<td>Response: Binary with Headers</td>
+<td>-</td>
+<td>Download</td>
+</tr>
+<tr>
+<td>17b</td>
+<td>Druckdialog öffnen</td>
+<td>-</td>
+<td>Frontend</td>
+<td>Print Dialog</td>
+</tr>
+<tr>
+<td>18a</td>
+<td>Download protokollieren</td>
+<td><code>POST /audit/document-download</code></td>
+<td>POST</td>
+<td>Audit</td>
+</tr>
+<tr>
+<td>18b</td>
+<td>Druck protokollieren</td>
+<td><code>POST /audit/document-print</code></td>
+<td>POST</td>
+<td>Audit</td>
+</tr>
+<tr>
+<td>19</td>
+<td>Notiz erstellen/bearbeiten</td>
+<td><code>PUT /dokumente/{documentId}/note</code></td>
+<td>PUT</td>
+<td>Note Management</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Notiz speichern</td>
+<td>-</td>
+<td>Backend</td>
+<td>Database Write</td>
+</tr>
+<tr>
+<td>21</td>
+<td>Speicherung bestätigt</td>
+<td>Response: 204 No Content</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>22</td>
+<td>Notiz anzeigen</td>
+<td><code>GET /dokumente/{documentId}/note</code></td>
+<td>GET</td>
+<td>Display</td>
+</tr>
+<tr>
+<td>23</td>
+<td>Notizen-Aktivität protokollieren</td>
+<td><code>POST /audit/note-activity</code></td>
+<td>POST</td>
+<td>Audit</td>
+</tr>
+<tr>
+<td>24</td>
+<td>Zurück-Button</td>
+<td>-</td>
+<td>Frontend</td>
+<td>Navigation</td>
+</tr>
+<tr>
+<td>25</td>
+<td>Rückkehr zur Übersicht</td>
+<td>-</td>
+<td>Frontend</td>
+<td>Route Change</td>
+</tr>
+<tr>
+<td>26</td>
+<td>Dokumentenzugriffe auditieren</td>
+<td>-</td>
+<td>Backend</td>
+<td>Continuous Audit</td>
+</tr>
+<tr>
+<td>27</td>
+<td>Schutz vor unbefugtem Zugriff</td>
+<td>-</td>
+<td>Backend</td>
+<td>Security</td>
+</tr>
+<tr>
+<td>28</td>
+<td>Session-Timeout überwachen</td>
+<td>-</td>
+<td>Backend</td>
+<td>Session Management</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="datenfluss-matrix-business-objects--api-schritte-mvp">Datenfluss-Matrix: Business Objects × API-Schritte (MVP) </h2>
+<h3 id="auftrag-business-object">Auftrag Business Object </h3>
+<table>
+<thead>
+<tr>
+<th>Attribut</th>
+<th>Typ</th>
+<th>Kard</th>
+<th>Step 2: Check Auth</th>
+<th>Step 4b: Load Details</th>
+<th>Step 5: Response</th>
+<th>Step 6a: Display</th>
+<th>Step 6b: Get Docs</th>
+<th>Step 22: Display Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>auftragsId</strong></td>
+<td>uuid</td>
+<td>1</td>
+<td>[AUTH]</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+<td>[R]</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>rvPurAuftragsID</strong></td>
+<td>string</td>
+<td>?</td>
+<td>-</td>
+<td>[R]</td>
+<td>-</td>
+<td>-</td>
+<td>[R]</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>proband</strong></td>
+<td>Proband</td>
+<td>1</td>
+<td>-</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>gutachter</strong></td>
+<td>Gutachter</td>
+<td>1</td>
+<td>[AUTH]</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>gutachtenstatus</strong></td>
+<td>Gutachtenstatus</td>
+<td>+</td>
+<td>-</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>anhang</strong></td>
+<td>Document</td>
+<td>*</td>
+<td>-</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+<td>[R]</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>auftraggeber</strong></td>
+<td>Träger</td>
+<td>1</td>
+<td>-</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>auftragsDatum</strong></td>
+<td>date</td>
+<td>1</td>
+<td>-</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>eingangsDatum</strong></td>
+<td>datetime</td>
+<td>1</td>
+<td>-</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>stornierungsDatum</strong></td>
+<td>datetime</td>
+<td>?</td>
+<td>-</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>dokumente</strong></td>
+<td>Document</td>
+<td>+</td>
+<td>-</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+<td>[R]</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Anmerkung:</strong> Alle MVP-Attribute des Auftrags sind in diesem Use Case erforderlich für die Detailansicht.</p>
+<hr>
+<h3 id="proband-business-object">Proband Business Object </h3>
+<table>
+<thead>
+<tr>
+<th>Attribut</th>
+<th>Typ</th>
+<th>Kard</th>
+<th>Step 4b: Load Details</th>
+<th>Step 5: Response</th>
+<th>Step 6a: Display</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>vsnr</strong></td>
+<td>string</td>
+<td>1</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+</tr>
+<tr>
+<td><strong>gebdatum</strong></td>
+<td>date</td>
+<td>1</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+</tr>
+<tr>
+<td><strong>name</strong></td>
+<td>string</td>
+<td>1</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+</tr>
+<tr>
+<td><strong>vorname</strong></td>
+<td>string</td>
+<td>1</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Anmerkung:</strong> Proband-Daten werden als Teil des <code>GutachtenauftragDetailDto</code> übertragen.</p>
+<hr>
+<h3 id="gutachter-business-object">Gutachter Business Object </h3>
+<table>
+<thead>
+<tr>
+<th>Attribut</th>
+<th>Typ</th>
+<th>Kard</th>
+<th>Step 2: Check Auth</th>
+<th>Step 4b: Load Details</th>
+<th>Step 5: Response</th>
+<th>Step 6a: Display</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>userId</strong></td>
+<td>uuid</td>
+<td>1</td>
+<td>[AUTH]</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+</tr>
+<tr>
+<td><strong>efn</strong></td>
+<td>number</td>
+<td>1</td>
+<td>-</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+</tr>
+<tr>
+<td><strong>anrede</strong></td>
+<td>string</td>
+<td>1</td>
+<td>-</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+</tr>
+<tr>
+<td><strong>titel</strong></td>
+<td>string</td>
+<td>?</td>
+<td>-</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+</tr>
+<tr>
+<td><strong>nachname</strong></td>
+<td>string</td>
+<td>1</td>
+<td>-</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+</tr>
+<tr>
+<td><strong>vorname</strong></td>
+<td>string</td>
+<td>1</td>
+<td>-</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Anmerkung:</strong> Gutachter-Daten zeigen, wer für den Auftrag zuständig ist. Wichtig für Berechtigungsprüfung und Anzeige.</p>
+<hr>
+<h3 id="document-business-object">Document Business Object </h3>
+<table>
+<thead>
+<tr>
+<th>Attribut</th>
+<th>Typ</th>
+<th>Kard</th>
+<th>Step 6b: Get Docs</th>
+<th>Step 7: Response</th>
+<th>Step 8: Display</th>
+<th>Step 12: Request Doc</th>
+<th>Step 13b: Stream</th>
+<th>Step 15a: View</th>
+<th>Step 15b: Download</th>
+<th>Step 18a: Audit</th>
+<th>Step 19: Update Note</th>
+<th>Step 22: Display Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>documentId</strong></td>
+<td>uuid</td>
+<td>1</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+<td>[AUDIT]</td>
+<td>[R]</td>
+<td>[R]</td>
+</tr>
+<tr>
+<td><strong>name</strong></td>
+<td>string</td>
+<td>1</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+<td>-</td>
+<td>[OK]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>filename</strong></td>
+<td>string</td>
+<td>1</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+<td>-</td>
+<td>[OK]</td>
+<td>-</td>
+<td>[OK]</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>filetype</strong></td>
+<td>string</td>
+<td>1</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+<td>-</td>
+<td>[OK]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>filesize</strong></td>
+<td>int</td>
+<td>?</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+<td>-</td>
+<td>[OK]</td>
+<td>-</td>
+<td>[OK]</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>data</strong></td>
+<td>binary</td>
+<td>1</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>metadata</strong></td>
+<td>DocumentMetadata</td>
+<td>1</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>note</strong></td>
+<td>DocumentNote</td>
+<td>?</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>[OK]</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>[U]</td>
+<td>[OK]</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Anmerkung:</strong> Dokument-Daten sind zentral für UC-05. Metadaten werden separat vom Binär-Stream geladen für Performance. Notizen sind pro Dokument gespeichert (DocumentNoteDto mit headline und content als base64).</p>
+<hr>
+<h3 id="gutachtenstatus-business-object">Gutachtenstatus Business Object </h3>
+<table>
+<thead>
+<tr>
+<th>Attribut</th>
+<th>Typ</th>
+<th>Kard</th>
+<th>Step 4b: Load Details</th>
+<th>Step 5: Response</th>
+<th>Step 6a: Display</th>
+<th>Step 10a: Check Storniert</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>status</strong></td>
+<td>enum</td>
+<td>1</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+<td>[AUTH]</td>
+</tr>
+<tr>
+<td><strong>changedOn</strong></td>
+<td>timestamp</td>
+<td>1</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[OK]</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Enum-Werte:</strong> <code>neu</code>, <code>einbestellt</code>, <code>in Bearbeitung</code>, <code>abgeschlossen</code>, <code>storniert</code>, <code>Stellungnahme angefordert</code></p>
+<p><strong>Anmerkung:</strong> Status <code>storniert</code> führt zu eingeschränkter Funktionalität (nur Einsicht, kein Download/Druck).</p>
+<hr>
+<h2 id="api-endpunkte-übersicht">API-Endpunkte Übersicht </h2>
+<h3 id="1-berechtigungsprüfung">1. Berechtigungsprüfung </h3>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>GET /api/v1/gutachtenauftraege/{auftragsId}/permissions
+Headers:
+  X-UserId: {userId}
+  X-GutachterId: {gutachterId}
+Response: PermissionDto {
+  canView: boolean,
+  canEdit: boolean,
+  canDownload: boolean
+}
+</code></pre><p><strong>Geprüfte Business Objects:</strong></p>
+<ul>
+<li>[AUTH] Gutachter.userId</li>
+<li>[AUTH] Auftrag.auftragsId</li>
+<li>[AUTH] Auftrag.gutachter (Zuordnung)</li>
+</ul>
+<hr>
+<h3 id="2-auftragsdetails-laden">2. Auftragsdetails laden </h3>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>GET /api/v1/gutachtenauftraege/{auftragsId}
+Headers:
+  X-UserId: {userId}
+  X-GutachterId: {gutachterId}
+Response: GutachtenauftragDetailDto
+</code></pre><p><strong>Gelieferte Business Objects:</strong></p>
+<ul>
+<li>[OK] Auftrag (vollständig MVP)</li>
+<li>[OK] Proband (vollständig MVP)</li>
+<li>[OK] Gutachter (vollständig MVP)</li>
+<li>[OK] Gutachtenstatus (vollständig)</li>
+<li>[OK] RvSmdId (Träger-Zuordnung)</li>
+</ul>
+<p><strong>Kritisch fehlend in UC-04 API, jetzt benötigt:</strong></p>
+<ul>
+<li>rvPurAuftragsID (für Dokumentenzugriff aus rvPuR/rvArchiv)</li>
+<li>gutachter (für Zuständigkeitsanzeige)</li>
+<li>auftraggeber/Träger (für vollständige Auftragsinformation)</li>
+<li>stornierungsDatum (für UI-Logik: Read-Only Mode)</li>
+</ul>
+<hr>
+<h3 id="3-dokumente-laden">3. Dokumente laden </h3>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>GET /api/v1/gutachtenauftraege/{auftragsId}/dokumente
+Headers:
+  X-UserId: {userId}
+  X-GutachterId: {gutachterId}
+Query Parameters:
+  source: rvPuR | rvArchiv | beide (Standard)
+Response: DokumentDto[]
+</code></pre><p><strong>Gelieferte Business Objects:</strong></p>
+<ul>
+<li>[OK] Document.documentId</li>
+<li>[OK] <a href="http://Document.name">Document.name</a></li>
+<li>[OK] Document.filename</li>
+<li>[OK] Document.filetype</li>
+<li>[OK] Document.filesize</li>
+<li>[OK] Document.metadata</li>
+</ul>
+<p><strong>Verwendet:</strong> <code>Auftrag.rvPurAuftragsID</code> zur Identifikation in rvPuR/rvArchiv</p>
+<hr>
+<h3 id="4-einzelnes-dokument-abrufen">4. Einzelnes Dokument abrufen </h3>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>GET /api/v1/dokumente/{documentId}
+Headers:
+  X-UserId: {userId}
+  X-GutachterId: {gutachterId}
+Response: Binary Stream
+Content-Type: application/pdf | image/jpeg | etc.
+Content-Disposition: inline | attachment
+</code></pre><p><strong>Gelieferte Business Objects:</strong></p>
+<ul>
+<li>[OK] Document.data (binary)</li>
+<li>[OK] Document.metadata (in Headers)</li>
+</ul>
+<hr>
+<h3 id="5-dokumentenzugriff-auditieren">5. Dokumentenzugriff auditieren </h3>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>POST /api/v1/audit/document-access
+Headers:
+  X-UserId: {userId}
+  X-GutachterId: {gutachterId}
+Body: {
+  "auftragsId": "{auftragsId}",
+  "documentId": "{documentId}",
+  "action": "view" | "download" | "print",
+  "timestamp": "2025-11-11T14:30:00Z"
+}
+Response: 201 Created
+</code></pre><p><strong>Protokollierte Business Objects:</strong></p>
+<ul>
+<li>[AUDIT] Gutachter.userId</li>
+<li>[AUDIT] Auftrag.auftragsId</li>
+<li>[AUDIT] Document.documentId</li>
+</ul>
+<hr>
+<h3 id="6-notiz-erstellenbearbeiten-pro-dokument">6. Notiz erstellen/bearbeiten (pro Dokument) </h3>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>GET /api/v1/dokumente/{documentId}/note
+PUT /api/v1/dokumente/{documentId}/note
+Headers:
+  X-UserId: {userId}
+  X-GutachterId: {gutachterId}
+  X-OrgId: {orgId}
+Body (PUT): {
+  "headline": "base64-encoded-headline",
+  "content": "base64-encoded-content"
+}
+Response: 
+  GET 200 OK - DocumentNoteDto
+  PUT 204 No Content
+</code></pre><p><strong>Anmerkung:</strong> Notizen werden pro Dokument gespeichert (siehe <code>DocumentNoteDto</code> in OpenAPI). Headline und Content sind base64-kodiert.</p>
+<hr>
+<h2 id="kritische-findings-für-uc-05">Kritische Findings für UC-05 </h2>
+<h3 id="1-backend-abhängigkeit-von-rvpurauftragsid">1. Backend-Abhängigkeit von rvPurAuftragsID </h3>
+<p><strong>Problem:</strong> Backend benötigt <code>Auftrag.rvPurAuftragsID</code> für rvPuR/rvArchiv Integration</p>
+<table>
+<thead>
+<tr>
+<th>Schritt</th>
+<th>Benötigt</th>
+<th>Auswirkung ohne rvPurAuftragsID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>6b</td>
+<td>rvPurAuftragsID</td>
+<td>Backend kann Dokumente aus rvPuR/rvArchiv nicht laden</td>
+</tr>
+<tr>
+<td>7</td>
+<td>rvPurAuftragsID</td>
+<td>Leere Dokumentenliste trotz vorhandener Dokumente</td>
+</tr>
+<tr>
+<td>12</td>
+<td>rvPurAuftragsID</td>
+<td>Dokumentenzugriff schlägt fehl</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> [WARN] Backend-seitig erforderlich, Frontend nutzt es nicht (MVP optional)</p>
+<hr>
+<h3 id="2-gutachter-zuordnung-erforderlich">2. Gutachter-Zuordnung erforderlich </h3>
+<p><strong>Problem:</strong> Berechtigungsprüfung (Step 2) benötigt <code>Auftrag.gutachter</code></p>
+<table>
+<thead>
+<tr>
+<th>Prüfung</th>
+<th>Benötigt</th>
+<th>Auswirkung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Step 2</td>
+<td>Auftrag.gutachter === aktueller Gutachter</td>
+<td>Berechtigung kann nicht korrekt geprüft werden</td>
+</tr>
+<tr>
+<td>Step 10b</td>
+<td>Gutachter.userId</td>
+<td>Audit-Log unvollständig</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> [CRIT] Sicherheitsrelevant</p>
+<hr>
+<h3 id="3-stornierungsstatus-für-ui-logik">3. Stornierungsstatus für UI-Logik </h3>
+<p><strong>Problem:</strong> <code>Auftrag.stornierungsDatum</code> bestimmt Funktionalität</p>
+<table>
+<thead>
+<tr>
+<th>Szenario</th>
+<th>Benötigt</th>
+<th>Auswirkung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Step 10a</td>
+<td>stornierungsDatum !== null</td>
+<td>UI muss Read-Only Mode aktivieren</td>
+</tr>
+<tr>
+<td>Step 15b/c</td>
+<td>stornierungsDatum !== null</td>
+<td>Download/Druck sollten deaktiviert sein</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> [WARN] Funktional wichtig, aber workaround möglich über <code>status === "storniert"</code></p>
+<hr>
+<h3 id="4-dokumentenmetadaten">4. Dokumentenmetadaten </h3>
+<p><strong>Problem:</strong> Document Business Object hat mehrere Attribute</p>
+<table>
+<thead>
+<tr>
+<th>Attribut</th>
+<th>MVP Kard</th>
+<th>Verfügbarkeit</th>
+<th>Anmerkung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>documentId</td>
+<td>1</td>
+<td>[OK]</td>
+<td>Primärschlüssel</td>
+</tr>
+<tr>
+<td>name</td>
+<td>1</td>
+<td>[OK]</td>
+<td>Anzeigename</td>
+</tr>
+<tr>
+<td>filename</td>
+<td>1</td>
+<td>[OK]</td>
+<td>Dateiname</td>
+</tr>
+<tr>
+<td>filetype</td>
+<td>1</td>
+<td>[OK]</td>
+<td>MIME-Type</td>
+</tr>
+<tr>
+<td>filesize</td>
+<td>?</td>
+<td>[WARN]</td>
+<td>Optional, aber hilfreich für UI</td>
+</tr>
+<tr>
+<td>data</td>
+<td>1</td>
+<td>[OK]</td>
+<td>Binary, nur bei Stream-Request</td>
+</tr>
+<tr>
+<td>metadata</td>
+<td>1</td>
+<td>[WARN]</td>
+<td>Structure unclear</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> [WARN] Metadata-Struktur muss definiert werden</p>
+<hr>
+<h2 id="vollständigkeits-prüfung-mvp">Vollständigkeits-Prüfung MVP </h2>
+<h3 id="für-uc-05-benötigte-mvp-daten">Für UC-05 benötigte MVP-Daten </h3>
+<table>
+<thead>
+<tr>
+<th>Anforderung</th>
+<th>Business Object</th>
+<th>Attribut</th>
+<th>Status</th>
+<th>Quelle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Auftrag identifizieren</td>
+<td>Auftrag</td>
+<td>auftragsId</td>
+<td>[OK]</td>
+<td>Step 2-5</td>
+</tr>
+<tr>
+<td>Dokumente aus rvPuR laden (Backend)</td>
+<td>Auftrag</td>
+<td>rvPurAuftragsID</td>
+<td>[WARN]</td>
+<td>Step 6b, 12 (Backend only)</td>
+</tr>
+<tr>
+<td>Berechtigung prüfen</td>
+<td>Gutachter</td>
+<td>userId</td>
+<td>[OK]</td>
+<td>Step 2</td>
+</tr>
+<tr>
+<td>Berechtigung prüfen</td>
+<td>Auftrag</td>
+<td>gutachter</td>
+<td>[CRIT]</td>
+<td>Step 2</td>
+</tr>
+<tr>
+<td>Proband anzeigen</td>
+<td>Proband</td>
+<td>vsnr, name, vorname, gebdatum</td>
+<td>[OK]</td>
+<td>Step 5-6a</td>
+</tr>
+<tr>
+<td>Status prüfen (storniert?)</td>
+<td>Gutachtenstatus</td>
+<td>status</td>
+<td>[OK]</td>
+<td>Step 5, 10a</td>
+</tr>
+<tr>
+<td>Löschfrist berechnen</td>
+<td>Auftrag</td>
+<td>stornierungsDatum</td>
+<td>[WARN]</td>
+<td>Optional via status</td>
+</tr>
+<tr>
+<td>Träger anzeigen</td>
+<td>Auftrag</td>
+<td>auftraggeber (RvSmdId)</td>
+<td>[CRIT]</td>
+<td>Step 5-6a</td>
+</tr>
+<tr>
+<td>Dokumente laden</td>
+<td>Document</td>
+<td>documentId, name, filename, filetype</td>
+<td>[OK]</td>
+<td>Step 6b-8</td>
+</tr>
+<tr>
+<td>Dokument anzeigen</td>
+<td>Document</td>
+<td>data</td>
+<td>[OK]</td>
+<td>Step 12-15a</td>
+</tr>
+<tr>
+<td>Audit-Log</td>
+<td>Gutachter</td>
+<td>userId</td>
+<td>[OK]</td>
+<td>Step 10b-11</td>
+</tr>
+<tr>
+<td>Audit-Log</td>
+<td>Auftrag</td>
+<td>auftragsId</td>
+<td>[OK]</td>
+<td>Step 10b-11</td>
+</tr>
+<tr>
+<td>Audit-Log</td>
+<td>Document</td>
+<td>documentId</td>
+<td>[OK]</td>
+<td>Step 10b-11, 18a-b</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Abdeckung:</strong> 9/13 Anforderungen vollständig erfüllt (69.2%)<br>
+<strong>Kritische Lücken:</strong> 2/13 (15.4%) - gutachter, auftraggeber<br>
+<strong>Warnungen:</strong> 2/13 (15.4%) - rvPurAuftragsID (Backend only), stornierungsDatum</p>
+<hr>
+<h2 id="empfehlungen">Empfehlungen </h2>
+<h3 id="sofortmaßnahmen-blockiert-uc-05">Sofortmaßnahmen (Blockiert UC-05) </h3>
+<ol>
+<li>
+<p><strong>GutachtenauftragDetailDto MUSS enthalten:</strong></p>
+<pre data-role="codeBlock" data-info="typescript" class="language-typescript typescript"><code><span class="token punctuation">{</span>
+  auftragsId<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span>           <span class="token comment">// [OK] vorhanden</span>
+  rvPurAuftragsID<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span>      <span class="token comment">// [CRIT] FEHLT - UC-05 blockiert!</span>
+  proband<span class="token operator">:</span> ProbandDto<span class="token punctuation">,</span>          <span class="token comment">// [OK] vorhanden</span>
+  gutachter<span class="token operator">:</span> <span class="token punctuation">{</span>                  <span class="token comment">// [CRIT] FEHLT - Berechtigung!</span>
+    userId<span class="token operator">:</span> uuid<span class="token punctuation">,</span>
+    efn<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span>
+    anrede<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span>
+    titel<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span>
+    nachname<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span>
+    vorname<span class="token operator">:</span> <span class="token builtin">string</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  gutachtenstatus<span class="token operator">:</span> GutachtenstatusDto<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>  <span class="token comment">// [OK] vorhanden</span>
+  auftraggeber<span class="token operator">:</span> <span class="token punctuation">{</span>               <span class="token comment">// [CRIT] FEHLT - Vollständigkeit!</span>
+    <span class="token constant">KTAN</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span>
+    name<span class="token operator">:</span> <span class="token builtin">string</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  auftragsDatum<span class="token operator">:</span> date<span class="token punctuation">,</span>          <span class="token comment">// [OK] vorhanden</span>
+  eingangsDatum<span class="token operator">:</span> datetime<span class="token punctuation">,</span>      <span class="token comment">// [OK] vorhanden</span>
+  stornierungsDatum<span class="token operator">?</span><span class="token operator">:</span> datetime<span class="token punctuation">,</span> <span class="token comment">// [WARN] fehlt, aber via status.status workaround</span>
+  dokumente<span class="token operator">:</span> DokumentMetadataDto<span class="token punctuation">[</span><span class="token punctuation">]</span>  <span class="token comment">// separate vom binary stream</span>
+<span class="token punctuation">}</span>
+</code></pre></li>
+<li>
+<p><strong>DokumentDto Definition:</strong></p>
+<pre data-role="codeBlock" data-info="typescript" class="language-typescript typescript"><code><span class="token comment">// Für Listing (Step 6b-8)</span>
+DokumentMetadataDto <span class="token punctuation">{</span>
+  documentId<span class="token operator">:</span> uuid<span class="token punctuation">,</span>
+  name<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span>
+  filename<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span>
+  filetype<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span>
+  filesize<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">number</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Für Stream (Step 12-15)</span>
+<span class="token comment">// Binary Response mit Headers:</span>
+<span class="token comment">// Content-Type: {filetype}</span>
+<span class="token comment">// Content-Disposition: inline; filename="{filename}"</span>
+<span class="token comment">// X-Document-Id: {documentId}</span>
+</code></pre></li>
+<li>
+<p><strong>Audit-Endpoints sicherstellen:</strong></p>
+<ul>
+<li><code>POST /audit/document-access</code></li>
+<li><code>POST /audit/document-download</code></li>
+<li><code>POST /audit/document-print</code></li>
+<li><code>POST /audit/note-activity</code></li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="architektur-entscheidungen">Architektur-Entscheidungen </h3>
+<ol>
+<li>
+<p><strong>rvPuR/rvArchiv Integration:</strong></p>
+<ul>
+<li>Wie erfolgt der Zugriff? REST API? File System?</li>
+<li>Authentifizierung zwischen Systemen?</li>
+<li>Caching-Strategie für Dokumentenmetadaten?</li>
+</ul>
+</li>
+<li>
+<p><strong>PDF-Viewer:</strong></p>
+<ul>
+<li>Client-seitig (z.B. PDF.js)?</li>
+<li>Server-seitige Konvertierung für andere Formate?</li>
+<li>Streaming vs. vollständiger Download?</li>
+</ul>
+</li>
+<li>
+<p><strong>Watermarking:</strong></p>
+<ul>
+<li>Wann und wo (Server/Client)?</li>
+<li>Welche Informationen im Watermark?</li>
+</ul>
+</li>
+<li>
+<p><strong>Session-Management:</strong></p>
+<ul>
+<li>Timeout-Dauer?</li>
+<li>Automatische Speicherung bei Timeout?</li>
+<li>Re-Authentication ohne Datenverlust?</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="datenfluss-diagramme">Datenfluss-Diagramme </h2>
+<h3 id="hauptfluss-auftragsdetails-laden">Hauptfluss: Auftragsdetails laden </h3>
+<div class="mermaid">graph TB
+    subgraph "Step 1-6a: Auftragsdetails anzeigen"
+        UI1[Gutachter klickt Auftrag]
+        API1[GET /gutachtenauftraege/:id/permissions]
+        AUTH[Berechtigung prüfen]
+        API2[GET /gutachtenauftraege/:id]
+        DB[(Datenbank)]
+        RESP[GutachtenauftragDetailDto]
+        UI2[Detailansicht anzeigen]
+        
+        UI1 --&gt; API1
+        API1 --&gt; AUTH
+        AUTH --&gt;|OK| API2
+        AUTH --&gt;|DENIED| UI3[Zurück zur Übersicht]
+        API2 --&gt; DB
+        DB --&gt; RESP
+        RESP --&gt; UI2
+    end
+    
+    subgraph "MVP Business Objects im Response"
+        BO1[Auftrag: auftragsId, rvPurAuftragsID, auftragsDatum, eingangsDatum, stornierungsDatum]
+        BO2[Proband: vsnr, name, vorname, gebdatum]
+        BO3[Gutachter: userId, efn, name]
+        BO4[Gutachtenstatus: status, changedOn]
+        BO5[RvSmdId: KTAN, GutachterId]
+        
+        RESP --&gt; BO1
+        RESP --&gt; BO2
+        RESP --&gt; BO3
+        RESP --&gt; BO4
+        RESP --&gt; BO5
+    end
+    
+    style AUTH fill:#fff4e6
+    style RESP fill:#ccffcc
+</div><h3 id="dokumentenfluss-laden-und-anzeigen">Dokumentenfluss: Laden und Anzeigen </h3>
+<div class="mermaid">sequenceDiagram
+    participant UI as Frontend
+    participant API as API Gateway
+    participant DB as Datenbank
+    participant PUR as rvPuR/rvArchiv
+    participant AUD as Audit Manager
+    
+    Note over UI,AUD: Step 6b-15a: Dokumente laden und anzeigen
+    
+    UI-&gt;&gt;API: Step 6b: GET /gutachtenauftraege/:id/dokumente
+    Note right of API: Verwendet Auftrag.rvPurAuftragsID
+    API-&gt;&gt;PUR: Dokumente abfragen (via rvPurAuftragsID)
+    PUR--&gt;&gt;API: Step 7: Dokumentenliste + Metadaten
+    API--&gt;&gt;UI: DokumentMetadataDto[]
+    UI-&gt;&gt;UI: Step 8: Dokumentenübersicht anzeigen
+    
+    UI-&gt;&gt;API: Step 9: Dokument auswählen
+    
+    alt Stornierter Auftrag (Step 10a)
+        Note over UI: Read-Only Mode aktiviert
+        Note over UI: Download/Druck deaktiviert
+    else Aktiver Auftrag (Step 10b-11)
+        API-&gt;&gt;AUD: Dokumentenzugriff protokollieren
+        AUD--&gt;&gt;API: Audit-Log erstellt
+    end
+    
+    UI-&gt;&gt;API: Step 12: GET /dokumente/:documentId
+    API-&gt;&gt;PUR: Dokument-Stream anfordern
+    
+    alt Dokument nicht gefunden (Step 13a)
+        PUR--&gt;&gt;API: 404 Not Found
+        API--&gt;&gt;UI: Step 14a: Fehlermeldung
+    else Dokument verfügbar (Step 13b-15a)
+        PUR--&gt;&gt;API: Binary Stream + Metadata
+        API--&gt;&gt;UI: Document.data (binary)
+        UI-&gt;&gt;UI: Step 14b: PDF-Viewer initialisieren
+        UI-&gt;&gt;UI: Step 15a: Dokument anzeigen
+    end
+</div><h3 id="audit-protokollierung">Audit-Protokollierung </h3>
+<div class="mermaid">graph LR
+    subgraph "Audit-Events in UC-05"
+        E1[Document Access]
+        E2[Document Download]
+        E3[Document Print]
+        E4[Note Activity]
+    end
+    
+    subgraph "Audit-API Calls"
+        A1[POST /audit/document-access]
+        A2[POST /audit/document-download]
+        A3[POST /audit/document-print]
+        A4[POST /audit/note-activity]
+    end
+    
+    subgraph "Protokollierte Daten"
+        D1[Gutachter.userId&lt;br/&gt;Auftrag.auftragsId&lt;br/&gt;Document.documentId&lt;br/&gt;timestamp]
+        D2[+ action: download]
+        D3[+ action: print]
+        D4[+ note content/ref]
+    end
+    
+    E1 --&gt; A1
+    E2 --&gt; A2
+    E3 --&gt; A3
+    E4 --&gt; A4
+    
+    A1 --&gt; D1
+    A2 --&gt; D2
+    A3 --&gt; D3
+    A4 --&gt; D4
+    
+    style E1 fill:#e6f3ff
+    style E2 fill:#e6f3ff
+    style E3 fill:#e6f3ff
+    style E4 fill:#e6f3ff
+    style D1 fill:#ffe6e6
+    style D2 fill:#ffe6e6
+    style D3 fill:#ffe6e6
+    style D4 fill:#ffe6e6
+</div><h3 id="kritische-abhängigkeiten">Kritische Abhängigkeiten </h3>
+<div class="mermaid">graph TB
+    subgraph "UC-05 Funktionalität"
+        F1[Auftragsdetails anzeigen]
+        F2[Dokumente laden]
+        F3[Dokument anzeigen]
+        F4[Berechtigung prüfen]
+    end
+    
+    subgraph "Kritisch benötigte Attribute"
+        A1[Auftrag.rvPurAuftragsID]
+        A2[Auftrag.gutachter]
+        A3[Auftrag.auftraggeber]
+        A4[Document.data]
+    end
+    
+    subgraph "Auswirkung wenn fehlend"
+        I1[Keine Dokumente&lt;br/&gt;aus rvPuR/rvArchiv]
+        I2[Berechtigungsprüfung&lt;br/&gt;nicht möglich]
+        I3[Unvollständige&lt;br/&gt;Auftragsinformation]
+        I4[Dokumentenanzeige&lt;br/&gt;nicht möglich]
+    end
+    
+    F2 -.benötigt.-&gt; A1
+    F4 -.benötigt.-&gt; A2
+    F1 -.benötigt.-&gt; A3
+    F3 -.benötigt.-&gt; A4
+    
+    A1 -.fehlt.-&gt; I1
+    A2 -.fehlt.-&gt; I2
+    A3 -.fehlt.-&gt; I3
+    A4 -.fehlt.-&gt; I4
+    
+    style A1 fill:#ff6666
+    style A2 fill:#ff6666
+    style A3 fill:#ff6666
+    style I1 fill:#ffcccc
+    style I2 fill:#ffcccc
+    style I3 fill:#ffcccc
+</div><hr>
+<h2 id="zusammenfassung">Zusammenfassung </h2>
+<p><strong>Dokumentiert:</strong></p>
+<ul>
+<li>28 Sequenzschritte mit API-Mappings</li>
+<li>5 Haupt-MVP-Business-Objects (Auftrag, Proband, Gutachter, Gutachtenstatus, Document)</li>
+<li>6 API-Endpunkte definiert</li>
+<li>Audit-Protokollierung spezifiziert</li>
+</ul>
+<p><strong>Kritische Findings:</strong></p>
+<ul>
+<li>[CRIT] Berechtigungsprüfung benötigt Auftrag.gutachter</li>
+<li>[CRIT] Vollständige Auftragsinformation benötigt auftraggeber (RvSmdId)</li>
+<li>[WARN] Backend benötigt rvPurAuftragsID für rvPuR/rvArchiv Integration (optional, Frontend nutzt nicht)</li>
+<li>[WARN] DocumentMetadata-Struktur muss definiert werden</li>
+</ul>
+<p><strong>Architektur-Entscheidungen erforderlich:</strong></p>
+<ol>
+<li>Integration mit rvPuR/rvArchiv</li>
+<li>PDF-Viewer Client/Server-Strategie</li>
+<li>Watermarking-Implementation</li>
+<li>Session-Management bei langen Dokumentenansichten</li>
+</ol>
+<p><strong>Nächste Schritte:</strong></p>
+<ol>
+<li>[TODO] API-Spezifikation für GutachtenauftragDetailDto erweitern</li>
+<li>[TODO] rvPuR/rvArchiv Integrations-Design</li>
+<li>[TODO] DokumentMetadataDto Schema definieren</li>
+<li>[TODO] Audit-API implementieren</li>
+<li>[TODO] UC-06 Traceability Matrix erstellen</li>
+</ol>
+<hr>
+<p><strong>Letzte Aktualisierung:</strong> November 2025<br>
+<strong>Status:</strong> MVP-Analyse komplett für UC-05<br>
+<strong>Reviewer:</strong> [TBD]</p>
+
+      </div>
+      
+      
+    
+    
+    <script type="module">
+// TODO: If ZenUML gets integrated into mermaid in the future,
+//      we can remove the following lines.
+
+
+var MERMAID_CONFIG = ({"startOnLoad":false});
+if (typeof MERMAID_CONFIG !== 'undefined') {
+  MERMAID_CONFIG.startOnLoad = false
+  MERMAID_CONFIG.cloneCssStyles = false
+  MERMAID_CONFIG.theme = "default"
+}
+
+mermaid.initialize(MERMAID_CONFIG || {})
+if (typeof(window['Reveal']) !== 'undefined') {
+  function mermaidRevealHelper(event) {
+    var currentSlide = event.currentSlide
+    var diagrams = currentSlide.querySelectorAll('.mermaid')
+    for (var i = 0; i < diagrams.length; i++) {
+      var diagram = diagrams[i]
+      if (!diagram.hasAttribute('data-processed')) {
+        mermaid.init(null, diagram, ()=> {
+          Reveal.slide(event.indexh, event.indexv)
+        })
+      }
+    }
+  }
+  Reveal.addEventListener('slidetransitionend', mermaidRevealHelper)
+  Reveal.addEventListener('ready', mermaidRevealHelper)
+  await mermaid.run({
+    nodes: document.querySelectorAll('.mermaid')
+  })
+} else {
+  await mermaid.run({
+    nodes: document.querySelectorAll('.mermaid')
+  })
+}
+</script>
+    
+    
+    
+  
+    </body></html>
