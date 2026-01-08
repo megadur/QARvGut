@@ -1,0 +1,68 @@
+Testfallbeschreibung
+Gruppe    Story    UseCase
+2.1. Zugang - Registrierung und Login (RL)    US-RL.01  Registrierung Gutachter          → UC-01
+US-RL.02  Verfahrensanmeldung Gutachtenmitarbeiter      → UC-08
+US-RL.03  Registrierung Gutachtenmitarbeiter             → UC-08
+US-RL.04  Registrierung Gutachter beantragen             → UC-01
+US-RL.05  Registrierung Gutachter prüfen                 → UC-01
+US-RL.06  Registrierung DRV-Mitarbeiter                  → UC-03
+US-RL.07  Login                                          → UC-02
+US-RL.08  Passwort zurücksetzen                          → UC-02
+US-RL.09  Verfahrensabmeldung Mitarbeiter                → UC-08 / UC-11
+US-RL.10  Verfahrensabmeldung Gutachter                  → UC-11
+
+2.2. Bereitstellung auftragsbezogener Dokumente und Daten für den Gutachter (BD)    US-BD.01  digitale Beauftragung        → UC-10
+US-BD.02  Unterlagen nachreichen                          → UC-10
+US-BD.03  ergänzende Stellungnahme annehmen              → UC-10
+US-BD.04  ergänzende Stellungnahme anfordern             → UC-10
+US-BD.05  Rechnungskorrekturen                           → UC offen (noch nicht spezifiziert)
+
+2.3. Auftragsmanagement (AM)    US-AM.01  Auftragsübersicht anzeigen          → UC-04
+US-AM.02  Auftragsdetails einsehen                       → UC-05 / UC-10
+US-AM.03  Auftragsunterlagen einsehen                    → UC-05 / UC-10
+US-AM.04  Auftragsstatus ändern                          → UC-04 / UC-12
+US-AM.05  Unterlagen drucken                             → UC-05 / UC-10
+US-AM.06  stornierte Aufträge                            → UC-13
+US-AM.07  Aufträge löschen                               → UC-09
+US-AM.08  Mahnungen                                      → UC-04
+US-AM.09  Mahnterminverschiebungen                       → UC-06 (Reminder-Kommunikation) / UC offen
+
+2.4. Notizfunktion (NF)    US-NF.01  Notizen erfassen                       → UC-05 / UC-10
+US-NF.02  Notizen bearbeiten/löschen                    → UC-05
+US-NF.03  Notizen nicht parallel bearbeitbar            → UC-05
+
+2.5. Benachrichtigungen (BN)    US-BN.01  E-Benachrichtigung bei neuen Aufträgen   → UC-06
+US-BN.02  Benachrichtigung bei Statusänderungen          → UC-06 / UC-13
+US-BN.03  Benachrichtigung Gutachter bei Nachrichten     → UC-06
+US-BN.04  Benachrichtigung Gutachter bei Wartung         → UC-06
+US-BN.05  Benachrichtigung fachlicher Administrator      → UC-06
+
+2.6. Löschen von Auftragsinformationen und -dokumenten (LA)    US-LA.01  Löschen von bereitgestellten Unterlagen und Daten   → UC-09
+US-LA.02  Löschen von bereitgestellten Unterlagen und Daten    → UC-09
+US-LA.03  Löschen einzelner Dokumente                          → UC-09
+US-LA.04  Konfiguration von Löschzeiträumen                    → UC-09
+
+2.7. Supportleistung (SL)    US-SL.01  Auftragszuweisungen einsehen     → UC-07
+US-SL.02  Übersicht bereitgestellte Dokumente          → UC-07
+US-SL.03  Fehlerprotokollierung                        → UC-07
+US-SL.04  Historie                                     → UC-07
+
+2.8. Kommunikation (BK)    US-BK.01  auftragsbezogene Kommunikation - Gutachter         → UC offen
+US-BK.02  auftragsbezogene Kommunikation - DRV-Mitarbeiter   → UC offen
+US-BK.03  auftragsunabhängige Kommunikation - Gutachter      → UC offen
+US-BK.04  auftragsunabhängige Kommunikation - DRV-Mitarbeiter→ UC offen
+
+2.9. Dokumenteneinreichung / Ergebnisse (DE)    US-DE.01  Dokumente einreichen                         → UC offen
+US-DE.02  Benachrichtigung zu eingereichten Dokumenten        → UC offen
+US-DE.03  Unterlageneinreichung (automatisierte Ablage rvPuR) → UC offen
+
+2.10. eS0080 / Begutachtungsmodul (BM)    US-BM.01  Formularbasierte Eingabe des S0080/Gutachtens     → UC offen
+US-BM.02  Info über vidierte Gutachten                         → UC offen
+US-BM.03  Prüfung der Eingaben                                 → UC offen
+US-BM.04  Textbausteine                                        → UC offen
+US-BM.05  eS0080 / Begutachtungsmodul (Schnittstelle)          → UC offen
+
+2.11. Unterstützung bei der Rechnungslegung (UR)    US-UR.01  Erstellung der Rechnung   → UC offen
+US-UR.02  Freigabe der Rechnung     → UC offen
+
+SMD=rvSMD, PUR=rvPuR, GWA= rvGutachten-Web-App, GVA= rvGutachten-Verwaltungs-App

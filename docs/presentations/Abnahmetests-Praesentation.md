@@ -382,11 +382,13 @@ DRV-Mitarbeiter:
 - UI-intensive Tests: 🔴 Manuell empfohlen
 
 ### F3: Wie lange dauert die Testausführung?
-**A:** 
-- Smoke Tests: ~2 Stunden
-- Regression Tests: ~30-40 Stunden
-- E2E Tests: ~10-15 Stunden
-- **Gesamt: ~50 Stunden (mit Team parallelisiert)**
+**A:**
+- CI/CD Smoke (automatisiert, headless): <10 Minuten pro Pipeline-Run (parallelisiert)
+- Erweiterter Smoke (manuell + UI-Sanity, optional): bis ~2 Stunden
+- Regression (breit, parallelisiert): ~30–40 Stunden
+- E2E (End-to-End, parallelisiert): ~10–15 Stunden
+- **Gesamt (parallelisiert): ~50 Stunden**
+- Hinweis: Zeiten beziehen sich nur auf die Ausführung. Vorbereitung (Umgebung, Testdaten, Skripting) ist separat in Phase 1 eingeplant.
 
 ### F4: Was ist, wenn ein Test fehlschlägt?
 **A:** 
