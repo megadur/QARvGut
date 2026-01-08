@@ -1,0 +1,1799 @@
+<!DOCTYPE html><html><head>
+      <title>UC-10-Data-Flow-Traceability-Matrix</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///c:\Users\DonTillo\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.8.20\crossnote\dependencies\katex\katex.min.css">
+      
+      
+      <script type="text/javascript" src="file:///c:\Users\DonTillo\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.8.20\crossnote\dependencies\mermaid\mermaid.min.js" charset="UTF-8"></script>
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. --><script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script></head><body for="html-export">
+    
+    
+      <div class="crossnote markdown-preview  ">
+      
+<h1 id="uc-10-datenfluss-rückverfolgbarkeitsmatrix">UC-10: Datenfluss-Rückverfolgbarkeitsmatrix </h1>
+<h2 id="automatisches-pdf-caching-rvpur--rvgutachten--gutachter">Automatisches PDF-Caching (rvPuR → rvGutachten → Gutachter) </h2>
+<p><strong>Use Case:</strong> UC-10: Automatisches Dokument-Caching und Dokumentenzugriff<br>
+<strong>Datum:</strong> Januar 2026<br>
+<strong>Zweck:</strong> Rückverfolgbarkeit des kompletten Dokumenten-Workflows von Auftragserstellung bis Gutachter-Zugriff</p>
+<p><strong>WICHTIG:</strong> Dies ist ein automatisierter Background-Prozess der sicherstellt, dass alle relevanten PDF-Dokumente lokal in rvGutachten gecacht werden für schnellen Zugriff ohne Abhängigkeit von rvArchiv.</p>
+<hr>
+<h2 id="legende">Legende </h2>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Bedeutung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[R]</td>
+<td><strong>Read</strong> - Daten werden gelesen/abgefragt</td>
+</tr>
+<tr>
+<td>[C]</td>
+<td><strong>Create</strong> - Daten werden erstellt</td>
+</tr>
+<tr>
+<td>[U]</td>
+<td><strong>Update</strong> - Daten werden aktualisiert</td>
+</tr>
+<tr>
+<td>[OK]</td>
+<td><strong>Display</strong> - Daten werden dem Benutzer angezeigt</td>
+</tr>
+<tr>
+<td>[WARN]</td>
+<td><strong>Validate</strong> - Daten werden validiert/geprüft</td>
+</tr>
+<tr>
+<td>[FILTER]</td>
+<td><strong>Filter</strong> - Daten werden gefiltert</td>
+</tr>
+<tr>
+<td>[SYNC]</td>
+<td><strong>Synchronize</strong> - Daten werden zwischen Systemen synchronisiert</td>
+</tr>
+<tr>
+<td>[CACHE]</td>
+<td><strong>Cache</strong> - Daten werden lokal gecacht</td>
+</tr>
+<tr>
+<td>[STREAM]</td>
+<td><strong>Stream</strong> - Daten werden gestreamt</td>
+</tr>
+<tr>
+<td>-</td>
+<td>Nicht beteiligt in diesem Schritt</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="sequenzschritte-zu-api-aufrufen-mapping">Sequenzschritte zu API-Aufrufen Mapping </h2>
+<table>
+<thead>
+<tr>
+<th>Schritt</th>
+<th>Phase</th>
+<th>Aktor</th>
+<th>Aktion</th>
+<th>API Aufruf</th>
+<th>Methode</th>
+<th>System</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PHASE 1: Auftragserstellung &amp; Sync-Trigger</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>rvSMD</td>
+<td>Neuer Gutachtenauftrag erstellt</td>
+<td>Message Queue Publish</td>
+<td>EVENT</td>
+<td>Message Queue</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>Background Worker</td>
+<td>Event konsumieren</td>
+<td>Message Queue Consume</td>
+<td>-</td>
+<td>Background Worker</td>
+</tr>
+<tr>
+<td><strong>PHASE 2: Metadaten-Abruf von rvPuR</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td>2</td>
+<td>Background Worker</td>
+<td>Liste aller Dokument-IOIDs abrufen</td>
+<td><code>getVorgangDokIdents(auftragsId)</code></td>
+<td>SOAP</td>
+<td>rvPuR</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2</td>
+<td>rvPuR</td>
+<td>Liste der Dokument-IOIDs zurückgeben</td>
+<td>SOAP Response</td>
+<td>-</td>
+<td>rvPuR</td>
+</tr>
+<tr>
+<td>5</td>
+<td>2</td>
+<td>Background Worker</td>
+<td>Metadaten für jedes Dokument abrufen (Loop)</td>
+<td><code>getDokumentMetainfo(IOID)</code></td>
+<td>SOAP</td>
+<td>rvPuR</td>
+</tr>
+<tr>
+<td>6</td>
+<td>2</td>
+<td>rvPuR</td>
+<td>Metadaten mit Dokument-Referenzen zurückgeben</td>
+<td>SOAP Response</td>
+<td>-</td>
+<td>rvPuR</td>
+</tr>
+<tr>
+<td>7</td>
+<td>2</td>
+<td>Background Worker</td>
+<td>Irrelevante Dokumente filtern</td>
+<td>Filter Logic</td>
+<td>-</td>
+<td>Background Worker</td>
+</tr>
+<tr>
+<td>8</td>
+<td>2</td>
+<td>Background Worker</td>
+<td>Dokument-Metadaten in DB speichern</td>
+<td><code>INSERT INTO documents</code></td>
+<td>SQL</td>
+<td>rvGutachten DB</td>
+</tr>
+<tr>
+<td><strong>PHASE 3: Dokument-Download, Extraktion &amp; Filterung (UC-10 Core!)</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>9</td>
+<td>3</td>
+<td>Background Worker</td>
+<td>PDF von rvArchiv herunterladen (pro Teil)</td>
+<td><code>getDokument(link)</code></td>
+<td>HTTP/SOAP</td>
+<td>rvArchiv</td>
+</tr>
+<tr>
+<td>10</td>
+<td>3</td>
+<td>rvArchiv</td>
+<td>PDF Binary zurückgeben (base64+gzip)</td>
+<td>Binary Response</td>
+<td>-</td>
+<td>rvArchiv</td>
+</tr>
+<tr>
+<td>11</td>
+<td>3</td>
+<td>Background Worker</td>
+<td>PDF lokal speichern (BLOB/FileSystem)</td>
+<td><code>INSERT INTO stored_documents</code></td>
+<td>SQL/FS</td>
+<td>rvGutachten DB/FS</td>
+</tr>
+<tr>
+<td>12</td>
+<td>3</td>
+<td>Background Worker</td>
+<td>Auftragsstatus aktualisieren</td>
+<td><code>UPDATE auftraege SET lastSync=...</code></td>
+<td>SQL</td>
+<td>rvGutachten DB</td>
+</tr>
+<tr>
+<td>13</td>
+<td>3</td>
+<td>Background Worker</td>
+<td>Sync-Completion Event publishen</td>
+<td>Message Queue Publish</td>
+<td>EVENT</td>
+<td>Message Queue</td>
+</tr>
+<tr>
+<td><strong>PHASE 4: Gutachter-Zugriff (lokales PDF)</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>14</td>
+<td>4</td>
+<td>Gutachter</td>
+<td>Dokumentenliste abrufen</td>
+<td><code>GET /auftraege/{id}/dokumente</code></td>
+<td>GET</td>
+<td>rvGutachten API</td>
+</tr>
+<tr>
+<td>15</td>
+<td>4</td>
+<td>REST API</td>
+<td>Dokument-Metadaten aus DB laden</td>
+<td><code>SELECT FROM documents</code></td>
+<td>SQL</td>
+<td>rvGutachten DB</td>
+</tr>
+<tr>
+<td>16</td>
+<td>4</td>
+<td>rvGutachten DB</td>
+<td>Metadaten-Liste zurückgeben</td>
+<td>Query Result</td>
+<td>-</td>
+<td>rvGutachten DB</td>
+</tr>
+<tr>
+<td>17</td>
+<td>4</td>
+<td>REST API</td>
+<td>JSON-Response mit Metadaten senden</td>
+<td>JSON Response</td>
+<td>-</td>
+<td>REST API</td>
+</tr>
+<tr>
+<td>18</td>
+<td>4</td>
+<td>Gutachter</td>
+<td>PDF-Inhalt abrufen (Click)</td>
+<td><code>GET /dokumente/{id}/content</code></td>
+<td>GET</td>
+<td>rvGutachten API</td>
+</tr>
+<tr>
+<td>19</td>
+<td>4</td>
+<td>REST API</td>
+<td>PDF aus lokalem Storage laden</td>
+<td><code>SELECT FROM stored_documents</code></td>
+<td>SQL/FS</td>
+<td>rvGutachten DB/FS</td>
+</tr>
+<tr>
+<td>20a</td>
+<td>4</td>
+<td>rvGutachten DB</td>
+<td>PDF Binary zurückgeben (Cache Hit)</td>
+<td>Query Result</td>
+<td>-</td>
+<td>rvGutachten DB/FS</td>
+</tr>
+<tr>
+<td>21a</td>
+<td>4</td>
+<td>REST API</td>
+<td>PDF an Gutachter streamen (200 OK)</td>
+<td>Stream PDF</td>
+<td>-</td>
+<td>REST API</td>
+</tr>
+<tr>
+<td>20b</td>
+<td>4</td>
+<td>REST API</td>
+<td>PDF nicht lokal → rvArchiv Fallback</td>
+<td><code>getDokument(IOID)</code></td>
+<td>HTTP/SOAP</td>
+<td>rvArchiv</td>
+</tr>
+<tr>
+<td>21b</td>
+<td>4</td>
+<td>rvArchiv</td>
+<td>PDF Binary zurückgeben</td>
+<td>Binary Response</td>
+<td>-</td>
+<td>rvArchiv</td>
+</tr>
+<tr>
+<td>22b</td>
+<td>4</td>
+<td>REST API</td>
+<td>PDF für zukünftige Anfragen speichern</td>
+<td><code>INSERT INTO stored_documents</code></td>
+<td>SQL/FS</td>
+<td>rvGutachten DB/FS</td>
+</tr>
+<tr>
+<td>23b</td>
+<td>4</td>
+<td>REST API</td>
+<td>PDF an Gutachter streamen (200 OK)</td>
+<td>Stream PDF</td>
+<td>-</td>
+<td>REST API</td>
+</tr>
+<tr>
+<td><strong>PHASE 5: Cache-Aktualisierung (bei Bedarf)</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>24</td>
+<td>5</td>
+<td>Message Queue</td>
+<td>Dokument-Update Event</td>
+<td>Message Queue Publish</td>
+<td>EVENT</td>
+<td>Message Queue</td>
+</tr>
+<tr>
+<td>25</td>
+<td>5</td>
+<td>Background Worker</td>
+<td>Aktualisierte Metadaten abrufen</td>
+<td><code>getDokumentMetainfo(IOID)</code></td>
+<td>SOAP</td>
+<td>rvPuR</td>
+</tr>
+<tr>
+<td>26</td>
+<td>5</td>
+<td>rvPuR</td>
+<td>Aktualisierte Metadaten zurückgeben</td>
+<td>SOAP Response</td>
+<td>-</td>
+<td>rvPuR</td>
+</tr>
+<tr>
+<td>27</td>
+<td>5</td>
+<td>Background Worker</td>
+<td>Relevante Dokumente filtern</td>
+<td>Filter Logic</td>
+<td>-</td>
+<td>Background Worker</td>
+</tr>
+<tr>
+<td>28</td>
+<td>5</td>
+<td>Background Worker</td>
+<td>Aktualisiertes PDF herunterladen</td>
+<td><code>getDokument(link)</code></td>
+<td>HTTP/SOAP</td>
+<td>rvArchiv</td>
+</tr>
+<tr>
+<td>29</td>
+<td>5</td>
+<td>rvArchiv</td>
+<td>PDF Binary zurückgeben</td>
+<td>Binary Response</td>
+<td>-</td>
+<td>rvArchiv</td>
+</tr>
+<tr>
+<td>30</td>
+<td>5</td>
+<td>Background Worker</td>
+<td>PDF aktualisieren/einfügen</td>
+<td><code>UPDATE/INSERT stored_documents</code></td>
+<td>SQL/FS</td>
+<td>rvGutachten DB/FS</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="datenfluss-matrix-business-objects--prozessschritte">Datenfluss-Matrix: Business Objects × Prozessschritte </h2>
+<h3 id="auftrag-gutachtenauftrag-business-object">Auftrag (Gutachtenauftrag) Business Object </h3>
+<table>
+<thead>
+<tr>
+<th>Attribut</th>
+<th>Typ</th>
+<th>MVP</th>
+<th>S1: Event</th>
+<th>S2: Consume</th>
+<th>S8: Meta Save</th>
+<th>S12: Update</th>
+<th>S14: API Call</th>
+<th>S17: Response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>auftragsId</strong></td>
+<td>uuid</td>
+<td>1</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>[OK]</td>
+</tr>
+<tr>
+<td><strong>vsnr</strong></td>
+<td>string</td>
+<td>1</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>rvPurVorgangsID</strong></td>
+<td>string</td>
+<td>1</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>status</strong></td>
+<td>enum</td>
+<td>1</td>
+<td>[C]</td>
+<td>-</td>
+<td>-</td>
+<td>[U]</td>
+<td>[R]</td>
+<td>[OK]</td>
+</tr>
+<tr>
+<td><strong>lastSync</strong></td>
+<td>datetime</td>
+<td>1</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>[U]</td>
+<td>[R]</td>
+<td>[OK]</td>
+</tr>
+<tr>
+<td><strong>syncStatus</strong></td>
+<td>enum</td>
+<td>1</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>[U]</td>
+<td>[R]</td>
+<td>[OK]</td>
+</tr>
+<tr>
+<td><strong>documentCount</strong></td>
+<td>int</td>
+<td>1</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>[U]</td>
+<td>[R]</td>
+<td>[OK]</td>
+</tr>
+<tr>
+<td><strong>createdAt</strong></td>
+<td>datetime</td>
+<td>1</td>
+<td>[C]</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>[R]</td>
+<td>[OK]</td>
+</tr>
+</tbody>
+</table>
+<h3 id="document-dokument-metadaten-business-object">Document (Dokument-Metadaten) Business Object </h3>
+<table>
+<thead>
+<tr>
+<th>Attribut</th>
+<th>Typ</th>
+<th>MVP</th>
+<th>S5: Meta Req</th>
+<th>S6: Meta Resp</th>
+<th>S7: Filter</th>
+<th>S8: Save</th>
+<th>S15: DB Query</th>
+<th>S16: Result</th>
+<th>S17: JSON</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>documentId</strong></td>
+<td>uuid</td>
+<td>1</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>[OK]</td>
+</tr>
+<tr>
+<td><strong>auftragsId</strong></td>
+<td>uuid</td>
+<td>1</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>[OK]</td>
+</tr>
+<tr>
+<td><strong>purIOID</strong></td>
+<td>string</td>
+<td>1</td>
+<td>[C]</td>
+<td>[OK]</td>
+<td>[R]</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>[OK]</td>
+</tr>
+<tr>
+<td><strong>docKlasse</strong></td>
+<td>string</td>
+<td>1</td>
+<td>-</td>
+<td>[OK]</td>
+<td>[FILTER]</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>[OK]</td>
+</tr>
+<tr>
+<td><strong>docKlasseBezeichnung</strong></td>
+<td>string</td>
+<td>1</td>
+<td>-</td>
+<td>[OK]</td>
+<td>-</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>[OK]</td>
+</tr>
+<tr>
+<td><strong>datum</strong></td>
+<td>date</td>
+<td>1</td>
+<td>-</td>
+<td>[OK]</td>
+<td>-</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>[OK]</td>
+</tr>
+<tr>
+<td><strong>status</strong></td>
+<td>enum</td>
+<td>1</td>
+<td>-</td>
+<td>[OK]</td>
+<td>[FILTER]</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>[OK]</td>
+</tr>
+<tr>
+<td><strong>relevanzKennzeichen</strong></td>
+<td>boolean</td>
+<td>1</td>
+<td>-</td>
+<td>[OK]</td>
+<td>[FILTER]</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>[OK]</td>
+</tr>
+<tr>
+<td><strong>documentLinks</strong></td>
+<td>array</td>
+<td>1</td>
+<td>-</td>
+<td>[OK]</td>
+<td>-</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>partCount</strong></td>
+<td>int</td>
+<td>1</td>
+<td>-</td>
+<td>[OK]</td>
+<td>-</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>[OK]</td>
+</tr>
+<tr>
+<td><strong>totalSize</strong></td>
+<td>long</td>
+<td>1</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>[OK]</td>
+</tr>
+<tr>
+<td><strong>createdAt</strong></td>
+<td>datetime</td>
+<td>1</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>[OK]</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storeddocument-gecachtes-pdf-business-object">StoredDocument (Gecachtes PDF) Business Object </h3>
+<table>
+<thead>
+<tr>
+<th>Attribut</th>
+<th>Typ</th>
+<th>MVP</th>
+<th>S9: Download</th>
+<th>S10: Receive</th>
+<th>S11: Store</th>
+<th>S19: Query</th>
+<th>S20a: Hit</th>
+<th>S21a: Stream</th>
+<th>S22b: Store</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>storedDocId</strong></td>
+<td>uuid</td>
+<td>1</td>
+<td>-</td>
+<td>-</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>[STREAM]</td>
+<td>[C]</td>
+</tr>
+<tr>
+<td><strong>documentId</strong></td>
+<td>uuid</td>
+<td>1</td>
+<td>-</td>
+<td>-</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>-</td>
+<td>[C]</td>
+</tr>
+<tr>
+<td><strong>purIOID</strong></td>
+<td>string</td>
+<td>1</td>
+<td>[R]</td>
+<td>-</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>-</td>
+<td>[C]</td>
+</tr>
+<tr>
+<td><strong>partNumber</strong></td>
+<td>int</td>
+<td>1</td>
+<td>[R]</td>
+<td>-</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>-</td>
+<td>[C]</td>
+</tr>
+<tr>
+<td><strong>content</strong></td>
+<td>blob</td>
+<td>1</td>
+<td>-</td>
+<td>[C]</td>
+<td>[C]</td>
+<td>-</td>
+<td>[R]</td>
+<td>[STREAM]</td>
+<td>[C]</td>
+</tr>
+<tr>
+<td><strong>contentType</strong></td>
+<td>string</td>
+<td>1</td>
+<td>-</td>
+<td>-</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[C]</td>
+</tr>
+<tr>
+<td><strong>size</strong></td>
+<td>long</td>
+<td>1</td>
+<td>-</td>
+<td>[C]</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>[OK]</td>
+<td>[C]</td>
+</tr>
+<tr>
+<td><strong>hash</strong></td>
+<td>string</td>
+<td>1</td>
+<td>-</td>
+<td>[C]</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>-</td>
+<td>[C]</td>
+</tr>
+<tr>
+<td><strong>storedAt</strong></td>
+<td>datetime</td>
+<td>1</td>
+<td>-</td>
+<td>-</td>
+<td>[C]</td>
+<td>[R]</td>
+<td>[R]</td>
+<td>-</td>
+<td>[C]</td>
+</tr>
+<tr>
+<td><strong>lastAccessed</strong></td>
+<td>datetime</td>
+<td>?</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>[U]</td>
+<td>[U]</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>accessCount</strong></td>
+<td>int</td>
+<td>?</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>[U]</td>
+<td>[U]</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[CRIT] Kritische Erkenntnisse:</strong></p>
+<ol>
+<li>
+<p><strong>Dreigliedrige Dokumentenstruktur:</strong></p>
+<ul>
+<li><strong>Auftrag</strong> → hat viele → <strong>Dokumente</strong> (Metadaten)</li>
+<li><strong>Dokument</strong> → hat viele → <strong>StoredDocuments</strong> (PDF-Teile)</li>
+<li>IOID ist der Primärschlüssel für die Verknüpfung zwischen Systemen</li>
+</ul>
+</li>
+<li>
+<p><strong>Zweistufige Filterung:</strong></p>
+<ul>
+<li><strong>Phase 2 (S7)</strong>: Metadaten-basierte Filterung VOR dem Download</li>
+<li>Verhindert unnötige Downloads von irrelevanten Dokumenten</li>
+<li>Filter-Kriterien: docKlasse, status, relevanzKennzeichen</li>
+</ul>
+</li>
+<li>
+<p><strong>Mehrteilige Dokumente:</strong></p>
+<ul>
+<li>Große PDFs können in mehrere Teile (Parts) aufgeteilt sein</li>
+<li>Jeder Teil wird separat heruntergeladen (Loop in S9-10)</li>
+<li>Alle Teile werden als separate StoredDocuments gespeichert (S11)</li>
+</ul>
+</li>
+<li>
+<p><strong>Cache-First Strategie mit Fallback:</strong></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Gutachter Request (S18)
+     ↓
+Lokaler Cache Check (S19)
+     ↓
+├─ Cache Hit (S20a) → Stream direkt (S21a) ✓ SCHNELL
+└─ Cache Miss (S20b) → rvArchiv Fallback → Cache für später (S22b) → Stream (S23b)
+</code></pre></li>
+<li>
+<p><strong>Performance-Charakteristik:</strong></p>
+<ul>
+<li><strong>Cache Hit</strong>: ~50-200ms (nur DB/FS Zugriff)</li>
+<li><strong>Cache Miss</strong>: ~500-2000ms (rvArchiv Netzwerk + Speichern)</li>
+<li><strong>Ziel</strong>: &gt;95% Cache Hit Rate nach initialer Sync</li>
+</ul>
+</li>
+<li>
+<p><strong>Asynchrone Event-basierte Architektur:</strong></p>
+<ul>
+<li>Message Queue entkoppelt rvSMD von rvGutachten</li>
+<li>Background Worker verarbeitet synchron (keine UI-Blockierung)</li>
+<li>Optional: DOCUMENT_UPDATED Events für Cache-Refresh (S24-30)</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="api-spezifikationen">API-Spezifikationen </h2>
+<h3 id="1-rvpur-soap-getvorgangdokidents">1. rvPuR SOAP: getVorgangDokIdents </h3>
+<p><strong>Zweck:</strong> Alle Dokument-IOIDs für einen Auftrag abrufen</p>
+<p><strong>Request:</strong></p>
+<pre data-role="codeBlock" data-info="xml" class="language-xml xml"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">soapenv:</span>Envelope</span> <span class="token attr-name"><span class="token namespace">xmlns:</span>soapenv</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://schemas.xmlsoap.org/soap/envelope/<span class="token punctuation">"</span></span>
+                  <span class="token attr-name"><span class="token namespace">xmlns:</span>pur</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://drv.de/rvpur/dokument/v1<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">soapenv:</span>Body</span><span class="token punctuation">&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">pur:</span>getVorgangDokIdents</span><span class="token punctuation">&gt;</span></span>
+         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>auftragsId</span><span class="token punctuation">&gt;</span></span>550e8400-e29b-41d4-a716-446655440000<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>auftragsId</span><span class="token punctuation">&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">pur:</span>getVorgangDokIdents</span><span class="token punctuation">&gt;</span></span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">soapenv:</span>Body</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">soapenv:</span>Envelope</span><span class="token punctuation">&gt;</span></span>
+</code></pre><p><strong>Response:</strong></p>
+<pre data-role="codeBlock" data-info="xml" class="language-xml xml"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">soapenv:</span>Envelope</span> <span class="token attr-name"><span class="token namespace">xmlns:</span>soapenv</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://schemas.xmlsoap.org/soap/envelope/<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">soapenv:</span>Body</span><span class="token punctuation">&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">pur:</span>getVorgangDokIdentsResponse</span><span class="token punctuation">&gt;</span></span>
+         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ioids</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ioid</span><span class="token punctuation">&gt;</span></span>IOID-2026-001-ABC123<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ioid</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ioid</span><span class="token punctuation">&gt;</span></span>IOID-2026-001-DEF456<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ioid</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ioid</span><span class="token punctuation">&gt;</span></span>IOID-2026-001-GHI789<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ioid</span><span class="token punctuation">&gt;</span></span>
+         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ioids</span><span class="token punctuation">&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">pur:</span>getVorgangDokIdentsResponse</span><span class="token punctuation">&gt;</span></span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">soapenv:</span>Body</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">soapenv:</span>Envelope</span><span class="token punctuation">&gt;</span></span>
+</code></pre><hr>
+<h3 id="2-rvpur-soap-getdokumentmetainfo">2. rvPuR SOAP: getDokumentMetainfo </h3>
+<p><strong>Zweck:</strong> Metadaten und Download-Links für ein Dokument abrufen</p>
+<p><strong>Request:</strong></p>
+<pre data-role="codeBlock" data-info="xml" class="language-xml xml"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">soapenv:</span>Envelope</span> <span class="token attr-name"><span class="token namespace">xmlns:</span>soapenv</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://schemas.xmlsoap.org/soap/envelope/<span class="token punctuation">"</span></span>
+                  <span class="token attr-name"><span class="token namespace">xmlns:</span>pur</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://drv.de/rvpur/dokument/v1<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">soapenv:</span>Body</span><span class="token punctuation">&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">pur:</span>getDokumentMetainfo</span><span class="token punctuation">&gt;</span></span>
+         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ioid</span><span class="token punctuation">&gt;</span></span>IOID-2026-001-ABC123<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ioid</span><span class="token punctuation">&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">pur:</span>getDokumentMetainfo</span><span class="token punctuation">&gt;</span></span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">soapenv:</span>Body</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">soapenv:</span>Envelope</span><span class="token punctuation">&gt;</span></span>
+</code></pre><p><strong>Response:</strong></p>
+<pre data-role="codeBlock" data-info="xml" class="language-xml xml"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">soapenv:</span>Envelope</span> <span class="token attr-name"><span class="token namespace">xmlns:</span>soapenv</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://schemas.xmlsoap.org/soap/envelope/<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">soapenv:</span>Body</span><span class="token punctuation">&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">pur:</span>getDokumentMetainfoResponse</span><span class="token punctuation">&gt;</span></span>
+         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>metainfo</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ioid</span><span class="token punctuation">&gt;</span></span>IOID-2026-001-ABC123<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ioid</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>docKlasse</span><span class="token punctuation">&gt;</span></span>MEDIZINISCHER_BERICHT<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>docKlasse</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>docKlasseBezeichnung</span><span class="token punctuation">&gt;</span></span>Medizinischer Bericht<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>docKlasseBezeichnung</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>datum</span><span class="token punctuation">&gt;</span></span>2026-01-05<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>datum</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>status</span><span class="token punctuation">&gt;</span></span>FINALIZED<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>status</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>relevanzKennzeichen</span><span class="token punctuation">&gt;</span></span>true<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>relevanzKennzeichen</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>documentLinks</span><span class="token punctuation">&gt;</span></span>
+               <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span><span class="token punctuation">&gt;</span></span>
+                  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>partNumber</span><span class="token punctuation">&gt;</span></span>1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>partNumber</span><span class="token punctuation">&gt;</span></span>
+                  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url</span><span class="token punctuation">&gt;</span></span>https://rvarchiv.drv.de/dokumente/IOID-2026-001-ABC123/part1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url</span><span class="token punctuation">&gt;</span></span>
+                  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>size</span><span class="token punctuation">&gt;</span></span>2048576<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>size</span><span class="token punctuation">&gt;</span></span>
+               <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>link</span><span class="token punctuation">&gt;</span></span>
+               <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span><span class="token punctuation">&gt;</span></span>
+                  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>partNumber</span><span class="token punctuation">&gt;</span></span>2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>partNumber</span><span class="token punctuation">&gt;</span></span>
+                  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url</span><span class="token punctuation">&gt;</span></span>https://rvarchiv.drv.de/dokumente/IOID-2026-001-ABC123/part2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url</span><span class="token punctuation">&gt;</span></span>
+                  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>size</span><span class="token punctuation">&gt;</span></span>1536000<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>size</span><span class="token punctuation">&gt;</span></span>
+               <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>link</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>documentLinks</span><span class="token punctuation">&gt;</span></span>
+         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>metainfo</span><span class="token punctuation">&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">pur:</span>getDokumentMetainfoResponse</span><span class="token punctuation">&gt;</span></span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">soapenv:</span>Body</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">soapenv:</span>Envelope</span><span class="token punctuation">&gt;</span></span>
+</code></pre><hr>
+<h3 id="3-rvarchiv-httpsoap-getdokument">3. rvArchiv HTTP/SOAP: getDokument </h3>
+<p><strong>Zweck:</strong> PDF Binary von rvArchiv herunterladen</p>
+<p><strong>Request:</strong></p>
+<pre data-role="codeBlock" data-info="http" class="language-http http"><code>GET https://rvarchiv.drv.de/dokumente/IOID-2026-001-ABC123/part1
+<span class="token header"><span class="token header-name keyword">Authorization</span><span class="token punctuation">:</span> <span class="token header-value">Bearer &lt;token&gt;</span></span>
+<span class="token header"><span class="token header-name keyword">Accept</span><span class="token punctuation">:</span> <span class="token header-value">application/pdf</span></span>
+</code></pre><p><strong>Response (Success):</strong></p>
+<pre data-role="codeBlock" data-info="http" class="language-http http"><code><span class="token response-status"><span class="token http-version property">HTTP/1.1</span> <span class="token status-code number">200</span> <span class="token reason-phrase string">OK</span></span>
+<span class="token header"><span class="token header-name keyword">Content-Type</span><span class="token punctuation">:</span> <span class="token header-value">application/pdf</span></span>
+<span class="token header"><span class="token header-name keyword">Content-Length</span><span class="token punctuation">:</span> <span class="token header-value">2048576</span></span>
+<span class="token header"><span class="token header-name keyword">Content-Encoding</span><span class="token punctuation">:</span> <span class="token header-value">gzip</span></span>
+
+&lt;binary PDF data, base64 encoded + gzipped&gt;
+</code></pre><p><strong>Alternative SOAP Request:</strong></p>
+<pre data-role="codeBlock" data-info="xml" class="language-xml xml"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">soapenv:</span>Envelope</span> <span class="token attr-name"><span class="token namespace">xmlns:</span>soapenv</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://schemas.xmlsoap.org/soap/envelope/<span class="token punctuation">"</span></span>
+                  <span class="token attr-name"><span class="token namespace">xmlns:</span>arch</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://drv.de/rvarchiv/dokument/v1<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">soapenv:</span>Body</span><span class="token punctuation">&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">arch:</span>getDokument</span><span class="token punctuation">&gt;</span></span>
+         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ioid</span><span class="token punctuation">&gt;</span></span>IOID-2026-001-ABC123<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ioid</span><span class="token punctuation">&gt;</span></span>
+         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>partNumber</span><span class="token punctuation">&gt;</span></span>1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>partNumber</span><span class="token punctuation">&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">arch:</span>getDokument</span><span class="token punctuation">&gt;</span></span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">soapenv:</span>Body</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">soapenv:</span>Envelope</span><span class="token punctuation">&gt;</span></span>
+</code></pre><hr>
+<h3 id="4-post-apiv1gutachtenauftraege-via-message-queue">4. POST /api/v1/gutachtenauftraege (via Message Queue) </h3>
+<p><strong>Zweck:</strong> Neuer Auftrag erstellt (Event von rvSMD)</p>
+<p><strong>Message Queue Event:</strong></p>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token punctuation">{</span>
+  <span class="token property">"eventType"</span><span class="token operator">:</span> <span class="token string">"ORDER_CREATED"</span><span class="token punctuation">,</span>
+  <span class="token property">"eventId"</span><span class="token operator">:</span> <span class="token string">"evt-2026-001-xyz"</span><span class="token punctuation">,</span>
+  <span class="token property">"timestamp"</span><span class="token operator">:</span> <span class="token string">"2026-01-08T10:30:00Z"</span><span class="token punctuation">,</span>
+  <span class="token property">"payload"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"auftragsId"</span><span class="token operator">:</span> <span class="token string">"550e8400-e29b-41d4-a716-446655440000"</span><span class="token punctuation">,</span>
+    <span class="token property">"vsnr"</span><span class="token operator">:</span> <span class="token string">"12345678901"</span><span class="token punctuation">,</span>
+    <span class="token property">"rvPurVorgangsID"</span><span class="token operator">:</span> <span class="token string">"VG-2026-001-12345"</span><span class="token punctuation">,</span>
+    <span class="token property">"gutachterId"</span><span class="token operator">:</span> <span class="token string">"gut-2025-123456"</span><span class="token punctuation">,</span>
+    <span class="token property">"beauftragungsDatum"</span><span class="token operator">:</span> <span class="token string">"2026-01-08"</span><span class="token punctuation">,</span>
+    <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"NEU"</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><hr>
+<h3 id="5-get-apiv1auftraegeiddokumente">5. GET /api/v1/auftraege/{id}/dokumente </h3>
+<p><strong>Zweck:</strong> Dokumentenliste für einen Auftrag abrufen</p>
+<p><strong>Request:</strong></p>
+<pre data-role="codeBlock" data-info="http" class="language-http http"><code>GET /api/v1/auftraege/550e8400-e29b-41d4-a716-446655440000/dokumente
+<span class="token header"><span class="token header-name keyword">Authorization</span><span class="token punctuation">:</span> <span class="token header-value">Bearer &lt;jwt_token&gt;</span></span>
+<span class="token header"><span class="token header-name keyword">Accept</span><span class="token punctuation">:</span> <span class="token header-value">application/json</span></span>
+</code></pre><p><strong>Response 200 OK:</strong></p>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token punctuation">{</span>
+  <span class="token property">"auftragsId"</span><span class="token operator">:</span> <span class="token string">"550e8400-e29b-41d4-a716-446655440000"</span><span class="token punctuation">,</span>
+  <span class="token property">"documentCount"</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+  <span class="token property">"documents"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"documentId"</span><span class="token operator">:</span> <span class="token string">"doc-001-uuid"</span><span class="token punctuation">,</span>
+      <span class="token property">"purIOID"</span><span class="token operator">:</span> <span class="token string">"IOID-2026-001-ABC123"</span><span class="token punctuation">,</span>
+      <span class="token property">"docKlasse"</span><span class="token operator">:</span> <span class="token string">"MEDIZINISCHER_BERICHT"</span><span class="token punctuation">,</span>
+      <span class="token property">"docKlasseBezeichnung"</span><span class="token operator">:</span> <span class="token string">"Medizinischer Bericht"</span><span class="token punctuation">,</span>
+      <span class="token property">"datum"</span><span class="token operator">:</span> <span class="token string">"2026-01-05"</span><span class="token punctuation">,</span>
+      <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"FINALIZED"</span><span class="token punctuation">,</span>
+      <span class="token property">"partCount"</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+      <span class="token property">"totalSize"</span><span class="token operator">:</span> <span class="token number">3584576</span><span class="token punctuation">,</span>
+      <span class="token property">"cached"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+      <span class="token property">"createdAt"</span><span class="token operator">:</span> <span class="token string">"2026-01-08T10:32:15Z"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"documentId"</span><span class="token operator">:</span> <span class="token string">"doc-002-uuid"</span><span class="token punctuation">,</span>
+      <span class="token property">"purIOID"</span><span class="token operator">:</span> <span class="token string">"IOID-2026-001-DEF456"</span><span class="token punctuation">,</span>
+      <span class="token property">"docKlasse"</span><span class="token operator">:</span> <span class="token string">"LABORBEFUND"</span><span class="token punctuation">,</span>
+      <span class="token property">"docKlasseBezeichnung"</span><span class="token operator">:</span> <span class="token string">"Laborbefund"</span><span class="token punctuation">,</span>
+      <span class="token property">"datum"</span><span class="token operator">:</span> <span class="token string">"2026-01-06"</span><span class="token punctuation">,</span>
+      <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"FINALIZED"</span><span class="token punctuation">,</span>
+      <span class="token property">"partCount"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+      <span class="token property">"totalSize"</span><span class="token operator">:</span> <span class="token number">512000</span><span class="token punctuation">,</span>
+      <span class="token property">"cached"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+      <span class="token property">"createdAt"</span><span class="token operator">:</span> <span class="token string">"2026-01-08T10:32:18Z"</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">"syncStatus"</span><span class="token operator">:</span> <span class="token string">"COMPLETED"</span><span class="token punctuation">,</span>
+  <span class="token property">"lastSync"</span><span class="token operator">:</span> <span class="token string">"2026-01-08T10:35:00Z"</span>
+<span class="token punctuation">}</span>
+</code></pre><hr>
+<h3 id="6-get-apiv1dokumenteidcontent">6. GET /api/v1/dokumente/{id}/content </h3>
+<p><strong>Zweck:</strong> PDF-Inhalt abrufen (primär von lokalem Cache)</p>
+<p><strong>Request:</strong></p>
+<pre data-role="codeBlock" data-info="http" class="language-http http"><code>GET /api/v1/dokumente/doc-001-uuid/content
+<span class="token header"><span class="token header-name keyword">Authorization</span><span class="token punctuation">:</span> <span class="token header-value">Bearer &lt;jwt_token&gt;</span></span>
+<span class="token header"><span class="token header-name keyword">Accept</span><span class="token punctuation">:</span> <span class="token header-value">application/pdf</span></span>
+</code></pre><p><strong>Response 200 OK (Cache Hit):</strong></p>
+<pre data-role="codeBlock" data-info="http" class="language-http http"><code><span class="token response-status"><span class="token http-version property">HTTP/1.1</span> <span class="token status-code number">200</span> <span class="token reason-phrase string">OK</span></span>
+<span class="token header"><span class="token header-name keyword">Content-Type</span><span class="token punctuation">:</span> <span class="token header-value">application/pdf</span></span>
+<span class="token header"><span class="token header-name keyword">Content-Length</span><span class="token punctuation">:</span> <span class="token header-value">2048576</span></span>
+<span class="token header"><span class="token header-name keyword">Content-Disposition</span><span class="token punctuation">:</span> <span class="token header-value">inline; filename="Medizinischer_Bericht_2026-01-05.pdf"</span></span>
+<span class="token header"><span class="token header-name keyword">X-Cache-Status</span><span class="token punctuation">:</span> <span class="token header-value">HIT</span></span>
+<span class="token header"><span class="token header-name keyword">X-Response-Time</span><span class="token punctuation">:</span> <span class="token header-value">85ms</span></span>
+
+&lt;binary PDF stream&gt;
+</code></pre><p><strong>Response 200 OK (Cache Miss):</strong></p>
+<pre data-role="codeBlock" data-info="http" class="language-http http"><code><span class="token response-status"><span class="token http-version property">HTTP/1.1</span> <span class="token status-code number">200</span> <span class="token reason-phrase string">OK</span></span>
+<span class="token header"><span class="token header-name keyword">Content-Type</span><span class="token punctuation">:</span> <span class="token header-value">application/pdf</span></span>
+<span class="token header"><span class="token header-name keyword">Content-Length</span><span class="token punctuation">:</span> <span class="token header-value">2048576</span></span>
+<span class="token header"><span class="token header-name keyword">Content-Disposition</span><span class="token punctuation">:</span> <span class="token header-value">inline; filename="Medizinischer_Bericht_2026-01-05.pdf"</span></span>
+<span class="token header"><span class="token header-name keyword">X-Cache-Status</span><span class="token punctuation">:</span> <span class="token header-value">MISS</span></span>
+<span class="token header"><span class="token header-name keyword">X-Response-Time</span><span class="token punctuation">:</span> <span class="token header-value">1520ms</span></span>
+
+&lt;binary PDF stream from rvArchiv fallback&gt;
+</code></pre><p><strong>Response 404 Not Found:</strong></p>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token punctuation">{</span>
+  <span class="token property">"error"</span><span class="token operator">:</span> <span class="token string">"DOCUMENT_NOT_FOUND"</span><span class="token punctuation">,</span>
+  <span class="token property">"message"</span><span class="token operator">:</span> <span class="token string">"Dokument mit ID doc-001-uuid nicht gefunden"</span><span class="token punctuation">,</span>
+  <span class="token property">"timestamp"</span><span class="token operator">:</span> <span class="token string">"2026-01-08T11:00:00Z"</span>
+<span class="token punctuation">}</span>
+</code></pre><hr>
+<h2 id="message-queue-events">Message Queue Events </h2>
+<h3 id="order_created-event-s1">ORDER_CREATED Event (S1) </h3>
+<p><strong>Trigger:</strong> Neuer Gutachtenauftrag in rvSMD erstellt<br>
+<strong>Publisher:</strong> rvSMD<br>
+<strong>Consumer:</strong> rvGutachten Background Worker<br>
+<strong>Topic/Queue:</strong> <code>gutachten.auftrag.created</code></p>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token punctuation">{</span>
+  <span class="token property">"eventType"</span><span class="token operator">:</span> <span class="token string">"ORDER_CREATED"</span><span class="token punctuation">,</span>
+  <span class="token property">"eventId"</span><span class="token operator">:</span> <span class="token string">"evt-2026-001-xyz"</span><span class="token punctuation">,</span>
+  <span class="token property">"timestamp"</span><span class="token operator">:</span> <span class="token string">"2026-01-08T10:30:00Z"</span><span class="token punctuation">,</span>
+  <span class="token property">"source"</span><span class="token operator">:</span> <span class="token string">"rvSMD"</span><span class="token punctuation">,</span>
+  <span class="token property">"version"</span><span class="token operator">:</span> <span class="token string">"1.0"</span><span class="token punctuation">,</span>
+  <span class="token property">"payload"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"auftragsId"</span><span class="token operator">:</span> <span class="token string">"550e8400-e29b-41d4-a716-446655440000"</span><span class="token punctuation">,</span>
+    <span class="token property">"vsnr"</span><span class="token operator">:</span> <span class="token string">"12345678901"</span><span class="token punctuation">,</span>
+    <span class="token property">"rvPurVorgangsID"</span><span class="token operator">:</span> <span class="token string">"VG-2026-001-12345"</span><span class="token punctuation">,</span>
+    <span class="token property">"gutachterId"</span><span class="token operator">:</span> <span class="token string">"gut-2025-123456"</span><span class="token punctuation">,</span>
+    <span class="token property">"beauftragungsDatum"</span><span class="token operator">:</span> <span class="token string">"2026-01-08"</span><span class="token punctuation">,</span>
+    <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"NEU"</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><hr>
+<h3 id="sync_completed-event-s13">SYNC_COMPLETED Event (S13) </h3>
+<p><strong>Trigger:</strong> Dokument-Sync erfolgreich abgeschlossen<br>
+<strong>Publisher:</strong> rvGutachten Background Worker<br>
+<strong>Consumer:</strong> Monitoring/Logging Services<br>
+<strong>Topic/Queue:</strong> <code>gutachten.sync.completed</code></p>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token punctuation">{</span>
+  <span class="token property">"eventType"</span><span class="token operator">:</span> <span class="token string">"SYNC_COMPLETED"</span><span class="token punctuation">,</span>
+  <span class="token property">"eventId"</span><span class="token operator">:</span> <span class="token string">"evt-2026-002-abc"</span><span class="token punctuation">,</span>
+  <span class="token property">"timestamp"</span><span class="token operator">:</span> <span class="token string">"2026-01-08T10:35:00Z"</span><span class="token punctuation">,</span>
+  <span class="token property">"source"</span><span class="token operator">:</span> <span class="token string">"rvGutachten.BackgroundWorker"</span><span class="token punctuation">,</span>
+  <span class="token property">"version"</span><span class="token operator">:</span> <span class="token string">"1.0"</span><span class="token punctuation">,</span>
+  <span class="token property">"payload"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"auftragsId"</span><span class="token operator">:</span> <span class="token string">"550e8400-e29b-41d4-a716-446655440000"</span><span class="token punctuation">,</span>
+    <span class="token property">"documentsProcessed"</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+    <span class="token property">"documentsFiltered"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+    <span class="token property">"documentsCached"</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+    <span class="token property">"totalPdfSize"</span><span class="token operator">:</span> <span class="token number">5120000</span><span class="token punctuation">,</span>
+    <span class="token property">"totalParts"</span><span class="token operator">:</span> <span class="token number">5</span><span class="token punctuation">,</span>
+    <span class="token property">"duration"</span><span class="token operator">:</span> <span class="token number">4500</span><span class="token punctuation">,</span>
+    <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"SUCCESS"</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><hr>
+<h3 id="document_updated-event-s24">DOCUMENT_UPDATED Event (S24) </h3>
+<p><strong>Trigger:</strong> Dokument in rvPuR aktualisiert<br>
+<strong>Publisher:</strong> rvPuR (optional)<br>
+<strong>Consumer:</strong> rvGutachten Background Worker<br>
+<strong>Topic/Queue:</strong> <code>gutachten.dokument.updated</code></p>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token punctuation">{</span>
+  <span class="token property">"eventType"</span><span class="token operator">:</span> <span class="token string">"DOCUMENT_UPDATED"</span><span class="token punctuation">,</span>
+  <span class="token property">"eventId"</span><span class="token operator">:</span> <span class="token string">"evt-2026-003-def"</span><span class="token punctuation">,</span>
+  <span class="token property">"timestamp"</span><span class="token operator">:</span> <span class="token string">"2026-01-08T14:00:00Z"</span><span class="token punctuation">,</span>
+  <span class="token property">"source"</span><span class="token operator">:</span> <span class="token string">"rvPuR"</span><span class="token punctuation">,</span>
+  <span class="token property">"version"</span><span class="token operator">:</span> <span class="token string">"1.0"</span><span class="token punctuation">,</span>
+  <span class="token property">"payload"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"ioid"</span><span class="token operator">:</span> <span class="token string">"IOID-2026-001-ABC123"</span><span class="token punctuation">,</span>
+    <span class="token property">"auftragsId"</span><span class="token operator">:</span> <span class="token string">"550e8400-e29b-41d4-a716-446655440000"</span><span class="token punctuation">,</span>
+    <span class="token property">"changeType"</span><span class="token operator">:</span> <span class="token string">"METADATA_UPDATE"</span><span class="token punctuation">,</span>
+    <span class="token property">"previousStatus"</span><span class="token operator">:</span> <span class="token string">"DRAFT"</span><span class="token punctuation">,</span>
+    <span class="token property">"newStatus"</span><span class="token operator">:</span> <span class="token string">"FINALIZED"</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><hr>
+<h2 id="mermaid-diagramme">Mermaid-Diagramme </h2>
+<h3 id="1-kompletter-uc-10-workflow-30-schritte">1. Kompletter UC-10 Workflow (30 Schritte) </h3>
+<div class="mermaid">sequenceDiagram
+    participant SMD as rvSMD
+    participant MQ as Message Queue
+    participant BG as Background Worker
+    participant DB as rvGutachten DB
+    participant PUR as rvPuR (SOAP)
+    participant ARC as rvArchiv
+    participant API as REST API
+    participant GUT as Gutachter
+
+    Note over SMD,GUT: PHASE 1: Auftragserstellung &amp; Sync-Trigger
+
+    SMD-&gt;&gt;MQ: 01. ORDER_CREATED Event
+    Note right of SMD: auftragsId, VSNR,&lt;br/&gt;rvPurVorgangsID
+    MQ-&gt;&gt;BG: 02. Consume Event
+   
+    Note over BG,ARC: PHASE 2: Metadaten-Abruf von rvPuR
+
+    BG-&gt;&gt;PUR: 03. getVorgangDokIdents(auftragsId)
+    PUR--&gt;&gt;BG: 04. List&lt;IOID&gt;
+   
+    loop Für jedes Dokument-IOID
+        BG-&gt;&gt;PUR: 05. getDokumentMetainfo(IOID)
+        Note right of PUR: Enthält Referenzen zu&lt;br/&gt;Subdokumenten
+        PUR--&gt;&gt;BG: 06. Metadaten mit Dokument-Ref
+        BG-&gt;&gt;BG: 07. Filter irrelevante Dokumente
+        Note right of BG: Filter-Kriterien: TBD&lt;br/&gt;(z.B. docKlasse, status)
+        BG-&gt;&gt;DB: 08. INSERT Document Metadata
+    end
+
+    Note over BG,ARC: PHASE 3: Dokument-Download, Extraktion &amp; Filterung (UC-10!)
+
+    loop Für jedes Dokument-IOID
+        loop Für jeden Teil (falls mehrteilig)
+            BG-&gt;&gt;ARC: 09. getDokument(link aus Metadaten)
+            Note right of BG: Via rvArchiv DokumentService&lt;br/&gt;(base64+gzip)
+            ARC--&gt;&gt;BG: 10. PDF Binary            
+        end      
+       
+        loop Für jedes PDF
+            BG-&gt;&gt;DB: 11. STORE PDF (BLOB/FileSystem)            
+        end
+    end
+
+    BG-&gt;&gt;DB: 12. UPDATE Auftrag: lastSync, status
+    BG--&gt;&gt;MQ: 13. SYNC_COMPLETED Event
+
+    Note over API,GUT: PHASE 4: Gutachter-Zugriff (lokales PDF)
+
+    GUT-&gt;&gt;API: 14. GET /auftraege/{id}/dokumente
+    API-&gt;&gt;DB: 15. SELECT Document Metadata
+    DB--&gt;&gt;API: 16. List&lt;DocumentDto&gt;
+    API--&gt;&gt;GUT: 17. JSON Response (Metadata only)
+
+    GUT-&gt;&gt;API: 18. GET /dokumente/{id}/content
+    API-&gt;&gt;DB: 19. SELECT PDF from local storage
+    Note right of API: PRIMARY: Local DB/FS&lt;br/&gt;FALLBACK: rvArchiv
+   
+    alt PDF exists locally (UC-10 cached)
+        DB--&gt;&gt;API: 20a. PDF Binary
+        API--&gt;&gt;GUT: 21a. Stream PDF (200 OK)
+        Note right of GUT: Fast! No rvArchiv call
+    else PDF not found locally (fallback)
+        API-&gt;&gt;ARC: 20b. getDokument(IOID)
+        ARC--&gt;&gt;API: 21b. PDF Binary
+        API-&gt;&gt;DB: 22b. STORE PDF for future
+        API--&gt;&gt;GUT: 23b. Stream PDF (200 OK)
+        Note right of GUT: Slower, rvArchiv required
+    end
+
+    Note over BG,GUT: PHASE 5: Cache-Aktualisierung (bei Bedarf)
+
+    opt Neue Dokumente in rvPuR
+        MQ-&gt;&gt;BG: 24. DOCUMENT_UPDATED Event
+        BG-&gt;&gt;PUR: 25. getDokumentMetainfo(IOID)
+        PUR--&gt;&gt;BG: 26. Updated Metadata
+        BG-&gt;&gt;BG: 27. Filter relevante Dokumente
+        BG-&gt;&gt;ARC: 28. getDokument(link aus Metadaten)
+        ARC--&gt;&gt;BG: 29. New/Updated PDF
+        BG-&gt;&gt;DB: 30. UPDATE/INSERT PDFs
+    end
+</div><hr>
+<h3 id="2-dokument-filterlogik-flussdiagramm">2. Dokument-Filterlogik Flussdiagramm </h3>
+<div class="mermaid">flowchart TD
+    Start([Dokument-Metadaten erhalten]) --&gt; CheckKlasse{docKlasse&lt;br/&gt;relevant?}
+    
+    CheckKlasse --&gt;|Nein| Skip[Skip Dokument&lt;br/&gt;Nicht cachen]
+    CheckKlasse --&gt;|Ja| CheckStatus{status =&lt;br/&gt;FINALIZED?}
+    
+    CheckStatus --&gt;|Nein| Skip
+    CheckStatus --&gt;|Ja| CheckRelevanz{relevanz-&lt;br/&gt;Kennzeichen?}
+    
+    CheckRelevanz --&gt;|Nein| Skip
+    CheckRelevanz --&gt;|Ja| CheckSize{Größe&lt;br/&gt;akzeptabel?}
+    
+    CheckSize --&gt;|Nein| Skip
+    CheckSize --&gt;|Ja| Cache[Dokument cachen&lt;br/&gt;Metadaten + PDF]
+    
+    Skip --&gt; End([Ende])
+    Cache --&gt; End
+    
+    style Start fill:#e1f5fe
+    style Cache fill:#c8e6c9
+    style Skip fill:#ffccbc
+    style End fill:#e1f5fe
+</div><hr>
+<h3 id="3-cache-hit-vs-cache-miss-performance">3. Cache-Hit vs Cache-Miss Performance </h3>
+<div class="mermaid">sequenceDiagram
+    participant GUT as Gutachter
+    participant API as REST API
+    participant CACHE as Local Cache&lt;br/&gt;(DB/FS)
+    participant ARC as rvArchiv
+
+    Note over GUT,ARC: Scenario A: Cache Hit (Fast Path)
+    
+    GUT-&gt;&gt;API: GET /dokumente/{id}/content
+    API-&gt;&gt;CACHE: Query PDF
+    CACHE--&gt;&gt;API: PDF Found ✓
+    API--&gt;&gt;GUT: Stream PDF (85ms)
+    Note right of GUT: ⚡ Schnell!&lt;br/&gt;50-200ms
+
+    Note over GUT,ARC: Scenario B: Cache Miss (Slow Path)
+    
+    GUT-&gt;&gt;API: GET /dokumente/{id}/content
+    API-&gt;&gt;CACHE: Query PDF
+    CACHE--&gt;&gt;API: PDF Not Found ✗
+    API-&gt;&gt;ARC: Fetch from rvArchiv
+    ARC--&gt;&gt;API: PDF Binary
+    API-&gt;&gt;CACHE: Store for future
+    API--&gt;&gt;GUT: Stream PDF (1520ms)
+    Note right of GUT: 🐌 Langsam&lt;br/&gt;500-2000ms
+</div><hr>
+<h2 id="architecture-decision-records-adrs">Architecture Decision Records (ADRs) </h2>
+<h3 id="adr-006-vollständiges-pdf-caching-in-rvgutachten">ADR-006: Vollständiges PDF-Caching in rvGutachten </h3>
+<p><strong>Status:</strong> Accepted<br>
+<strong>Kontext:</strong> Gutachter benötigen schnellen Zugriff auf Auftragsdokumente. rvArchiv ist manchmal langsam oder nicht verfügbar.</p>
+<p><strong>Entscheidung:</strong></p>
+<ul>
+<li>Alle relevanten PDF-Dokumente werden vollständig in rvGutachten gecacht (DB BLOB oder File System)</li>
+<li>Caching erfolgt automatisch bei Auftragserstellung via Background Worker</li>
+<li>Filterung irrelevanter Dokumente bereits in Phase 2 (Metadaten-Ebene)</li>
+<li>Cache-First Strategie mit rvArchiv als Fallback</li>
+</ul>
+<p><strong>Konsequenzen:</strong></p>
+<ul>
+<li>➕ <strong>Performance:</strong> 50-200ms statt 500-2000ms (Faktor 10x schneller)</li>
+<li>➕ <strong>Verfügbarkeit:</strong> Unabhängig von rvArchiv-Verfügbarkeit</li>
+<li>➕ <strong>Reduzierte Last:</strong> Weniger rvArchiv-Aufrufe durch Cache</li>
+<li>➕ <strong>Bessere UX:</strong> Konsistente, schnelle Ladezeiten</li>
+<li>➖ <strong>Speicherbedarf:</strong> ~100-500 MB pro Auftrag (nach Filterung)</li>
+<li>➖ <strong>Sync-Komplexität:</strong> Dokument-Updates müssen nachgezogen werden</li>
+<li>➖ <strong>DSGVO:</strong> Längere Datenhaltung erfordert klare Löschkonzepte</li>
+</ul>
+<p><strong>Mitigation:</strong></p>
+<ul>
+<li>Automatische Löschung nach Auftragsabschluss (siehe UC-09)</li>
+<li>Filterung reduziert Speicherbedarf um ~60-70%</li>
+<li>Optional: DOCUMENT_UPDATED Events für Cache-Refresh</li>
+<li>Monitoring: Cache Hit Rate (Ziel: &gt;95%)</li>
+</ul>
+<hr>
+<h3 id="adr-007-metadaten-basierte-filterung-vor-download">ADR-007: Metadaten-basierte Filterung vor Download </h3>
+<p><strong>Status:</strong> Accepted<br>
+<strong>Kontext:</strong> Nicht alle Dokumente in rvPuR sind für Gutachter relevant. Download aller Dokumente verschwendet Speicher und Bandbreite.</p>
+<p><strong>Entscheidung:</strong></p>
+<ul>
+<li>Filterung erfolgt in Phase 2 (Schritt 7) basierend auf Metadaten</li>
+<li>Filter-Kriterien: docKlasse, status, relevanzKennzeichen, Größe</li>
+<li>Nur gefilterte Dokumente werden von rvArchiv heruntergeladen</li>
+</ul>
+<p><strong>Konsequenzen:</strong></p>
+<ul>
+<li>➕ <strong>Reduzierter Speicherbedarf:</strong> ~60-70% weniger gecachte Daten</li>
+<li>➕ <strong>Schnellere Sync:</strong> Weniger Downloads erforderlich</li>
+<li>➕ <strong>Geringere Netzwerklast:</strong> Nur relevante PDFs werden übertragen</li>
+<li>➖ <strong>Komplexität:</strong> Filter-Kriterien müssen definiert und gepflegt werden</li>
+<li>➖ <strong>Risiko:</strong> Zu aggressive Filterung könnte wichtige Dokumente ausschließen</li>
+</ul>
+<p><strong>Filter-Kriterien (Initial MVP):</strong></p>
+<pre data-role="codeBlock" data-info="java" class="language-java java"><code><span class="token keyword keyword-boolean">boolean</span> isRelevant <span class="token operator">=</span> 
+    docKlasse<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"MEDIZINISCHER_BERICHT"</span><span class="token punctuation">)</span> 
+    <span class="token operator">&amp;&amp;</span> status<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"FINALIZED"</span><span class="token punctuation">)</span>
+    <span class="token operator">&amp;&amp;</span> relevanzKennzeichen <span class="token operator">==</span> <span class="token boolean">true</span>
+    <span class="token operator">&amp;&amp;</span> size <span class="token operator">&lt;</span> <span class="token number">50_000_000</span><span class="token punctuation">;</span> <span class="token comment">// Max 50 MB</span>
+</code></pre><hr>
+<h3 id="adr-008-background-worker-pattern-für-sync">ADR-008: Background Worker Pattern für Sync </h3>
+<p><strong>Status:</strong> Accepted<br>
+<strong>Kontext:</strong> Dokument-Download und Caching kann mehrere Minuten dauern. UI darf nicht blockieren.</p>
+<p><strong>Entscheidung:</strong></p>
+<ul>
+<li>Message Queue entkoppelt rvSMD-Events von rvGutachten-Verarbeitung</li>
+<li>Dedizierter Background Worker verarbeitet ORDER_CREATED Events</li>
+<li>Asynchrone Verarbeitung mit Status-Tracking im Auftrag</li>
+</ul>
+<p><strong>Konsequenzen:</strong></p>
+<ul>
+<li>➕ <strong>Keine UI-Blockierung:</strong> Gutachter kann sofort weiterarbeiten</li>
+<li>➕ <strong>Skalierbarkeit:</strong> Mehrere Worker können parallel arbeiten</li>
+<li>➕ <strong>Fehlertoleranz:</strong> Retry-Logik bei fehlgeschlagenen Downloads</li>
+<li>➕ <strong>Monitoring:</strong> Klare Trennung zwischen Event-Empfang und Verarbeitung</li>
+<li>➖ <strong>Komplexität:</strong> Zusätzliche Infrastruktur (Message Queue, Worker)</li>
+<li>➖ <strong>Eventual Consistency:</strong> Dokumente sind nicht sofort verfügbar</li>
+</ul>
+<p><strong>Status-Lifecycle:</strong></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>ORDER_CREATED (S1)
+    ↓
+SYNC_STARTED (S2)
+    ↓
+METADATA_FETCHED (S8)
+    ↓
+PDFS_CACHED (S11)
+    ↓
+SYNC_COMPLETED (S13)
+</code></pre><hr>
+<h3 id="adr-009-cache-first-mit-rvarchiv-fallback">ADR-009: Cache-First mit rvArchiv Fallback </h3>
+<p><strong>Status:</strong> Accepted<br>
+<strong>Kontext:</strong> Was passiert, wenn ein PDF trotz Caching nicht lokal verfügbar ist?</p>
+<p><strong>Entscheidung:</strong></p>
+<ul>
+<li>Primär: Lokaler Cache (Schritte 20a → 21a)</li>
+<li>Fallback: rvArchiv Download (Schritte 20b → 21b → 22b → 23b)</li>
+<li>Nach Fallback: PDF für zukünftige Requests cachen (22b)</li>
+</ul>
+<p><strong>Konsequenzen:</strong></p>
+<ul>
+<li>➕ <strong>Robustheit:</strong> System funktioniert auch bei Cache-Fehlern</li>
+<li>➕ <strong>Selbstheilend:</strong> Fehlende PDFs werden nachgeladen und gecacht</li>
+<li>➕ <strong>Keine Datenverluste:</strong> Gutachter erhält immer Zugriff</li>
+<li>➖ <strong>Inkonsistente Performance:</strong> Erster Request langsam, nachfolgende schnell</li>
+<li>➖ <strong>Zusätzliche Abhängigkeit:</strong> rvArchiv muss verfügbar sein</li>
+</ul>
+<p><strong>Monitoring:</strong></p>
+<ul>
+<li>Cache Hit Rate (Ziel: &gt;95%)</li>
+<li>Fallback-Häufigkeit (sollte selten sein)</li>
+<li>Alert bei Cache Hit Rate &lt;90%</li>
+</ul>
+<hr>
+<h2 id="performance-anforderungen">Performance-Anforderungen </h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Target</th>
+<th>Max</th>
+<th>Begründung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ORDER_CREATED Event Processing</strong></td>
+<td>&lt; 5s</td>
+<td>10s</td>
+<td>Event-Empfang bis Sync-Start</td>
+</tr>
+<tr>
+<td><strong>getVorgangDokIdents</strong></td>
+<td>&lt; 500ms</td>
+<td>1s</td>
+<td>SOAP-Call zu rvPuR</td>
+</tr>
+<tr>
+<td><strong>getDokumentMetainfo</strong></td>
+<td>&lt; 300ms</td>
+<td>500ms</td>
+<td>Pro Dokument, kann mehrfach aufgerufen werden</td>
+</tr>
+<tr>
+<td><strong>Filter-Logik</strong></td>
+<td>&lt; 50ms</td>
+<td>100ms</td>
+<td>Pro Dokument, reine CPU-Operation</td>
+</tr>
+<tr>
+<td><strong>getDokument (rvArchiv)</strong></td>
+<td>&lt; 1s</td>
+<td>3s</td>
+<td>Pro PDF-Teil, abhängig von Größe</td>
+</tr>
+<tr>
+<td><strong>PDF Storage (DB/FS)</strong></td>
+<td>&lt; 500ms</td>
+<td>1s</td>
+<td>Pro PDF-Teil</td>
+</tr>
+<tr>
+<td><strong>Kompletter Sync</strong></td>
+<td>&lt; 2min</td>
+<td>5min</td>
+<td>3-5 Dokumente mit je 2-3 Teilen</td>
+</tr>
+<tr>
+<td><strong>GET /dokumente (Metadata)</strong></td>
+<td>&lt; 200ms</td>
+<td>500ms</td>
+<td>Nur Metadaten, keine PDFs</td>
+</tr>
+<tr>
+<td><strong>GET /content (Cache Hit)</strong></td>
+<td>&lt; 200ms</td>
+<td>500ms</td>
+<td>PDF aus lokalem Cache</td>
+</tr>
+<tr>
+<td><strong>GET /content (Cache Miss)</strong></td>
+<td>&lt; 2s</td>
+<td>5s</td>
+<td>Inkl. rvArchiv Fallback + Caching</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Performance-Ziele:</strong></p>
+<ul>
+<li><strong>Cache Hit Rate:</strong> &gt;95% nach initialer Sync</li>
+<li><strong>Sync Success Rate:</strong> &gt;99% (inkl. Retries)</li>
+<li><strong>Parallel Workers:</strong> 3-5 für ~20 Aufträge/Stunde</li>
+<li><strong>Storage Growth:</strong> ~10-20 GB/Monat (nach Filterung)</li>
+</ul>
+<hr>
+<h2 id="dsgvo--datenschutz">DSGVO &amp; Datenschutz </h2>
+<h3 id="datenhaltung">Datenhaltung </h3>
+<table>
+<thead>
+<tr>
+<th>Datentyp</th>
+<th>Speicherort</th>
+<th>Retention</th>
+<th>Löschung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Auftragsdaten</strong></td>
+<td>rvGutachten DB</td>
+<td>Bis Auftragsabschluss + 90 Tage</td>
+<td>UC-09</td>
+</tr>
+<tr>
+<td><strong>Dokument-Metadaten</strong></td>
+<td>rvGutachten DB</td>
+<td>Bis Auftragsabschluss + 90 Tage</td>
+<td>UC-09</td>
+</tr>
+<tr>
+<td><strong>PDF-Inhalte (Cache)</strong></td>
+<td>DB BLOB oder File System</td>
+<td>Bis Auftragsabschluss + 90 Tage</td>
+<td>UC-09</td>
+</tr>
+<tr>
+<td><strong>Sync-Logs</strong></td>
+<td>Logging System</td>
+<td>30 Tage</td>
+<td>Automatisch</td>
+</tr>
+<tr>
+<td><strong>Access-Logs</strong></td>
+<td>Audit Log</td>
+<td>1 Jahr</td>
+<td>Compliance-Anforderung</td>
+</tr>
+</tbody>
+</table>
+<h3 id="verschlüsselung">Verschlüsselung </h3>
+<ul>
+<li><strong>At Rest:</strong> PDFs in DB verschlüsselt (AES-256)</li>
+<li><strong>In Transit:</strong> TLS 1.3 für alle API-Calls</li>
+<li><strong>Access Control:</strong> JWT-basierte Authentifizierung + RBAC</li>
+</ul>
+<h3 id="audit-trail">Audit Trail </h3>
+<p>Folgende Ereignisse werden geloggt:</p>
+<ul>
+<li>Dokument-Sync gestartet/abgeschlossen (S2, S13)</li>
+<li>PDF heruntergeladen von rvArchiv (S9)</li>
+<li>PDF lokal gespeichert (S11)</li>
+<li>Gutachter-Zugriff auf PDF (S18, S21a/23b)</li>
+<li>Dokument gelöscht (UC-09)</li>
+</ul>
+<hr>
+<h2 id="mvp-abdeckung">MVP-Abdeckung </h2>
+<table>
+<thead>
+<tr>
+<th>Anforderung</th>
+<th>Abgedeckt</th>
+<th>Bemerkung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Automatisches PDF-Caching</td>
+<td>✅</td>
+<td>Phase 1-3 (S1-S13)</td>
+</tr>
+<tr>
+<td>Event-basierte Synchronisation</td>
+<td>✅</td>
+<td>Message Queue + Background Worker</td>
+</tr>
+<tr>
+<td>Metadaten-Abruf von rvPuR</td>
+<td>✅</td>
+<td>SOAP Integration (S3-S8)</td>
+</tr>
+<tr>
+<td>PDF-Download von rvArchiv</td>
+<td>✅</td>
+<td>HTTP/SOAP (S9-S11)</td>
+</tr>
+<tr>
+<td>Dokument-Filterung</td>
+<td>✅</td>
+<td>Phase 2 (S7)</td>
+</tr>
+<tr>
+<td>Mehrteilige Dokumente</td>
+<td>✅</td>
+<td>Loop in S9-S11</td>
+</tr>
+<tr>
+<td>Lokaler Cache-Storage</td>
+<td>✅</td>
+<td>DB BLOB oder File System (S11)</td>
+</tr>
+<tr>
+<td>Gutachter-Zugriff via REST API</td>
+<td>✅</td>
+<td>Phase 4 (S14-S21a)</td>
+</tr>
+<tr>
+<td>Cache-First mit Fallback</td>
+<td>✅</td>
+<td>S19-S23b</td>
+</tr>
+<tr>
+<td>Cache-Aktualisierung</td>
+<td>✅</td>
+<td>Phase 5 (S24-S30) - Optional</td>
+</tr>
+<tr>
+<td>Performance-Optimierung</td>
+<td>✅</td>
+<td>Cache Hit &lt;200ms, Ziel &gt;95%</td>
+</tr>
+<tr>
+<td>DSGVO-Compliance</td>
+<td>✅</td>
+<td>Verschlüsselung + Löschung nach 90 Tagen</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> 12/12 MVP-Anforderungen erfüllt ✅</p>
+<hr>
+<h2 id="testing-strategie">Testing-Strategie </h2>
+<h3 id="unit-tests">Unit Tests </h3>
+<pre data-role="codeBlock" data-info="java" class="language-java java"><code><span class="token annotation punctuation">@Test</span>
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-void">void</span> <span class="token function">testDocumentFiltering_ShouldFilterIrrelevant</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">DokumentMetainfo</span> relevant <span class="token operator">=</span> <span class="token function">createMetainfo</span><span class="token punctuation">(</span><span class="token string">"MEDIZINISCHER_BERICHT"</span><span class="token punctuation">,</span> <span class="token string">"FINALIZED"</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">DokumentMetainfo</span> irrelevant <span class="token operator">=</span> <span class="token function">createMetainfo</span><span class="token punctuation">(</span><span class="token string">"DRAFT_NOTES"</span><span class="token punctuation">,</span> <span class="token string">"DRAFT"</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token function">assertTrue</span><span class="token punctuation">(</span>documentSyncService<span class="token punctuation">.</span><span class="token function">isRelevantDocument</span><span class="token punctuation">(</span>relevant<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">assertFalse</span><span class="token punctuation">(</span>documentSyncService<span class="token punctuation">.</span><span class="token function">isRelevantDocument</span><span class="token punctuation">(</span>irrelevant<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token annotation punctuation">@Test</span>
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-void">void</span> <span class="token function">testPdfCaching_MultiPartDocument</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">DocumentLink</span><span class="token punctuation">&gt;</span></span> links <span class="token operator">=</span> <span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span>
+        <span class="token keyword keyword-new">new</span> <span class="token class-name">DocumentLink</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">"url1"</span><span class="token punctuation">,</span> <span class="token number">2048576</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token keyword keyword-new">new</span> <span class="token class-name">DocumentLink</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">"url2"</span><span class="token punctuation">,</span> <span class="token number">1536000</span><span class="token punctuation">)</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    documentSyncService<span class="token punctuation">.</span><span class="token function">cachePdfParts</span><span class="token punctuation">(</span><span class="token string">"IOID-001"</span><span class="token punctuation">,</span> links<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token function">verify</span><span class="token punctuation">(</span>pdfStorageService<span class="token punctuation">,</span> <span class="token function">times</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">storePdf</span><span class="token punctuation">(</span><span class="token function">any</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><h3 id="integration-tests">Integration Tests </h3>
+<pre data-role="codeBlock" data-info="java" class="language-java java"><code><span class="token annotation punctuation">@Test</span>
+<span class="token annotation punctuation">@Transactional</span>
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-void">void</span> <span class="token function">testFullSyncWorkflow</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// Arrange</span>
+    <span class="token class-name">UUID</span> auftragsId <span class="token operator">=</span> <span class="token constant">UUID</span><span class="token punctuation">.</span><span class="token function">randomUUID</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">when</span><span class="token punctuation">(</span>rvPurClient<span class="token punctuation">.</span><span class="token function">getVorgangDokIdents</span><span class="token punctuation">(</span>auftragsId<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">thenReturn</span><span class="token punctuation">(</span><span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token string">"IOID-001"</span><span class="token punctuation">,</span> <span class="token string">"IOID-002"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token comment">// Act</span>
+    documentSyncService<span class="token punctuation">.</span><span class="token function">syncDocumentsWithPdfCaching</span><span class="token punctuation">(</span>auftragsId<span class="token punctuation">,</span> <span class="token string">"12345678901"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token comment">// Assert</span>
+    <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Document</span><span class="token punctuation">&gt;</span></span> documents <span class="token operator">=</span> documentRepository<span class="token punctuation">.</span><span class="token function">findByAuftragsId</span><span class="token punctuation">(</span>auftragsId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">assertEquals</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> documents<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">StoredDocument</span><span class="token punctuation">&gt;</span></span> pdfs <span class="token operator">=</span> pdfStorageService<span class="token punctuation">.</span><span class="token function">findByDocumentId</span><span class="token punctuation">(</span>documents<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">assertTrue</span><span class="token punctuation">(</span>pdfs<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><h3 id="performance-tests">Performance Tests </h3>
+<pre data-role="codeBlock" data-info="java" class="language-java java"><code><span class="token annotation punctuation">@Test</span>
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-void">void</span> <span class="token function">testCacheHitPerformance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">UUID</span> documentId <span class="token operator">=</span> <span class="token function">setupCachedPdf</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword keyword-long">long</span> startTime <span class="token operator">=</span> <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">ResponseEntity</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Resource</span><span class="token punctuation">&gt;</span></span> response <span class="token operator">=</span> documentController<span class="token punctuation">.</span><span class="token function">getDocumentContent</span><span class="token punctuation">(</span>documentId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-long">long</span> duration <span class="token operator">=</span> <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> startTime<span class="token punctuation">;</span>
+    
+    <span class="token function">assertEquals</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">,</span> response<span class="token punctuation">.</span><span class="token function">getStatusCodeValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">assertTrue</span><span class="token punctuation">(</span>duration <span class="token operator">&lt;</span> <span class="token number">200</span><span class="token punctuation">,</span> <span class="token string">"Cache Hit should be &lt;200ms, was: "</span> <span class="token operator">+</span> duration <span class="token operator">+</span> <span class="token string">"ms"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><hr>
+<h2 id="monitoring--observability">Monitoring &amp; Observability </h2>
+<h3 id="key-metrics">Key Metrics </h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Typ</th>
+<th>Threshold</th>
+<th>Alert</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sync_duration_seconds</code></td>
+<td>Histogram</td>
+<td>p95 &lt; 120s</td>
+<td>&gt;180s</td>
+</tr>
+<tr>
+<td><code>cache_hit_rate</code></td>
+<td>Gauge</td>
+<td>&gt;0.95</td>
+<td>&lt;0.90</td>
+</tr>
+<tr>
+<td><code>pdf_download_errors</code></td>
+<td>Counter</td>
+<td>&lt;5/hour</td>
+<td>&gt;10/hour</td>
+</tr>
+<tr>
+<td><code>storage_size_bytes</code></td>
+<td>Gauge</td>
+<td>&lt;100GB</td>
+<td>&gt;150GB</td>
+</tr>
+<tr>
+<td><code>document_filter_rate</code></td>
+<td>Gauge</td>
+<td>0.60-0.70</td>
+<td>&lt;0.50 or &gt;0.80</td>
+</tr>
+<tr>
+<td><code>sync_queue_depth</code></td>
+<td>Gauge</td>
+<td>&lt;10</td>
+<td>&gt;50</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dashboards">Dashboards </h3>
+<p><strong>Sync-Performance Dashboard:</strong></p>
+<ul>
+<li>Sync Duration (p50, p95, p99)</li>
+<li>Documents Processed per Hour</li>
+<li>Filter Efficiency (% filtered)</li>
+<li>Error Rate</li>
+</ul>
+<p><strong>Cache-Performance Dashboard:</strong></p>
+<ul>
+<li>Cache Hit Rate (%)</li>
+<li>Response Time (Cache Hit vs Miss)</li>
+<li>Storage Usage (GB)</li>
+<li>Top Accessed Documents</li>
+</ul>
+<hr>
+<h2 id="quellverweise">Quellverweise </h2>
+<p><strong>User Stories:</strong></p>
+<ul>
+<li>US-BD.01: Digitale Beauftragung (Auslöser für UC-10)</li>
+<li>US-AM.02: Auftragsdetails einsehen (Gutachter-Perspektive)</li>
+<li>US-AM.03: Auftragsunterlagen einsehen (Gutachter-Perspektive)</li>
+</ul>
+<p><strong>Verwandte Use Cases:</strong></p>
+<ul>
+<li>UC-04: Auftragsübersicht und -verwaltung (zeigt Dokumentenanzahl)</li>
+<li>UC-05: Auftragsdetails und Dokumenteneinsicht (nutzt gecachte PDFs)</li>
+<li>UC-09: Datenaufbewahrung und DSGVO-Löschung (löscht Cache)</li>
+</ul>
+<p><strong>Architektur:</strong></p>
+<ul>
+<li><code>/docs/architecture/domain-model.drawio</code> (Document, StoredDocument Entities)</li>
+<li><code>/docs/brownfield-architecture/integration-strategy.md</code> (rvPuR, rvArchiv Integration)</li>
+</ul>
+<p><strong>Externe Systeme:</strong></p>
+<ul>
+<li><strong>rvSMD:</strong> Sendet ORDER_CREATED Events</li>
+<li><strong>rvPuR:</strong> Dokumenten-Metadaten SOAP Service</li>
+<li><strong>rvArchiv:</strong> PDF-Storage Backend</li>
+</ul>
+<hr>
+<p><strong>Dokument-Ende</strong></p>
+
+      </div>
+      
+      
+    
+    
+    <script type="module">
+// TODO: If ZenUML gets integrated into mermaid in the future,
+//      we can remove the following lines.
+
+
+var MERMAID_CONFIG = ({"startOnLoad":false});
+if (typeof MERMAID_CONFIG !== 'undefined') {
+  MERMAID_CONFIG.startOnLoad = false
+  MERMAID_CONFIG.cloneCssStyles = false
+  MERMAID_CONFIG.theme = "default"
+}
+
+mermaid.initialize(MERMAID_CONFIG || {})
+if (typeof(window['Reveal']) !== 'undefined') {
+  function mermaidRevealHelper(event) {
+    var currentSlide = event.currentSlide
+    var diagrams = currentSlide.querySelectorAll('.mermaid')
+    for (var i = 0; i < diagrams.length; i++) {
+      var diagram = diagrams[i]
+      if (!diagram.hasAttribute('data-processed')) {
+        mermaid.init(null, diagram, ()=> {
+          Reveal.slide(event.indexh, event.indexv)
+        })
+      }
+    }
+  }
+  Reveal.addEventListener('slidetransitionend', mermaidRevealHelper)
+  Reveal.addEventListener('ready', mermaidRevealHelper)
+  await mermaid.run({
+    nodes: document.querySelectorAll('.mermaid')
+  })
+} else {
+  await mermaid.run({
+    nodes: document.querySelectorAll('.mermaid')
+  })
+}
+</script>
+    
+    
+    
+  
+    </body></html>
